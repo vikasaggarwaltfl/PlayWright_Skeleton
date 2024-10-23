@@ -1,12 +1,10 @@
 import { test as baseTest, Page, Browser, BrowserContext } from '@playwright/test';
-import { LoginPage } from '@pages/LoginPage';
-import { HomePage } from '@pages/HomePage';
+
 import * as dotenv from 'dotenv';
-import { AlertPage } from '@pages/AlertPage';
-import { MyLibraryPage } from '@pages/MyLibraryPage';
-import { BrowsePage } from '@pages/BrowsePage';
-import { CardDetailsPage } from '@pages/CardDetailsPage';
+
 import { VisualRegression } from '@pages/VisualRegression';
+import { Click } from '@pages/Click';
+import { Actions } from '@pages/Actions';
 dotenv.config();
 
 const caps = {
@@ -16,16 +14,14 @@ const caps = {
     'browser': process.env.BROWSER_NAME,
     'os': process.env.OS,
     'os_version': process.env.OS_VERSION,
+
 };
 
 const test = baseTest.extend<{
-    loginPage: LoginPage;
-    homePage: HomePage;
-    alertPage: AlertPage;
-    myLibraryPage: MyLibraryPage;
-    browsePage: BrowsePage;
-    cardDetailsPage: CardDetailsPage;
+
     visualRegression: VisualRegression;
+    Click: Click;
+    Actions: Actions;
 }>({
 
     page: async ({ playwright }, use, testInfo) => {
@@ -54,26 +50,11 @@ const test = baseTest.extend<{
     visualRegression: async ({ page, context }, use) => {
         await use(new VisualRegression(page, context));
     },
-
-    loginPage: async ({ page, context }, use) => {
-        await use(new LoginPage(page, context));
+    Click: async ({ page, context }, use) => {
+        await use(new Click(page, context));
     },
-
-    homePage: async ({ page, context }, use) => {
-        await use(new HomePage(page, context));
-    },
-
-    alertPage: async ({ page, context }, use) => {
-        await use(new AlertPage(page, context));
-    },
-    myLibraryPage: async ({ page, context }, use) => {
-        await use(new MyLibraryPage(page, context));
-    },
-    browsePage: async ({ page, context }, use) => {
-        await use(new BrowsePage(page, context));
-    },
-    cardDetailsPage: async ({ page, context }, use) => {
-        await use(new CardDetailsPage(page, context));
+    Actions: async ({ page, context }, use) => {
+        await use(new Actions(page, context));
     },
 })
 
