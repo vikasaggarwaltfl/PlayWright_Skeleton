@@ -6,13 +6,14 @@ export class Click {
     readonly page: Page;
     readonly context: BrowserContext;
     readonly submitBtn : Locator;
+    
 
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page;
         this.context = context;
         this.submitBtn = page.locator("div[class='modal-content background-customizable modal-content-mobile visible-md visible-lg'] div[class='modal-body'] div div div div input[name='signInSubmitButton']")
-
+        
     }
 
     async Btn(str : String): Promise<void> {
@@ -36,6 +37,7 @@ export class Click {
         {
             await this.submitBtn.click();
         }
+       
     }
     
 } 

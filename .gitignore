@@ -59,4 +59,6 @@ dev
 *.flv
 *.mov
 *.wmv
-
+/playwright-report/
+/blob-report/
+/playwright/.cache/
