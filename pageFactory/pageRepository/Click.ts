@@ -43,18 +43,20 @@ export class Click {
     }
   }
 
-  async link(str: String): Promise<void> {
-    if (str === 'login') {
-      await this.submitBtn.click()
+    async Btn(str: string): Promise<void> {
+
+        if (str === "login") {
+            await this.submitBtn.click();
+        }
     }
-  }
-  async icon(str: String): Promise<void> {
-    if (str === 'login') {
-      await this.submitBtn.click()
-    } else if (str === 'FilterDropDown') {
-      await this.filterDropDown.click()
+
+    async link(str: string): Promise<void> {
+
+        if (str === "login") {
+            await this.submitBtn.click();
+        }
     }
-  }
+    async icon(str: string): Promise<void> {
 
   async tabs(str: String): Promise<void> {
     if (str === 'Dashboard') {
@@ -74,5 +76,37 @@ export class Click {
     } else if (str === 'Imports') {
       await this.imports.click()
     }
-  }
-}
+
+    async tabs(str: string): Promise<void> {
+
+        if (str === "Dashboard") {
+            await this.dashboard.click();
+        }
+
+        else if (str === "Members") {
+            await this.suppliers.click();
+        }
+        else if (str === "Suppliers") {
+
+            await this.suppliers.click();
+        }
+        else if (str === "Brands") {
+            await this.brands.click();
+        }
+        else if (str === "Products") {
+            await this.products.click();
+        }
+        else if (str === "Catalogues") {
+            await this.catalogues.click();
+        }
+        else if (str === "ONA Staff") {
+            await this.ona_staff.click();
+        }
+        else if (str === "Group Settings") {
+            await this.group_settings.click();
+        }
+        else if (str === "Imports") {
+            await this.imports.click();
+        }
+    }
+} 
