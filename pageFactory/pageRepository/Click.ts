@@ -62,6 +62,9 @@ export class Click {
         if (str === "Dashboard") {
             await this.dashboard.click();
         }
+        else if (str === "Members") {
+            await this.suppliers.click();
+        }
         else if (str === "Suppliers") {
             await this.suppliers.click();
         }
