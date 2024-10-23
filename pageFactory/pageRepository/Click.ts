@@ -57,12 +57,12 @@ export class Click {
         }
     }
 
-    async tabs(str: String): Promise<void> {
+    async tabs(str: string): Promise<void> {
 
         if (str === "Dashboard") {
             await this.dashboard.click();
         }
-        else if (str === "Suppliers") {
+        else if (str === "Suppliers") { 
             await this.suppliers.click();
         }
         else if (str === "Brands") {
