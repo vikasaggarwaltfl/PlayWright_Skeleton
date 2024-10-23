@@ -34,20 +34,20 @@ export class Click {
         this.filterDropDown=page.locator("//button[@class='flex items-center justify-center w-4 h-4']")
     }
 
-    async Btn(str: String): Promise<void> {
+    async Btn(str: string): Promise<void> {
 
         if (str === "login") {
             await this.submitBtn.click();
         }
     }
 
-    async link(str: String): Promise<void> {
+    async link(str: string): Promise<void> {
 
         if (str === "login") {
             await this.submitBtn.click();
         }
     }
-    async icon(str: String): Promise<void> {
+    async icon(str: string): Promise<void> {
 
         if (str === "login") {
             await this.submitBtn.click();
@@ -57,7 +57,7 @@ export class Click {
         }
     }
 
-    async tabs(str: String): Promise<void> {
+    async tabs(str: string): Promise<void> {
 
         if (str === "Dashboard") {
             await this.dashboard.click();
