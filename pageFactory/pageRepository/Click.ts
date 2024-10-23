@@ -53,6 +53,12 @@ export class Click {
         }
     }
     async icon(str: string): Promise<void> {
+       if (str === "login") {
+            await this.submitBtn.click();
+        }
+        else if (str === "FilterDropDown") {
+            await this.filterDropDown.click();
+        }
     }
  
 
