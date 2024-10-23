@@ -15,6 +15,7 @@ export class Click {
     private readonly ona_staff: Locator;
     private readonly group_settings: Locator;
     private readonly imports: Locator;
+    private readonly filterDropDown: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -30,6 +31,7 @@ export class Click {
         this.ona_staff = page.locator("//div[text()='ONA Staff']")
         this.group_settings = page.locator("//div[text()='Group Settings']")
         this.imports = page.locator("//div[text()='Imports']")
+        this.filterDropDown=page.locator("//button[@class='flex items-center justify-center w-4 h-4']")
     }
 
     async Btn(str: String): Promise<void> {
@@ -49,6 +51,9 @@ export class Click {
 
         if (str === "login") {
             await this.submitBtn.click();
+        }
+        else if (str === "FilterDropDown") {
+            await this.filterDropDown.click();
         }
     }
 
@@ -78,7 +83,5 @@ export class Click {
         else if (str === "Imports") {
             await this.imports.click();
         }
-
     }
-
 } 
