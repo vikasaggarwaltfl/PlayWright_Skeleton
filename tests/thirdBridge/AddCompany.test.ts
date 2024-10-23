@@ -1,8 +1,7 @@
-import test from '@lib/BaseTest';
-import { expect } from '@playwright/test';
-import { Actions } from '@pages/Actions';
-import { Click } from '@pages/Click';
-
+import test from '@lib/BaseTest'
+import { expect } from '@playwright/test'
+import { Actions } from '@pages/Actions'
+import { Click } from '@pages/Click'
 
 // test('has title', async ({ page, Actions, Click }) => {
 //   await page.goto('https://onexweb-uat.officenational.co.za/');
