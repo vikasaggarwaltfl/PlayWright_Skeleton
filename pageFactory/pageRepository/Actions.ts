@@ -19,7 +19,7 @@ export class Actions {
         this.USERNAME_EDITBOX = page.locator("body > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > form:nth-child(2) > div:nth-child(3) > input:nth-child(1)");
         this.PASSWORD_EDITBOX = page.locator("body > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > form:nth-child(2) > div:nth-child(5) > input:nth-child(1)");
         this.searchMenu = page.locator("//input[@placeholder='Name, SKU, ON Code']")
-        this.nameFilter = page.locator("//input[@placeholder='Name']")
+        this.nameFilter = page.locator("//input[@placeholder='Supplier Name']")
 
     }
 
