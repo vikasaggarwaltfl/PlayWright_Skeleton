@@ -35,7 +35,7 @@ import { Click } from '@pages/Click'
 // });
 
 
-test('ritesh TC_ID_013', async ({ page, Actions, Click }) => {
+test('ritesh TC_ID_007', async ({ page, Actions, Click }) => {
   await page.goto('https://onexweb-uat.officenational.co.za/');
 
   await Actions.enterText("email", "jeigemmabrije-7589@yopmail.com");
@@ -45,7 +45,7 @@ test('ritesh TC_ID_013', async ({ page, Actions, Click }) => {
   await Click.Btn("ProfileBtn");
 });
 
-test('ritesh TC_ID_014', async ({ page, Actions, Click }) => {
+test('ritesh TC_ID_008', async ({ page, Actions, Click }) => {
   await page.goto('https://onexweb-uat.officenational.co.za/');
 
   await Actions.enterText("email", "jeigemmabrije-7589@yopmail.com");
@@ -55,7 +55,7 @@ test('ritesh TC_ID_014', async ({ page, Actions, Click }) => {
   await Click.tabs("ProductsTab");
 });
 
-test('ritesh TC_ID_015', async ({ page, Actions, Click }) => {
+test('ritesh TC_ID_009', async ({ page, Actions, Click }) => {
   await page.goto('https://onexweb-uat.officenational.co.za/');
 
   await Actions.enterText("email", "jeigemmabrije-7589@yopmail.com");
