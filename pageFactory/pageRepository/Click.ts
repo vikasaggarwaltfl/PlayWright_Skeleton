@@ -18,7 +18,7 @@ export class Click {
     private readonly filterDropDown: Locator
     private readonly profileBtn: Locator
     private readonly sideMenuSlider: Locator
-    private readonly ProductsTab: Locator
+    private readonly signOutBtn: Locator
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
@@ -40,7 +40,7 @@ export class Click {
         )
         this.profileBtn = page.locator("//p[text()='Testing']");
         this.sideMenuSlider = page.locator("//button[@type='button']")
-        this.ProductsTab = page.locator("//div[text()='Products']")
+        this.signOutBtn = page.locator("//span[text()='Sign Out']")
     }
 
 
@@ -52,6 +52,10 @@ export class Click {
         }
         else if (str === "ProfileBtn") {
             await this.profileBtn.click();
+        }
+        else if(str === "SignoutBtn")
+        {
+            await this.signOutBtn.click();
         }
     }
 

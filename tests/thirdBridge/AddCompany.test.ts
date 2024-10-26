@@ -70,7 +70,7 @@ import { Click } from '@pages/Click'
 // });
 
 
-<<<<<<< HEAD
+
 test('ritesh TC_ID_007', async ({ page, Actions, Click }) => {
   await page.goto('https://onexweb-uat.officenational.co.za/');
 
@@ -102,6 +102,4 @@ test('ritesh TC_ID_009', async ({ page, Actions, Click }) => {
 });
 
 
-=======
->>>>>>> a231c91c3092c6748a26d069230fa513eab3bae0
 
