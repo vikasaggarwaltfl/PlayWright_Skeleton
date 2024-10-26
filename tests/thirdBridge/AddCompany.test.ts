@@ -101,4 +101,3 @@ test('ritesh TC_ID_009', async ({ page, Actions, Click }) => {
   await Click.icon("MinimizeMenuBtn");
 });
 
-
