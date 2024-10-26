@@ -81,7 +81,7 @@ export class Click {
         }
 
         else if (str === "MembersTab") {
-            await this.suppliers.click();
+            await this.member.click();
         }
         else if (str === "SuppliersTab") {
 
