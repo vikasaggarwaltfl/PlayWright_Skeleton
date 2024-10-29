@@ -1,0 +1,20 @@
+{
+    "members": [
+      {
+        "MemberID": "001",
+        "Name": "John Doe",
+        "LegalEntity": "Company A",
+        "MemberType": "Type 1",
+        "VatRegNo": "VAT12345",
+        "CoRegNo": "CO123456",
+        "Telephone": "123-456-7890",
+        "Email": "john@example.com",
+        "Province": "Province A",
+        "PhysicalAddress1": "123 Street",
+        "PhysicalAddress2": "",
+        "PhysicalAddress3": "",
+        "PostalAddress1": "PO Box 123",
+        "DateJoined": "2024-01-01"
+      }
+    ]
+  }

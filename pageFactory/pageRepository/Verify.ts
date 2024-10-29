@@ -19,5 +19,9 @@ export class Verify {
       const buttonText = await this.SignIn.getAttribute('value')
       expect(buttonText).toBe('Sign in')
     }
+    if (text === 'Dashbaord') {
+      const dashboardText = await this.page.locator('text=Dashboard');
+      await expect(dashboardText).toBeVisible({ timeout: 5000 });
+    }
   }
 }

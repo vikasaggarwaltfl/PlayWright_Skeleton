@@ -1,5 +1,6 @@
 import { Page, BrowserContext, Locator, expect } from '@playwright/test'
 import * as dotenv from 'dotenv'
+import { get } from 'http'
 dotenv.config()
 
 export class Click {
@@ -19,6 +20,7 @@ export class Click {
     private readonly profileBtn: Locator
     private readonly sideMenuSlider: Locator
     private readonly signOutBtn: Locator
+    private readonly addMemberQuickLink:Locator;
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
@@ -41,6 +43,7 @@ export class Click {
         this.profileBtn = page.locator("//p[text()='Testing']");
         this.sideMenuSlider = page.locator("//button[@type='button']")
         this.signOutBtn = page.locator("//span[text()='Sign Out']")
+        this.addMemberQuickLink = page.locator("//div[text()=' Add Member']")
     }
 
 
@@ -83,7 +86,6 @@ export class Click {
         if (str === "DashboardTab") {
             await this.dashboard.click();
         }
-
         else if (str === "MembersTab") {
             await this.member.click();
         }
@@ -108,6 +110,14 @@ export class Click {
         }
         else if (str === "ImportsTab") {
             await this.imports.click();
+        }
+    }
+
+    async quickLink(linkName: String)
+    {
+        if(linkName==="addMember")
+        {
+            await this.addMemberQuickLink.click();
         }
     }
 } 
