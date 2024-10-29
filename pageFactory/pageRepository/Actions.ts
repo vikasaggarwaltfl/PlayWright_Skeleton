@@ -5,25 +5,13 @@ import * as path from 'path';
 
 
 dotenv.config();
-interface Member {
-    MemberID: string;
-    Name: string;
-    LegalEntity: string;
-    MemberType: string;
-    VatRegNo: string;
-    CoRegNo: string;
-    Telephone: string;
-    Email: string;
-    Province: string;
-    PhysicalAddress1: string;
-    PhysicalAddress2?: string; // Optional
-    PhysicalAddress3?: string; // Optional
-    PostalAddress1: string;
-    DateJoined: string; // Consider using Date type if needed
+interface catogrie {
+    CategoryCode: string;
+    NaCategoryme: string;
 }
 
 interface MemberData {
-    members: Member[];
+    catogries: catogrie[];
 }
 
 export class Actions {
@@ -83,33 +71,50 @@ export class Actions {
         await this.enterText("password", "Testing@1212");
     }
 
-    async addMemberFromJson(): Promise<void> {
+    // async addMemberFromJson(): Promise<void> {
+    //     try {
+    //         const response = await fetch('./data.json'); // Replace with your JSON file path
+    //         const data: MemberData = await response.json();
+    //         console.log(data);
+
+    //         // Assuming you want to populate the first member's data
+    //         const member = data.members[0];
+
+    //         if (member) {
+    //             await this.page.fill("//input[@placeholder='Member ID']", member.MemberID);
+    //             await this.page.fill("//input[@placeholder='Name']", member.Name);
+    //             // (document.getElementById("//input[@placeholder='Member ID']") as HTMLInputElement).value = member.MemberID;
+    //             // (document.getElementById("//input[@placeholder='Name']") as HTMLInputElement).value = member.Name;
+    //             // (document.getElementById('LegalEntity') as HTMLInputElement).value = member.LegalEntity;
+    //             // (document.getElementById('MemberType') as HTMLInputElement).value = member.MemberType;
+    //             // (document.getElementById('VatRegNo') as HTMLInputElement).value = member.VatRegNo;
+    //             // (document.getElementById('CoRegNo') as HTMLInputElement).value = member.CoRegNo;
+    //             // (document.getElementById('Telephone') as HTMLInputElement).value = member.Telephone;
+    //             // (document.getElementById('Email') as HTMLInputElement).value = member.Email;
+    //             // (document.getElementById('Province') as HTMLInputElement).value = member.Province;
+    //             // (document.getElementById('PhysicalAddress1') as HTMLInputElement).value = member.PhysicalAddress1;
+    //             // (document.getElementById('PhysicalAddress2') as HTMLInputElement).value = member.PhysicalAddress2 || '';
+    //             // (document.getElementById('PhysicalAddress3') as HTMLInputElement).value = member.PhysicalAddress3 || '';
+    //             // (document.getElementById('PostalAddress1') as HTMLInputElement).value = member.PostalAddress1;
+    //             // (document.getElementById('DateJoined') as HTMLInputElement).value = member.DateJoined;
+
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching JSON data:', error);
+    //     }
+    // }
+    async productCategoryFromJson(): Promise<void> {
         try {
             const response = await fetch('./data.json'); // Replace with your JSON file path
+            console.log(response);
             const data: MemberData = await response.json();
-            console.log(data);
 
             // Assuming you want to populate the first member's data
-            const member = data.members[0];
+            const member = data.catogries[0];
 
             if (member) {
-                await this.page.fill("//input[@placeholder='Member ID']", member.MemberID);
-                await this.page.fill("//input[@placeholder='Name']", member.Name);
-                // (document.getElementById("//input[@placeholder='Member ID']") as HTMLInputElement).value = member.MemberID;
-                // (document.getElementById("//input[@placeholder='Name']") as HTMLInputElement).value = member.Name;
-                // (document.getElementById('LegalEntity') as HTMLInputElement).value = member.LegalEntity;
-                // (document.getElementById('MemberType') as HTMLInputElement).value = member.MemberType;
-                // (document.getElementById('VatRegNo') as HTMLInputElement).value = member.VatRegNo;
-                // (document.getElementById('CoRegNo') as HTMLInputElement).value = member.CoRegNo;
-                // (document.getElementById('Telephone') as HTMLInputElement).value = member.Telephone;
-                // (document.getElementById('Email') as HTMLInputElement).value = member.Email;
-                // (document.getElementById('Province') as HTMLInputElement).value = member.Province;
-                // (document.getElementById('PhysicalAddress1') as HTMLInputElement).value = member.PhysicalAddress1;
-                // (document.getElementById('PhysicalAddress2') as HTMLInputElement).value = member.PhysicalAddress2 || '';
-                // (document.getElementById('PhysicalAddress3') as HTMLInputElement).value = member.PhysicalAddress3 || '';
-                // (document.getElementById('PostalAddress1') as HTMLInputElement).value = member.PostalAddress1;
-                // (document.getElementById('DateJoined') as HTMLInputElement).value = member.DateJoined;
-
+                await this.page.fill("//input[@name='CategoryCode']", member.CategoryCode);
+                await this.page.fill("//input[@name='Category']", member.NaCategoryme);
             }
         } catch (error) {
             console.error('Error fetching JSON data:', error);

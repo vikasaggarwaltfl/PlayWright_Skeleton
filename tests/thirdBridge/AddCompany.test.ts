@@ -72,15 +72,26 @@ import { access } from 'fs';
 //   await Click.icon("MinimizeMenuBtn");
 // });
 
-test('End-to-End test case 1', async ({ Actions, Click, Verify}) => {
+// test('End-to-End test case 1', async ({ Actions, Click, Verify}) => {
+//     await Actions.signIn();
+//     await Click.Btn("login");
+//     await Verify.IsTextDisplayed("Dashbaord");
+//     await Click.tabs("MembersTab")
+//     // await Click.quickLink("addMember");
+//     // await Actions.addMemberFromJson();
+//     await Click.Btn("ProfileBtn");
+//     await Click.Btn("SignoutBtn");
+// });
+
+test('End-to-End test case 2', async ({ Actions, Click, Verify}) => {
     await Actions.signIn();
     await Click.Btn("login");
-    await Verify.IsTextDisplayed("Dashbaord");
-    await Click.tabs("MembersTab")
-    await Click.quickLink("addMember");
-    await Actions.addMemberFromJson();
+    // await Verify.IsTextDisplayed("Dashbaord");
+    await Click.tabs("GroupSettingsTab")
+    await Click.Link("MasterProductCategorySetup");
+    await Click.Btn("addProdcutCatogerySetup");
+    await Actions.productCategoryFromJson();
+    await Click.Btn("saveProdcutCatogerySetup");
     await Click.Btn("ProfileBtn");
     await Click.Btn("SignoutBtn");
 });
-
-

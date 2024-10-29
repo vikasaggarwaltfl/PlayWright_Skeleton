@@ -20,7 +20,9 @@ export class Click {
     private readonly profileBtn: Locator
     private readonly sideMenuSlider: Locator
     private readonly signOutBtn: Locator
-    private readonly addMemberQuickLink:Locator;
+    private readonly MasterProductCategorySetup:Locator;
+    private readonly saveProdcutCatogerySetup: Locator;
+    private readonly addProdcutCatogerySetup: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
@@ -43,7 +45,9 @@ export class Click {
         this.profileBtn = page.locator("//p[text()='Testing']");
         this.sideMenuSlider = page.locator("//button[@type='button']")
         this.signOutBtn = page.locator("//span[text()='Sign Out']")
-        this.addMemberQuickLink = page.locator("//div[text()=' Add Member']")
+        this.MasterProductCategorySetup = page.locator("//a[text()='Master Product Category Setup']")
+        this.saveProdcutCatogerySetup = page.locator("//span[text()='Save']")
+        this.addProdcutCatogerySetup = page.locator("//span[text()='Add']")
     }
 
 
@@ -59,6 +63,14 @@ export class Click {
         else if(str === "SignoutBtn")
         {
             await this.signOutBtn.click();
+        }
+        else if(str==="saveProdcutCatogerySetup")
+        {
+            await this.saveProdcutCatogerySetup.click();
+        }
+        else if(str==="addProdcutCatogerySetup")
+        {
+            await this.addProdcutCatogerySetup.click();
         }
     }
 
@@ -113,11 +125,11 @@ export class Click {
         }
     }
 
-    async quickLink(linkName: String)
+    async Link(linkName: String)
     {
-        if(linkName==="addMember")
+        if(linkName==="MasterProductCategorySetup")
         {
-            await this.addMemberQuickLink.click();
+            await this.MasterProductCategorySetup.click();
         }
     }
 } 
