@@ -1,5 +1,6 @@
 import { Page, BrowserContext, Locator, expect } from '@playwright/test'
 import * as dotenv from 'dotenv'
+import { get } from 'http'
 dotenv.config()
 
 export class Click {
@@ -19,6 +20,9 @@ export class Click {
     private readonly profileBtn: Locator
     private readonly sideMenuSlider: Locator
     private readonly signOutBtn: Locator
+    private readonly MasterProductCategorySetup:Locator;
+    private readonly saveProdcutCatogerySetup: Locator;
+    private readonly addProdcutCatogerySetup: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
@@ -41,6 +45,9 @@ export class Click {
         this.profileBtn = page.locator("//p[text()='Testing']");
         this.sideMenuSlider = page.locator("//button[@type='button']")
         this.signOutBtn = page.locator("//span[text()='Sign Out']")
+        this.MasterProductCategorySetup = page.locator("//a[text()='Master Product Category Setup']")
+        this.saveProdcutCatogerySetup = page.locator("//span[text()='Save']")
+        this.addProdcutCatogerySetup = page.locator("//span[text()='Add']")
     }
 
 
@@ -56,6 +63,14 @@ export class Click {
         else if(str === "SignoutBtn")
         {
             await this.signOutBtn.click();
+        }
+        else if(str==="saveProdcutCatogerySetup")
+        {
+            await this.saveProdcutCatogerySetup.click();
+        }
+        else if(str==="addProdcutCatogerySetup")
+        {
+            await this.addProdcutCatogerySetup.click();
         }
     }
 
@@ -83,7 +98,6 @@ export class Click {
         if (str === "DashboardTab") {
             await this.dashboard.click();
         }
-
         else if (str === "MembersTab") {
             await this.member.click();
         }
@@ -108,6 +122,14 @@ export class Click {
         }
         else if (str === "ImportsTab") {
             await this.imports.click();
+        }
+    }
+
+    async Link(linkName: String)
+    {
+        if(linkName==="MasterProductCategorySetup")
+        {
+            await this.MasterProductCategorySetup.click();
         }
     }
 } 
