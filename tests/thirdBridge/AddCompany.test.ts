@@ -2,8 +2,8 @@ import test from '@lib/BaseTest'
 import { expect } from '@playwright/test'
 import { Actions } from '@pages/Actions'
 import { Click } from '@pages/Click'
-import { verify } from 'crypto';
-import { access } from 'fs';
+import { verify } from 'crypto'
+import { access } from 'fs'
 
 // test('has title', async ({ page, Actions, Click }) => {
 //   await page.goto('https://onexweb-uat.officenational.co.za/');
@@ -17,7 +17,6 @@ import { access } from 'fs';
 //   await Actions.enterText("nameFilter","Sofiya")
 
 // });
-
 
 //    test('sonali tests', async ({ page, Actions, Click }) => {
 //    await page.goto('https://onexweb-uat.officenational.co.za/');
@@ -39,8 +38,6 @@ import { access } from 'fs';
 //   //  await Actions.scrollPage('left', 100); // Scroll left 100 pixels
 
 //  });
-
-
 
 // test('ritesh TC_ID_007', async ({ page, Actions, Click }) => {
 //   await page.goto('https://onexweb-uat.officenational.co.za/');
@@ -83,15 +80,15 @@ import { access } from 'fs';
 //     await Click.Btn("SignoutBtn");
 // });
 
-test('End-to-End test case 2', async ({ Actions, Click, Verify}) => {
-    await Actions.signIn();
-    await Click.Btn("login");
-    // await Verify.IsTextDisplayed("Dashbaord");
-    await Click.tabs("GroupSettingsTab")
-    await Click.Link("MasterProductCategorySetup");
-    await Click.Btn("addProdcutCatogerySetup");
-    await Actions.productCategoryFromJson();
-    await Click.Btn("saveProdcutCatogerySetup");
-    await Click.Btn("ProfileBtn");
-    await Click.Btn("SignoutBtn");
-});
+test('End-to-End test case 2', async ({ Actions, Click, Verify }) => {
+  await Actions.signIn()
+  await Click.Btn('login')
+  await Verify.IsTextDisplayed('Dashbaord')
+  await Click.tabs('GroupSettingsTab')
+  await Click.Link('MasterProductCategorySetup')
+  await Click.Btn('addProdcutCatogerySetup')
+  await Actions.productCategoryFromJson()
+  await Click.Btn('saveProdcutCatogerySetup')
+  await Click.Btn('ProfileBtn')
+  await Click.Btn('SignoutBtn')
+})
