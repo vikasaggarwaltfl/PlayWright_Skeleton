@@ -14,13 +14,13 @@ export class Verify {
       'xpath=/html/body/div[1]/div/div[1]/div[2]/div[2]/div[3]/div/div/form/input[3]',
     )
   }
-  get Search() {
+  get ErrorPopUp() {
     return this.page.locator(
-      "input[class='p-inputtext p-component text-base bg-white border rounded-md text-neutral-700 border-neutral-200 placeholder:text-neutral-400 placeholder:text-base']",
+      "//div[@class='modal-content background-customizable modal-content-mobile visible-xs visible-sm']//div[@class='modal-body']//div//div//div//div//p[@id='loginErrorMessage']",
     )
   }
+
   async IsTextDisplayed(text: string): Promise<void> {
-    await this.Search.fill('hffh')
     if (text === 'Sign in') {
       const buttonText = await this.SignIn.getAttribute('value')
       expect(buttonText).toBe('Sign in')
@@ -40,6 +40,11 @@ export class Verify {
     if (text === 'Brand') {
       const BrandText = this.page.locator('text=Brand')
       await expect(BrandText).toBeVisible({ timeout: 5000 })
+    }
+  }
+  async IsErrorPopUp(text: string): Promise<void> {
+    if (text === 'Incorrect username or password') {
+      await expect(this.ErrorPopUp).toBeVisible({ timeout: 5000 })
     }
   }
 }
