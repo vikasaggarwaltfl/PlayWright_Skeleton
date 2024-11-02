@@ -1,18 +1,16 @@
 import { Page, BrowserContext, Locator, expect } from '@playwright/test';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
+import { connect } from 'http2';
 import * as path from 'path';
 
 
 dotenv.config();
-interface catogrie {
+interface MyObj  {
     CategoryCode: string;
     NaCategoryme: string;
 }
 
-interface MemberData {
-    catogries: catogrie[];
-}
 
 export class Actions {
     readonly page: Page;
@@ -53,6 +51,7 @@ export class Actions {
 
             await this.nameFilter.fill(text);
         }
+
 
     }
 
@@ -103,21 +102,25 @@ export class Actions {
     //         console.error('Error fetching JSON data:', error);
     //     }
     // }
+
     async productCategoryFromJson(): Promise<void> {
+        
         try {
-            const response = await fetch('./data.json'); // Replace with your JSON file path
-            console.log(response);
-            const data: MemberData = await response.json();
+            const filePath = "C:\\Users\\rites\\Desktop\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\data.json";
+            const data = await fs.promises.readFile(filePath, 'utf8');
+        console.log("output of data",data)
+        // Parse JSON data
+        const jsonData: MyObj = JSON.parse(data);
+        console.log("output after parse",jsonData["catogrie"].CategoryCode)
 
-            // Assuming you want to populate the first member's data
-            const member = data.catogries[0];
 
-            if (member) {
-                await this.page.fill("//input[@name='CategoryCode']", member.CategoryCode);
-                await this.page.fill("//input[@name='Category']", member.NaCategoryme);
-            }
+           
+                await this.page.fill("//input[@name='CategoryCode']", jsonData["catogrie"].CategoryCode);
+                await this.page.fill("//input[@name='Category']", jsonData["catogrie"].NaCategoryme);
+            
         } catch (error) {
             console.error('Error fetching JSON data:', error);
         }
+       await this.page.pause();
     }
 }
