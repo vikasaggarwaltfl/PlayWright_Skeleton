@@ -121,6 +121,6 @@ export class Actions {
         } catch (error) {
             console.error('Error fetching JSON data:', error);
         }
-       await this.page.pause();
+    //    await this.page.pause();
     }
 }

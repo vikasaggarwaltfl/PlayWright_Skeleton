@@ -41,6 +41,9 @@ export class Verify {
       const BrandText = this.page.locator('text=Brand')
       await expect(BrandText).toBeVisible({ timeout: 5000 })
     }
+    else if (text === 'ProdcutCategorySaved') {
+      expect(await this.page.locator("div[data-pc-section='message']")).toContainText("Record Saved Successfully")
+    }
   }
   async IsErrorPopUp(text: string): Promise<void> {
     if (text === 'Incorrect username or password') {

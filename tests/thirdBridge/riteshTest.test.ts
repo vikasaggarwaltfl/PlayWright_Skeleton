@@ -2,6 +2,7 @@ import test from '@lib/BaseTest'
 import { expect } from '@playwright/test'
 import { Actions } from '@pages/Actions'
 import { Click } from '@pages/Click'
+import { verify } from 'crypto';
 
 test('ritesh TC_ID_007', async ({ page, Actions, Click }) => {
     await Actions.signIn();
@@ -29,6 +30,7 @@ test.only('End-to-End test case 1', async ({ Actions, Click, Verify }) => {
     await Click.Btn("addProdcutCatogerySetup")
     await Actions.productCategoryFromJson();
     await Click.Btn("saveProdcutCatogerySetup");
+    await Verify.IsTextDisplayed("ProdcutCategorySaved");
     // await Click.Btn("ProfileBtn");
     // await Click.Btn("SignoutBtn");
    
