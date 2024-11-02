@@ -6,9 +6,11 @@ import * as path from 'path';
 
 
 dotenv.config();
-interface MyObj  {
+interface MyObj {
     CategoryCode: string;
     NaCategoryme: string;
+    code: String;
+    department: string;
 }
 
 
@@ -20,6 +22,8 @@ export class Actions {
     readonly PASSWORD_EDITBOX: Locator;
     readonly searchMenu: Locator;
     readonly nameFilter: Locator;
+    private readonly profileBtn: Locator
+    private readonly signOutBtn: Locator
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -30,6 +34,8 @@ export class Actions {
         this.PASSWORD_EDITBOX = page.locator("body > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > form:nth-child(2) > div:nth-child(5) > input:nth-child(1)");
         this.searchMenu = page.locator("//input[@placeholder='Name, SKU, ON Code']")
         this.nameFilter = page.locator("//input[@placeholder='Supplier Name']")
+        this.profileBtn = page.locator("//p[text()='Testing']");
+        this.signOutBtn = page.locator("//span[text()='Sign Out']")
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -69,6 +75,10 @@ export class Actions {
         await this.enterText("email", "jeigemmabrije-7589@yopmail.com");
         await this.enterText("password", "Testing@1212");
     }
+    async logout() {
+        await this.profileBtn.click();
+        await this.signOutBtn.click();
+    }
 
     // async addMemberFromJson(): Promise<void> {
     //     try {
@@ -103,24 +113,28 @@ export class Actions {
     //     }
     // }
 
-    async productCategoryFromJson(): Promise<void> {
-        
+    async productCategoryFromJson(groupSetting: string): Promise<void> {
+
         try {
             const filePath = "C:\\Users\\rites\\Desktop\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\data.json";
             const data = await fs.promises.readFile(filePath, 'utf8');
-        console.log("output of data",data)
-        // Parse JSON data
-        const jsonData: MyObj = JSON.parse(data);
-        console.log("output after parse",jsonData["catogrie"].CategoryCode)
+            // Parse JSON data
+            const jsonData: MyObj = JSON.parse(data);
+            console.log("output after parse", jsonData["MasterCatogrie"].CategoryCode)
 
 
-           
-                await this.page.fill("//input[@name='CategoryCode']", jsonData["catogrie"].CategoryCode);
-                await this.page.fill("//input[@name='Category']", jsonData["catogrie"].NaCategoryme);
-            
+            if (groupSetting === 'MasterProductCategorySetup') {
+                await this.page.fill("//input[@name='CategoryCode']", jsonData["MasterCatogrie"].CategoryCode);
+                await this.page.fill("//input[@name='Category']", jsonData["MasterCatogrie"].NaCategoryme);
+            }
+            else if (groupSetting === 'IQProductCategorySetup') {
+                await this.page.fill("//input[@placeholder='Code']", jsonData["IQCatogrie"].code);
+                await this.page.fill("//input[@placeholder='Department']", jsonData["IQCatogrie"].department);
+            }
+
         } catch (error) {
             console.error('Error fetching JSON data:', error);
         }
-    //    await this.page.pause();
+        //    await this.page.pause();
     }
 }

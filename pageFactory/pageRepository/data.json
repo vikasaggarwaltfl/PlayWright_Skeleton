@@ -1,8 +1,10 @@
 {
-  "catogrie": 
-    {
-      "CategoryCode": "0005",
-      "NaCategoryme": "Ritesh testing C1"
-    }
-  
+  "MasterCatogrie": {
+    "CategoryCode": "0007",
+    "NaCategoryme": "Ritesh testing C7"
+  },
+  "IQCatogrie": {
+    "code": "0001",
+    "department": "Ritesh T1"
+  }
 }

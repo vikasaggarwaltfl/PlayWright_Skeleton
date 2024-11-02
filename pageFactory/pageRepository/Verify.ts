@@ -45,6 +45,8 @@ export class Verify {
       expect(await this.page.locator("div[data-pc-section='message']")).toContainText("Record Saved Successfully")
     }
   }
+
+  
   async IsErrorPopUp(text: string): Promise<void> {
     if (text === 'Incorrect username or password') {
       await expect(this.ErrorPopUp).toBeVisible({ timeout: 5000 })

@@ -23,6 +23,7 @@ export class Click {
     private readonly MasterProductCategorySetup:Locator;
     private readonly saveProdcutCatogerySetup: Locator;
     private readonly addProdcutCatogerySetup: Locator;
+    private readonly IQProductCategorySetup: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
@@ -48,6 +49,7 @@ export class Click {
         this.MasterProductCategorySetup = page.locator("//a[text()='Master Product Category Setup']")
         this.saveProdcutCatogerySetup = page.locator("//span[text()='Save']")
         this.addProdcutCatogerySetup = page.locator("//span[text()='Add']")
+        this.IQProductCategorySetup=page.locator("//a[text()='IQ Product Category Setup']")
     }
 
 
@@ -72,14 +74,10 @@ export class Click {
         {
             await this.addProdcutCatogerySetup.click();
         }
+       
     }
 
-    async link(str: string): Promise<void> {
-
-        if (str === "login") {
-            await this.submitBtn.click();
-        }
-    }
+    
     async icon(str: string): Promise<void> {
         if (str === "login") {
             await this.submitBtn.click();
@@ -125,11 +123,15 @@ export class Click {
         }
     }
 
-    async Link(linkName: String)
+    async link(linkName: String)
     {
         if(linkName==="MasterProductCategorySetup")
         {
             await this.MasterProductCategorySetup.click();
+        }
+        else if(linkName==='IQProductCategorySetup')
+        {
+            await this.IQProductCategorySetup.click();
         }
     }
 } 
