@@ -20,10 +20,11 @@ export class Click {
     private readonly profileBtn: Locator
     private readonly sideMenuSlider: Locator
     private readonly signOutBtn: Locator
-    private readonly MasterProductCategorySetup:Locator;
+    private readonly MasterProductCategorySetup: Locator;
     private readonly saveProdcutCatogerySetup: Locator;
     private readonly addProdcutCatogerySetup: Locator;
     private readonly IQProductCategorySetup: Locator;
+    private readonly paginatorToLast: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
@@ -49,7 +50,8 @@ export class Click {
         this.MasterProductCategorySetup = page.locator("//a[text()='Master Product Category Setup']")
         this.saveProdcutCatogerySetup = page.locator("//span[text()='Save']")
         this.addProdcutCatogerySetup = page.locator("//span[text()='Add']")
-        this.IQProductCategorySetup=page.locator("//a[text()='IQ Product Category Setup']")
+        this.IQProductCategorySetup = page.locator("//a[text()='IQ Product Category Setup']")
+        this.paginatorToLast = page.locator("button[aria-label='Last Page']").last();
     }
 
 
@@ -62,22 +64,23 @@ export class Click {
         else if (str === "ProfileBtn") {
             await this.profileBtn.click();
         }
-        else if(str === "SignoutBtn")
-        {
+        else if (str === "SignoutBtn") {
             await this.signOutBtn.click();
         }
-        else if(str==="saveProdcutCatogerySetup")
-        {
+        else if (str === "saveProdcutCatogerySetup") {
             await this.saveProdcutCatogerySetup.click();
         }
-        else if(str==="addProdcutCatogerySetup")
-        {
+        else if (str === "addProdcutCatogerySetup") {
             await this.addProdcutCatogerySetup.click();
         }
-       
+        else if (str === "paginatorToLast") {
+            // await this.page.getByRole("button").click();
+            await this.paginatorToLast.click();
+        }
+
     }
 
-    
+
     async icon(str: string): Promise<void> {
         if (str === "login") {
             await this.submitBtn.click();
@@ -123,14 +126,11 @@ export class Click {
         }
     }
 
-    async link(linkName: String)
-    {
-        if(linkName==="MasterProductCategorySetup")
-        {
+    async link(linkName: String) {
+        if (linkName === "MasterProductCategorySetup") {
             await this.MasterProductCategorySetup.click();
         }
-        else if(linkName==='IQProductCategorySetup')
-        {
+        else if (linkName === 'IQProductCategorySetup') {
             await this.IQProductCategorySetup.click();
         }
     }

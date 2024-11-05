@@ -24,6 +24,7 @@ export class Actions {
     readonly nameFilter: Locator;
     private readonly profileBtn: Locator
     private readonly signOutBtn: Locator
+    private jsonData: MyObj;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -119,22 +120,49 @@ export class Actions {
             const filePath = "C:\\Users\\rites\\Desktop\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\data.json";
             const data = await fs.promises.readFile(filePath, 'utf8');
             // Parse JSON data
-            const jsonData: MyObj = JSON.parse(data);
-            console.log("output after parse", jsonData["MasterCatogrie"].CategoryCode)
+            this.jsonData = JSON.parse(data);
+            // console.log("output after parse", jsonData["MasterCatogrie"].CategoryCode)
 
 
             if (groupSetting === 'MasterProductCategorySetup') {
-                await this.page.fill("//input[@name='CategoryCode']", jsonData["MasterCatogrie"].CategoryCode);
-                await this.page.fill("//input[@name='Category']", jsonData["MasterCatogrie"].NaCategoryme);
+                await this.page.fill("//input[@name='CategoryCode']", this.jsonData["MasterCatogrie"].CategoryCode);
+                await this.page.fill("//input[@name='Category']", this.jsonData["MasterCatogrie"].NaCategoryme);
             }
             else if (groupSetting === 'IQProductCategorySetup') {
-                await this.page.fill("//input[@placeholder='Code']", jsonData["IQCatogrie"].code);
-                await this.page.fill("//input[@placeholder='Department']", jsonData["IQCatogrie"].department);
+                await this.page.fill("//input[@placeholder='Code']", this.jsonData["IQCatogrie"].code);
+                await this.page.fill("//input[@placeholder='Department']", this.jsonData["IQCatogrie"].department);
             }
 
         } catch (error) {
             console.error('Error fetching JSON data:', error);
         }
         //    await this.page.pause();
+    }
+
+    async dataAssertion(TypeOfData: String) {
+
+        try{
+            const filePath = "C:\\Users\\rites\\Desktop\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\data.json";
+            const data = await fs.promises.readFile(filePath, 'utf8');
+            // Parse JSON data
+            this.jsonData = JSON.parse(data);
+
+            var storedData = await this.jsonData["MasterCatogrie"].NaCategoryme;
+        }
+        catch(e)
+        {
+            console.log("We found error in reading data")
+        }
+        // await this.page.locator("table tbody").waitFor();
+        if (TypeOfData === 'MasterProductCategorySetup') {
+
+            const item = await this.page.locator("tr").last().locator("td").nth(2).textContent();
+
+            // const dataComeing = await this.page.locator(`td:has-text(${storedData})`).textContent();
+
+            console.log("the element is: ", item, "\nthe data we received is:", storedData)
+            expect(item).toBe(storedData);
+
+        }
     }
 }
