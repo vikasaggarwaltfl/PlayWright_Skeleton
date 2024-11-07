@@ -3,6 +3,7 @@ import { expect } from '@playwright/test'
 import { Actions } from '@pages/Actions'
 import { Click } from '@pages/Click'
 import { verify } from 'crypto';
+import { TIMEOUT } from 'dns';
 
 // test('ritesh TC_ID_007', async ({ page, Actions, Click }) => {
 //     await Actions.signIn();
@@ -50,13 +51,24 @@ test('End-to-End test case 2', async ({ Actions, Click, Verify }) => {
 });
 
 
-test.only('Testing my code', async ({ Actions, Click, Verify,page }) => {
+test('Testing my code', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("login");
     await Click.tabs("GroupSettingsTab")
     await Click.link("MasterProductCategorySetup")
-    // await page.getByLabel('Last Page').click();
-
-    // await page.locator("table tbody").waitFor();
+    await page.locator("//nav[@class='p-paginator-bottom']").waitFor();
+    // await page.locator("//table").waitFor();
+    await page.pause();
+    await Click.Btn("paginatorToLast");
     await Actions.dataAssertion("MasterProductCategorySetup");
+
 });
+
+test.only('uploading files', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("login");
+    await Click.tabs("ProductsTab");
+    await Click.link("ProductMedia")
+    await Click.link("productMediaCode");
+    await Actions.uploadFile();
+})

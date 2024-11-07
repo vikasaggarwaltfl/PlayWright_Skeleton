@@ -140,8 +140,7 @@ export class Actions {
     }
 
     async dataAssertion(TypeOfData: String) {
-
-        try{
+        try {
             const filePath = "C:\\Users\\rites\\Desktop\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\data.json";
             const data = await fs.promises.readFile(filePath, 'utf8');
             // Parse JSON data
@@ -149,8 +148,7 @@ export class Actions {
 
             var storedData = await this.jsonData["MasterCatogrie"].NaCategoryme;
         }
-        catch(e)
-        {
+        catch (e) {
             console.log("We found error in reading data")
         }
         // await this.page.locator("table tbody").waitFor();
@@ -160,9 +158,17 @@ export class Actions {
 
             // const dataComeing = await this.page.locator(`td:has-text(${storedData})`).textContent();
 
-            console.log("the element is: ", item, "\nthe data we received is:", storedData)
+            console.log("Web element data: ", item, "\nJSON data:", storedData)
             expect(item).toBe(storedData);
 
         }
+    }
+
+    async uploadFile() {
+        await this.page.waitForSelector("//button[@aria-label='Add File']");
+
+        await this.page.locator("//button[@aria-label='Add File']").setInputFiles('PlayWright_Skeleton\pageFactory\pageRepository\files\v1.mkv')
+
+        await this.page.waitForTimeout(5000);
     }
 }

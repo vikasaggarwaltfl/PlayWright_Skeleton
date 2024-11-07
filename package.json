@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "extension": "npx playwright test --config=config/extension.config.ts",
-    "thirdBridge": "npx playwright test --config=config/thirdBridge.config.ts"
+    "thirdBridge": "npx playwright test --config=config/thirdBridge.config.ts",
+    "test":"npx playwright test "
   },
   "keywords": [],
   "author": "",

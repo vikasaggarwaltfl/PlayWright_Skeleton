@@ -1,6 +1,7 @@
 import { Page, BrowserContext, Locator, expect } from '@playwright/test'
 import * as dotenv from 'dotenv'
 import { get } from 'http'
+import { waitForDebugger } from 'inspector'
 dotenv.config()
 
 export class Click {
@@ -25,6 +26,9 @@ export class Click {
     private readonly addProdcutCatogerySetup: Locator;
     private readonly IQProductCategorySetup: Locator;
     private readonly paginatorToLast: Locator;
+    private readonly ProductMedia: Locator;
+    private readonly uploadVideo: Locator;
+    private readonly productMediaCode: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
@@ -41,9 +45,7 @@ export class Click {
         this.ona_staff = page.locator("//div[text()='ONA Staff']")
         this.group_settings = page.locator("//div[text()='Group Settings']")
         this.imports = page.locator("//div[text()='Imports']")
-        this.filterDropDown = page.locator(
-            "//button[@class='flex items-center justify-center w-4 h-4']",
-        )
+        this.filterDropDown = page.locator("//button[@class='flex items-center justify-center w-4 h-4']")
         this.profileBtn = page.locator("//p[text()='Testing']");
         this.sideMenuSlider = page.locator("//button[@type='button']")
         this.signOutBtn = page.locator("//span[text()='Sign Out']")
@@ -51,7 +53,10 @@ export class Click {
         this.saveProdcutCatogerySetup = page.locator("//span[text()='Save']")
         this.addProdcutCatogerySetup = page.locator("//span[text()='Add']")
         this.IQProductCategorySetup = page.locator("//a[text()='IQ Product Category Setup']")
-        this.paginatorToLast = page.locator("button[aria-label='Last Page']").last();
+        this.paginatorToLast = page.locator("button[aria-label='Last Page']");
+        this.ProductMedia = page.locator("//a[text()='Product Media']");
+        this.uploadVideo = page.locator("//button[text()='Upload Video']")
+        this.productMediaCode = page.locator("text=PPVC0001")
     }
 
 
@@ -75,9 +80,12 @@ export class Click {
         }
         else if (str === "paginatorToLast") {
             // await this.page.getByRole("button").click();
+            await this.paginatorToLast.waitFor();
             await this.paginatorToLast.click();
         }
-
+        else if (str === "UploadVideo") {
+            await this.uploadVideo.click();
+        }
     }
 
 
@@ -132,6 +140,12 @@ export class Click {
         }
         else if (linkName === 'IQProductCategorySetup') {
             await this.IQProductCategorySetup.click();
+        }
+        else if (linkName === 'ProductMedia') {
+            await this.ProductMedia.click();
+        }
+        else if (linkName === "productMediaCode") {
+            await this.productMediaCode.click();
         }
     }
 } 
