@@ -25,6 +25,8 @@ export class Actions {
     private readonly profileBtn: Locator
     private readonly signOutBtn: Locator
     private jsonData: MyObj;
+    private readonly brandName: Locator
+    private readonly brandPrefix: Locator
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -37,6 +39,8 @@ export class Actions {
         this.nameFilter = page.locator("//input[@placeholder='Supplier Name']")
         this.profileBtn = page.locator("//p[text()='Testing']");
         this.signOutBtn = page.locator("//span[text()='Sign Out']")
+        this.brandName = page.locator("//input[@placeholder='Brand Name']")
+        this.brandPrefix = page.locator("//input[@placeholder='Prefix']")
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -58,8 +62,17 @@ export class Actions {
 
             await this.nameFilter.fill(text);
         }
+        if (textBoxName === "enterBrandName"){
 
-
+            await this.brandName.fill(text);
+        }
+        if (textBoxName === "enterBrandPrefix"){
+            
+            await this.brandPrefix.fill(text);
+        
+        }
+   
+        
     }
 
     // async scrollPage(direction: 'up' | 'down' | 'left' | 'right', distance: number): Promise<void> {
@@ -166,15 +179,16 @@ export class Actions {
 
     //following funtion will be user to upload the file.
     async uploadFile(locatorName: string) {
-        await this.page.waitForSelector(locatorName);
+        //await this.page.waitForSelector(locatorName);
         const fileLocation = {
             "doc": "",
             "video1": "PlayWright_Skeleton\pageFactory\pageRepository\files\v1.mkv",
-            "video2":""
+            "video2":"",
+            "image" : "pageFactory\pageRepository\files\logo.png"
         }
 
-        await this.page.locator(locatorName).setInputFiles(fileLocation["video1"])
-
+        await this.page.locator(locatorName).setInputFiles(fileLocation["image1"])
+        await this.page.pause()
         await this.page.waitForTimeout(5000);
     }
 }

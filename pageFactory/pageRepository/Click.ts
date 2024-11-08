@@ -29,6 +29,7 @@ export class Click {
     private readonly ProductMedia: Locator;
     private readonly uploadVideo: Locator;
     private readonly productMediaCode: Locator;
+    private readonly newBrand: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
@@ -57,6 +58,7 @@ export class Click {
         this.ProductMedia = page.locator("//a[text()='Product Media']");
         this.uploadVideo = page.locator("//button[text()='Upload Video']")
         this.productMediaCode = page.locator("text=PPVC0001")
+        this.newBrand = page.locator("//div[text()=' Add Brand']")
     }
 
 
@@ -146,6 +148,9 @@ export class Click {
         }
         else if (linkName === "productMediaCode") {
             await this.productMediaCode.click();
+        }
+        else if (linkName === "NewBrand") {
+            await this.newBrand.click();
         }
     }
 } 

@@ -64,7 +64,7 @@ test('Testing my code', async ({ Actions, Click, Verify, page }) => {
 
 });
 
-test.only('uploading files', async ({ Actions, Click, Verify, page }) => {
+test('uploading files', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("login");
     await Click.tabs("ProductsTab");
