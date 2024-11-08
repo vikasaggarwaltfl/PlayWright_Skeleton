@@ -105,9 +105,9 @@ test('End-to-End test case 2', async ({ Actions, Click, Verify }) => {
   await Click.Btn('login')
   // await Verify.IsTextDisplayed("Dashbaord");
   await Click.tabs('GroupSettingsTab')
-  await Click.Link('MasterProductCategorySetup')
+  await Click.link('MasterProductCategorySetup')
   await Click.Btn('addProdcutCatogerySetup')
-  await Actions.productCategoryFromJson()
+  // await Actions.productCategoryFromJson()
   await Click.Btn('saveProdcutCatogerySetup')
   await Click.Btn('ProfileBtn')
   await Click.Btn('SignoutBtn')

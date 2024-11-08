@@ -70,5 +70,5 @@ test.only('uploading files', async ({ Actions, Click, Verify, page }) => {
     await Click.tabs("ProductsTab");
     await Click.link("ProductMedia")
     await Click.link("productMediaCode");
-    await Actions.uploadFile();
+    await Actions.uploadFile("//button[@aria-label='Add File']");
 })

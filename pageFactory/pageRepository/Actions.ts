@@ -164,10 +164,16 @@ export class Actions {
         }
     }
 
-    async uploadFile() {
-        await this.page.waitForSelector("//button[@aria-label='Add File']");
+    //following funtion will be user to upload the file.
+    async uploadFile(locatorName: string) {
+        await this.page.waitForSelector(locatorName);
+        const fileLocation = {
+            "doc": "",
+            "video1": "PlayWright_Skeleton\pageFactory\pageRepository\files\v1.mkv",
+            "video2":""
+        }
 
-        await this.page.locator("//button[@aria-label='Add File']").setInputFiles('PlayWright_Skeleton\pageFactory\pageRepository\files\v1.mkv')
+        await this.page.locator(locatorName).setInputFiles(fileLocation["video1"])
 
         await this.page.waitForTimeout(5000);
     }
