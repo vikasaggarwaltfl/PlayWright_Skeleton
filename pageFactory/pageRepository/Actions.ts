@@ -179,16 +179,17 @@ export class Actions {
 
     //following funtion will be user to upload the file.
     async uploadFile(locatorName: string) {
-        //await this.page.waitForSelector(locatorName);
+        // await this.page.waitForSelector(locatorName);
         const fileLocation = {
             "doc": "",
             "video1": "PlayWright_Skeleton\pageFactory\pageRepository\files\v1.mkv",
             "video2":"",
-            "image" : "pageFactory\pageRepository\files\logo.png"
+            "image" : "C:\\Users\\rites\\Desktop\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\files\\logo.png"
         }
 
-        await this.page.locator(locatorName).setInputFiles(fileLocation["image1"])
-        await this.page.pause()
+        console.log(fileLocation["image"])
+        // await this.page.locator(locatorName).setInputFiles(fileLocation["image1"])
+        await this.page.getByRole('button', { name: ' Drop files here to upload' }).setInputFiles(fileLocation["image"]);
         await this.page.waitForTimeout(5000);
     }
 }
