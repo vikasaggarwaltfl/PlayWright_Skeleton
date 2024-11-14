@@ -189,7 +189,7 @@ export class Actions {
 
         console.log(fileLocation["image"])
         // await this.page.locator(locatorName).setInputFiles(fileLocation["image1"])
-        await this.page.getByRole('button', { name: ' Drop files here to upload' }).setInputFiles(fileLocation["image"]);
+        await this.page.getByRole('button', { name: 'Drop files here to upload' }).setInputFiles(fileLocation["image"]);
         await this.page.waitForTimeout(5000);
     }
 }
