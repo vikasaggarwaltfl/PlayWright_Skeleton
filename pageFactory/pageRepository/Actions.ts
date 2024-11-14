@@ -62,17 +62,17 @@ export class Actions {
 
             await this.nameFilter.fill(text);
         }
-        if (textBoxName === "enterBrandName"){
+        if (textBoxName === "enterBrandName") {
 
             await this.brandName.fill(text);
         }
-        if (textBoxName === "enterBrandPrefix"){
-            
+        if (textBoxName === "enterBrandPrefix") {
+
             await this.brandPrefix.fill(text);
-        
+
         }
-   
-        
+
+
     }
 
     // async scrollPage(direction: 'up' | 'down' | 'left' | 'right', distance: number): Promise<void> {
@@ -183,13 +183,25 @@ export class Actions {
         const fileLocation = {
             "doc": "",
             "video1": "PlayWright_Skeleton\pageFactory\pageRepository\files\v1.mkv",
-            "video2":"",
-            "image" : "C:\\Users\\rites\\Desktop\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\files\\logo.png"
+            "video2": "",
+            "image": "C:\\Users\\rites\\Desktop\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\files\\logo.png"
         }
 
         console.log(fileLocation["image"])
         // await this.page.locator(locatorName).setInputFiles(fileLocation["image1"])
-        await this.page.getByRole('button', { name: 'Drop files here to upload' }).setInputFiles(fileLocation["image"]);
-        await this.page.waitForTimeout(5000);
+        // await this.page.getByRole('button', { name: 'Drop files here to upload' }).setInputFiles(fileLocation["image"]);
+        // await this.page.waitForTimeout(5000);
+        // Assuming there is a button or div that triggers a file input when clicked
+        await this.page.click(".p-fileupload-empty.flex.flex-row.justify-center.p-0"); // Adjust selector based on your element
+
+        // Wait for the input to appear if it is dynamically added
+        const [fileChooser] = await Promise.all([
+        this.page.waitForEvent('filechooser'), // Wait for the file chooser event
+        this.page.click(".p-fileupload-empty.flex.flex-row.justify-center.p-0") // Trigger the file chooser
+        ]);
+
+        // Set the file path
+        await fileChooser.setFiles('pageFactory\pageRepository\files\logo.png');
+
     }
 }
