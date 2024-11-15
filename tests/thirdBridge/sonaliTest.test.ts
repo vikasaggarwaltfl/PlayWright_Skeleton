@@ -28,7 +28,7 @@ test.only('end to end test_New Brand ', async ({ Actions, Click, Verify, page })
     await Click.Btn("login");
     await Click.tabs("BrandsTab")
     await Click.link("NewBrand")
-    //await page.pause();
+    await page.pause();
 
     Actions.uploadFile("//div[text()='Drop files here to upload logo']")
 });
