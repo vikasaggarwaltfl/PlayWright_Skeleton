@@ -26,12 +26,14 @@ export class Click {
     private readonly addProdcutCatogerySetup: Locator;
     private readonly IQProductCategorySetup: Locator;
     private readonly paginatorToLast: Locator;
+    private readonly ProductTab: Locator;
     private readonly ProductMedia: Locator;
+    private readonly ProductWIP: Locator;
     private readonly uploadVideo: Locator;
     private readonly productMediaCode: Locator;
     private readonly newBrand: Locator;
     private readonly BrandDropBox: Locator;
-    
+
     constructor(page: Page, context: BrowserContext) {
         this.page = page
         this.context = context
@@ -48,7 +50,7 @@ export class Click {
         this.group_settings = page.locator("//div[text()='Group Settings']")
         this.imports = page.locator("//div[text()='Imports']")
         this.filterDropDown = page.locator("//button[@class='flex items-center justify-center w-4 h-4']")
-        this.profileBtn = page.locator("//p[text()='Testing']");
+        this.profileBtn = page.locator("//p[text()='ONA Super Admin']");
         this.sideMenuSlider = page.locator("//button[@type='button']")
         this.signOutBtn = page.locator("//span[text()='Sign Out']")
         this.MasterProductCategorySetup = page.locator("//a[text()='Master Product Category Setup']")
@@ -57,8 +59,10 @@ export class Click {
         this.IQProductCategorySetup = page.locator("//a[text()='IQ Product Category Setup']")
         this.paginatorToLast = page.locator("button[aria-label='Last Page']");
         this.ProductMedia = page.locator("//a[text()='Product Media']");
+        this.ProductTab = page.locator("//div[text()='Products']");
+        this.ProductWIP = page.locator("//a[text()='Product WIP']");
         this.uploadVideo = page.locator("//button[text()='Upload Video']")
-        this.productMediaCode = page.locator("text=PPVC0001")
+        this.productMediaCode = page.locator("//a[text()='SEG1SB']")
         this.newBrand = page.locator("//div[text()=' Add Brand']")
         this.BrandDropBox = page.locator("//div[text()='Drop files here to upload logo']")
     }
@@ -84,7 +88,7 @@ export class Click {
         }
         else if (str === "paginatorToLast") {
             // await this.page.getByRole("button").click();
-            await this.paginatorToLast.waitFor();
+            // await this.paginatorToLast.scrollIntoViewIfNeeded();
             await this.paginatorToLast.click();
         }
         else if (str === "UploadVideo") {
@@ -92,6 +96,12 @@ export class Click {
         }
         else if (str === "BrandDropBox") {
             await this.BrandDropBox.click();
+        }
+        else if (str === "ProductTab") {
+            await this.ProductTab.click();
+        }
+        else if (str === "ProductWIP") {
+            await this.ProductWIP.click();
         }
     }
 

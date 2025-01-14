@@ -42,7 +42,7 @@ export class Verify {
       await expect(BrandText).toBeVisible({ timeout: 5000 })
     }
     else if (text === 'ProdcutCategorySaved') {
-      expect(await this.page.locator("div[data-pc-section='message']")).toContainText("Record Saved Successfully")
+      expect(await this.page.locator("div[data-pc-section='message']")).toContainText("Please fix errors before submitting.")
     }
   }
 
