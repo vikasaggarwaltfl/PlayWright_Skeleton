@@ -30,7 +30,8 @@ export class Click {
     private readonly uploadVideo: Locator;
     private readonly productMediaCode: Locator;
     private readonly newBrand: Locator;
-
+    private readonly BrandDropBox: Locator;
+    
     constructor(page: Page, context: BrowserContext) {
         this.page = page
         this.context = context
@@ -59,6 +60,7 @@ export class Click {
         this.uploadVideo = page.locator("//button[text()='Upload Video']")
         this.productMediaCode = page.locator("text=PPVC0001")
         this.newBrand = page.locator("//div[text()=' Add Brand']")
+        this.BrandDropBox = page.locator("//div[text()='Drop files here to upload logo']")
     }
 
 
@@ -87,6 +89,9 @@ export class Click {
         }
         else if (str === "UploadVideo") {
             await this.uploadVideo.click();
+        }
+        else if (str === "BrandDropBox") {
+            await this.BrandDropBox.click();
         }
     }
 

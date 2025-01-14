@@ -86,8 +86,8 @@ export class Actions {
     async signIn() {
         await this.page.goto('https://onexweb-uat.officenational.co.za/')
 
-        await this.enterText("email", "jeigemmabrije-7589@yopmail.com");
-        await this.enterText("password", "Testing@1212");
+        await this.enterText("email", "greitraragrevo-2086@yopmail.com ");
+        await this.enterText("password", "SuperAdmin@123");
     }
     async logout() {
         await this.profileBtn.click();
@@ -178,26 +178,46 @@ export class Actions {
     }
 
     //following funtion will be user to upload the file.
-    async uploadFile(locatorName: string) {
+    async uploadFile(locatorName: string, pageName: string) {
         // await this.page.waitForSelector(locatorName);
         const fileLocation = {
             "doc": "",
             "video1": "PlayWright_Skeleton\pageFactory\pageRepository\files\v1.mkv",
             "video2": "",
-            "image": "C:\\Users\\rites\\Desktop\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\files\\logo.png"
+            "image": "C:\\Users\\rites\\Desktop\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\files\\logo.png",
+            "image2": "E:\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\files\\logo.png"
         }
 
-        console.log(fileLocation["image"])
+        // console.log(fileLocation["image2"])
         // await this.page.locator(locatorName).setInputFiles(fileLocation["image1"])
         // await this.page.getByRole('button', { name: 'Drop files here to upload' }).setInputFiles(fileLocation["image"]);
         // await this.page.waitForTimeout(5000);
 
-        await this.page.locator(".p-fileupload-empty.flex.flex-row.justify-center.p-0").click();
-        const [fileChooser] = await Promise.all([
-        this.page.waitForEvent('filechooser'), 
-        this.page.locator(".p-fileupload-empty.flex.flex-row.justify-center.p-0").click() 
-        ]);
-        await fileChooser.setFiles('pageFactory\pageRepository\files\logo.png');
+        // following code is running for Product media 
+        if (pageName === "ProductPage") {
+
+            await this.page.locator("//button[text()=' Upload Brochure']").click();
+            const [fileChooser] = await Promise.all([
+                this.page.waitForEvent('filechooser'),
+                this.page.locator("//p[text()='Add File']").click()
+            ]);
+            await fileChooser.setFiles(fileLocation["image2"]);
+            await this.page.locator("//p[text()='Upload']").click();
+            await this.page.locator("//span[text()='Approve']").click();
+
+        }
+        else if(pageName==="NewBrand")
+        {
+
+            // await this.page.locator(locatorName).click();
+            const [fileChooser] = await Promise.all([
+                this.page.waitForEvent('filechooser'),
+                this.page.locator(locatorName).click()
+            ]);
+            await fileChooser.setFiles(fileLocation["image2"]);
+
+        }
+
 
     }
 }

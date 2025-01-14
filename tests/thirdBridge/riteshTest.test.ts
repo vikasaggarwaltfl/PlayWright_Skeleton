@@ -56,7 +56,8 @@ test('Testing my code', async ({ Actions, Click, Verify, page }) => {
     await Click.Btn("login");
     await Click.tabs("GroupSettingsTab")
     await Click.link("MasterProductCategorySetup")
-    await page.locator("//nav[@class='p-paginator-bottom']").waitFor();
+    // await page.locator("//nav[@class='p-paginator-bottom']").waitFor();
+    await page.waitForLoadState();
     // await page.locator("//table").waitFor();
     await page.pause();
     await Click.Btn("paginatorToLast");
@@ -70,5 +71,5 @@ test('uploading files', async ({ Actions, Click, Verify, page }) => {
     await Click.tabs("ProductsTab");
     await Click.link("ProductMedia")
     await Click.link("productMediaCode");
-    await Actions.uploadFile("//button[@aria-label='Add File']");
+    await Actions.uploadFile("//button[@aria-label='Add File']","ProductPage");
 })
