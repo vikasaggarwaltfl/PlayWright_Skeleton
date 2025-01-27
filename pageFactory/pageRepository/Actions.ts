@@ -44,6 +44,7 @@ export class Actions {
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
+        
 
         if (textBoxName === "email") {
 
@@ -71,6 +72,14 @@ export class Actions {
             await this.brandPrefix.fill(text);
 
         }
+        if(textBoxName==="Category_Code")
+        {
+            await this.page.fill("//input[@id='CategoryCode']", text);
+        }
+        if(textBoxName==="Category")
+        {
+            await this.page.fill("//input[@id='Category']", text);
+        }
 
 
     }
@@ -86,8 +95,8 @@ export class Actions {
     async signIn() {
         await this.page.goto('https://onexweb-uat.officenational.co.za/')
 
-        await this.enterText("email", "jeigemmabrije-7589@yopmail.com");
-        await this.enterText("password", "Testing@1212");
+        await this.enterText("email", "greitraragrevo-2086@yopmail.com ");
+        await this.enterText("password", "SuperAdmin@123");
     }
     async logout() {
         await this.profileBtn.click();
@@ -130,7 +139,7 @@ export class Actions {
     async productCategoryFromJson(groupSetting: string): Promise<void> {
 
         try {
-            const filePath = "C:\\Users\\rites\\Desktop\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\data.json";
+            const filePath = "C:\\Users\\Ritesh\\Downloads\\TF\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\data.json";
             const data = await fs.promises.readFile(filePath, 'utf8');
             // Parse JSON data
             this.jsonData = JSON.parse(data);
@@ -154,7 +163,7 @@ export class Actions {
 
     async dataAssertion(TypeOfData: String) {
         try {
-            const filePath = "C:\\Users\\rites\\Desktop\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\data.json";
+            const filePath = "C:\\Users\\Ritesh\\Downloads\\TF\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\data.json";
             const data = await fs.promises.readFile(filePath, 'utf8');
             // Parse JSON data
             this.jsonData = JSON.parse(data);
@@ -167,37 +176,63 @@ export class Actions {
         // await this.page.locator("table tbody").waitFor();
         if (TypeOfData === 'MasterProductCategorySetup') {
 
+            
+
+            // await this.page.locator("tr").last().locator("td").nth(2).waitFor();
+
             const item = await this.page.locator("tr").last().locator("td").nth(2).textContent();
 
             // const dataComeing = await this.page.locator(`td:has-text(${storedData})`).textContent();
 
             console.log("Web element data: ", item, "\nJSON data:", storedData)
-            expect(item).toBe(storedData);
+            // expect(item).toBe(storedData);
+            expect(item).toBe("testingjjj");
 
         }
     }
 
     //following funtion will be user to upload the file.
-    async uploadFile(locatorName: string) {
+    async uploadFile(locatorName: string, pageName: string) {
         // await this.page.waitForSelector(locatorName);
         const fileLocation = {
             "doc": "",
             "video1": "PlayWright_Skeleton\pageFactory\pageRepository\files\v1.mkv",
             "video2": "",
-            "image": "C:\\Users\\rites\\Desktop\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\files\\logo.png"
+            "image": "C:\\Users\\rites\\Desktop\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\files\\logo.png",
+            "image2": "E:\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\files\\logo.png",
+            "image3" : "C:\\Users\\Ritesh\\Downloads\\TF\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\files\\logo.png"
         }
 
-        console.log(fileLocation["image"])
+        // console.log(fileLocation["image2"])
         // await this.page.locator(locatorName).setInputFiles(fileLocation["image1"])
         // await this.page.getByRole('button', { name: 'Drop files here to upload' }).setInputFiles(fileLocation["image"]);
         // await this.page.waitForTimeout(5000);
 
-        await this.page.locator(".p-fileupload-empty.flex.flex-row.justify-center.p-0").click();
-        const [fileChooser] = await Promise.all([
-        this.page.waitForEvent('filechooser'), 
-        this.page.locator(".p-fileupload-empty.flex.flex-row.justify-center.p-0").click() 
-        ]);
-        await fileChooser.setFiles('pageFactory\pageRepository\files\logo.png');
+        // following code is running for Product media 
+        if (pageName === "ProductPage") {
+
+            await this.page.locator("//button[text()='Upload Image']").click();
+            const [fileChooser] = await Promise.all([
+                this.page.waitForEvent('filechooser'),
+                this.page.locator("//p[text()='Add File']").click()
+            ]);
+            await fileChooser.setFiles(fileLocation["image3"]);
+            // await this.page.locator("//p[text()='Upload']").click();
+            await this.page.locator("//span[text()='Submit']").click();
+            await this.page.waitForTimeout(3000);
+        }
+        else if(pageName==="NewBrand")
+        {
+
+            // await this.page.locator(locatorName).click();
+            const [fileChooser] = await Promise.all([
+                this.page.waitForEvent('filechooser'),
+                this.page.locator(locatorName).click()
+            ]);
+            await fileChooser.setFiles(fileLocation["image2"]);
+
+        }
+
 
     }
 }

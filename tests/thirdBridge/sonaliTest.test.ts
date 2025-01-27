@@ -22,16 +22,17 @@ test('end to end test_supplier', async ({ page, Actions, Click }) => {
 
 });
 
-test.only('end to end test_New Brand ', async ({ Actions, Click, Verify, page }) => {
+test('end to end test_New Brand ', async ({ Actions, Click, Verify, page }) => {
 
     await Actions.signIn();
     await Click.Btn("login");
     await Click.tabs("BrandsTab")
     await Click.link("NewBrand")
     await page.pause();
-
-    Actions.uploadFile("//div[text()='Drop files here to upload logo']")
-});
+    await Actions.enterText("enterBrandName","TestingBrand1");
+    await Click.Btn("BrandDropBox");
+    await Actions.uploadFile("//div[text()='Drop files here to upload logo']","NewBrand");
+})
 
 
 
