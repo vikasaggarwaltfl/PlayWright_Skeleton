@@ -17,18 +17,6 @@ test('ritesh TC_ID_007', async ({ page, Actions, Click }) => {
     await page.waitForTimeout(2000);
     await Click.Btn("SignoutBtn");
 });
-test.only('ritesh TC_ID_007', async ({ page, Actions, Click }) => {
-    await Actions.signIn();
-    await Click.Btn("login");
-    await page.waitForTimeout(1000);
-    await Click.Btn("ProductTab");
-    await page.waitForTimeout(2000);
-    await Click.Btn("ProductWIP");
-    await page.waitForTimeout(2000);
-    await Click.Btn("ProfileBtn");
-    await page.waitForTimeout(2000);
-    await Click.Btn("SignoutBtn");
-});
 
 // test('ritesh TC_ID_008', async ({ page, Actions, Click }) => {
 //     await Actions.signIn();
@@ -70,7 +58,7 @@ test.only('ritesh TC_ID_007', async ({ page, Actions, Click }) => {
 //     // await Actions.logout();
 // });
 
-test('Add Master Product Category Setup and verify the data', async ({ Actions, Click, Verify, page }) => {
+// test('Add Master Product Category Setup and verify the data', async ({ Actions, Click, Verify, page }) => {
     // await page.setViewportSize({ width: 1920, height: 1080 });
 // test('End-to-End test case 1', async ({ Actions, Click, Verify }) => {
 //     await Actions.signIn();
@@ -158,7 +146,7 @@ test('Add Master Product Category Setup and verify the data', async ({ Actions, 
 
 // });
 
-test.only('uploading files', async ({ Actions, Click, Verify, page }) => {
+test('uploading files', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("login");
     await Click.tabs("ProductsTab");    
@@ -172,4 +160,4 @@ test.only('uploading files', async ({ Actions, Click, Verify, page }) => {
     await Click.link("productMediaCode");
     await Actions.uploadFile("//button[@aria-label='Add File']", "ProductPage");
     await Actions.uploadFile("//button[@aria-label='Add File']", "ProductPage");
-})
+});
