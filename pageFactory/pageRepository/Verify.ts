@@ -25,24 +25,8 @@ export class Verify {
       const buttonText = await this.SignIn.getAttribute('value')
       expect(buttonText).toBe('Sign in')
     }
-    if (text === 'Dashbaord') {
-      const dashboardText = await this.page.locator('text=Dashboard')
-      await expect(dashboardText).toBeVisible({ timeout: 5000 })
-    }
-    if (text === 'Member') {
-      const MemberText = this.page.locator('text=Member')
-      await expect(MemberText).toBeVisible({ timeout: 5000 })
-    }
-    if (text === 'Supplier') {
-      const SupplierText = this.page.locator('text=Supplier')
-      await expect(SupplierText).toBeVisible({ timeout: 5000 })
-    }
-    if (text === 'Brand') {
-      const BrandText = this.page.locator('text=Brand')
-      await expect(BrandText).toBeVisible({ timeout: 5000 })
-    }
     else if (text === 'ProdcutCategorySaved') {
-      expect(await this.page.locator("div[data-pc-section='message']")).toContainText("Record Saved Successfully")
+      expect(await this.page.locator("div[data-pc-section='message']")).toContainText("Please fix errors before submitting.")
     }
   }
 

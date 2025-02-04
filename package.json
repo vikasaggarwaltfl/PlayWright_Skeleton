@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "extension": "npx playwright test --config=config/extension.config.ts",
-    "thirdBridge": "npx playwright test --config=config/thirdBridge.config.ts",
-    "test":"npx playwright test "
+    "seriti": "npx playwright test --config=config/seriti.config.ts",
+    "ritesh":"npx playwright test tests/seriti/riteshTest.test.ts",
+    "sonali":"npx playwright test tests/seriti/sonaliTest.test.ts",
+    "akshay":"npx playwright test tests/seriti/akshayTest.test.ts"
   },
   "keywords": [],
   "author": "",
