@@ -7,7 +7,7 @@
     "seriti": "npx playwright test --config=config/seriti.config.ts",
     "ritesh":"npx playwright test tests/seriti/riteshTest.test.ts",
     "sonali":"npx playwright test tests/seriti/sonaliTest.test.ts",
-    "akshay":"npx playwright test tests/seriti/akshayTest.test.ts"
+    "akshaya":"npx playwright test tests/seriti/akshayaTest.test.ts"
   },
   "keywords": [],
   "author": "",
