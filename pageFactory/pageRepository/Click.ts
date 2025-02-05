@@ -9,14 +9,22 @@ export class Click {
     readonly context: BrowserContext;
     private readonly loginBtn: Locator;
     private readonly createTransBtn: Locator;
-    private readonly grouparrowIcon: Locator;
+    private readonly selectGroup: Locator;
+    private readonly selectGroupOption: Locator;
+    private readonly selectBranch: Locator;
+    private readonly selectBranchOption: Locator;
+
+
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
         this.context = context
         this.loginBtn = page.locator("//span[text()='Login']")
         this.createTransBtn =page.locator("//span[text()='Create Transaction']")
-        this.grouparrowIcon = page.locator("//span[@aria-label='Select a group']")
+        this.selectGroup = page.locator("//span[text()='Select a group']")
+        this.selectGroupOption = page.locator("//span[text()='Test_Group']")
+        this.selectBranch = page.locator("//span[text()='Select a branch']")
+        this.selectBranchOption = page.locator("//span[text()='Test_Branch']")
 
     }
 
@@ -35,12 +43,35 @@ export class Click {
         // if (str === "login") {
         //     await this.loginBtn.click();
         // }
-        if (str === "grouparrowIcon") {
-            await this.grouparrowIcon.click();
-        }
-
         
     }
+
+    async dropdown(str: string): Promise<void>{
+
+        if (str === "selectGroup") {
+            await this.selectGroup.click();
+        }
+
+        if (str === "selectGroupOption") {
+            await this.selectGroupOption.click();
+        }
+
+        if (str === "selectBranch") {
+            await this.selectBranch.click();
+        }
+
+        if (str === "selectBranchOption") {
+            await this.selectBranchOption.click();
+        }
+
+    }
+
+    async radio(str: string): Promise<void>{
+
+        
+
+    }
+
 
     async tabs(str: string): Promise<void> {
 

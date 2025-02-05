@@ -6,20 +6,36 @@ import { verify } from 'crypto'
 import { access } from 'fs'
 
 
-test.beforeEach('TCS_001 ', async ({ page, Actions, Click }) => {
+test.beforeEach('Login ', async ({ page, Actions, Click }) => {
     await Actions.signIn();
     await Click.Btn("login");
 
 });
 
-test('TCS_002 ', async ({ page, Actions, Click }) => {
+test('TCS_001 ', async ({ page, Actions, Click }) => {
     
     await Click.Btn("createTransBtn")
     await page.waitForTimeout(3000)
 });
 
-// test('TCS_003 ', async ({ page, Actions, Click }) => {
-//      await Click.icon("grouparrowIcon  ")
+test('TCS_002 ', async ({ page, Actions, Click }) => {
+    await Click.Btn("createTransBtn")
+    await Click.dropdown("selectGroup")
+    await Click.dropdown("selectGroupOption")
     
-//  });
+ });
+
+ test('TCS_003 ', async ({ page, Actions, Click }) => {
+    await Click.Btn("createTransBtn")
+    await Click.dropdown("selectGroup")
+    await Click.dropdown("selectGroupOption")
+    await Click.dropdown("selectBranch")
+    await Click.dropdown("selectBranchOption")
+    
+ });
+
+
+ 
+
+
 
