@@ -8,18 +8,27 @@ export class Click {
     readonly context: BrowserContext;
     private readonly loginBtn: Locator;
     private readonly seritiLogo: Locator;
+    private readonly createTransBtn: Locator;
+    private readonly grouparrowIcon: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
         this.context = context
         this.loginBtn = page.locator("//span[text()='Login']")
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
+        this.createTransBtn =page.locator("//span[text()='Create Transaction']")
+        this.grouparrowIcon = page.locator("//span[@aria-label='Select a group']")
+
     }
 
     async Btn(str: string): Promise<void> {
 
         if (str === "login") {
             await this.loginBtn.click();
+        }
+
+        else if (str === "createTransBtn") {
+            await this.createTransBtn.click();
         }
     }
 
