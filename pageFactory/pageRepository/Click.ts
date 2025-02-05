@@ -8,11 +8,15 @@ export class Click {
     readonly page: Page;
     readonly context: BrowserContext;
     private readonly loginBtn: Locator;
+    private readonly createTransBtn: Locator;
+    private readonly grouparrowIcon: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
         this.context = context
         this.loginBtn = page.locator("//span[text()='Login']")
+        this.createTransBtn =page.locator("//span[text()='Create Transaction']")
+        this.grouparrowIcon = page.locator("//span[@aria-label='Select a group']")
 
     }
 
@@ -21,12 +25,21 @@ export class Click {
         if (str === "login") {
             await this.loginBtn.click();
         }
+
+        else if (str === "createTransBtn") {
+            await this.createTransBtn.click();
+        }
     }
 
     async icon(str: string): Promise<void> {
         // if (str === "login") {
         //     await this.loginBtn.click();
         // }
+        if (str === "grouparrowIcon") {
+            await this.grouparrowIcon.click();
+        }
+
+        
     }
 
     async tabs(str: string): Promise<void> {
