@@ -1,19 +1,19 @@
 import { Page, BrowserContext, Locator, expect } from '@playwright/test'
 import * as dotenv from 'dotenv'
-import { get } from 'http'
-import { waitForDebugger } from 'inspector'
+
 dotenv.config()
 
 export class Click {
     readonly page: Page;
     readonly context: BrowserContext;
     private readonly loginBtn: Locator;
+    private readonly seritiLogo: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
         this.context = context
         this.loginBtn = page.locator("//span[text()='Login']")
-
+        this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
     }
 
     async Btn(str: string): Promise<void> {
@@ -24,9 +24,9 @@ export class Click {
     }
 
     async icon(str: string): Promise<void> {
-        // if (str === "login") {
-        //     await this.loginBtn.click();
-        // }
+        if (str === "seritiLogo") {
+            await this.seritiLogo.click();
+        }
     }
 
     async tabs(str: string): Promise<void> {
@@ -53,5 +53,5 @@ export class Click {
         //     await this.newBrand.click();
         // }
     }
-} 
+}
 
