@@ -20,6 +20,8 @@ export class Actions {
     private readonly submitBtn: Locator;
     private readonly USERNAME_EDITBOX: Locator;
     private readonly PASSWORD_EDITBOX: Locator;
+    private readonly lastnameTextbox: Locator;
+    
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page;
@@ -27,6 +29,9 @@ export class Actions {
         this.submitBtn = page.locator("div[class='modal-content background-customizable modal-content-mobile visible-md visible-lg'] div[class='modal-body'] div div div div input[name='signInSubmitButton']")
         this.USERNAME_EDITBOX = page.locator("//input[@placeholder='Username']");
         this.PASSWORD_EDITBOX = page.locator("//input[@placeholder='Password']");
+
+        this.lastnameTextbox = this.page.locator("//div[@title='Enter customer last name']");
+
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -39,6 +44,10 @@ export class Actions {
 
             await this.PASSWORD_EDITBOX.fill(text);
         }
+        else if (textBoxName === "lastnameTextbox") {
+
+            await this.lastnameTextbox.fill(text);
+        }
 
     }
 
@@ -47,6 +56,7 @@ export class Actions {
         await this.enterText("email", "sonali@testingframeworks.co.uk");
         await this.enterText("password", "Testing@123");
     }
+
 
     async dataAssertion(TypeOfData: String) {
         try {

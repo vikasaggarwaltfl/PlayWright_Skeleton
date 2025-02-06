@@ -13,6 +13,9 @@ export class Click {
     private readonly selectGroupOption: Locator;
     private readonly selectBranch: Locator;
     private readonly selectBranchOption: Locator;
+    private readonly selectCustmerType: Locator;
+    private readonly enterTextLastname: Locator;
+    private readonly openCreateTrans: Locator;
 
 
 
@@ -21,12 +24,14 @@ export class Click {
         this.context = context
         this.loginBtn = page.locator("//span[text()='Login']")
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
-        this.createTransBtn =page.locator("//span[text()='Create Transaction']")
+        this.createTransBtn =page.locator("//button[text()='Create Transaction']")
         this.selectGroup = page.locator("//span[text()='Select a group']")
         this.selectGroupOption = page.locator("//span[text()='Test_Group']")
         this.selectBranch = page.locator("//span[text()='Select a branch']")
         this.selectBranchOption = page.locator("//span[text()='Test_Branch']")
-
+        this.selectCustmerType = page.locator("//label[text()='Individual']")
+        this.openCreateTrans = page.locator("//span[text()='Create Transaction']")
+        
     }
 
     async Btn(str: string): Promise<void> {
@@ -38,6 +43,11 @@ export class Click {
         else if (str === "createTransBtn") {
             await this.createTransBtn.click();
         }
+        
+        else if (str === "openCreateTrans") {
+            await this.openCreateTrans.click();
+        }
+
     }
 
     async icon(str: string): Promise<void> {
@@ -66,9 +76,11 @@ export class Click {
 
     }
 
-    async radio(str: string): Promise<void>{
+    async radioBtn(str: string): Promise<void>{
 
-        
+        if (str === "selectCustmerType") {
+            await this.selectCustmerType.click();
+        }
 
     }
 

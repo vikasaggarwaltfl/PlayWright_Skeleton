@@ -34,6 +34,18 @@ test('TCS_002 ', async ({ page, Actions, Click }) => {
     
  });
 
+ test.only('TCS_004 ', async ({ page, Actions, Click }) => {
+    await Click.Btn("openCreateTrans")
+    await Click.dropdown("selectGroup")
+    await Click.dropdown("selectGroupOption")
+    await Click.dropdown("selectBranch")
+    await Click.dropdown("selectBranchOption")
+    await Click.radioBtn("selectCustmerType")
+    await Actions.enterText("lastnameTextbox","John")
+    await Click.Btn("createTransBtn")
+
+ });
+
 
  
 
