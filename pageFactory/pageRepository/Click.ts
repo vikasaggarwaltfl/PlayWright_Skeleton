@@ -16,8 +16,14 @@ export class Click {
     private readonly selectCustmerType: Locator;
     private readonly enterTextLastname: Locator;
     private readonly openCreateTrans: Locator;
-
-
+    private readonly clickSearchOption: Locator;
+    private readonly clickTransaction: Locator;
+    private readonly clickUsersOption: Locator;
+    private readonly clickProfileOption: Locator;
+    private readonly clickAdminArrow: Locator;
+    private readonly clickBranchTab: Locator;
+    private readonly clickBranchFilterArrow: Locator;
+    private readonly clickApplyBtn: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
@@ -31,7 +37,14 @@ export class Click {
         this.selectBranchOption = page.locator("//span[text()='Test_Branch']")
         this.selectCustmerType = page.locator("//label[text()='Individual']")
         this.openCreateTrans = page.locator("//span[text()='Create Transaction']")
-        
+        this.clickSearchOption=page.locator("//div[@class='text-start']")
+        this.clickTransaction=page.locator("//div[text()='Transaction']")
+        this.clickUsersOption=page.locator("//div[text()='S']")
+        this.clickProfileOption=page.locator("/html/body/div[3]/div/div/div[2]/button[1]/span[2]")
+        this.clickAdminArrow=page.locator("//li[6]//div[1]//div[2]//button[1]//i[1]")
+        this.clickBranchTab=page.locator("(//div[contains(@class,'px-2 py-2')])[8]") 
+        this.clickBranchFilterArrow=page.locator("(//i[@class='pi pi-chevron-down transition-all duration-200'])[1]")
+        this.clickApplyBtn=page.locator("//input[@id='BranchName']")
     }
 
     async Btn(str: string): Promise<void> {
@@ -47,12 +60,28 @@ export class Click {
         else if (str === "openCreateTrans") {
             await this.openCreateTrans.click();
         }
-
-    }
+        else if (str === "clickProfileOption") {
+            await this.clickProfileOption.click();
+        }
+        else if (str === "clickApplyBtn") {
+            await this.clickApplyBtn.click();
+        }
 
     async icon(str: string): Promise<void> {
         if (str === "seritiLogo") {
             await this.seritiLogo.click();
+        }
+
+        if (str === "clickUsersOption") {
+            await this.clickProfileOption.click();
+        }
+
+        if (str === "clickAdminArrow") {
+            await this.clickAdminArrow.click();
+        }
+
+        if (str === "clickBranchFilterArrow") {
+            await this.clickBranchFilterArrow.click();
         }
     }
 
@@ -89,6 +118,18 @@ export class Click {
 
         if (str === "DashboardTab") {
             // await this.dashboard.click();
+        }
+
+        else if (str === "clickSearchOption") {
+            await this.clickSearchOption.click();
+        }
+
+        else if (str === "clickTransaction") {
+            await this.clickTransaction.click();
+        }
+
+        else if (str === "clickBranchTab") {
+            await this.clickBranchTab.click();
         }
     }
 

@@ -21,6 +21,8 @@ export class Actions {
     private readonly USERNAME_EDITBOX: Locator;
     private readonly PASSWORD_EDITBOX: Locator;
     private readonly lastnameTextbox: Locator;
+    private readonly searchMenu: Locator;
+    private readonly sendBranchName: Locator;
     
 
     constructor(page: Page, context: BrowserContext) {
@@ -31,7 +33,8 @@ export class Actions {
         this.PASSWORD_EDITBOX = page.locator("//input[@placeholder='Password']");
 
         this.lastnameTextbox = this.page.locator("//div[@title='Enter customer last name']");
-
+        this.searchMenu = page.locator("//input[@placeholder='Search']");
+        this.sendBranchName=page.locator("//input[@id='BranchName']");
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -48,7 +51,14 @@ export class Actions {
 
             await this.lastnameTextbox.fill(text);
         }
+        else if (textBoxName === "searchMenu") {
 
+            await this.searchMenu.fill(text);
+        }
+        else if (textBoxName === "sendBranchName") {
+
+            await this.sendBranchName.fill(text);
+        }
     }
 
     async signIn() {
