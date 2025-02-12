@@ -1,4 +1,5 @@
 import { Page, BrowserContext, Locator, expect } from '@playwright/test';
+import { profile } from 'console';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import { connect } from 'http2';
@@ -23,7 +24,7 @@ export class Actions {
     private readonly lastnameTextbox: Locator;
     private readonly searchMenu: Locator;
     private readonly sendBranchName: Locator;
-    
+
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page;
@@ -34,7 +35,7 @@ export class Actions {
 
         this.lastnameTextbox = this.page.locator("//div[@title='Enter customer last name']");
         this.searchMenu = page.locator("//input[@placeholder='Search']");
-        this.sendBranchName=page.locator("//input[@id='BranchName']");
+        this.sendBranchName = page.locator("//input[@id='BranchName']");
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -61,10 +62,16 @@ export class Actions {
         }
     }
 
-    async signIn() {
+    async signIn(userProfile: string) {
         await this.page.goto('https://seritiweb-mea-uat.seriti-int.com');
-        await this.enterText("email", "sonali@testingframeworks.co.uk");
-        await this.enterText("password", "Testing@123");
+        if (userProfile === "sonali") {
+            await this.enterText("email", "sonali@testingframeworks.co.uk");
+            await this.enterText("password", "Testing@123");
+        }
+        else if (userProfile === "Automation") {
+            await this.enterText("email", "test-automation@testingframeworks.co.uk");
+            await this.enterText("password", "TFLlogin@123");
+        }
     }
 
 

@@ -66,7 +66,7 @@ export class Click {
         else if (str === "clickApplyBtn") {
             await this.clickApplyBtn.click();
         }
-
+    };
     async icon(str: string): Promise<void> {
         if (str === "seritiLogo") {
             await this.seritiLogo.click();

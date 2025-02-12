@@ -7,7 +7,7 @@ import { access } from 'fs'
 
 
 test.beforeEach('Login ', async ({ page, Actions, Click }) => {
-    await Actions.signIn();
+    await Actions.signIn("sonali");
     await Click.Btn("login");
 
 });
