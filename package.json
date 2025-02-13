@@ -6,7 +6,8 @@
   "scripts": {
     "extension": "npx playwright test --config=config/extension.config.ts",
     "thirdBridge": "npx playwright test --config=config/thirdBridge.config.ts",
-    "test":"npx playwright test "
+    "test":"npx playwright test ",
+    "akshaya":"npx playwright test tests/thirdBridge/akshayaTest.test.ts"
   },
   "keywords": [],
   "author": "",
