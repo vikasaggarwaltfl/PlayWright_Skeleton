@@ -33,7 +33,8 @@ export class Actions {
         this.USERNAME_EDITBOX = page.locator("//input[@placeholder='Username']");
         this.PASSWORD_EDITBOX = page.locator("//input[@placeholder='Password']");
 
-        this.lastnameTextbox = this.page.locator("//div[@title='Enter customer last name']");
+        this.lastnameTextbox = page.locator("//input[@placeholder='Enter customer last name']").last();
+        
         this.searchMenu = page.locator("//input[@placeholder='Search']");
         this.sendBranchName = page.locator("//input[@id='BranchName']");
     }
@@ -52,6 +53,7 @@ export class Actions {
 
             await this.lastnameTextbox.fill(text);
         }
+
         else if (textBoxName === "searchMenu") {
 
             await this.searchMenu.fill(text);

@@ -41,7 +41,7 @@ test('TCS_002 ', async ({ page, Actions, Click }) => {
     await Click.dropdown("selectBranch")
     await Click.dropdown("selectBranchOption")
     await Click.radioBtn("selectCustmerType")
-    await Actions.enterText("lastnameTextbox","John")
+    await Actions.enterText("lastnameTextbox","Jean")
     await Click.Btn("createTransBtn")
 
  });
