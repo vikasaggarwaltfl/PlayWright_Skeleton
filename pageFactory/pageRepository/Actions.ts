@@ -95,7 +95,7 @@ export class Actions {
     async signIn() {
         await this.page.goto('https://onexweb-uat.officenational.co.za/')
 
-        await this.enterText("email", "greitraragrevo-2086@yopmail.com ");
+        await this.enterText("email", "greitraragrevo-2086@yopmail.com");
         await this.enterText("password", "SuperAdmin@123");
     }
     async logout() {

@@ -11,6 +11,7 @@ import { VisualRegression } from '@pages/VisualRegression'
 import { Click } from '@pages/Click'
 import { Actions } from '@pages/Actions'
 import { Verify } from '@pages/Verify'
+
 dotenv.config()
 
 const caps = {

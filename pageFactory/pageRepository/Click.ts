@@ -68,8 +68,7 @@ export class Click {
     }
 
 
-
-    async Btn(str: string): Promise<void> {
+async Btn(str: string): Promise<void> {
 
         if (str === "login") {
             await this.submitBtn.click();
