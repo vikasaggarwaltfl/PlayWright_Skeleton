@@ -39,7 +39,7 @@ export class Click {
         this.openCreateTrans = page.locator("//span[text()='Create Transaction']")
         this.clickSearchOption=page.locator("//div[@class='text-start']")
         this.clickTransaction=page.locator("//div[text()='Transaction']")
-        this.clickUsersOption=page.locator("//div[text()='S']")
+        this.clickUsersOption=page.locator("(//button[@class='flex flex-row items-center justify-start gap-1'])[1]")
         this.clickProfileOption=page.locator("/html/body/div[3]/div/div/div[2]/button[1]/span[2]")
         this.clickAdminArrow=page.locator("//li[6]//div[1]//div[2]//button[1]//i[1]")
         this.clickBranchTab=page.locator("(//div[contains(@class,'px-2 py-2')])[8]") 
@@ -73,7 +73,7 @@ export class Click {
         }
 
         if (str === "clickUsersOption") {
-            await this.clickProfileOption.click();
+            await this.clickUsersOption.click();
         }
 
         if (str === "clickAdminArrow") {

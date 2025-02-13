@@ -5,7 +5,7 @@ import { Click } from '@pages/Click'
 
 test.beforeEach('login', async ({ page, Actions, Click }) => {
 
-    await Actions.signIn();
+    await Actions.signIn("Automation");
     await Click.Btn("login");
 });
 
@@ -40,7 +40,7 @@ await Click.icon("clickBranchFilterArrow");
 await Actions.enterText("sendBranchName","Test Branch");
 await Click.Btn("clickApplyBtn");
 
-
-
 })
+
+
 
