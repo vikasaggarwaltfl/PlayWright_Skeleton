@@ -27,6 +27,11 @@ export class Actions {
     // private jsonData: MyObj;
     private readonly brandName: Locator
     //private readonly brandPrefix: Locator
+    private readonly enterCurrentPassword: Locator;
+    private readonly enterNewPassword: Locator;
+    private readonly confirmNewPassword: Locator;
+    private readonly enterProductSupplierCode: Locator;
+
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -42,6 +47,10 @@ export class Actions {
 
         this.brandName = page.locator("//input[@placeholder='Brand Name']")
         //this.brandPrefix = page.locator("//input[@placeholder='Prefix']")
+        this.enterCurrentPassword=page.locator("(//input[@placeholder='Current Password'])[1]")
+        this.enterNewPassword=page.locator(" //input[@placeholder='New Password']")
+        this.confirmNewPassword=page.locator(" //input[@placeholder='Confirm New Password']")
+        this.enterProductSupplierCode=page.locator("//input[@id='SupplierCode']")
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -68,6 +77,24 @@ export class Actions {
 
              await this.brandName.fill(text);
           }
+          if (textBoxName === "enterCurrentPassword") {
+
+            await this.enterCurrentPassword.fill(text);
+         }
+
+         if (textBoxName === "enterNewPassword") {
+
+            await this.enterNewPassword.fill(text);
+         }
+
+         if (textBoxName === "confirmNewPassword") {
+
+            await this.confirmNewPassword.fill(text);
+         }
+         if (textBoxName === "enterProductSupplierCode") {
+
+            await this.enterProductSupplierCode.fill(text);
+         }
         //  if (textBoxName === "enterBrandPrefix") {
 
         //     await this.brandPrefix.fill(text);

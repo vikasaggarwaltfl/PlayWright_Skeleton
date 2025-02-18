@@ -34,6 +34,14 @@ export class Click {
     private readonly AddnewBrand: Locator;
     private readonly SavenewBrand: Locator;
     // private readonly BrandDropBox: Locator;
+    private readonly ClickProfileButton: Locator;
+    private readonly changePassword: Locator;
+    private readonly clickSubmitBtn: Locator;
+    private readonly clickproductLink: Locator;
+    private readonly clickProductFilterIcon : Locator;
+    private readonly clickproductFilterBtn: Locator;
+    private readonly clickProductResetBtn: Locator;
+    
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
@@ -45,8 +53,13 @@ export class Click {
         this.brands = page.locator("//div[text()='Brands']")
         this.AddnewBrand = page.locator("//div[text()=' Add Brands']")
         this.SavenewBrand = page.locator('button', { hasText: 'Save' });
-
-
+        this.ClickProfileButton=page.locator("(//div[@class='flex items-center justify-center overflow-hidden border-2 w-[38px] h-[38px] rounded-full border-primary-50 bg-[#F59E0B] text-white'])[1]")
+        this.changePassword=page.locator("(//span[normalize-space()='Change Password'])[1]")
+        this.clickproductLink=page.locator("//div[contains(text(),'Products')]")
+        this.clickProductFilterIcon=page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])[1]")
+        this.clickproductFilterBtn=page.locator("(//button[normalize-space()='Filter'])[1]")
+        this.clickProductResetBtn=page.locator("//button[normalize-space()='Reset']")
+       
         // this.dashboard = page.locator("//div[text()='Dashboard']")
         // this.member = page.locator("//div[text()='Members']")
         // this.suppliers = page.locator("//div[text()='Suppliers']")
@@ -80,6 +93,23 @@ export class Click {
         }
         else if (str === "SavenewBrand") {
             await this.SavenewBrand.click();
+        }
+
+        else if (str === "clickProfileButton") {
+            await this.ClickProfileButton.click();
+        }
+
+        else if (str === "changePassword") {
+            await this.changePassword.click();
+        }
+        else if (str === "clickSubmitBtn") {
+            await this.clickSubmitBtn.click();
+        }
+        else if (str === "clickProductFilterBtn") {
+            await this.clickproductFilterBtn.click();
+        }
+        else if (str === "clickProductResetBtn") {
+            await this.clickProductResetBtn.click();
         }
 
         // else if (str === "ProfileBtn") {
@@ -124,6 +154,10 @@ export class Click {
         // else if (str === "MinimizeMenuBtn") {
         //     await this.sideMenuSlider.click();
         // }
+
+        if (str === "clickProductFilterIcon") {
+            await this.clickProductFilterIcon.click();
+        }
     }
 
 
@@ -178,6 +212,8 @@ export class Click {
         // else if (linkName === "productMediaCode") {
         //     await this.productMediaCode.click();
         // }
-
+        if (linkName === "clickproductLink") {
+            await this.clickproductLink.click();
+        }
     }
 } 
