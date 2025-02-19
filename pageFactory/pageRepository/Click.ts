@@ -54,7 +54,7 @@ export class Click {
         this.AddnewBrand = page.locator("//div[text()=' Add Brands']")
         this.SavenewBrand = page.locator('button', { hasText: 'Save' });
         this.ClickProfileButton=page.locator("(//div[@class='flex items-center justify-center overflow-hidden border-2 w-[38px] h-[38px] rounded-full border-primary-50 bg-[#F59E0B] text-white'])[1]")
-        this.changePassword=page.locator("(//span[normalize-space()='Change Password'])[1]")
+        this.changePassword=page.locator("//span[normalize-space()='Change Password']")
         this.clickproductLink=page.locator("//div[contains(text(),'Products')]")
         this.clickProductFilterIcon=page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])[1]")
         this.clickproductFilterBtn=page.locator("(//button[normalize-space()='Filter'])[1]")

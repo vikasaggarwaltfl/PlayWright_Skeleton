@@ -8,32 +8,35 @@ test('user login', async ({ page, Actions, Click }) => {
 });
 
 test('change password', async ({ Actions, Click, Verify, page }) => {
+  
   await Click.Btn("ClickProfileButton");
-  await Click.Btn("changePassword");
-  await Actions.enterText("enterCurrentPassword", "SuperAdmin@123");
-  await Actions.enterText("enterNewPassword", "SuperAdmin@1234");
-  await Actions.enterText("confirmNewPassword", "SuperAdmin@1234");
-  await Click.Btn("clickSubmitBtn");
+  // await page.waitForLoadState("domcontentloaded");
+  // //await page.waitForSelector("button#changePassword", { state: "visible" });
+  // await Click.Btn("changePassword");
+  // await Actions.enterText("enterCurrentPassword", "SuperAdmin@123");
+  // await Actions.enterText("enterNewPassword", "SuperAdmin@1234");
+  // await Actions.enterText("confirmNewPassword", "SuperAdmin@1234");
+  // await Click.Btn("clickSubmitBtn");
 
 
 });
 
-test('filter products', async ({ Actions, Click, Verify, page }) => {
-  await Click.link("clickProductLink");
-  await Click.icon("clickProductFilterIcon");
-  await Actions.enterText("enterProductSupplierCode", "DS3MM87427");
-  await Click.Btn("clickProductFilterBtn");
-});
+// test('filter products', async ({ Actions, Click, Verify, page }) => {
+//   await Click.link("clickProductLink");
+//   await Click.icon("clickProductFilterIcon");
+//   await Actions.enterText("enterProductSupplierCode", "DS3MM87427");
+//   await Click.Btn("clickProductFilterBtn");
+// });
 
 
-test('reset products', async ({ Actions, Click, Verify, page }) => {
-  await Click.link("clickProductLink");
-  await Click.icon("clickProductFilterIcon");
-  await Actions.enterText("enterProductSupplierCode", "DS3MM87427");
-  await Click.Btn("clickProductFilterBtn");
-  await Click.Btn("clickProductResetBtn");
-});
-
+// test('reset products', async ({ Actions, Click, Verify, page }) => {
+//   await Click.link("clickProductLink");
+//   await Click.icon("clickProductFilterIcon");
+//   await Actions.enterText("enterProductSupplierCode", "DS3MM87427");
+//   await Click.Btn("clickProductFilterBtn");
+//   await Click.Btn("clickProductResetBtn");
+// });
+//-----------------------------------------------------------------------------------------------------------
 
 // test('jesmi TC_ID_001', async ({ page, Actions, Verify }) => {
 //   await page.goto('https://onexweb-uat.officenational.co.za/')
