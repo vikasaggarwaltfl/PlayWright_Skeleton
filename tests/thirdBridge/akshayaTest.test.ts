@@ -1,9 +1,6 @@
 import test from '@lib/BaseTest'
-import { expect } from '@playwright/test'
 import { Actions } from '@pages/Actions'
 import { Click } from '@pages/Click'
-import { Verify, verify } from 'crypto'
-import { access } from 'fs'
 
 test('user login', async ({ page, Actions, Click }) => {
   await Actions.signIn();
@@ -11,12 +8,12 @@ test('user login', async ({ page, Actions, Click }) => {
 });
 
 test('change password', async ({ Actions, Click, Verify, page }) => {
-await Click.Btn("ClickProfileButton");
-await Click.Btn("changePassword");
-await Actions.enterText("enterCurrentPassword", "SuperAdmin@123");
-await Actions.enterText("enterNewPassword", "SuperAdmin@1234");
-await Actions.enterText("confirmNewPassword", "SuperAdmin@1234");
-await Click.Btn("clickSubmitBtn");
+  await Click.Btn("ClickProfileButton");
+  await Click.Btn("changePassword");
+  await Actions.enterText("enterCurrentPassword", "SuperAdmin@123");
+  await Actions.enterText("enterNewPassword", "SuperAdmin@1234");
+  await Actions.enterText("confirmNewPassword", "SuperAdmin@1234");
+  await Click.Btn("clickSubmitBtn");
 
 
 });
@@ -26,9 +23,9 @@ test('filter products', async ({ Actions, Click, Verify, page }) => {
   await Click.icon("clickProductFilterIcon");
   await Actions.enterText("enterProductSupplierCode", "DS3MM87427");
   await Click.Btn("clickProductFilterBtn");
-  });
+});
 
-  
+
 test('reset products', async ({ Actions, Click, Verify, page }) => {
   await Click.link("clickProductLink");
   await Click.icon("clickProductFilterIcon");
