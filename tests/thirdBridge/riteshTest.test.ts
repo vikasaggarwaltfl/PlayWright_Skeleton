@@ -113,6 +113,7 @@ test('Add Master Product Category Setup and verify the data', async ({ Actions, 
     await page.locator("tbody tr:nth-child(1)").waitFor({ state: 'attached' });
     await page.waitForTimeout(3000); 
     await Actions.dataAssertion("MasterProductCategorySetup");
+    await page.waitForLoadState("networkidle");
     // await page.pause();
     // await page.pause();
 });
