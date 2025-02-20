@@ -6,8 +6,9 @@
   "scripts": {
     "extension": "npx playwright test --config=config/extension.config.ts",
     "thirdBridge": "npx playwright test --config=config/thirdBridge.config.ts",
-    "test":"npx playwright test ",
-    "akshaya":"npx playwright test tests/thirdBridge/akshayaTest.test.ts"
+    "test": "npx playwright test ",
+    "akshaya": "npx playwright test tests/thirdBridge/akshayaTest.test.ts",
+    "sonali": "npx playwright test tests/thirdBridge/sonaliTest.test.ts"
   },
   "keywords": [],
   "author": "",
@@ -23,7 +24,7 @@
     "adm-zip": "^0.5.12",
     "allure-playwright": "^2.15.1",
     "crypto-js": "^4.2.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.29.1",
     "exceljs": "^4.4.0",
@@ -38,7 +39,8 @@
   "dependencies": {
     "browserstack": "^1.6.1",
     "browserstack-local": "^1.4.8",
-    "fs-extra": "^11.2.0",
-    "pixelmatch": "^6.0.0"
+    "fs-extra": "^11.3.0",
+    "pixelmatch": "^6.0.0",
+    "playwright": "^1.50.1"
   }
 }
