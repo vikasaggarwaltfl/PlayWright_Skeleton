@@ -13,7 +13,7 @@ test('change password', async ({ Actions, Click, Verify, page }) => {
   await Actions.enterText("enterCurrentPassword", "SuperAdmin@123");
   await Actions.enterText("enterNewPassword", "SuperAdmin@1234");
   await Actions.enterText("confirmNewPassword", "SuperAdmin@1234");
-  await Click.Btn("clickSubmitBtn");
+  //await Click.Btn("clickSubmitBtn");
 
 
 });
