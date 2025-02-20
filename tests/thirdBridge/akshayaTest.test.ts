@@ -2,24 +2,24 @@ import test from '@lib/BaseTest'
 import { Actions } from '@pages/Actions'
 import { Click } from '@pages/Click'
 
-test('user login', async ({ page, Actions, Click }) => {
+test.beforeEach('user login', async ({ page, Actions, Click }) => {
   await Actions.signIn();
   await Click.Btn("login");
 });
 
 test('change password', async ({ Actions, Click, Verify, page }) => {
   
+  await page.waitForLoadState("networkidle");
   await Click.Btn("ClickProfileButton");
-  // await page.waitForLoadState("domcontentloaded");
-  // //await page.waitForSelector("button#changePassword", { state: "visible" });
-  // await Click.Btn("changePassword");
-  // await Actions.enterText("enterCurrentPassword", "SuperAdmin@123");
-  // await Actions.enterText("enterNewPassword", "SuperAdmin@1234");
-  // await Actions.enterText("confirmNewPassword", "SuperAdmin@1234");
-  // await Click.Btn("clickSubmitBtn");
+  await page.waitForTimeout(2000);
+//   await Click.Btn("changePassword");
+//   await Actions.enterText("enterCurrentPassword", "SuperAdmin@123");
+//   await Actions.enterText("enterNewPassword", "SuperAdmin@1234");
+//   await Actions.enterText("confirmNewPassword", "SuperAdmin@1234");
+//   await Click.Btn("clickSubmitBtn");
 
 
-});
+ });
 
 // test('filter products', async ({ Actions, Click, Verify, page }) => {
 //   await Click.link("clickProductLink");
