@@ -7,20 +7,97 @@ import { verify } from 'crypto'
 import { access } from 'fs'
 
 
-test('user login', async ({ page, Actions, Click }) => {
+// Login ------------------------------------------------------------------------------------------------------------------------------
+
+test.beforeEach('User login', async ({ page, Actions, Click }) => {
     await Actions.signIn();
     await Click.Btn("login");
 });
 
-test.only('Add New Brand ', async ({ Actions, Click, Verify, page }) => {
-    await Actions.signIn();
-    await Click.Btn("login");
+// Brand Screen ------------------------------------------------------------------------------------------------------------------------
+
+test('Add New Brand ', async ({ Actions, Click, Verify, page }) => {
     await Click.tabs("BrandsTab")
     await Click.link("AddnewBrand")
-    await Actions.enterText("enterBrandName","TestBrand2");
+    await Actions.enterText("enterBrandName", "TestBrand4");
     await Click.Btn("SavenewBrand");
-    await page.pause();
-})
+});
+
+test('Edit Brand Details', async ({ Actions, Click, Verify, page }) => {
+    await Click.tabs("BrandsTab")
+    await Click.icon("clickBrandActionsIcon")
+    await Click.Btn("clickBrandEditIcon")
+    await Actions.enterText("enterEditBrandPrefix", "ABB");
+    await Click.Btn("SaveEditedBrandBtn")
+});
+
+test('Open Brand Details ', async ({ Actions, Click, Verify, page }) => {
+    await Click.tabs("BrandsTab")
+    await Click.link("clickBrandNameLink")
+});
+
+test('Sort Brand Records ', async ({ Actions, Click, Verify, page }) => {
+    await Click.tabs("BrandsTab")
+    await Click.icon("clickSortBrandIcon")
+});
+
+test('Filter Brand Records ', async ({ Actions, Click, Verify, page }) => {
+    await Click.tabs("BrandsTab")
+    await Click.Btn("clickFilterBrandBtn")
+    await Actions.enterText("enterfilterBrandName", "ABSTO");
+});
+
+// Group Setting Screen ---------------------------------------------------------------------------------------------------------------
+
+test('Open Group Settings ', async ({ Actions, Click, Verify, page }) => {
+    await Click.tabs("GroupSettingsTab")
+});
+
+test('Open Lookup Category Setup ', async ({ Actions, Click, Verify, page }) => {
+    await Click.tabs("GroupSettingsTab")
+    await Click.link("LookupCatLink")
+});
+
+test('Open Master Product Category Setup ', async ({ Actions, Click, Verify, page }) => {
+    await Click.tabs("GroupSettingsTab")
+    await Click.link("MasterCatLink")
+});
+
+test('Open IQ Product Category Setup ', async ({ Actions, Click, Verify, page }) => {
+    await Click.tabs("GroupSettingsTab")
+    await Click.link("IQCatLink")
+});
+
+test('Open Pastel Product Category Setup ', async ({ Actions, Click, Verify, page }) => {
+    await Click.tabs("GroupSettingsTab")
+    await Click.link("PastelCatLink")
+});
+
+test('Open Audit log ', async ({ Actions, Click, Verify, page }) => {
+    await Click.tabs("GroupSettingsTab")
+    await Click.link("AuditLogLink")
+});
+
+test('Open config codes ', async ({ Actions, Click, Verify, page }) => {
+    await Click.tabs("GroupSettingsTab")
+    await Click.link("ConfigCodesLink")
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -60,4 +137,3 @@ test.only('Add New Brand ', async ({ Actions, Click, Verify, page }) => {
 
 
 
-     
