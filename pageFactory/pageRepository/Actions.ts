@@ -31,6 +31,8 @@ export class Actions {
     private readonly enterNewPassword: Locator;
     private readonly confirmNewPassword: Locator;
     private readonly enterProductSupplierCode: Locator;
+    private readonly enterfilterBrandName: Locator;
+    private readonly enterEditBrandPrefix: Locator;
 
 
 
@@ -51,6 +53,8 @@ export class Actions {
         this.enterNewPassword = page.locator(" //input[@placeholder='New Password']")
         this.confirmNewPassword = page.locator(" //input[@placeholder='Confirm New Password']")
         this.enterProductSupplierCode = page.locator("//input[@id='SupplierCode']")
+        this.enterfilterBrandName = page.locator("//input[@id='Name']")
+        this.enterEditBrandPrefix = page.locator("//input[@id='Prefix']")
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -95,6 +99,15 @@ export class Actions {
 
             await this.enterProductSupplierCode.fill(text);
         }
+        if (textBoxName === "enterfilterBrandName") {
+
+            await this.enterfilterBrandName.fill(text);
+        }
+        if (textBoxName === "enterEditBrandPrefix") {
+
+            await this.enterEditBrandPrefix.fill(text);
+        }
+        
         //  if (textBoxName === "enterBrandPrefix") {
 
         //     await this.brandPrefix.fill(text);
