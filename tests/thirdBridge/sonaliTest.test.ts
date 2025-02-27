@@ -3,7 +3,7 @@ import test from '@lib/BaseTest'
 import { expect } from '@playwright/test'
 import { Actions } from '@pages/Actions'
 import { Click } from '@pages/Click'
-import { verify } from 'crypto'
+import { Verify } from '@pages/Verify'
 import { access } from 'fs'
 
 
@@ -16,11 +16,13 @@ test.beforeEach('User login', async ({ page, Actions, Click }) => {
 
 // Brand Screen ------------------------------------------------------------------------------------------------------------------------
 
-test('Add New Brand ', async ({ Actions, Click, Verify, page }) => {
+test.only('Add New Brand ', async ({ Actions, Click, Verify, page }) => {
+    //await Verify.IsTextDisplayed(" Brands")
     await Click.tabs("BrandsTab")
     await Click.link("AddnewBrand")
     await Actions.enterText("enterBrandName", "TestBrand4");
     await Click.Btn("SavenewBrand");
+    await Verify.verifyToastSuccessMessage('Brand added successfully');
 });
 
 test('Edit Brand Details', async ({ Actions, Click, Verify, page }) => {
