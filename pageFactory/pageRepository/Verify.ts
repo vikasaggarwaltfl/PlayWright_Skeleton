@@ -40,7 +40,7 @@ export class Verify {
     await this.page.waitForSelector(this.toastMessage, { state: 'visible' });
 
     // Get the text content of the toast message
-    const message = await this.page.locator(this.toastMessage).textContent();
+    const message = await this.page.locator(this.toastMessage).t;
     
     // Validate that the message matches the expected message
     if (message.trim() !== expectedMessage) {
