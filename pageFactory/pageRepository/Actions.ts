@@ -30,7 +30,7 @@ export class Actions {
     private readonly enterCurrentPassword: Locator;
     private readonly enterNewPassword: Locator;
     private readonly confirmNewPassword: Locator;
-    private readonly enterProductSupplierCode: Locator;
+    private readonly ProductSupplierCode: Locator;
     private readonly enterfilterBrandName: Locator;
     private readonly enterEditBrandPrefix: Locator;
 
@@ -52,7 +52,7 @@ export class Actions {
         this.enterCurrentPassword = page.locator("(//input[@placeholder='Current Password'])[1]")
         this.enterNewPassword = page.locator(" //input[@placeholder='New Password']")
         this.confirmNewPassword = page.locator(" //input[@placeholder='Confirm New Password']")
-        this.enterProductSupplierCode = page.locator("//input[@id='SupplierCode']")
+        this.ProductSupplierCode = page.locator("//input[@id='SupplierCode']")
         this.enterfilterBrandName = page.locator("//input[@id='Name']")
         this.enterEditBrandPrefix = page.locator("//input[@id='Prefix']")
     }
@@ -95,9 +95,9 @@ export class Actions {
 
             await this.confirmNewPassword.fill(text);
         }
-        if (textBoxName === "enterProductSupplierCode") {
+        if (textBoxName === "ProductSupplierCode") {
 
-            await this.enterProductSupplierCode.fill(text);
+            await this.ProductSupplierCode.fill(text);
         }
         if (textBoxName === "enterfilterBrandName") {
 
@@ -124,7 +124,7 @@ export class Actions {
 
     }
 
-    async url() {
+    async signIn() {
         await this.page.goto('https://onexweb-uat.officenational.co.za/')
 
         await this.enterText("email", "greitraragrevo-2086@yopmail.com");
