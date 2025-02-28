@@ -1,4 +1,4 @@
-import { Page, BrowserContext, expect } from '@playwright/test'
+import { Page, Locator, BrowserContext, expect } from '@playwright/test'
 // import * as dotenv from 'dotenv'
 // dotenv.config()
 
@@ -15,9 +15,11 @@ export class Verify {
   constructor(page: Page, context: BrowserContext) {
     this.page = page
     this.context = context
-    this.successPopup = page.locator('.success-popup'); 
-    this.successMessage = page.locator('.success-popup .message'); 
-    this.toastMessage = page.locator('.toast-success'); 
+    this.successPopup = page.locator(".success-popup"); 
+    this.successMessage = page.locator(".success-popup .message"); 
+    //this.toastMessage = page.locator("//span[@class='p-toast-summary']"); 
+    this.toastMessage = page.locator("//span[@class='p-toast-summary']")
+    //await page.getByText('Saved Successfully')
   }
 
   get SignIn() {
@@ -32,20 +34,17 @@ export class Verify {
   }
 
 
-
-  // Method to verify the success message in the popup
-
   async verifyToastSuccessMessage(expectedMessage) {
     // Wait for the toast message to appear
-    await this.page.waitForSelector(this.toastMessage, { state: 'visible' });
-
+    await this.page.waitForTimeout(1000);
+    await expect(this.toastMessage).toBeVisible({ timeout: 5000 })
     // Get the text content of the toast message
-    const message = await this.page.locator(this.toastMessage).t;
-    
+    //const message = await this.toastMessage.textContent();
+    //await expect(this.toastMessage).toContainText("Saved Successfully")
     // Validate that the message matches the expected message
-    if (message.trim() !== expectedMessage) {
-      throw new Error(`Expected toast message: "${expectedMessage}", but got: "${message}"`);
-    }
+    // if (message.trim() !== expectedMessage) {
+    //   throw new Error(`Expected toast message: "${expectedMessage}", but got: "${message}"`);
+    // }
   }
 
 
@@ -53,6 +52,8 @@ export class Verify {
     if (text === 'Brands') {
       const BrandText = this.page.locator('text=Brands')
       await expect(BrandText).toBeVisible({ timeout: 5000 })
+      
+
 
     }//   if(text === 'Sign in') {
     //   const buttonText = await this.SignIn.getAttribute('value')

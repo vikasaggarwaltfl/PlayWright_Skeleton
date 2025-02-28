@@ -17,16 +17,16 @@ test.beforeEach('User login', async ({ page, Actions, Click }) => {
 // Brand Screen ------------------------------------------------------------------------------------------------------------------------
 
 test.only('Add New Brand ', async ({ Actions, Click, Verify, page }) => {
-    //await Verify.IsTextDisplayed(" Brands")
-    await Click.tabs("BrandsTab")
-    await Click.link("AddnewBrand")
-    await Actions.enterText("enterBrandName", "TestBrand4");
+    
+    await Click.tabs("Brands")
+    await Click.link("AddBrand")
+    await Actions.enterText("BrandName", "TestBrand10");
     await Click.Btn("SavenewBrand");
     await Verify.verifyToastSuccessMessage('Brand added successfully');
 });
 
 test('Edit Brand Details', async ({ Actions, Click, Verify, page }) => {
-    await Click.tabs("BrandsTab")
+    await Click.tabs("Brands")
     await Click.icon("clickBrandActionsIcon")
     await Click.Btn("clickBrandEditIcon")
     await Actions.enterText("enterEditBrandPrefix", "ABB");
@@ -34,17 +34,17 @@ test('Edit Brand Details', async ({ Actions, Click, Verify, page }) => {
 });
 
 test('Open Brand Details ', async ({ Actions, Click, Verify, page }) => {
-    await Click.tabs("BrandsTab")
+    await Click.tabs("Brands")
     await Click.link("clickBrandNameLink")
 });
 
 test('Sort Brand Records ', async ({ Actions, Click, Verify, page }) => {
-    await Click.tabs("BrandsTab")
+    await Click.tabs("Brands")
     await Click.icon("clickSortBrandIcon")
 });
 
 test('Filter Brand Records ', async ({ Actions, Click, Verify, page }) => {
-    await Click.tabs("BrandsTab")
+    await Click.tabs("Brands")
     await Click.Btn("clickFilterBrandBtn")
     await Actions.enterText("enterfilterBrandName", "ABSTO");
 });

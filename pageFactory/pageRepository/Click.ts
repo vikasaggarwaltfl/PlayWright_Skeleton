@@ -8,29 +8,24 @@ export class Click {
     readonly page: Page
     readonly context: BrowserContext
     private readonly submitBtn: Locator
-    private readonly brands: Locator
-    private readonly AddnewBrand: Locator;
-    private readonly SavenewBrand: Locator;
-    private readonly ClickProfileButton: Locator;
-    private readonly changePassword: Locator;
-    private readonly clickSubmitBtn: Locator;
-    private readonly clickproductLink: Locator;
-    private readonly clickProductFilterIcon: Locator;
-    private readonly clickproductFilterBtn: Locator;
-    private readonly clickProductResetBtn: Locator;
-    private readonly clickSortBrandIcon: Locator;
-    private readonly clickFilterBrandBtn: Locator;
-    private readonly clickBrandNameLink: Locator;
-    private readonly clickBrandActionsIcon: Locator;
-    private readonly clickBrandEditIcon: Locator;
-    private readonly SaveEditedBrandBtn: Locator
-    private readonly GroupSettingsTab: Locator
-    private readonly LookupCatLink: Locator
-    private readonly MasterCatLink: Locator
-    private readonly IQCatLink: Locator
-    private readonly PastelCatLink: Locator
-    private readonly AuditLogLink: Locator
-    private readonly ConfigCodesLink: Locator
+    private readonly Brands: Locator
+    private readonly AddBrand: Locator;
+    private readonly Save: Locator;
+    private readonly ProductFilter: Locator;
+    private readonly ProductReset: Locator;
+    private readonly SortBrand: Locator;
+    private readonly FilterBrand: Locator;
+    private readonly OpenBrandDetails: Locator;
+    private readonly BrandActions: Locator;
+    private readonly EditBrand: Locator;
+    private readonly SaveEditedBrand: Locator
+    private readonly GroupSettings: Locator
+    private readonly LookupCategory: Locator
+    private readonly MasterCategory: Locator
+    private readonly IQCategory: Locator
+    private readonly PastelCategory: Locator
+    private readonly AuditLog: Locator
+    private readonly ConfigCodes: Locator
 
     // private readonly dashboard: Locator
     // private readonly member: Locator
@@ -53,16 +48,15 @@ export class Click {
     // private readonly ProductWIP: Locator;
     // private readonly uploadVideo: Locator;
     // private readonly productMediaCode: Locator;
-    private readonly AddnewBrand: Locator;
-    private readonly SavenewBrand: Locator;
+    
     // private readonly BrandDropBox: Locator;
-    private readonly ClickProfileButton: Locator;
+    //private readonly ClickProfileButton: Locator;
    
-    private readonly PasswordSubmit: Locator;
+    //private readonly PasswordSubmit: Locator;
     private readonly Products: Locator;
     private readonly ProductFilterArrow: Locator;
-    private readonly clickproductFilterBtn: Locator;
-    private readonly clickProductResetBtn: Locator;
+    //private readonly clickproductFilterBtn: Locator;
+    //private readonly clickProductResetBtn: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -72,29 +66,31 @@ export class Click {
             "div[class='modal-content background-customizable modal-content-mobile visible-md visible-lg'] div[class='modal-body'] div div div div input[name='signInSubmitButton']",
         )
 
-        this.brands = page.locator("//div[text()='Brands']")
-        this.AddnewBrand = page.locator("//div[text()=' Add Brand']")
-        this.SavenewBrand = page.locator('button', { hasText: 'Save' });
-        this.ClickProfileButton = page.locator("//p[text()='ONA Super Admin']")
+        
+        //this.ClickProfileButton = page.locator("//p[text()='ONA Super Admin']")
        
         this.Products= page.locator("//div[contains(text(),'Products')]")
         this.ProductFilterArrow = page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])[1]")
-        this.clickproductFilterBtn = page.locator("(//button[normalize-space()='Filter'])[1]")
-        this.clickProductResetBtn = page.locator("//button[normalize-space()='Reset']")
-        this.PasswordSubmit=page.locator("//span[@class='p-button-label']")
-        this.clickSortBrandIcon = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
-        this.clickFilterBrandBtn = page.locator("//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90']")
-        this.clickBrandNameLink = page.locator("//a[normalize-space()='ABSTO']")
-        this.clickBrandActionsIcon = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/span[1]")
-        this.clickBrandEditIcon = page.locator("//button[normalize-space()='Edit']")
-        this.SaveEditedBrandBtn = page.locator("//span[normalize-space()='Save']")
-        this.GroupSettingsTab = page.locator("//div[text()='Group Settings']")
-        this.LookupCatLink = page.locator("//a[normalize-space()='Lookup Category Setup']")
-        this.MasterCatLink = page.locator("//a[normalize-space()='Master Product Category Setup']")
-        this.IQCatLink = page.locator("//a[normalize-space()='IQ Product Category Setup']")
-        this.PastelCatLink = page.locator("//a[normalize-space()='Pastel Product Category Setup']")
-        this.AuditLogLink = page.locator("//a[normalize-space()='Audit Log']")
-        this.ConfigCodesLink = page.locator("//a[normalize-space()='Config Codes']")
+        this.ProductFilter = page.locator("(//button[normalize-space()='Filter'])[1]")
+        this.ProductReset = page.locator("//button[normalize-space()='Reset']")
+        //this.PasswordSubmit=page.locator("//span[@class='p-button-label']")
+
+        this.Brands = page.locator("//span[text()='Brands']")
+        this.AddBrand = page.locator("//div[text()=' Add Brand']")
+        this.Save = page.locator('button', { hasText: 'Save' });
+        this.SortBrand = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
+        this.FilterBrand = page.locator("//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90']")
+        this.OpenBrandDetails = page.locator("//a[normalize-space()='ABSTO']")
+        this.BrandActions = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/span[1]")
+        this.EditBrand = page.locator("//button[normalize-space()='Edit']")
+        this.SaveEditedBrand = page.locator("//span[normalize-space()='Save']")
+        this.GroupSettings = page.locator("//div[text()='Group Settings']")
+        this.LookupCategory = page.locator("//a[normalize-space()='Lookup Category Setup']")
+        this.MasterCategory = page.locator("//a[normalize-space()='Master Product Category Setup']")
+        this.IQCategory = page.locator("//a[normalize-space()='IQ Product Category Setup']")
+        this.PastelCategory = page.locator("//a[normalize-space()='Pastel Product Category Setup']")
+        this.AuditLog = page.locator("//a[normalize-space()='Audit Log']")
+        this.ConfigCodes = page.locator("//a[normalize-space()='Config Codes']")
 
 
         // this.dashboard = page.locator("//div[text()='Dashboard']")
@@ -124,35 +120,33 @@ export class Click {
 
     async Btn(str: string): Promise<void> {
 
-        if (str === "Signin") {
+        if (str === "login") {
             await this.submitBtn.click();
         }
-        else if (str === "SavenewBrand") {
-            await this.SavenewBrand.click();
+        else if (str === "Save") {
+            await this.Save.click();
         }
 
-        else if (str === "clickProfileButton") {
-            await this.ClickProfileButton.click();
+        // else if (str === "clickProfileButton") {
+        //     await this.ClickProfileButton.click();
+        // }
+        // else if (str === "PasswordSubmit") {
+        //     await this.PasswordSubmit.click();
+        // }
+        else if (str === "ProductFilter") {
+            await this.ProductFilter.click();
         }
-
-       
-        else if (str === "PasswordSubmit") {
-            await this.PasswordSubmit.click();
+        else if (str === "ProductReset") {
+            await this.ProductReset.click();
         }
-        else if (str === "clickProductFilterBtn") {
-            await this.clickproductFilterBtn.click();
+        else if (str === "FilterBrand") {
+            await this.FilterBrand.click();
         }
-        else if (str === "clickProductResetBtn") {
-            await this.clickProductResetBtn.click();
+        else if (str === "EditBrand") {
+            await this.EditBrand.click();
         }
-        else if (str === "clickFilterBrandBtn") {
-            await this.clickFilterBrandBtn.click();
-        }
-        else if (str === "clickBrandEditIcon") {
-            await this.clickBrandEditIcon.click();
-        }
-        else if (str === "SaveEditedBrandBtn") {
-            await this.SaveEditedBrandBtn.click();
+        else if (str === "SaveEditedBrand") {
+            await this.SaveEditedBrand.click();
         }
 
 
@@ -187,25 +181,25 @@ export class Click {
         // }
     }
 
-    async Profile() {
-        await this.page.waitForTimeout(5000);
-       await this.ClickProfileButton.click();
-        await this.PasswordSubmit.click();
-    }
+    // async Profile() {
+    //     await this.page.waitForTimeout(5000);
+    //     await this.ClickProfileButton.click();
+    //     await this.changePassword.click();
+    // }
 
 
     async icon(str: string): Promise<void> {
         if (str === "login") {
             await this.submitBtn.click();
         }
-        if (str === "clickProductFilterIcon") {
-            await this.clickProductFilterIcon.click();
+        // if (str === "clickProductFilterIcon") {
+        //     await this.clickProductFilterIcon.click();
+        // }
+        if (str === "SortBrand") {
+            await this.SortBrand.click();
         }
-        if (str === "clickSortBrandIcon") {
-            await this.clickSortBrandIcon.click();
-        }
-        if (str === "clickBrandActionsIcon") {
-            await this.clickBrandActionsIcon.click();
+        if (str === "BrandActions") {
+            await this.BrandActions.click();
         }
         // else if (str === "FilterDropDown") {
         //     await this.filterDropDown.click();
@@ -214,7 +208,7 @@ export class Click {
         //     await this.sideMenuSlider.click();
         // }
 
-        if (str === "clickProductFilterIcon") {
+        if (str === "ProductFilterArrow") {
             await this.ProductFilterArrow.click();
         }
     }
@@ -222,11 +216,11 @@ export class Click {
 
     async tabs(str: string): Promise<void> {
 
-        if (str === "BrandsTab") {
-            await this.brands.click();
+        if (str === "Brands") {
+            await this.Brands.click();
         }
-        else if (str === "GroupSettingsTab") {
-            await this.GroupSettingsTab.click();
+        else if (str === "GroupSettings") {
+            await this.GroupSettings.click();
         }
 
         // if (str === "DashboardTab") {
@@ -256,36 +250,30 @@ export class Click {
 
     async link(linkName: String) {
 
-        if (linkName === "AddnewBrand") {
-            await this.AddnewBrand.click();
+        if (linkName === "AddBrand") {
+            await this.AddBrand.click();
         }
-        else if (linkName === "clickBrandNameLink") {
-            await this.clickBrandNameLink.click();
+        else if (linkName === "OpenBrandDetails") {
+            await this.OpenBrandDetails.click();
         }
-        else if (linkName === "LookupCatLink") {
-            await this.LookupCatLink.click();
+        else if (linkName === "LookupCategory") {
+            await this.LookupCategory.click();
         }
-        else if (linkName === "MasterCatLink") {
-            await this.MasterCatLink.click();
+        else if (linkName === "MasterCategory") {
+            await this.MasterCategory.click();
         }
-        else if (linkName === "MasterCatLink") {
-            await this.MasterCatLink.click();
+        else if (linkName === "IQCategory") {
+            await this.IQCategory.click();
         }
-        else if (linkName === "IQCatLink") {
-            await this.IQCatLink.click();
+        else if (linkName === "PastelCategory") {
+            await this.PastelCategory.click();
         }
-        else if (linkName === "PastelCatLink") {
-            await this.PastelCatLink.click();
+        else if (linkName === "AuditLog") {
+            await this.AuditLog.click();
         }
-        else if (linkName === "AuditLogLink") {
-            await this.AuditLogLink.click();
+        else if (linkName === "ConfigCodes") {
+            await this.ConfigCodes.click();
         }
-        else if (linkName === "ConfigCodesLink") {
-            await this.ConfigCodesLink.click();
-        }
-        if (linkName === "clickproductLink") {
-            await this.clickproductLink.click();
-
         // if (linkName === "MasterProductCategorySetup") {
         //     await this.MasterProductCategorySetup.click();
         // }
@@ -298,9 +286,9 @@ export class Click {
         // else if (linkName === "productMediaCode") {
         //     await this.productMediaCode.click();
         // }
-        }
+        
         if (linkName === "Products") {
-            await this.product.click();
+            await this.Products.click();
         }
     }
 } 
