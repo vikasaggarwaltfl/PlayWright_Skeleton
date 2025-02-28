@@ -2,28 +2,31 @@ import test from '@lib/BaseTest'
 import { Actions } from '@pages/Actions'
 import { Click } from '@pages/Click'
 
-test.beforeEach('user login', async ({ page, Actions, Click }) => {
-  await Actions.signIn();
-  await Click.Btn("login");
+test('user login', async ({ page, Actions, Click }) => {
+  await Actions.url();
+  await Click.Btn("Signin");
 });
 
-test('change password', async ({ Actions, Click, Verify, page }) => {
+// test('change password', async ({ Actions, Click, Verify, page }) => {
+//   await Actions.url();
+//   await Click.Btn("Signin");
+//   await Click.Profile();
+//   await Actions.enterText("enterCurrentPassword", "SuperAdmin@123");
+//   await Actions.enterText("enterNewPassword", "SuperAdmin@1234");
+//   await Actions.enterText("confirmNewPassword", "SuperAdmin@1234");
+//   await Click.Btn("PasswordSubmit");
 
-  await Click.gotToProfile();
-  await Actions.enterText("enterCurrentPassword", "SuperAdmin@123");
-  await Actions.enterText("enterNewPassword", "SuperAdmin@1234");
-  await Actions.enterText("confirmNewPassword", "SuperAdmin@1234");
-  //await Click.Btn("clickSubmitBtn");
 
-
-});
-
-// test('filter products', async ({ Actions, Click, Verify, page }) => {
-//   await Click.link("clickProductLink");
-//   await Click.icon("clickProductFilterIcon");
-//   await Actions.enterText("enterProductSupplierCode", "DS3MM87427");
-//   await Click.Btn("clickProductFilterBtn");
 // });
+
+test('filter products', async ({ Actions, Click, Verify, page }) => {
+  await Actions.url();
+  await Click.Btn("Signin");
+  await Click.link("Products");
+  await Click.icon("ProductFilterArrow");
+  await Actions.enterText("enterProductSupplierCode", "DS3MM87427");
+  await Click.Btn("clickProductFilterBtn");
+});
 
 
 // test('reset products', async ({ Actions, Click, Verify, page }) => {

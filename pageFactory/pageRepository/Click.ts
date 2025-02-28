@@ -53,7 +53,16 @@ export class Click {
     // private readonly ProductWIP: Locator;
     // private readonly uploadVideo: Locator;
     // private readonly productMediaCode: Locator;
-    //private readonly BrandDropBox: Locator;
+    private readonly AddnewBrand: Locator;
+    private readonly SavenewBrand: Locator;
+    // private readonly BrandDropBox: Locator;
+    private readonly ClickProfileButton: Locator;
+   
+    private readonly PasswordSubmit: Locator;
+    private readonly Products: Locator;
+    private readonly ProductFilterArrow: Locator;
+    private readonly clickproductFilterBtn: Locator;
+    private readonly clickProductResetBtn: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -67,11 +76,12 @@ export class Click {
         this.AddnewBrand = page.locator("//div[text()=' Add Brand']")
         this.SavenewBrand = page.locator('button', { hasText: 'Save' });
         this.ClickProfileButton = page.locator("//p[text()='ONA Super Admin']")
-        this.changePassword = page.locator("//span[text()='Change Password']")
-        this.clickproductLink = page.locator("//div[contains(text(),'Products')]")
-        this.clickProductFilterIcon = page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])[1]")
+       
+        this.Products= page.locator("//div[contains(text(),'Products')]")
+        this.ProductFilterArrow = page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])[1]")
         this.clickproductFilterBtn = page.locator("(//button[normalize-space()='Filter'])[1]")
         this.clickProductResetBtn = page.locator("//button[normalize-space()='Reset']")
+        this.PasswordSubmit=page.locator("//span[@class='p-button-label']")
         this.clickSortBrandIcon = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
         this.clickFilterBrandBtn = page.locator("//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90']")
         this.clickBrandNameLink = page.locator("//a[normalize-space()='ABSTO']")
@@ -114,7 +124,7 @@ export class Click {
 
     async Btn(str: string): Promise<void> {
 
-        if (str === "login") {
+        if (str === "Signin") {
             await this.submitBtn.click();
         }
         else if (str === "SavenewBrand") {
@@ -125,11 +135,9 @@ export class Click {
             await this.ClickProfileButton.click();
         }
 
-        else if (str === "changePassword") {
-            await this.changePassword.click();
-        }
-        else if (str === "clickSubmitBtn") {
-            await this.clickSubmitBtn.click();
+       
+        else if (str === "PasswordSubmit") {
+            await this.PasswordSubmit.click();
         }
         else if (str === "clickProductFilterBtn") {
             await this.clickproductFilterBtn.click();
@@ -179,10 +187,10 @@ export class Click {
         // }
     }
 
-    async gotToProfile() {
+    async Profile() {
         await this.page.waitForTimeout(5000);
-        await this.ClickProfileButton.click();
-        await this.changePassword.click();
+       await this.ClickProfileButton.click();
+        await this.PasswordSubmit.click();
     }
 
 
@@ -206,6 +214,9 @@ export class Click {
         //     await this.sideMenuSlider.click();
         // }
 
+        if (str === "clickProductFilterIcon") {
+            await this.ProductFilterArrow.click();
+        }
     }
 
 
@@ -287,7 +298,9 @@ export class Click {
         // else if (linkName === "productMediaCode") {
         //     await this.productMediaCode.click();
         // }
-        
+        }
+        if (linkName === "Products") {
+            await this.product.click();
         }
     }
 } 
