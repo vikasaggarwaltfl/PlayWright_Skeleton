@@ -3,39 +3,41 @@ import { Actions } from '@pages/Actions'
 import { Click } from '@pages/Click'
 
 test('user login', async ({ page, Actions, Click }) => {
-  await Actions.url();
-  await Click.Btn("Signin");
+  await Actions.signIn();
+  await Click.Btn("login");
 });
 
 // test('change password', async ({ Actions, Click, Verify, page }) => {
-//   await Actions.url();
-//   await Click.Btn("Signin");
+//   await Actions.signIn();
+//   await Click.Btn("login");
 //   await Click.Profile();
 //   await Actions.enterText("enterCurrentPassword", "SuperAdmin@123");
 //   await Actions.enterText("enterNewPassword", "SuperAdmin@1234");
 //   await Actions.enterText("confirmNewPassword", "SuperAdmin@1234");
-//   await Click.Btn("PasswordSubmit");
+//   await Click.Btn("changePassword");
 
 
 // });
 
 test('filter products', async ({ Actions, Click, Verify, page }) => {
-  await Actions.url();
-  await Click.Btn("Signin");
+  await Actions.signIn();
+  await Click.Btn("login");
   await Click.link("Products");
   await Click.icon("ProductFilterArrow");
-  await Actions.enterText("enterProductSupplierCode", "DS3MM87427");
-  await Click.Btn("clickProductFilterBtn");
+  await Actions.enterText("ProductSupplierCode", "DS3MM87427");
+  await Click.Btn("ProductFilter");
 });
 
 
-// test('reset products', async ({ Actions, Click, Verify, page }) => {
-//   await Click.link("clickProductLink");
-//   await Click.icon("clickProductFilterIcon");
-//   await Actions.enterText("enterProductSupplierCode", "DS3MM87427");
-//   await Click.Btn("clickProductFilterBtn");
-//   await Click.Btn("clickProductResetBtn");
-// });
+test('reset products', async ({ Actions, Click, Verify, page }) => {
+  await Actions.signIn();
+  await Click.Btn("login");
+  await Click.link("Products");
+  await Click.icon("ProductFilterArrow");
+  await Actions.enterText("ProductSupplierCode", "DS3MM87427");
+  await Click.Btn("ProductFilter");
+  await Click.Btn("ProductReset");
+});
 //-----------------------------------------------------------------------------------------------------------
 
 // test('jesmi TC_ID_001', async ({ page, Actions, Verify }) => {
