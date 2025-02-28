@@ -8,7 +8,7 @@ export class Click {
     readonly page: Page
     readonly context: BrowserContext
     private readonly submitBtn: Locator
-    private readonly brands: Locator
+    private readonly Brands: Locator
     private readonly AddnewBrand: Locator;
     private readonly SavenewBrand: Locator;
     private readonly ClickProfileButton: Locator;
@@ -63,7 +63,7 @@ export class Click {
             "div[class='modal-content background-customizable modal-content-mobile visible-md visible-lg'] div[class='modal-body'] div div div div input[name='signInSubmitButton']",
         )
 
-        this.brands = page.locator("//div[text()='Brands']")
+        this.Brands = page.locator("//span[text()='Brands']")
         this.AddnewBrand = page.locator("//div[text()=' Add Brand']")
         this.SavenewBrand = page.locator('button', { hasText: 'Save' });
         this.ClickProfileButton = page.locator("//p[text()='ONA Super Admin']")
@@ -211,8 +211,8 @@ export class Click {
 
     async tabs(str: string): Promise<void> {
 
-        if (str === "BrandsTab") {
-            await this.brands.click();
+        if (str === "Brands") {
+            await this.Brands.click();
         }
         else if (str === "GroupSettingsTab") {
             await this.GroupSettingsTab.click();

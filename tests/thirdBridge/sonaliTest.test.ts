@@ -18,9 +18,9 @@ test.beforeEach('User login', async ({ page, Actions, Click }) => {
 
 test.only('Add New Brand ', async ({ Actions, Click, Verify, page }) => {
     //await Verify.IsTextDisplayed(" Brands")
-    await Click.tabs("BrandsTab")
+    await Click.tabs("Brands")
     await Click.link("AddnewBrand")
-    await Actions.enterText("enterBrandName", "TestBrand4");
+    await Actions.enterText("enterBrandName", "TestBrand6");
     await Click.Btn("SavenewBrand");
     await Verify.verifyToastSuccessMessage('Brand added successfully');
 });
