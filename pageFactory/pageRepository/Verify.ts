@@ -10,6 +10,7 @@ export class Verify {
   private readonly successPopup: Locator;
   private readonly successMessage: Locator;
   private readonly toastMessage: Locator;
+
   //private readonly newBrand: Locator;
 
 
@@ -21,6 +22,7 @@ export class Verify {
     this.successMessage = page.locator(".success-popup .message"); 
     //this.toastMessage = page.locator("//span[@class='p-toast-summary']"); 
     this.toastMessage = page.locator("//span[@class='p-toast-summary']")
+    
     //await page.getByText('Saved Successfully')
   }
 
@@ -59,12 +61,12 @@ export class Verify {
         const valueprint = await this.page.locator("//a[text()='Test15']").textContent();
         await expect(valueprint).toBe('Test15')
       }
+      
 
-
-    }//   if(text === 'Sign in') {
-    //   const buttonText = await this.SignIn.getAttribute('value')
-    //   expect(buttonText).toBe('Sign in')
-    // }
+    } //if(text === 'Sign in') {
+      //const buttonText = await this.SignIn.getAttribute('value')
+       //expect(buttonText).toBe('Sign in')
+    //}
     // if (text === 'Dashbaord') {
     //   const dashboardText = await this.page.locator('text=Dashboard')
     //   await expect(dashboardText).toBeVisible({ timeout: 5000 })
@@ -83,15 +85,31 @@ export class Verify {
     // else if (text === 'ProdcutCategorySaved') {
     //   expect(await this.page.locator("div[data-pc-section='message']")).toContainText("Please fix errors before submitting.")
     // }
+    async ParticularProductText(text: string): Promise < void> {
+  if (text === 'Product: 3M087427') {
+         const ParticularProductText = this.page.locator("(//div[contains(text(),'Product: 3M087427')])[1]")
+        await expect(ParticularProductText).toBeVisible({ timeout: 5000 })
+      }
+      
   }
+  async ProductText(text: string): Promise < void> {
+    if (text === 'Products') {
+           const ProductText = this.page.locator("(//div[@class='topHeading'])[1]")
+          await expect(ProductText).toBeVisible({ timeout: 5000 })
+        }
+        
+    }
 
+    async verifyURL(): Promise<void> {
+      await expect(this.page).toHaveURL("https://onexweb-uat.officenational.co.za/");
+    }
 
   // async IsErrorPopUp(text: string): Promise<void> {
   //   if (text === 'Incorrect username or password') {
   //     await expect(this.ErrorPopUp).toBeVisible({ timeout: 5000 })
   //   }
   
-
+}
 
 
 

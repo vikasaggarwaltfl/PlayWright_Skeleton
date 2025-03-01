@@ -27,6 +27,7 @@ export class Click {
     private readonly AuditLog: Locator
     private readonly ConfigCodes: Locator
 
+
     // private readonly dashboard: Locator
     // private readonly member: Locator
     // private readonly suppliers: Locator
@@ -55,6 +56,7 @@ export class Click {
     //private readonly PasswordSubmit: Locator;
     private readonly Products: Locator;
     private readonly ProductFilterArrow: Locator;
+    private readonly ArtisticProduct: Locator;
     //private readonly clickproductFilterBtn: Locator;
     //private readonly clickProductResetBtn: Locator;
 
@@ -69,10 +71,10 @@ export class Click {
         
         //this.ClickProfileButton = page.locator("//p[text()='ONA Super Admin']")
        
-        this.Products= page.locator("//div[contains(text(),'Products')]")
+        this.Products= page.locator("(//span[normalize-space()='Products'])[1]")
         this.ProductFilterArrow = page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])[1]")
         this.ProductFilter = page.locator("(//button[normalize-space()='Filter'])[1]")
-        this.ProductReset = page.locator("//button[normalize-space()='Reset']")
+        this.ProductReset = page.locator(" (//button[normalize-space()='Reset'])[1]")
         //this.PasswordSubmit=page.locator("//span[@class='p-button-label']")
 
         this.Brands = page.locator("//span[text()='Brands']")
@@ -91,7 +93,7 @@ export class Click {
         this.PastelCategory = page.locator("//a[normalize-space()='Pastel Product Category Setup']")
         this.AuditLog = page.locator("//a[normalize-space()='Audit Log']")
         this.ConfigCodes = page.locator("//a[normalize-space()='Config Codes']")
-
+        this.ArtisticProduct = page.locator("//a[normalize-space()='3M087427']")
 
         // this.dashboard = page.locator("//div[text()='Dashboard']")
         // this.member = page.locator("//div[text()='Members']")
@@ -290,5 +292,14 @@ export class Click {
         if (linkName === "Products") {
             await this.Products.click();
         }
+
+        else if (linkName === "ArtisticProduct") {
+            await this.ArtisticProduct.click();
+            
+        }
+        
     }
-} 
+
+    
+}
+
