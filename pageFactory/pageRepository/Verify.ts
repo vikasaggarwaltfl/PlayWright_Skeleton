@@ -10,16 +10,17 @@ export class Verify {
   private readonly successPopup: Locator;
   private readonly successMessage: Locator;
   private readonly toastMessage: Locator;
-  //private readonly newBrand: Locator;
+  private readonly newBrand: Locator;
+  
 
 
   constructor(page: Page, context: BrowserContext) {
     this.page = page
     this.context = context
-    //this.newBrand = page.locator("//a[text()='Test15']");
+    this.newBrand = page.locator("//a[text()='Test15']");
     this.successPopup = page.locator(".success-popup"); 
     this.successMessage = page.locator(".success-popup .message"); 
-    //this.toastMessage = page.locator("//span[@class='p-toast-summary']"); 
+    this.toastMessage = page.locator("//span[@class='p-toast-summary']"); 
     this.toastMessage = page.locator("//span[@class='p-toast-summary']")
     //await page.getByText('Saved Successfully')
   }
@@ -35,33 +36,69 @@ export class Verify {
     )
   }
 
+  
+// Display of Text Verification--------------------------------------------------------------------------------------------------------------------------------------------
+  async IsTextDisplayed(text: string, TextValue:string): Promise<void> {
 
-  //async verifyToastSuccessMessage(expectedMessage) {
-    // Wait for the toast message to appear
-    //await this.page.waitForTimeout(1000);
-    //await expect(this.toastMessage).toBeVisible({ timeout: 5000 })
-    // Get the text content of the toast message
-    //const message = await this.toastMessage.textContent();
-    //await expect(this.toastMessage).toContainText("Saved Successfully")
-    // Validate that the message matches the expected message
-    // if (message.trim() !== expectedMessage) {
-    //   throw new Error(`Expected toast message: "${expectedMessage}", but got: "${message}"`);
-    // }
-  //}
-
-
-  async IsTextDisplayed(text: string): Promise < void> {
     if (text === 'Brands') {
       const BrandText = this.page.locator('text=Brands')
       await expect(BrandText).toBeVisible({ timeout: 5000 })
+  }
+      else if (text === 'newBrand') {
+        const valueprint = await this.page.locator(`//a[text()='${TextValue}']`).textContent();
+        await expect(valueprint?.trim()).toBe(`${TextValue}`);
+        console.log(valueprint)
+      }
     }
-      else if (text = 'newBrand') {
-        const valueprint = await this.page.locator("//a[text()='Test15']").textContent();
-        await expect(valueprint).toBe('Test15')
+
+  // URL Verification-------------------------------------------------------------------------------------------------------------------------------------------
+  async getCurrentUrl() {
+    return await this.page.url();
+}
+
+async validateUrl(expectedUrl) {
+    const currentUrl = await this.getCurrentUrl();
+    if (currentUrl !== expectedUrl) {
+        throw new Error(`Expected URL to be "${expectedUrl}", but got "${currentUrl}"`);
+    }
+    console.log('URL verification passed');
+}
+
+// // Display of Success message in Popup Verification---------------------------------------------------------------------------------------------------------------------
+    async IsSuccessPopup(expectedMessage) {
+    await this.page.waitForTimeout(1000);
+    await expect(this.toastMessage).toBeVisible({ timeout: 5000 })
+    const message = await this.toastMessage.textContent();
+    await expect(this.toastMessage).toContainText("Saved Successfully")
+
+    if (message.trim() !== expectedMessage) {
+      throw new Error(`Expected toast message: "${expectedMessage}", but got: "${message}"`);
+    }
+  }
+
+// // Display of Error message in Popup Verification------------------------------------------------------------------------------------------------------------------------
+    async IsErrorPopUp(text: string): Promise<void> {
+        if (text === 'Saving Failed') {
+          await expect(this.ErrorPopUp).toBeVisible({ timeout: 5000 })
+         }
       }
 
-
-    }//   if(text === 'Sign in') {
+    //   async IsTextDisplayed(text: string): Promise<void> {
+    //     if (text === 'Brands') {
+    //         const BrandText = this.page.locator('text=Brands');
+    //         await expect(BrandText).toBeVisible({ timeout: 5000 });
+    //     } 
+    //     else if (text === 'newBrand') {
+    //         // Wait for the brand to be visible
+    //         const Brand = this.page.locator("//a[text()='Test30']");
+    //         await Brand.waitFor({ state: 'visible', timeout: 5000 }); // Ensure element is visible
+    
+    //         // Get the text content and verify
+    //         const valueprint = await Brand.textContent();
+    //         await expect(valueprint?.trim()).toBe('Test30');
+    //     }
+    // }
+    //   if(text === 'Sign in') {
     //   const buttonText = await this.SignIn.getAttribute('value')
     //   expect(buttonText).toBe('Sign in')
     // }
@@ -83,13 +120,15 @@ export class Verify {
     // else if (text === 'ProdcutCategorySaved') {
     //   expect(await this.page.locator("div[data-pc-section='message']")).toContainText("Please fix errors before submitting.")
     // }
-  }
-
-
-  // async IsErrorPopUp(text: string): Promise<void> {
+    // async IsErrorPopUp(text: string): Promise<void> {
   //   if (text === 'Incorrect username or password') {
   //     await expect(this.ErrorPopUp).toBeVisible({ timeout: 5000 })
   //   }
+  
+  }
+  
+
+
   
 
 

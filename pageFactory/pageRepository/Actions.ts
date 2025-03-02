@@ -17,69 +17,60 @@ interface MyObj {
 export class Actions {
     readonly page: Page;
     readonly context: BrowserContext;
-    //readonly submitBtn: Locator;
     readonly USERNAME_EDITBOX: Locator;
     readonly PASSWORD_EDITBOX: Locator;
-    // readonly searchMenu: Locator;
-    // readonly nameFilter: Locator;
     private readonly profileBtn: Locator
     private readonly signOutBtn: Locator
-    // private jsonData: MyObj;
-    private readonly brandName: Locator
-    //private readonly brandPrefix: Locator
+    private readonly BrandName: Locator
     private readonly enterCurrentPassword: Locator;
     private readonly enterNewPassword: Locator;
     private readonly confirmNewPassword: Locator;
     private readonly ProductSupplierCode: Locator;
-    private readonly enterfilterBrandName: Locator;
-    private readonly enterEditBrandPrefix: Locator;
+    private readonly filterBrandName: Locator;
+    private readonly BrandPrefix: Locator;
+
+    //readonly submitBtn: Locator;
+    // readonly searchMenu: Locator;
+    // readonly nameFilter: Locator;
+    // private jsonData: MyObj;
+    //private readonly brandPrefix: Locator
 
 
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page;
         this.context = context;
-        //this.submitBtn = page.locator("div[class='modal-content background-customizable modal-content-mobile visible-md visible-lg'] div[class='modal-body'] div div div div input[name='signInSubmitButton']")
         this.USERNAME_EDITBOX = page.locator("#signInFormUsername").last();
         this.PASSWORD_EDITBOX = page.locator("#signInFormPassword").last();
-        //this.searchMenu = page.locator("//input[@placeholder='Name, SKU, ON Code']")
-        //this.nameFilter = page.locator("//input[@placeholder='Supplier Name']")
         this.profileBtn = page.locator("//p[text()='ONA Super Admin']");
         this.signOutBtn = page.locator("//button[@aria-label='Sign Out']")
-
-        this.brandName = page.locator("//input[@placeholder='Brand Name']") 
-        //this.brandPrefix = page.locator("//input[@placeholder='Prefix']")
+        this.BrandName = page.locator("//input[@placeholder='Brand Name']") 
         this.enterCurrentPassword = page.locator("(//input[@placeholder='Current Password'])[1]")
         this.enterNewPassword = page.locator(" //input[@placeholder='New Password']")
         this.confirmNewPassword = page.locator(" //input[@placeholder='Confirm New Password']")
         this.ProductSupplierCode = page.locator("//input[@id='SupplierCode']")
-        this.enterfilterBrandName = page.locator("//input[@id='Name']")
-        this.enterEditBrandPrefix = page.locator("//input[@id='Prefix']")
+        this.filterBrandName = page.locator("//input[@id='Name']")
+        this.BrandPrefix = page.locator("//input[@id='Prefix']")
+
+        //this.submitBtn = page.locator("div[class='modal-content background-customizable modal-content-mobile visible-md visible-lg'] div[class='modal-body'] div div div div input[name='signInSubmitButton']")
+        //this.searchMenu = page.locator("//input[@placeholder='Name, SKU, ON Code']")
+        //this.nameFilter = page.locator("//input[@placeholder='Supplier Name']")
+        //this.brandPrefix = page.locator("//input[@placeholder='Prefix']")
+        
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
 
-
         if (textBoxName === "email") {
-
             await this.USERNAME_EDITBOX.fill(text);
         }
 
         if (textBoxName === "password") {
-
             await this.PASSWORD_EDITBOX.fill(text);
         }
-        // if (textBoxName === "searchmenu") {
+        if (textBoxName === "BrandName") {
 
-        //     await this.searchMenu.fill(text);
-        // }
-        // if (textBoxName === "nameFilter") {
-
-        //     await this.nameFilter.fill(text);
-        // }
-        if (textBoxName === "enterBrandName") {
-
-            await this.brandName.fill(text);
+            await this.BrandName.fill(text);
         }
         if (textBoxName === "enterCurrentPassword") {
 
@@ -99,15 +90,22 @@ export class Actions {
 
             await this.ProductSupplierCode.fill(text);
         }
-        if (textBoxName === "enterfilterBrandName") {
+        // if (textBoxName === "filterBrandName") {
 
-            await this.enterfilterBrandName.fill(text);
-        }
-        if (textBoxName === "enterEditBrandPrefix") {
+        //     await this.filterBrandName.fill(text);
+        // }
+        if (textBoxName === "BrandPrefix") {
 
-            await this.enterEditBrandPrefix.fill(text);
+            await this.BrandPrefix.fill(text);
         }
-        
+        // if (textBoxName === "searchmenu") {
+
+        //     await this.searchMenu.fill(text);
+        // }
+        // if (textBoxName === "nameFilter") {
+
+        //     await this.nameFilter.fill(text);
+        // }
         //  if (textBoxName === "enterBrandPrefix") {
 
         //     await this.brandPrefix.fill(text);
@@ -126,7 +124,6 @@ export class Actions {
 
     async signIn() {
         await this.page.goto('https://onexweb-uat.officenational.co.za/')
-
         await this.enterText("email", "greitraragrevo-2086@yopmail.com");
         await this.enterText("password", "SuperAdmin@123");
     }
