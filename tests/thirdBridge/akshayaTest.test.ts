@@ -6,7 +6,7 @@ import { Verify } from '@pages/Verify'
 
 test('user login', async ({ Actions, Click,Verify,page}) => {
   await Actions.signIn();
-  await Click.Btn("login");
+  await Click.Btn("Signin");
   await Verify.verifyURL();
   });
 
@@ -41,19 +41,28 @@ test('products info', async ({ Actions, Click, Verify, page }) => {
 });
 
 
-test('reset products', async ({ Actions, Click, Verify, page }) => {
-  await Actions.signIn();
-  await Click.Btn("login");
-  await Click.link("Products");
-  await Click.icon("ProductFilterArrow");
-  await Actions.enterText("ProductSupplierCode", "DS3MM87427");
-  await Click.Btn("ProductFilter");
-  await Click.icon("ProductFilterArrow");
-  await page.waitForTimeout(60000);
-  await Click.Btn("ProductReset");
-  await page.close();
+test.only('Supplier Filter Test', async ({ Actions, Click,Verify,page}) => {
+ await Actions.signIn();
+ await Click.Btn("signIn");
+ 
+ await Click.tabs("Suppliers");
+ 
+  });
 
-});
+
+// test('reset products', async ({ Actions, Click, Verify, page }) => {
+//   await Actions.signIn();
+//   await Click.Btn("login");
+//   await Click.link("Products");
+//   await Click.icon("ProductFilterArrow");
+//   await Actions.enterText("ProductSupplierCode", "DS3MM87427");
+//   await Click.Btn("ProductFilter");
+//   await Click.icon("ProductFilterArrow");
+//   await page.waitForTimeout(60000);
+//   await Click.Btn("ProductReset");
+//   await page.close();
+
+// });
 
 
 

@@ -8,7 +8,7 @@ export class Click {
     readonly page: Page
     readonly context: BrowserContext
     private readonly submitBtn: Locator
-    private readonly Brands: Locator
+ 
     private readonly AddBrand: Locator;
     private readonly Save: Locator;
     private readonly ProductFilter: Locator;
@@ -19,46 +19,22 @@ export class Click {
     private readonly BrandActions: Locator;
     private readonly EditBrand: Locator;
     private readonly SaveEditedBrand: Locator
-    private readonly GroupSettings: Locator
+    
     private readonly LookupCategory: Locator
     private readonly MasterCategory: Locator
     private readonly IQCategory: Locator
     private readonly PastelCategory: Locator
     private readonly AuditLog: Locator
     private readonly ConfigCodes: Locator
-
-
-    // private readonly dashboard: Locator
-    // private readonly member: Locator
-    // private readonly suppliers: Locator
-    // private readonly products: Locator
-    // private readonly catalogues: Locator
-    // private readonly ona_staff: Locator
-    // private readonly imports: Locator
-    // private readonly filterDropDown: Locator
-    // private readonly profileBtn: Locator
-    // private readonly sideMenuSlider: Locator
-    // private readonly signOutBtn: Locator
-    // private readonly MasterProductCategorySetup: Locator;
-    // private readonly saveProdcutCatogerySetup: Locator;
-    // private readonly addProdcutCatogerySetup: Locator;
-    // private readonly IQProductCategorySetup: Locator;
-    // private readonly paginatorToLast: Locator;
-    // private readonly ProductTab: Locator;
-    // private readonly ProductMedia: Locator;
-    // private readonly ProductWIP: Locator;
-    // private readonly uploadVideo: Locator;
-    // private readonly productMediaCode: Locator;
-    
-    // private readonly BrandDropBox: Locator;
-    //private readonly ClickProfileButton: Locator;
-   
-    //private readonly PasswordSubmit: Locator;
     private readonly Products: Locator;
     private readonly ProductFilterArrow: Locator;
     private readonly ArtisticProduct: Locator;
-    //private readonly clickproductFilterBtn: Locator;
-    //private readonly clickProductResetBtn: Locator;
+    //tab names
+    private readonly Catalogues: Locator
+    private readonly Imports: Locator
+    private readonly Suppliers: Locator
+    private readonly Brands: Locator
+    private readonly GroupSettings: Locator
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -77,7 +53,7 @@ export class Click {
         this.ProductReset = page.locator(" (//button[normalize-space()='Reset'])[1]")
         //this.PasswordSubmit=page.locator("//span[@class='p-button-label']")
 
-        this.Brands = page.locator("//span[text()='Brands']")
+       
         this.AddBrand = page.locator("//div[text()=' Add Brand']")
         this.Save = page.locator('button', { hasText: 'Save' });
         this.SortBrand = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
@@ -86,7 +62,7 @@ export class Click {
         this.BrandActions = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/span[1]")
         this.EditBrand = page.locator("//button[normalize-space()='Edit']")
         this.SaveEditedBrand = page.locator("//span[normalize-space()='Save']")
-        this.GroupSettings = page.locator("//div[text()='Group Settings']")
+       
         this.LookupCategory = page.locator("//a[normalize-space()='Lookup Category Setup']")
         this.MasterCategory = page.locator("//a[normalize-space()='Master Product Category Setup']")
         this.IQCategory = page.locator("//a[normalize-space()='IQ Product Category Setup']")
@@ -94,7 +70,13 @@ export class Click {
         this.AuditLog = page.locator("//a[normalize-space()='Audit Log']")
         this.ConfigCodes = page.locator("//a[normalize-space()='Config Codes']")
         this.ArtisticProduct = page.locator("//a[normalize-space()='3M087427']")
+//tabs 
 
+this.Brands = page.locator("//span[text()='Brands']")
+this.GroupSettings = page.locator("//span[text()='Group Settings']")
+this.Imports = page.locator("//span[text()='Imports']")
+this.Catalogues = page.locator("//span[text()='Catalogues']")
+this.Suppliers = page.locator("//span[text()='Suppliers']")
         // this.dashboard = page.locator("//div[text()='Dashboard']")
         // this.member = page.locator("//div[text()='Members']")
         // this.suppliers = page.locator("//div[text()='Suppliers']")
@@ -224,30 +206,15 @@ export class Click {
         else if (str === "GroupSettings") {
             await this.GroupSettings.click();
         }
-
-        // if (str === "DashboardTab") {
-        //     await this.dashboard.click();
-        // }
-        // else if (str === "MembersTab") {
-        //     await this.member.click();
-        // }
-        // else if (str === "SuppliersTab") {
-
-        //     await this.suppliers.click();
-        // }
-        // else if (str === "ProductsTab") {
-        //     await this.products.click();
-        // }
-        // else if (str === "CataloguesTab") {
-        //     await this.catalogues.click();
-        // }
-        // else if (str === "ONAStaffTab") {
-        //     await this.ona_staff.click();
-        // }
-        // 
-        // else if (str === "ImportsTab") {
-        //     await this.imports.click();
-        // }
+        else if (str === "Catalogues") {
+            await this.Catalogues.click();
+        }
+        else if (str === "Imports") {
+            await this.Imports.click();
+        }
+        else if (str === "Suppliers") {
+            await this.Suppliers.click();
+        }
     }
 
     async link(linkName: String) {
