@@ -1,11 +1,80 @@
 import test from '@lib/BaseTest'
 import { Actions } from '@pages/Actions'
 import { Click } from '@pages/Click'
+import { expect } from '@playwright/test'
+import { Verify } from '@pages/Verify'
 
-test('user login', async ({ page, Actions, Click }) => {
+test('user login', async ({ Actions, Click,Verify,page}) => {
+  await Actions.signIn();
+  await Click.Btn("Signin");
+  await Verify.verifyURL();
+  });
+
+  test('Products title', async ({ Actions, Click,Verify,page}) => {
+    await Actions.signIn();
+    await Click.Btn("login");
+    await Click.link("Products");
+    await Verify.ProductText("Products");
+
+    });
+
+test('filter products', async ({ Actions, Click, Verify, page }) => {
   await Actions.signIn();
   await Click.Btn("login");
+  await Click.link("Products");
+  await Click.icon("ProductFilterArrow");
+  await Actions.enterText("ProductSupplierCode", "DS3MM87427");
+  await Click.Btn("ProductFilter");
 });
+
+
+
+test('products info', async ({ Actions, Click, Verify, page }) => {
+  await Actions.signIn();
+  await Click.Btn("login");
+  await Click.link("Products");
+  await Click.icon("ProductFilterArrow");
+  await Actions.enterText("ProductSupplierCode", "DS3MM87427");
+  await Click.Btn("ProductFilter");
+  await Click.link("ArtisticProduct");
+  await Verify.ParticularProductText("Product: 3M087427");
+});
+
+
+test.only('Supplier Filter Test', async ({ Actions, Click,Verify,page}) => {
+ await Actions.signIn();
+ await Click.Btn("signIn");
+ 
+ await Click.tabs("Suppliers");
+ 
+  });
+
+
+// test('reset products', async ({ Actions, Click, Verify, page }) => {
+//   await Actions.signIn();
+//   await Click.Btn("login");
+//   await Click.link("Products");
+//   await Click.icon("ProductFilterArrow");
+//   await Actions.enterText("ProductSupplierCode", "DS3MM87427");
+//   await Click.Btn("ProductFilter");
+//   await Click.icon("ProductFilterArrow");
+//   await page.waitForTimeout(60000);
+//   await Click.Btn("ProductReset");
+//   await page.close();
+
+// });
+
+
+
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------------
 
 // test('change password', async ({ Actions, Click, Verify, page }) => {
 //   await Actions.signIn();
@@ -19,25 +88,6 @@ test('user login', async ({ page, Actions, Click }) => {
 
 // });
 
-test('filter products', async ({ Actions, Click, Verify, page }) => {
-  await Actions.signIn();
-  await Click.Btn("login");
-  await Click.link("Products");
-  await Click.icon("ProductFilterArrow");
-  await Actions.enterText("ProductSupplierCode", "DS3MM87427");
-  await Click.Btn("ProductFilter");
-});
-
-
-test('reset products', async ({ Actions, Click, Verify, page }) => {
-  await Actions.signIn();
-  await Click.Btn("login");
-  await Click.link("Products");
-  await Click.icon("ProductFilterArrow");
-  await Actions.enterText("ProductSupplierCode", "DS3MM87427");
-  await Click.Btn("ProductFilter");
-  await Click.Btn("ProductReset");
-});
 //-----------------------------------------------------------------------------------------------------------
 
 // test('jesmi TC_ID_001', async ({ page, Actions, Verify }) => {

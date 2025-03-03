@@ -29,12 +29,6 @@ export class Actions {
     private readonly filterBrandName: Locator;
     private readonly BrandPrefix: Locator;
 
-    //readonly submitBtn: Locator;
-    // readonly searchMenu: Locator;
-    // readonly nameFilter: Locator;
-    // private jsonData: MyObj;
-    //private readonly brandPrefix: Locator
-
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -52,10 +46,7 @@ export class Actions {
         this.filterBrandName = page.locator("//input[@id='Name']")
         this.BrandPrefix = page.locator("//input[@id='Prefix']")
 
-        //this.submitBtn = page.locator("div[class='modal-content background-customizable modal-content-mobile visible-md visible-lg'] div[class='modal-body'] div div div div input[name='signInSubmitButton']")
-        //this.searchMenu = page.locator("//input[@placeholder='Name, SKU, ON Code']")
-        //this.nameFilter = page.locator("//input[@placeholder='Supplier Name']")
-        //this.brandPrefix = page.locator("//input[@placeholder='Prefix']")
+        
         
     }
 
@@ -90,35 +81,12 @@ export class Actions {
 
             await this.ProductSupplierCode.fill(text);
         }
-        // if (textBoxName === "filterBrandName") {
-
-        //     await this.filterBrandName.fill(text);
-        // }
+        
         if (textBoxName === "BrandPrefix") {
 
             await this.BrandPrefix.fill(text);
         }
-        // if (textBoxName === "searchmenu") {
-
-        //     await this.searchMenu.fill(text);
-        // }
-        // if (textBoxName === "nameFilter") {
-
-        //     await this.nameFilter.fill(text);
-        // }
-        //  if (textBoxName === "enterBrandPrefix") {
-
-        //     await this.brandPrefix.fill(text);
-        // }
-        // if(textBoxName==="Category_Code")
-        // {
-        //     await this.page.fill("//input[@id='CategoryCode']", text);
-        // }
-        // if(textBoxName==="Category")
-        // {
-        //     await this.page.fill("//input[@id='Category']", text);
-        // }
-
+        
 
     }
 
@@ -128,143 +96,10 @@ export class Actions {
         await this.enterText("password", "SuperAdmin@123");
     }
 
-    async logout() {
+    async Signout() {
         await this.page.waitForTimeout(5000);
         await this.profileBtn.click();
         await this.signOutBtn.click();
-        // await this.page.pause();
-    }
-
-    // async addMemberFromJson(): Promise<void> {
-    //     try {
-    //         const response = await fetch('./data.json'); // Replace with your JSON file path
-    //         const data: MemberData = await response.json();
-    //         console.log(data);
-
-    //         // Assuming you want to populate the first member's data
-    //         const member = data.members[0];
-
-    //         if (member) {
-    //             await this.page.fill("//input[@placeholder='Member ID']", member.MemberID);
-    //             await this.page.fill("//input[@placeholder='Name']", member.Name);
-    //             // (document.getElementById("//input[@placeholder='Member ID']") as HTMLInputElement).value = member.MemberID;
-    //             // (document.getElementById("//input[@placeholder='Name']") as HTMLInputElement).value = member.Name;
-    //             // (document.getElementById('LegalEntity') as HTMLInputElement).value = member.LegalEntity;
-    //             // (document.getElementById('MemberType') as HTMLInputElement).value = member.MemberType;
-    //             // (document.getElementById('VatRegNo') as HTMLInputElement).value = member.VatRegNo;
-    //             // (document.getElementById('CoRegNo') as HTMLInputElement).value = member.CoRegNo;
-    //             // (document.getElementById('Telephone') as HTMLInputElement).value = member.Telephone;
-    //             // (document.getElementById('Email') as HTMLInputElement).value = member.Email;
-    //             // (document.getElementById('Province') as HTMLInputElement).value = member.Province;
-    //             // (document.getElementById('PhysicalAddress1') as HTMLInputElement).value = member.PhysicalAddress1;
-    //             // (document.getElementById('PhysicalAddress2') as HTMLInputElement).value = member.PhysicalAddress2 || '';
-    //             // (document.getElementById('PhysicalAddress3') as HTMLInputElement).value = member.PhysicalAddress3 || '';
-    //             // (document.getElementById('PostalAddress1') as HTMLInputElement).value = member.PostalAddress1;
-    //             // (document.getElementById('DateJoined') as HTMLInputElement).value = member.DateJoined;
-
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching JSON data:', error);
-    //     }
-    // }
-
-    // async productCategoryFromJson(groupSetting: string): Promise<void> {
-
-    //     try {
-    //         const filePath = "C:\\Users\\Ritesh\\Downloads\\TF\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\data.json";
-    //         const data = await fs.promises.readFile(filePath, 'utf8');
-    //         // Parse JSON data
-    //         this.jsonData = JSON.parse(data);
-    //         // console.log("output after parse", jsonData["MasterCatogrie"].CategoryCode)
-
-
-    //         if (groupSetting === 'MasterProductCategorySetup') {
-    //             await this.page.fill("//input[@name='CategoryCode']", this.jsonData["MasterCatogrie"].CategoryCode);
-    //             await this.page.fill("//input[@name='Category']", this.jsonData["MasterCatogrie"].NaCategoryme);
-    //         }
-    //         else if (groupSetting === 'IQProductCategorySetup') {
-    //             await this.page.fill("//input[@placeholder='Code']", this.jsonData["IQCatogrie"].code);
-    //             await this.page.fill("//input[@placeholder='Department']", this.jsonData["IQCatogrie"].department);
-    //         }
-
-    //     } catch (error) {
-    //         console.error('Error fetching JSON data:', error);
-    //     }
-    //     //    await this.page.pause();
-    // }
-
-    // async dataAssertion(TypeOfData: String) {
-    //     try {
-    //         const filePath = "C:\\Users\\Ritesh\\Downloads\\TF\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\data.json";
-    //         const data = await fs.promises.readFile(filePath, 'utf8');
-    //         // Parse JSON data
-    //         this.jsonData = JSON.parse(data);
-
-    //         var storedData = await this.jsonData["MasterCatogrie"].NaCategoryme;
-    //     }
-    //     catch (e) {
-    //         console.log("We found error in reading data")
-    //     }
-    //     // await this.page.locator("table tbody").waitFor();
-    //     if (TypeOfData === 'MasterProductCategorySetup') {
-
-
-
-    //         // await this.page.locator("tr").last().locator("td").nth(2).waitFor();
-
-    //         const item = await this.page.locator("tr").last().locator("td").nth(2).textContent();
-
-    //         // const dataComeing = await this.page.locator(`td:has-text(${storedData})`).textContent();
-
-    //         console.log("Web element data: ", item, "\nJSON data:", storedData)
-    //         // expect(item).toBe(storedData);
-    //         expect(item).toBe("testingjjj");
-
-    //     }
-    // }
-
-    // //following funtion will be user to upload the file.
-    // async uploadFile(locatorName: string, pageName: string) {
-    //     // await this.page.waitForSelector(locatorName);
-    //     const fileLocation = {
-    //         "doc": "",
-    //         "video1": "PlayWright_Skeleton\pageFactory\pageRepository\files\v1.mkv",
-    //         "video2": "",
-    //         "image": "C:\\Users\\rites\\Desktop\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\files\\logo.png",
-    //         "image2": "E:\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\files\\logo.png",
-    //         "image3" : "C:\\Users\\Ritesh\\Downloads\\TF\\TF\\PlayWright_Skeleton\\pageFactory\\pageRepository\\files\\logo.png"
-    //     }
-
-    //     // console.log(fileLocation["image2"])
-    //     // await this.page.locator(locatorName).setInputFiles(fileLocation["image1"])
-    //     // await this.page.getByRole('button', { name: 'Drop files here to upload' }).setInputFiles(fileLocation["image"]);
-    //     // await this.page.waitForTimeout(5000);
-
-    //     // following code is running for Product media 
-    //     if (pageName === "ProductPage") {
-
-    //         await this.page.locator("//button[text()='Upload Image']").click();
-    //         const [fileChooser] = await Promise.all([
-    //             this.page.waitForEvent('filechooser'),
-    //             this.page.locator("//p[text()='Add File']").click()
-    //         ]);
-    //         await fileChooser.setFiles(fileLocation["image3"]);
-    //         // await this.page.locator("//p[text()='Upload']").click();
-    //         await this.page.locator("//span[text()='Submit']").click();
-    //         await this.page.waitForTimeout(3000);
-    //     }
-    //     else if(pageName==="NewBrand")
-    //     {
-
-    //         // await this.page.locator(locatorName).click();
-    //         const [fileChooser] = await Promise.all([
-    //             this.page.waitForEvent('filechooser'),
-    //             this.page.locator(locatorName).click()
-    //         ]);
-    //         await fileChooser.setFiles(fileLocation["image2"]);
-
-    //     }
-
-
+       }
 }
 

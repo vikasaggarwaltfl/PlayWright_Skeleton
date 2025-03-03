@@ -15,17 +15,16 @@ test.beforeEach('User login', async ({ page, Actions, Click }) => {
 });
 
 // Brand Screen ----------------------------------------------------------------------------------------------------------------------
-
-test('Verify that new brand is added successfully', async ({ Actions, Click, Verify, page }) => {
+test.only('Verify that new brand is added successfully', async ({ Actions, Click, Verify, page }) => {
     await Click.tabs("Brands")
     await Click.link("AddBrand")
-    await Actions.enterText("BrandName", "Test38");
+    await Actions.enterText("BrandName", "Test39");
     await Click.Btn("Save");
     await page.waitForTimeout(3000)
     await Click.tabs("Brands")
     await Click.Btn("Filter");
-    await Actions.enterText("BrandName", "Test38");
-    await Verify.IsTextDisplayed("newBrand", "Test38");
+    await Actions.enterText("BrandName", "Test39");
+    await Verify.IsTextDisplayed("newBrand", "Test39");
     //await Verify.verifyToastSuccessMessage('Brand added successfully');
 });
 
@@ -110,7 +109,7 @@ test('Open config codes ', async ({ Actions, Click, Verify, page }) => {
 
 //Supplier--------------------------------------------------
 
-test.only('Navigate to supplier', async ({ page, Actions, Click }) => {
+test('Navigate to supplier', async ({ page, Actions, Click }) => {
     await Click.tabs("Suppliers")
     await page.pause()
     

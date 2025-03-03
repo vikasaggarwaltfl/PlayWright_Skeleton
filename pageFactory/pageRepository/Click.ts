@@ -8,57 +8,33 @@ export class Click {
     readonly page: Page
     readonly context: BrowserContext
     private readonly submitBtn: Locator
-    private readonly Brands: Locator
     private readonly AddBrand: Locator;
     private readonly Save: Locator;
     private readonly ProductFilter: Locator;
     private readonly ProductReset: Locator;
     private readonly SortBrand: Locator;
-    //private readonly FilterBrand: Locator;
     private readonly Filter: Locator;
     private readonly OpenBrandDetails: Locator;
     private readonly BrandActions: Locator;
     private readonly EditBrand: Locator;
-    private readonly BrandInfo: Locator;
-    //private readonly SaveEditedBrand: Locator
-    private readonly GroupSettings: Locator
+    private readonly SaveEditedBrand: Locator
     private readonly LookupCategory: Locator
     private readonly MasterCategory: Locator
     private readonly IQCategory: Locator
     private readonly PastelCategory: Locator
     private readonly AuditLog: Locator
     private readonly ConfigCodes: Locator
-    private readonly suppliers: Locator
-    // private readonly dashboard: Locator
-    // private readonly member: Locator
-     
-    // private readonly products: Locator
-    // private readonly catalogues: Locator
-    // private readonly ona_staff: Locator
-    // private readonly imports: Locator
-    // private readonly filterDropDown: Locator
-    // private readonly profileBtn: Locator
-    // private readonly sideMenuSlider: Locator
-    // private readonly signOutBtn: Locator
-    // private readonly MasterProductCategorySetup: Locator;
-    // private readonly saveProdcutCatogerySetup: Locator;
-    // private readonly addProdcutCatogerySetup: Locator;
-    // private readonly IQProductCategorySetup: Locator;
-    // private readonly paginatorToLast: Locator;
-    // private readonly ProductTab: Locator;
-    // private readonly ProductMedia: Locator;
-    // private readonly ProductWIP: Locator;
-    // private readonly uploadVideo: Locator;
-    // private readonly productMediaCode: Locator;
-    
-    // private readonly BrandDropBox: Locator;
-    //private readonly ClickProfileButton: Locator;
-   
-    //private readonly PasswordSubmit: Locator;
     private readonly Products: Locator;
     private readonly ProductFilterArrow: Locator;
-    //private readonly clickproductFilterBtn: Locator;
-    //private readonly clickProductResetBtn: Locator;
+    private readonly ArtisticProduct: Locator;
+    //tab names
+    private readonly Catalogues: Locator
+    private readonly Imports: Locator
+    private readonly Suppliers: Locator
+    private readonly Brands: Locator
+    private readonly GroupSettings: Locator
+    //Icons names
+
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -69,56 +45,38 @@ export class Click {
         )
 
         
-        //this.ClickProfileButton = page.locator("//p[text()='ONA Super Admin']")
-       
-        this.Products= page.locator("//div[contains(text(),'Products')]")
+        
+        this.Products= page.locator("(//span[normalize-space()='Products'])[1]")
         this.ProductFilterArrow = page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])[1]")
         this.ProductFilter = page.locator("(//button[normalize-space()='Filter'])[1]")
-        this.ProductReset = page.locator("//button[normalize-space()='Reset']")
-        //this.PasswordSubmit=page.locator("//span[@class='p-button-label']")
-        this.Brands = page.locator("//span[text()='Brands']")
+        this.ProductReset = page.locator(" (//button[normalize-space()='Reset'])[1]")
+       
+       
         this.AddBrand = page.locator("//div[text()=' Add Brand']")
         this.Save = page.locator('button', { hasText: 'Save' });
         this.SortBrand = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
-        //this.FilterBrand = page.locator("//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90']")
+        
         this.Filter = page.locator("//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90']")
         this.OpenBrandDetails = page.locator("//a[normalize-space()='ABSTO']")
         this.BrandActions = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/span[1]")
         this.EditBrand = page.locator("//button[normalize-space()='Edit']")
-        this.BrandInfo = page.locator("//button[normalize-space()='Info']")
-        //this.SaveEditedBrand = page.locator("//span[normalize-space()='Save']")
-        this.GroupSettings = page.locator("//span[normalize-space()='Group Settings']")
+        this.SaveEditedBrand = page.locator("//span[normalize-space()='Save']")
+       
         this.LookupCategory = page.locator("//a[normalize-space()='Lookup Category Setup']")
         this.MasterCategory = page.locator("//a[normalize-space()='Master Product Category Setup']")
         this.IQCategory = page.locator("//a[normalize-space()='IQ Product Category Setup']")
         this.PastelCategory = page.locator("//a[normalize-space()='Pastel Product Category Setup']")
         this.AuditLog = page.locator("//a[normalize-space()='Audit Log']")
         this.ConfigCodes = page.locator("//a[normalize-space()='Config Codes']")
-        this.suppliers = page.locator("//span[text()='Suppliers']")
+        this.ArtisticProduct = page.locator("//a[normalize-space()='3M087427']")
+//tabs 
 
-
-        // this.dashboard = page.locator("//div[text()='Dashboard']")
-        // this.member = page.locator("//div[text()='Members']")
+this.Brands = page.locator("//span[text()='Brands']")
+this.GroupSettings = page.locator("//span[text()='Group Settings']")
+this.Imports = page.locator("//span[text()='Imports']")
+this.Catalogues = page.locator("//span[text()='Catalogues']")
+this.Suppliers = page.locator("//span[text()='Suppliers']")
         
-        // this.products = page.locator("//div[text()='Products']")
-        // this.catalogues = page.locator("//div[text()='Catalogues']")
-        // this.ona_staff = page.locator("//div[text()='ONA Staff']")
-        // this.imports = page.locator("//div[text()='Imports']")
-        // this.filterDropDown = page.locator("//button[@class='flex items-center justify-center w-4 h-4']")
-        // this.profileBtn = page.locator("//p[text()='ONA Super Admin']");
-        // this.sideMenuSlider = page.locator("//button[@type='button']")
-        // this.signOutBtn = page.locator("//span[text()='Sign Out']")
-        // this.MasterProductCategorySetup = page.locator("//a[text()='Master Product Category Setup']")
-        // this.saveProdcutCatogerySetup = page.locator("//span[text()='Save']")
-        // this.addProdcutCatogerySetup = page.locator("//span[text()='Add']")
-        // this.IQProductCategorySetup = page.locator("//a[text()='IQ Product Category Setup']")
-        // this.paginatorToLast = page.locator("button[aria-label='Last Page']");
-        // this.ProductMedia = page.locator("//a[text()='Product Media']");
-        // this.ProductTab = page.locator("//div[text()='Products']");
-        // this.ProductWIP = page.locator("//a[text()='Product WIP']");
-        // this.uploadVideo = page.locator("//button[text()='Upload Video']")
-        // this.productMediaCode = page.locator("//a[text()='SEG1SB']")
-        // //this.BrandDropBox = page.locator("//div[text()='Drop files here to upload logo']")
     }
 
 
@@ -136,61 +94,16 @@ export class Click {
         else if (str === "ProductReset") {
             await this.ProductReset.click();
         }
-        else if (str === "Filter") {
-            await this.Filter.click();
-        }
+        
         else if (str === "EditBrand") {
             await this.EditBrand.click();
         }
         else if (str === "BrandInfo") {
             await this.BrandInfo.click();
         }
-        // else if (str === "SaveEditedBrand") {
-        //     await this.SaveEditedBrand.click();
-        // }
-
-        // else if (str === "clickProfileButton") {
-        //     await this.ClickProfileButton.click();
-        // }
-        // else if (str === "PasswordSubmit") {
-        //     await this.PasswordSubmit.click();
-        // }
-        // else if (str === "ProfileBtn") {
-        //     await this.profileBtn.click();
-        // }
-        // else if (str === "SignoutBtn") {
-        //     await this.signOutBtn.click();
-        // }
-        // else if (str === "saveProdcutCatogerySetup") {
-        //     await this.saveProdcutCatogerySetup.click();
-        // }
-        // else if (str === "addProdcutCatogerySetup") {
-        //     await this.addProdcutCatogerySetup.click();
-        // }
-        // else if (str === "paginatorToLast") {
-        //     await this.page.getByRole("button").click();
-        //     await this.paginatorToLast.scrollIntoViewIfNeeded();
-        //     await this.paginatorToLast.click();
-        // }
-        // else if (str === "UploadVideo") {
-        //     await this.uploadVideo.click();
-        // }
-        // else if (str === "BrandDropBox") {
-        //     await this.BrandDropBox.click();
-        // }
-        // else if (str === "ProductTab") {
-        //     await this.ProductTab.click();
-        // }
-        // else if (str === "ProductWIP") {
-        //     await this.ProductWIP.click();
-        // }
+        
     }
 
-    // async Profile() {
-    //     await this.page.waitForTimeout(5000);
-    //     await this.ClickProfileButton.click();
-    //     await this.changePassword.click();
-    // }
 
 
     async icon(str: string): Promise<void> {
@@ -203,19 +116,11 @@ export class Click {
         else if (str === "BrandActions") {
             await this.BrandActions.click();
         }
-        else if (str === "ProductFilterArrow") {
-            await this.ProductFilterArrow.click();
+        
+        else if (str === "FilterArrow") {
+            await this.FilterArrow.click();
         }
-        // else if (str === "FilterDropDown") {
-        //     await this.filterDropDown.click();
-        // }
-        // else if (str === "MinimizeMenuBtn") {
-        //     await this.sideMenuSlider.click();
-        // }
-        // if (str === "clickProductFilterIcon") {
-        //     await this.clickProductFilterIcon.click();
-        // }
-
+        
         
     }
 
@@ -228,30 +133,15 @@ export class Click {
         else if (str === "GroupSettings") {
             await this.GroupSettings.click();
         }
-
-        // if (str === "DashboardTab") {
-        //     await this.dashboard.click();
-        // }
-        // else if (str === "MembersTab") {
-        //     await this.member.click();
-        // }
-        else if (str === "Suppliers") {
-
-            await this.suppliers.click();
+        else if (str === "Catalogues") {
+            await this.Catalogues.click();
         }
-        // else if (str === "ProductsTab") {
-        //     await this.products.click();
-        // }
-        // else if (str === "CataloguesTab") {
-        //     await this.catalogues.click();
-        // }
-        // else if (str === "ONAStaffTab") {
-        //     await this.ona_staff.click();
-        // }
-        // 
-        // else if (str === "ImportsTab") {
-        //     await this.imports.click();
-        // }
+        else if (str === "Imports") {
+            await this.Imports.click();
+        }
+        else if (str === "Suppliers") {
+            await this.Suppliers.click();
+        }
     }
 
     async link(linkName: String) {
@@ -283,19 +173,19 @@ export class Click {
         if (linkName === "Products") {
             await this.Products.click();
         }
-        // if (linkName === "MasterProductCategorySetup") {
-        //     await this.MasterProductCategorySetup.click();
-        // }
-        // else if (linkName === 'IQProductCategorySetup') {
-        //     await this.IQProductCategorySetup.click();
-        // }
-        // else if (linkName === 'ProductMedia') {
-        //     await this.ProductMedia.click();
-        // }
-        // else if (linkName === "productMediaCode") {
-        //     await this.productMediaCode.click();
-        // }
         
+        
+        if (linkName === "Products") {
+            await this.Products.click();
+        }
+
+        else if (linkName === "ArtisticProduct") {
+            await this.ArtisticProduct.click();
+            
+        }
         
     }
-} 
+
+    
+}
+
