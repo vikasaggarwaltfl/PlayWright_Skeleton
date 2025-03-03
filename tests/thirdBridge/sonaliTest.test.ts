@@ -9,36 +9,37 @@ import { access } from 'fs'
 
 // Login ------------------------------------------------------------------------------------------------------------------------------
 
-test.beforeEach('User login', async ({ page, Actions, Click }) => {
+test.only('User login', async ({ page, Actions, Click }) => {
     await Actions.signIn();
-    await Click.Btn("Signin");
+    await Click.Btn("sign_In");
 });
 
 // Brand Screen ----------------------------------------------------------------------------------------------------------------------
-test.only('Verify that new brand is added successfully', async ({ Actions, Click, Verify, page }) => {
-    await Click.tabs("Brands")
-    await Click.link("AddBrand")
-    await Actions.enterText("BrandName", "Test39");
+test('Verify that new brand is added successfully', async ({ Actions, Click, Verify, page }) => {
+    await Click.Tab("Brands")
+    await Click.Link("addBrand")
+    await Actions.enterText("brandName", "Test40");
     await Click.Btn("Save");
     await page.waitForTimeout(3000)
-    await Click.tabs("Brands")
-    await Click.Btn("Filter");
-    await Actions.enterText("BrandName", "Test39");
-    await Verify.IsTextDisplayed("newBrand", "Test39");
+    await Click.Tab("Brands")
+    await Click.Icon("filterArrow");
+    await Actions.enterText("brandName", "Test40");
+    await Verify.IsTextDisplayed("newBrand", "Test40");
+
     //await Verify.verifyToastSuccessMessage('Brand added successfully');
 });
 
 test('User should not able to add brand with invalid data', async ({ Actions, Click, Verify, page }) => {
-    await Click.tabs("Brands")
-    await Click.link("AddBrand")
+    await Click.Tab("Brands")
+    await Click.Link("AddBrand")
     await Actions.enterText("BrandName", "Test30");
     await Click.Btn("Save");
     //await Verify.IsErrorPopUp('Saving Failed')
 });
 
 test('Edit Brand Details', async ({ Actions, Click, Verify, page }) => {
-    await Click.tabs("Brands")
-    await Click.icon("BrandActions")
+    await Click.Tab("Brands")
+    await Click.Icon("BrandActions")
     await Click.Btn("EditBrand")
     await Actions.enterText("BrandPrefix", "ABB");
     await Click.Btn("Save")
@@ -48,72 +49,69 @@ test('Edit Brand Details', async ({ Actions, Click, Verify, page }) => {
 });
 
 test('Open Brand Details ', async ({ Actions, Click, Verify, page }) => {
-    await Click.tabs("Brands")
-    await Click.link("OpenBrandDetails")
+    await Click.Tab("Brands")
+    await Click.Link("OpenBrandDetails")
     await expect(page).toHaveURL('https://onexweb-uat.officenational.co.za/table/brand/6')
     await page.pause()
 });
 
 test('Sort Brand Records ', async ({ Actions, Click, Verify, page }) => {
-    await Click.tabs("Brands")
-    await Click.icon("SortBrand")
-    await Click.icon("SortBrand")
-    await Click.icon("SortBrand")
+    await Click.Tab("Brands")
+    await Click.Icon("SortBrand")
+    await Click.Icon("SortBrand")
+    await Click.Icon("SortBrand")
     ///await page.pause()
 });
 
-test('Filter Brand Records ', async ({ Actions, Click, Verify, page }) => {
-    await Click.tabs("Brands")
+test('Filter Brand Records and Verify Result ', async ({ Actions, Click, Verify, page }) => {
+    await Click.Tab("Brands")
     await Click.Btn("FilterBrand");
     await Actions.enterText("BrandName", "Test36");
     await Verify.IsTextDisplayed("newBrand", "Test36");
     await page.pause()
 });
 
+
 // Group Setting Screen ---------------------------------------------------------------------------------------------------------------
 
 test('Open Group Settings ', async ({ Actions, Click, Verify, page }) => {
-    await Click.tabs("GroupSettings")
+    await Click.Tab("GroupSettings")
 });
 
 test('Open Lookup Category Setup ', async ({ Actions, Click, Verify, page }) => {
-    await Click.tabs("GroupSettings")
-    await Click.link("LookupCategory")
+    await Click.Tab("GroupSettings")
+    await Click.Link("LookupCategory")
 });
 
 test('Open Master Product Category Setup ', async ({ Actions, Click, Verify, page }) => {
-    await Click.tabs("GroupSettings")
-    await Click.link("MasterCategory")
+    await Click.Tab("GroupSettings")
+    await Click.Link("MasterCategory")
 });
 
 test('Open IQ Product Category Setup ', async ({ Actions, Click, Verify, page }) => {
-    await Click.tabs("GroupSettings")
-    await Click.link("IQCategory")
+    await Click.Tab("GroupSettings")
+    await Click.Link("IQCategory")
 });
 
 test('Open Pastel Product Category Setup ', async ({ Actions, Click, Verify, page }) => {
-    await Click.tabs("GroupSettings")
-    await Click.link("PastelCategory")
+    await Click.Tab("GroupSettings")
+    await Click.Link("PastelCategory")
 });
 
 test('Open Audit log ', async ({ Actions, Click, Verify, page }) => {
-    await Click.tabs("GroupSettings")
-    await Click.link("AuditLog")
+    await Click.Tab("GroupSettings")
+    await Click.Link("AuditLog")
     //await page.pause()
 });
 
 test('Open config codes ', async ({ Actions, Click, Verify, page }) => {
-    await Click.tabs("GroupSettings")
-    await Click.link("ConfigCodes")
+    await Click.Tab("GroupSettings")
+    await Click.Link("ConfigCodes")
 });
 
-//Supplier--------------------------------------------------
 
-test('Navigate to supplier', async ({ page, Actions, Click }) => {
-    await Click.tabs("Suppliers")
-    await page.pause()
-    
-});
+
+
 
 
 

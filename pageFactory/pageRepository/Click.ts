@@ -7,8 +7,8 @@ dotenv.config()
 export class Click {
     readonly page: Page
     readonly context: BrowserContext
-   
-//Link
+
+    //Link
     private readonly addBrand: Locator
     private readonly addProduct: Locator
     private readonly addCatalogue: Locator
@@ -27,7 +27,7 @@ export class Click {
     private readonly groupSettings: Locator
     private readonly Imports: Locator
     private readonly Exports: Locator
-   
+
     //Icon 
     private readonly chevronLeft: Locator
     private readonly filterArrow: Locator
@@ -36,53 +36,54 @@ export class Click {
     private readonly Sort: Locator
 
     //Btn
-    private readonly signIn: Locator
+    private readonly sign_In: Locator
     private readonly Profile: Locator
     private readonly Save: Locator
     private readonly Filter: Locator
     private readonly Reset: Locator
     private readonly signOut: Locator
-    
+
     constructor(page: Page, context: BrowserContext) {
         this.page = page
         this.context = context
-       
-//Link
-this.addBrand = page.locator("//div[text()=' Add Brand']")
-this.addProduct = page.locator("//div[text()=' Add Product']")
-this.addCatalogue = page.locator("//div[text()=' Add Catalogues']")
-this.lookupCategory = page.locator("//a[normalize-space()='Lookup Category Setup']")
-this.masterCategory = page.locator("//a[normalize-space()='Master Product Category Setup']")
-this.iQCategory = page.locator("//a[normalize-space()='IQ Product Category Setup']")
-this.pastelCategory = page.locator("//a[normalize-space()='Pastel Product Category Setup']")
-this.auditLog = page.locator("//a[normalize-space()='Audit Log']")
-this.configCodes = page.locator("//a[normalize-space()='Config Codes']")
 
-   //Tab
-    this.Dashboard = page.locator("//span[text()='Dashboard']")
-    this.Brands = page.locator("//span[text()='Brands']")
-    this.Products = page.locator("//span[text()='Products']")
-    this.Catalogues = page.locator("//span[text()='Catalogues']")
-    this.groupSettings = page.locator("//span[text()='Group Settings']")
-    this.Imports = page.locator("//span[text()='Imports']")
-    this.Exports = page.locator("//span[text()='Exports']")
+        //Link
+        this.addBrand = page.locator("//div[text()=' Add Brand']")
+        this.addProduct = page.locator("//div[text()=' Add Product']")
+        this.addCatalogue = page.locator("//div[text()=' Add Catalogues']")
+        this.lookupCategory = page.locator("//a[normalize-space()='Lookup Category Setup']")
+        this.masterCategory = page.locator("//a[normalize-space()='Master Product Category Setup']")
+        this.iQCategory = page.locator("//a[normalize-space()='IQ Product Category Setup']")
+        this.pastelCategory = page.locator("//a[normalize-space()='Pastel Product Category Setup']")
+        this.auditLog = page.locator("//a[normalize-space()='Audit Log']")
+        this.configCodes = page.locator("//a[normalize-space()='Config Codes']")
 
-    //Icon
-this.chevronLeft = page.locator("//span[class='p-input-icon text-[10px] pi pi-chevron-left']")
-this.filterArrow = page.locator("//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90']")
- this.kebabMenu = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/span[1]")
- this.Edit = page.locator("//button[normalize-space()='Edit']")
- this.Sort = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")  
- 
- //Btn
-this.signIn = page.locator("//button[normalize-space()='Sign In']")
-this.Profile = page.locator("//p[text()='ONA Super Admin']")
-this.Save = page.locator("//button[normalize-space()='Save']")
-this.Filter = page.locator("//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90']")
-this.Reset = page.locator("//button[normalize-space()='Reset']")
-this.signOut = page.locator("//button[@aria-label='Sign Out']")
+        //Tab
+        this.Dashboard = page.locator("//span[text()='Dashboard']")
+        this.Brands = page.locator("//span[text()='Brands']")
+        this.Products = page.locator("//span[text()='Products']")
+        this.Catalogues = page.locator("//span[text()='Catalogues']")
+        this.groupSettings = page.locator("//span[text()='Group Settings']")
+        this.Imports = page.locator("//span[text()='Imports']")
+        this.Exports = page.locator("//span[text()='Exports']")
+
+        //Icon
+        this.chevronLeft = page.locator("//span[class='p-input-icon text-[10px] pi pi-chevron-left']")
+        this.filterArrow = page.locator("//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90']")
+        this.kebabMenu = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/span[1]")
+        this.Edit = page.locator("//button[normalize-space()='Edit']")
+        this.Sort = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
+
+        //Btn
+        this.sign_In = page.locator("(//input[@name='signInSubmitButton'])[2]")
+        this.Profile = page.locator("//p[text()='ONA Super Admin']")
+        this.Save = page.locator("//button[normalize-space()='Save']")
+        this.Filter = page.locator("//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90']")
+        this.Reset = page.locator("//button[normalize-space()='Reset']")
+        this.signOut = page.locator("//button[@aria-label='Sign Out']")
     }
-//Link
+
+    //Link
     async Link(linkName: String) {
 
         if (linkName === "addBrand") {
@@ -112,61 +113,59 @@ this.signOut = page.locator("//button[@aria-label='Sign Out']")
         if (linkName === "configCodes") {
             await this.configCodes.click();
         }
-        }
-//Tab
-        async Tab(str: string): Promise<void> {
+    }
 
-            if (str === "Dashboard") {
-                await this.Dashboard.click();
-            }
-            if (str === "Brands") {
-                await this.Brands.click();
-            }
-            else if (str === "Products") {
-                await this.Products.click();
-            }
-            else if (str === "Catalogues") {
-                await this.Catalogues.click();
-            }
-            else if (str === "groupSettings") {
-                await this.groupSettings.click();
-            }
-            
-            else if (str === "Imports") {
-                await this.Imports.click();
-            }
-            else if (str === "Exports") {
-                await this.Exports.click();
-            }
+    //Tab
+    async Tab(str: string): Promise<void> {
+
+        if (str === "Dashboard") {
+            await this.Dashboard.click();
+        }
+        if (str === "Brands") {
+            await this.Brands.click();
+        }
+        else if (str === "Products") {
+            await this.Products.click();
+        }
+        else if (str === "Catalogues") {
+            await this.Catalogues.click();
+        }
+        else if (str === "groupSettings") {
+            await this.groupSettings.click();
         }
 
-//Icon
-async Icon(str: string): Promise<void> {
-    if (str === "chevronLeft") {
-        await this.chevronLeft.click();
+        else if (str === "Imports") {
+            await this.Imports.click();
+        }
+        else if (str === "Exports") {
+            await this.Exports.click();
+        }
     }
-    else if (str === "filterArrow") {
-        await this.filterArrow.click();
-    }
-    else if (str === "kebabMenu") {
-        await this.kebabMenu.click();
-    }
-    
-    else if (str === "Edit") {
-        await this.Edit.click();
-    }
-    
-    else if (str === "Sort") {
-        await this.Sort.click();
-    }
-}
 
-//Btn
+    //Icon
+    async Icon(str: string): Promise<void> {
+        if (str === "chevronLeft") {
+            await this.chevronLeft.click();
+        }
+        else if (str === "filterArrow") {
+            await this.filterArrow.click();
+        }
+        else if (str === "kebabMenu") {
+            await this.kebabMenu.click();
+        }
+        else if (str === "Edit") {
+            await this.Edit.click();
+        }
+        else if (str === "Sort") {
+            await this.Sort.click();
+        }
+    }
 
+    //Btn
     async Btn(str: string): Promise<void> {
 
-        if (str === "signIn") {
-            await this.signIn.click();
+        if (str === "sign_In") {
+            await this.sign_In.click();
         }
         else if (str === "Profile") {
             await this.Profile.click();
@@ -177,25 +176,25 @@ async Icon(str: string): Promise<void> {
         else if (str === "Filter") {
             await this.Filter.click();
         }
-        
+
         else if (str === "Reset") {
             await this.Reset.click();
         }
         else if (str === "signOut") {
             await this.signOut.click();
         }
-        
+
     }
 
 
 
-    
 
 
-    
 
-    
 
-    
+
+
+
+
 }
 
