@@ -7,184 +7,194 @@ dotenv.config()
 export class Click {
     readonly page: Page
     readonly context: BrowserContext
-    private readonly submitBtn: Locator
-    private readonly AddBrand: Locator;
-    private readonly Save: Locator;
-    private readonly ProductFilter: Locator;
-    private readonly ProductReset: Locator;
-    private readonly SortBrand: Locator;
-    private readonly Filter: Locator;
-    private readonly OpenBrandDetails: Locator;
-    private readonly BrandActions: Locator;
-    private readonly EditBrand: Locator;
-    private readonly SaveEditedBrand: Locator
-    private readonly LookupCategory: Locator
-    private readonly MasterCategory: Locator
-    private readonly IQCategory: Locator
-    private readonly PastelCategory: Locator
-    private readonly AuditLog: Locator
-    private readonly ConfigCodes: Locator
-    private readonly Products: Locator;
-    private readonly ProductFilterArrow: Locator;
-    private readonly ArtisticProduct: Locator;
-    //tab names
-    private readonly Catalogues: Locator
-    private readonly Imports: Locator
-    private readonly Suppliers: Locator
+   
+//Link
+    private readonly addBrand: Locator
+    private readonly addProduct: Locator
+    private readonly addCatalogue: Locator
+    private readonly lookupCategory: Locator
+    private readonly masterCategory: Locator
+    private readonly iQCategory: Locator
+    private readonly pastelCategory: Locator
+    private readonly auditLog: Locator
+    private readonly configCodes: Locator
+
+    //Tab 
+    private readonly Dashboard: Locator
     private readonly Brands: Locator
-    private readonly GroupSettings: Locator
-    //Icons names
+    private readonly Products: Locator
+    private readonly Catalogues: Locator
+    private readonly groupSettings: Locator
+    private readonly Imports: Locator
+    private readonly Exports: Locator
+   
+    //Icon 
+    private readonly chevronLeft: Locator
+    private readonly filterArrow: Locator
+    private readonly kebabMenu: Locator
+    private readonly Edit: Locator
+    private readonly Sort: Locator
 
-
-
+    //Btn
+    private readonly signIn: Locator
+    private readonly Profile: Locator
+    private readonly Save: Locator
+    private readonly Filter: Locator
+    private readonly Reset: Locator
+    private readonly signOut: Locator
+    
     constructor(page: Page, context: BrowserContext) {
         this.page = page
         this.context = context
-        this.submitBtn = page.locator(
-            "div[class='modal-content background-customizable modal-content-mobile visible-md visible-lg'] div[class='modal-body'] div div div div input[name='signInSubmitButton']",
-        )
+       
+//Link
+this.addBrand = page.locator("//div[text()=' Add Brand']")
+this.addProduct = page.locator("//div[text()=' Add Product']")
+this.addCatalogue = page.locator("//div[text()=' Add Catalogues']")
+this.lookupCategory = page.locator("//a[normalize-space()='Lookup Category Setup']")
+this.masterCategory = page.locator("//a[normalize-space()='Master Product Category Setup']")
+this.iQCategory = page.locator("//a[normalize-space()='IQ Product Category Setup']")
+this.pastelCategory = page.locator("//a[normalize-space()='Pastel Product Category Setup']")
+this.auditLog = page.locator("//a[normalize-space()='Audit Log']")
+this.configCodes = page.locator("//a[normalize-space()='Config Codes']")
 
-        
-        
-        this.Products= page.locator("(//span[normalize-space()='Products'])[1]")
-        this.ProductFilterArrow = page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])[1]")
-        this.ProductFilter = page.locator("(//button[normalize-space()='Filter'])[1]")
-        this.ProductReset = page.locator(" (//button[normalize-space()='Reset'])[1]")
-       
-       
-        this.AddBrand = page.locator("//div[text()=' Add Brand']")
-        this.Save = page.locator('button', { hasText: 'Save' });
-        this.SortBrand = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
-        
-        this.Filter = page.locator("//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90']")
-        this.OpenBrandDetails = page.locator("//a[normalize-space()='ABSTO']")
-        this.BrandActions = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/span[1]")
-        this.EditBrand = page.locator("//button[normalize-space()='Edit']")
-        this.SaveEditedBrand = page.locator("//span[normalize-space()='Save']")
-       
-        this.LookupCategory = page.locator("//a[normalize-space()='Lookup Category Setup']")
-        this.MasterCategory = page.locator("//a[normalize-space()='Master Product Category Setup']")
-        this.IQCategory = page.locator("//a[normalize-space()='IQ Product Category Setup']")
-        this.PastelCategory = page.locator("//a[normalize-space()='Pastel Product Category Setup']")
-        this.AuditLog = page.locator("//a[normalize-space()='Audit Log']")
-        this.ConfigCodes = page.locator("//a[normalize-space()='Config Codes']")
-        this.ArtisticProduct = page.locator("//a[normalize-space()='3M087427']")
-//tabs 
+   //Tab
+    this.Dashboard = page.locator("//span[text()='Dashboard']")
+    this.Brands = page.locator("//span[text()='Brands']")
+    this.Products = page.locator("//span[text()='Products']")
+    this.Catalogues = page.locator("//span[text()='Catalogues']")
+    this.groupSettings = page.locator("//span[text()='Group Settings']")
+    this.Imports = page.locator("//span[text()='Imports']")
+    this.Exports = page.locator("//span[text()='Exports']")
 
-this.Brands = page.locator("//span[text()='Brands']")
-this.GroupSettings = page.locator("//span[text()='Group Settings']")
-this.Imports = page.locator("//span[text()='Imports']")
-this.Catalogues = page.locator("//span[text()='Catalogues']")
-this.Suppliers = page.locator("//span[text()='Suppliers']")
-        
+    //Icon
+this.chevronLeft = page.locator("//span[class='p-input-icon text-[10px] pi pi-chevron-left']")
+this.filterArrow = page.locator("//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90']")
+ this.kebabMenu = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/span[1]")
+ this.Edit = page.locator("//button[normalize-space()='Edit']")
+ this.Sort = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")  
+ 
+ //Btn
+this.signIn = page.locator("//button[normalize-space()='Sign In']")
+this.Profile = page.locator("//p[text()='ONA Super Admin']")
+this.Save = page.locator("//button[normalize-space()='Save']")
+this.Filter = page.locator("//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90']")
+this.Reset = page.locator("//button[normalize-space()='Reset']")
+this.signOut = page.locator("//button[@aria-label='Sign Out']")
     }
+//Link
+    async Link(linkName: String) {
 
+        if (linkName === "addBrand") {
+            await this.addBrand.click();
+        }
+        else if (linkName === "addProduct") {
+            await this.addProduct.click();
+        }
+        else if (linkName === "addCatalogue") {
+            await this.addCatalogue.click();
+        }
+        else if (linkName === "lookupCategory") {
+            await this.lookupCategory.click();
+        }
+        else if (linkName === "masterCategory") {
+            await this.masterCategory.click();
+        }
+        else if (linkName === "iQCategory") {
+            await this.iQCategory.click();
+        }
+        else if (linkName === "pastelCategory") {
+            await this.pastelCategory.click();
+        }
+        else if (linkName === "auditLog") {
+            await this.auditLog.click();
+        }
+        if (linkName === "configCodes") {
+            await this.configCodes.click();
+        }
+        }
+//Tab
+        async Tab(str: string): Promise<void> {
+
+            if (str === "Dashboard") {
+                await this.Dashboard.click();
+            }
+            if (str === "Brands") {
+                await this.Brands.click();
+            }
+            else if (str === "Products") {
+                await this.Products.click();
+            }
+            else if (str === "Catalogues") {
+                await this.Catalogues.click();
+            }
+            else if (str === "groupSettings") {
+                await this.groupSettings.click();
+            }
+            
+            else if (str === "Imports") {
+                await this.Imports.click();
+            }
+            else if (str === "Exports") {
+                await this.Exports.click();
+            }
+        }
+
+//Icon
+async Icon(str: string): Promise<void> {
+    if (str === "chevronLeft") {
+        await this.chevronLeft.click();
+    }
+    else if (str === "filterArrow") {
+        await this.filterArrow.click();
+    }
+    else if (str === "kebabMenu") {
+        await this.kebabMenu.click();
+    }
+    
+    else if (str === "Edit") {
+        await this.Edit.click();
+    }
+    
+    else if (str === "Sort") {
+        await this.Sort.click();
+    }
+}
+
+//Btn
 
     async Btn(str: string): Promise<void> {
 
-        if (str === "Signin") {
-            await this.submitBtn.click();
+        if (str === "signIn") {
+            await this.signIn.click();
+        }
+        else if (str === "Profile") {
+            await this.Profile.click();
         }
         else if (str === "Save") {
             await this.Save.click();
         }
-        else if (str === "ProductFilter") {
-            await this.ProductFilter.click();
-        }
-        else if (str === "ProductReset") {
-            await this.ProductReset.click();
+        else if (str === "Filter") {
+            await this.Filter.click();
         }
         
-        else if (str === "EditBrand") {
-            await this.EditBrand.click();
+        else if (str === "Reset") {
+            await this.Reset.click();
         }
-        else if (str === "BrandInfo") {
-            await this.BrandInfo.click();
+        else if (str === "signOut") {
+            await this.signOut.click();
         }
         
     }
 
 
 
-    async icon(str: string): Promise<void> {
-        if (str === "login") {
-            await this.submitBtn.click();
-        }
-        else if (str === "SortBrand") {
-            await this.SortBrand.click();
-        }
-        else if (str === "BrandActions") {
-            await this.BrandActions.click();
-        }
-        
-        else if (str === "FilterArrow") {
-            await this.FilterArrow.click();
-        }
-        
-        
-    }
+    
 
 
-    async tabs(str: string): Promise<void> {
+    
 
-        if (str === "Brands") {
-            await this.Brands.click();
-        }
-        else if (str === "GroupSettings") {
-            await this.GroupSettings.click();
-        }
-        else if (str === "Catalogues") {
-            await this.Catalogues.click();
-        }
-        else if (str === "Imports") {
-            await this.Imports.click();
-        }
-        else if (str === "Suppliers") {
-            await this.Suppliers.click();
-        }
-    }
-
-    async link(linkName: String) {
-
-        if (linkName === "AddBrand") {
-            await this.AddBrand.click();
-        }
-        else if (linkName === "OpenBrandDetails") {
-            await this.OpenBrandDetails.click();
-        }
-        else if (linkName === "LookupCategory") {
-            await this.LookupCategory.click();
-        }
-        else if (linkName === "MasterCategory") {
-            await this.MasterCategory.click();
-        }
-        else if (linkName === "IQCategory") {
-            await this.IQCategory.click();
-        }
-        else if (linkName === "PastelCategory") {
-            await this.PastelCategory.click();
-        }
-        else if (linkName === "AuditLog") {
-            await this.AuditLog.click();
-        }
-        else if (linkName === "ConfigCodes") {
-            await this.ConfigCodes.click();
-        }
-        if (linkName === "Products") {
-            await this.Products.click();
-        }
-        
-        
-        if (linkName === "Products") {
-            await this.Products.click();
-        }
-
-        else if (linkName === "ArtisticProduct") {
-            await this.ArtisticProduct.click();
-            
-        }
-        
-    }
+    
 
     
 }
