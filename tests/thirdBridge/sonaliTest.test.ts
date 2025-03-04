@@ -18,36 +18,26 @@ test.beforeEach('User login', async ({ page, Actions, Click }) => {
 
 // Supplier---------------------------------------------------------------------------------------------------------------------------
 
-test('Verify Supplier Records filtered by Suppliername', async ({ Actions, Click, Verify, page }) => {
-    await Click.Tab("Suppliers");
-    await Click.Icon("filterArrow");
-    await Actions.enterText("supplierName", "Artistic");
-    await Verify.IsTextDisplayed("checkSupplier", "Artistic");
-    await page.pause();
-});
+// test('Verify Supplier Records filtered by Suppliername', async ({ Actions, Click, Verify, page }) => {
+//     await Click.Tab("Suppliers");
+//     await Click.Icon("filterArrow");
+//     await Actions.enterText("supplierName", "Artistic");
+//     await Verify.IsTextDisplayed("checkSupplier", "Artistic");
+//     await page.pause();
+// });
 
-test.only('Verify the number of records where supplierName is Artistic', async ({ Actions, Click, Verify, page }) => {
-    await Click.Tab("Suppliers");
-    await Click.Icon("filterArrow");
-    await Actions.enterText("supplierName", "Artistic");
-    
-    const artisticCount = await Verify.getArtisticRecordsCount();
-    console.log(`Number of Artistic records: ${artisticCount}`);
-    expect(artisticCount).toBeGreaterThan(0); 
-    await page.pause();
-  });
 
 // Brand Screen ----------------------------------------------------------------------------------------------------------------------
 test('Verify that new brand is added successfully', async ({ Actions, Click, Verify, page }) => {
     await Click.Tab("Brands")
     await Click.Link("addBrand")
-    await Actions.enterText("brandName", "Test52");
+    await Actions.enterText("brandName", "Test53");
     await Click.Btn("Save");
     await page.waitForTimeout(3000);
     await Click.Tab("Brands");
     await Click.Icon("filterArrow");
-    await Actions.enterText("brandName", "Test52");
-    await Verify.IsTextDisplayed("newBrand", "Test52");
+    await Actions.enterText("brandName", "Test53");
+    await Verify.IsTextDisplayed("newBrand", "Test53");
     
 });
 
@@ -87,12 +77,23 @@ test('Sort Brand Records ', async ({ Actions, Click, Verify, page }) => {
 
 test('Filter Brand Records and Verify Result ', async ({ Actions, Click, Verify, page }) => {
     await Click.Tab("Brands")
-    await Click.Btn("FilterBrand");
-    await Actions.enterText("BrandName", "Test36");
+    await Click.Btn("filterArrow");
+    await Actions.enterText("brandName", "Test36");
     await Verify.IsTextDisplayed("newBrand", "Test36");
     await page.pause()
 });
 
+// Product Screen---------------------------------------------------------------------------------------------------------------------
+test.only('Filter Product Records and Verify Result ', async ({ Actions, Click, Verify, page }) => {
+    await Click.Tab("Products");
+    await Click.Icon("filterArrow");
+    await Click.Icon("supplier");
+    await Click.dropdownOption("artistic");
+    await Click.Btn("Filter");
+    await page.waitForTimeout(5000);
+    expect(await Verify.verifyData("Artistic")).toBe(4);
+    await page.pause()
+});
 
 // Group Setting Screen ---------------------------------------------------------------------------------------------------------------
 

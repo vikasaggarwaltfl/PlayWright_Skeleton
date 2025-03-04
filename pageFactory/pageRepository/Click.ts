@@ -34,6 +34,7 @@ export class Click {
     private readonly kebabMenu: Locator
     private readonly Edit: Locator
     private readonly Sort: Locator
+    private readonly supplier: Locator
 
     //Btn
     private readonly sign_In: Locator
@@ -42,6 +43,11 @@ export class Click {
     private readonly Filter: Locator
     private readonly Reset: Locator
     private readonly signOut: Locator
+
+    //dropdownOption
+    private readonly artistic: Locator
+
+
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
@@ -73,14 +79,18 @@ export class Click {
         this.kebabMenu = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/span[1]")
         this.Edit = page.locator("//button[normalize-space()='Edit']")
         this.Sort = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
+        this.supplier = page.locator("//div[@name='SupplierId']")
 
         //Btn
         this.sign_In = page.locator("(//input[@name='signInSubmitButton'])[2]")
         this.Profile = page.locator("//p[text()='ONA Super Admin']")
         this.Save = page.locator("//button[normalize-space()='Save']")
-        this.Filter = page.locator("//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90']")
+        this.Filter = page.locator("//button[normalize-space()='Filter']")
         this.Reset = page.locator("//button[normalize-space()='Reset']")
         this.signOut = page.locator("//button[@aria-label='Sign Out']")
+
+//dropdownOption
+       this.artistic = page.locator("//span[text()='Artistic']")
     }
 
     //Link
@@ -159,6 +169,10 @@ export class Click {
         else if (str === "Sort") {
             await this.Sort.click();
         }
+        else if (str === "supplier") {
+            await this.supplier.click();
+        }
+        
     }
 
     //Btn
@@ -186,6 +200,13 @@ export class Click {
 
     }
 
+//dropdownOption
+async dropdownOption(str: string): Promise<void> {
+
+    if (str === "artistic") {
+        await this.artistic.click();
+    }
+
 
 
 
@@ -197,4 +218,4 @@ export class Click {
 
 
 }
-
+}
