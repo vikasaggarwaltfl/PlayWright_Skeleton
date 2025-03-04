@@ -9,24 +9,46 @@ import { access } from 'fs'
 
 // Login ------------------------------------------------------------------------------------------------------------------------------
 
-test.only('User login', async ({ page, Actions, Click }) => {
+test.beforeEach('User login', async ({ page, Actions, Click }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
 });
+
+
+
+// Supplier---------------------------------------------------------------------------------------------------------------------------
+
+test('Verify Supplier Records filtered by Suppliername', async ({ Actions, Click, Verify, page }) => {
+    await Click.Tab("Suppliers");
+    await Click.Icon("filterArrow");
+    await Actions.enterText("supplierName", "Artistic");
+    await Verify.IsTextDisplayed("checkSupplier", "Artistic");
+    await page.pause();
+});
+
+test.only('Verify the number of records where supplierName is Artistic', async ({ Actions, Click, Verify, page }) => {
+    await Click.Tab("Suppliers");
+    await Click.Icon("filterArrow");
+    await Actions.enterText("supplierName", "Artistic");
+    
+    const artisticCount = await Verify.getArtisticRecordsCount();
+    console.log(`Number of Artistic records: ${artisticCount}`);
+    expect(artisticCount).toBeGreaterThan(0); 
+    await page.pause();
+  });
 
 // Brand Screen ----------------------------------------------------------------------------------------------------------------------
 test('Verify that new brand is added successfully', async ({ Actions, Click, Verify, page }) => {
     await Click.Tab("Brands")
     await Click.Link("addBrand")
-    await Actions.enterText("brandName", "Test40");
+    await Actions.enterText("brandName", "Test52");
     await Click.Btn("Save");
-    await page.waitForTimeout(3000)
-    await Click.Tab("Brands")
+    await page.waitForTimeout(3000);
+    await Click.Tab("Brands");
     await Click.Icon("filterArrow");
-    await Actions.enterText("brandName", "Test40");
-    await Verify.IsTextDisplayed("newBrand", "Test40");
-
-    //await Verify.verifyToastSuccessMessage('Brand added successfully');
+    await Actions.enterText("brandName", "Test52");
+    await Verify.IsTextDisplayed("newBrand", "Test52");
+    
 });
 
 test('User should not able to add brand with invalid data', async ({ Actions, Click, Verify, page }) => {

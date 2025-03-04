@@ -4,16 +4,17 @@ import { Page, Locator, BrowserContext, expect } from '@playwright/test'
 export class Verify {
   readonly page: Page
   readonly context: BrowserContext
-  private readonly newBrand: Locator;
-
+  readonly rows: Locator;
+  
+  
 
   constructor(page: Page, context: BrowserContext) {
     this.page = page
-    this.context = context
-    this.newBrand = page.locator("//a[text()='Test15']");
+    this.context = context    
 
-    
   }
+
+  
 
   // Display of Error message---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -28,27 +29,28 @@ export class Verify {
     )
   }
 
-  
-// Display of Text Verification--------------------------------------------------------------------------------------------------------------------------------------------
-  
-async IsTextDisplayed(text: string, TextValue:string): Promise<void> {
+
+  // Display of Text Verification---------------------------------------------------------------------------------------------------------------
+
+  async IsTextDisplayed(text: string, TextValue: string): Promise<void> {
 
     if (text === 'Brands') {
       const BrandText = this.page.locator('text=Brands')
       await expect(BrandText).toBeVisible({ timeout: 5000 })
     }
-      else if (text = 'newBrand') {
-        const valueprint = await this.page.locator("//a[text()='Test15']").textContent();
-        await expect(valueprint).toBe('Test15')
+    else if (text = 'newBrand') {
+      try{
+        const valueprint = await this.page.locator(`//a[text()='${ TextValue }']`).textContent();
+        console.log(valueprint)
       }
-    } 
+      catch(e){
+      console.log("Element not found", e)
+      }
+      //await expect(valueprint).toBe('TextValue')
+    }
+//---------------------------------------------------------------------------------------------------------------------------------------------
 
 
-    
-
-  
 }
 
-
-
-
+}

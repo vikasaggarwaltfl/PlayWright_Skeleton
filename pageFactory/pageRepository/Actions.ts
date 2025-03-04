@@ -20,13 +20,14 @@ export class Actions {
     readonly USERNAME_EDITBOX: Locator;
     readonly PASSWORD_EDITBOX: Locator;
     private readonly brandName: Locator
+
     
     
     constructor(page: Page, context: BrowserContext) {
         this.page = page;
         this.context = context;
         this.USERNAME_EDITBOX = page.locator("#signInFormUsername").last();
-        this.PASSWORD_EDITBOX = page.locator("#signInFormPassword").last();
+        this.PASSWORD_EDITBOX = page.locator("#signInFormPassword").last(); 
         this.brandName = page.locator("//input[@placeholder='Brand Name']") 
         
         
