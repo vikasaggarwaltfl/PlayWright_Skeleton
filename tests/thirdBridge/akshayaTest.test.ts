@@ -4,89 +4,41 @@ import { Click } from '@pages/Click'
 import { expect } from '@playwright/test'
 import { Verify } from '@pages/Verify'
 
-test('user login', async ({ Actions, Click,Verify,page}) => {
+test.only('login', async ({ Actions, Click,Verify,page}) => {
   await Actions.signIn();
-  await Click.Btn("Signin");
-  await Verify.verifyURL();
+  await Click.Btn("sign_In");
   });
 
-  test('Products title', async ({ Actions, Click,Verify,page}) => {
+test.only('Products', async ({ Actions, Click,Verify,page}) => {
     await Actions.signIn();
-    await Click.Btn("login");
-    await Click.link("Products");
-    await Verify.ProductText("Products");
-
-    });
-
-test('filter products', async ({ Actions, Click, Verify, page }) => {
-  await Actions.signIn();
-  await Click.Btn("login");
-  await Click.link("Products");
-  await Click.icon("ProductFilterArrow");
-  await Actions.enterText("ProductSupplierCode", "DS3MM87427");
-  await Click.Btn("ProductFilter");
+    await Click.Btn("sign_In");
+    await Click.Tab("Products");
 });
 
+  test.only('Filter Product', async ({ Actions, Click,Verify,page}) => {
+      await Actions.signIn();
+      await Click.Btn("sign_In");
+      await Click.Tab("Products");
+      await page.waitForTimeout(60000);
+      await Click.Icon("filterArrow");
+      await Actions.enterText("productName", "Absto003");
+      await Click.Btn("Filter");
 
 
-test('products info', async ({ Actions, Click, Verify, page }) => {
-  await Actions.signIn();
-  await Click.Btn("login");
-  await Click.link("Products");
-  await Click.icon("ProductFilterArrow");
-  await Actions.enterText("ProductSupplierCode", "DS3MM87427");
-  await Click.Btn("ProductFilter");
-  await Click.link("ArtisticProduct");
-  await Verify.ParticularProductText("Product: 3M087427");
-});
+      });
+
+      test('Reset Product', async ({ Actions, Click,Verify,page}) => {
+        await Actions.signIn();
+        await Click.Btn("sign_In");
+        await Click.Tab("Products");
+        await Click.Icon("filterArrow");
+        await Actions.enterText("productName", "Absto003");
+        await Click.Btn("Filter");
+        await Click.Icon("filterArrow");
+        await Click.Btn("Reset");
+        });
 
 
-test.only('Supplier Filter Test', async ({ Actions, Click,Verify,page}) => {
- await Actions.signIn();
- await Click.Btn("signIn");
- 
- await Click.tabs("Suppliers");
- 
-  });
-
-
-// test('reset products', async ({ Actions, Click, Verify, page }) => {
-//   await Actions.signIn();
-//   await Click.Btn("login");
-//   await Click.link("Products");
-//   await Click.icon("ProductFilterArrow");
-//   await Actions.enterText("ProductSupplierCode", "DS3MM87427");
-//   await Click.Btn("ProductFilter");
-//   await Click.icon("ProductFilterArrow");
-//   await page.waitForTimeout(60000);
-//   await Click.Btn("ProductReset");
-//   await page.close();
-
-// });
-
-
-
-
-
-
-
-
-
-
-
-//-------------------------------------------------------------------------------------------------------
-
-// test('change password', async ({ Actions, Click, Verify, page }) => {
-//   await Actions.signIn();
-//   await Click.Btn("login");
-//   await Click.Profile();
-//   await Actions.enterText("enterCurrentPassword", "SuperAdmin@123");
-//   await Actions.enterText("enterNewPassword", "SuperAdmin@1234");
-//   await Actions.enterText("confirmNewPassword", "SuperAdmin@1234");
-//   await Click.Btn("changePassword");
-
-
-// });
 
 //-----------------------------------------------------------------------------------------------------------
 

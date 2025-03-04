@@ -69,7 +69,7 @@ export class Click {
 
         //Icon
         this.chevronLeft = page.locator("//span[class='p-input-icon text-[10px] pi pi-chevron-left']")
-        this.filterArrow = page.locator("//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90']")
+        this.filterArrow = page.locator("/html[1]/body[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[2]/div[4]/div[1]/div[1]/div[2]/button[1]")
         this.kebabMenu = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/span[1]")
         this.Edit = page.locator("//button[normalize-space()='Edit']")
         this.Sort = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")

@@ -20,6 +20,7 @@ export class Actions {
     readonly USERNAME_EDITBOX: Locator;
     readonly PASSWORD_EDITBOX: Locator;
     private readonly brandName: Locator
+    private readonly productName: Locator
 
     
     
@@ -29,6 +30,7 @@ export class Actions {
         this.USERNAME_EDITBOX = page.locator("#signInFormUsername").last();
         this.PASSWORD_EDITBOX = page.locator("#signInFormPassword").last(); 
         this.brandName = page.locator("//input[@placeholder='Brand Name']") 
+        this.productName = page.locator("//input[@id='SupplierCode']")
         
         
     }
@@ -53,7 +55,10 @@ export class Actions {
 
             await this.brandName.fill(text);
         }
+        if (textBoxName === "productName") {
 
+            await this.brandName.fill(text);
+        }
     }
  }
 
