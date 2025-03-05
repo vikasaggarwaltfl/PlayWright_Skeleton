@@ -35,6 +35,7 @@ export class Click {
     private readonly Edit: Locator
     private readonly Sort: Locator
     private readonly supplier: Locator
+    private readonly brand: Locator
 
     //Btn
     private readonly sign_In: Locator
@@ -46,6 +47,7 @@ export class Click {
 
     //dropdownOption
     private readonly artistic: Locator
+    private readonly absto: Locator
 
 
 
@@ -80,6 +82,7 @@ export class Click {
         this.Edit = page.locator("//button[normalize-space()='Edit']")
         this.Sort = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
         this.supplier = page.locator("//div[@name='SupplierId']")
+        this.brand=page.locator("(//*[name()='svg'][@class='p-icon p-dropdown-trigger-icon'])[3]")
 
         //Btn
         this.sign_In = page.locator("(//input[@name='signInSubmitButton'])[2]")
@@ -91,6 +94,7 @@ export class Click {
 
 //dropdownOption
        this.artistic = page.locator("//span[text()='Artistic']")
+       this.absto = page.locator("//div[@id='pv_id_86'][1]")
     }
 
     //Link
@@ -172,6 +176,9 @@ export class Click {
         else if (str === "supplier") {
             await this.supplier.click();
         }
+        else if (str === "brand") {
+            await this.brand.click();
+        }
         
     }
 
@@ -206,14 +213,9 @@ async dropdownOption(str: string): Promise<void> {
     if (str === "artistic") {
         await this.artistic.click();
     }
-
-
-
-
-
-
-
-
+    if (str === "absto") {
+        await this.absto.click();
+    }
 
 
 

@@ -57,7 +57,7 @@ export class Actions {
         }
         if (textBoxName === "productName") {
 
-            await this.brandName.fill(text);
+            await this.productName.fill(text);
         }
     }
  }
