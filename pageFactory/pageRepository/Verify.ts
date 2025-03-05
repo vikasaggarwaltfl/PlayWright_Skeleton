@@ -67,7 +67,13 @@ export class Verify {
       }
       return totalElemetns;
     }
-  
 
-  }
 
+  // VerifyData---------------------------------------------------------------------------------------------------------------------------------------------
+
+//   async toBeDisabled(str: string) {
+
+//     const locator = Verify.locator('Btn.filter');
+
+//   }
+}

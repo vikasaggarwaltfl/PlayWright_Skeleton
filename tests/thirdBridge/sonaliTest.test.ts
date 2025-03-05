@@ -75,7 +75,7 @@ test('Sort Brand Records ', async ({ Actions, Click, Verify, page }) => {
     ///await page.pause()
 });
 
-test('Filter Brand Records and Verify Result ', async ({ Actions, Click, Verify, page }) => {
+test('Filter Brand Records and Verify Result', async ({ Actions, Click, Verify, page }) => {
     await Click.Tab("Brands")
     await Click.Btn("filterArrow");
     await Actions.enterText("brandName", "Test36");
@@ -84,7 +84,16 @@ test('Filter Brand Records and Verify Result ', async ({ Actions, Click, Verify,
 });
 
 // Product Screen---------------------------------------------------------------------------------------------------------------------
-test.only('Filter Product Records and Verify Result ', async ({ Actions, Click, Verify, page }) => {
+
+// test('Test', async ({ Actions, Click, Verify, page }) => {
+//     await Click.Tab("Products");
+//     await Click.Icon("filterArrow");
+//     await expect("Filter").toBeDisabled();
+//     expect(await Verify.verifyData("Artistic")).toBe(4);
+//     await page.pause()
+// });
+
+test.only('Filter Product Records and Verify Record Count', async ({ Actions, Click, Verify, page }) => {
     await Click.Tab("Products");
     await Click.Icon("filterArrow");
     await Click.Icon("supplier");
