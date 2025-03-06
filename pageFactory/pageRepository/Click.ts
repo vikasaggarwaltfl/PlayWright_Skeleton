@@ -10,6 +10,7 @@ export class Click {
 
     //Link
     private readonly addBrand: Locator
+    private readonly brandInfo: Locator
     private readonly addProduct: Locator
     private readonly addCatalogue: Locator
     private readonly lookupCategory: Locator
@@ -57,6 +58,7 @@ export class Click {
 
         //Link
         this.addBrand = page.locator("//div[text()=' Add Brand']")
+        this.brandInfo = page.locator("//a[normalize-space()='ABSTO']")
         this.addProduct = page.locator("//div[text()=' Add Product']")
         this.addCatalogue = page.locator("//div[text()=' Add Catalogues']")
         this.lookupCategory = page.locator("//a[normalize-space()='Lookup Category Setup']")
@@ -102,6 +104,9 @@ export class Click {
 
         if (linkName === "addBrand") {
             await this.addBrand.click();
+        }
+        else if (linkName === "brandInfo") {
+            await this.brandInfo.click();
         }
         else if (linkName === "addProduct") {
             await this.addProduct.click();
@@ -216,8 +221,6 @@ async dropdownOption(str: string): Promise<void> {
     if (str === "absto") {
         await this.absto.click();
     }
-
-
 
 }
 }

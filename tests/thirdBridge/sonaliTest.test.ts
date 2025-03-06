@@ -14,65 +14,60 @@ test.beforeEach('User login', async ({ page, Actions, Click }) => {
     await Click.Btn("sign_In");
 });
 
-
-
-// Supplier---------------------------------------------------------------------------------------------------------------------------
-
-// test('Verify Supplier Records filtered by Suppliername', async ({ Actions, Click, Verify, page }) => {
-//     await Click.Tab("Suppliers");
-//     await Click.Icon("filterArrow");
-//     await Actions.enterText("supplierName", "Artistic");
-//     await Verify.IsTextDisplayed("checkSupplier", "Artistic");
-//     await page.pause();
-// });
-
-
 // Brand Screen ----------------------------------------------------------------------------------------------------------------------
-test('Verify that new brand is added successfully', async ({ Actions, Click, Verify, page }) => {
-    await Click.Tab("Brands")
-    await Click.Link("addBrand")
-    await Actions.enterText("brandName", "Test53");
+
+test('Verify Adding Brand with Valid Data and Verifying Record Presence in Grid', async ({ Actions, Click, Verify, page }) => {
+
+    await Click.Tab("Brands");
+    await Click.Link("addBrand");
+    await Actions.enterText("brandName", "Test55");
     await Click.Btn("Save");
     await page.waitForTimeout(3000);
     await Click.Tab("Brands");
     await Click.Icon("filterArrow");
-    await Actions.enterText("brandName", "Test53");
-    await Verify.IsTextDisplayed("newBrand", "Test53");
+    await Actions.enterText("brandName", "Test55");
+    await Verify.IsTextDisplayed("newBrand", "Test55");
+});
+
+test.only('Adding brand with invalid data and Verify Error message', async ({ Actions, Click, Verify, page }) => {
+    await Click.Tab("Brands")
+    await Click.Link("addBrand")
+    await Actions.enterText("brandName", "Test30");
+    await Click.Btn("Save");
+    await page.waitForTimeout(3000);
+    await Verify.verifyErrorMessage('Brand Name is a required field');
+    await page.pause();
     
 });
 
-test('User should not able to add brand with invalid data', async ({ Actions, Click, Verify, page }) => {
+test('Editing Brand Details', async ({ Actions, Click, Verify, page }) => {
     await Click.Tab("Brands")
-    await Click.Link("AddBrand")
-    await Actions.enterText("BrandName", "Test30");
-    await Click.Btn("Save");
-    //await Verify.IsErrorPopUp('Saving Failed')
-});
-
-test('Edit Brand Details', async ({ Actions, Click, Verify, page }) => {
-    await Click.Tab("Brands")
-    await Click.Icon("BrandActions")
-    await Click.Btn("EditBrand")
-    await Actions.enterText("BrandPrefix", "ABB");
+    await Click.Icon("kebabMenu")
+    await Click.Icon("Edit")
+    await Actions.enterText("brandPrefix", "ABBB");
     await Click.Btn("Save")
     await Click.Btn("BrandInfo")
-    //await Verify.IsTextDisplayed("editedPrefix");
     //await page.pause()
+    
 });
 
-test('Open Brand Details ', async ({ Actions, Click, Verify, page }) => {
+test('Open BrandInfo and Verify URL', async ({ Actions, Click, Verify, page }) => {
     await Click.Tab("Brands")
-    await Click.Link("OpenBrandDetails")
-    await expect(page).toHaveURL('https://onexweb-uat.officenational.co.za/table/brand/6')
-    await page.pause()
+    await Click.Link("brandInfo")
+    await page.waitForTimeout(5000);
+    await Verify.verifyURL('https://onexweb-uat.officenational.co.za/table/brand/6');
+    //await page.pause()
 });
 
 test('Sort Brand Records ', async ({ Actions, Click, Verify, page }) => {
     await Click.Tab("Brands")
-    await Click.Icon("SortBrand")
-    await Click.Icon("SortBrand")
-    await Click.Icon("SortBrand")
-    ///await page.pause()
+    const clickCount = 3;
+    for (let i = 0; i < clickCount; i++) {
+        await Click.Icon("Sort");
+        await Verify.verifySortOrder();
+        console.log(`Click #${i + 1}`);
+      }
+    await page.pause()
 });
 
 test('Filter Brand Records and Verify Result', async ({ Actions, Click, Verify, page }) => {
@@ -80,20 +75,11 @@ test('Filter Brand Records and Verify Result', async ({ Actions, Click, Verify, 
     await Click.Btn("filterArrow");
     await Actions.enterText("brandName", "Test36");
     await Verify.IsTextDisplayed("newBrand", "Test36");
-    await page.pause()
+    //await page.pause()
 });
 
-// Product Screen---------------------------------------------------------------------------------------------------------------------
 
-// test('Test', async ({ Actions, Click, Verify, page }) => {
-//     await Click.Tab("Products");
-//     await Click.Icon("filterArrow");
-//     await expect("Filter").toBeDisabled();
-//     expect(await Verify.verifyData("Artistic")).toBe(4);
-//     await page.pause()
-// });
-
-test.only('Filter Product Records and Verify Record Count', async ({ Actions, Click, Verify, page }) => {
+test('Filter Product Records and Verify Record Count', async ({ Actions, Click, Verify, page }) => {
     await Click.Tab("Products");
     await Click.Icon("filterArrow");
     await Click.Icon("supplier");
