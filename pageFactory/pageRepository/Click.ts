@@ -10,6 +10,7 @@ export class Click {
 
     //Link
     private readonly addBrand: Locator
+    private readonly brandInfo: Locator
     private readonly addProduct: Locator
     private readonly addCatalogue: Locator
     private readonly lookupCategory: Locator
@@ -58,6 +59,7 @@ export class Click {
 
         //Link
         this.addBrand = page.locator("//div[text()=' Add Brand']")
+        this.brandInfo = page.locator("//a[normalize-space()='ABSTO']")
         this.addProduct = page.locator("//div[text()=' Add Product']")
         this.addCatalogue = page.locator("//div[text()=' Add Catalogues']")
         this.lookupCategory = page.locator("//a[normalize-space()='Lookup Category Setup']")
@@ -83,9 +85,9 @@ export class Click {
         this.kebabMenu = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/span[1]")
         this.Edit = page.locator("//button[normalize-space()='Edit']")
         this.Sort = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
-        this.selectSupplier = page.locator("//div[@name='SupplierId']")
-        this.selectBrand=page.locator("//div[@name='BrandId']")
-        
+        this.supplier = page.locator("//div[@name='SupplierId']")
+        this.brand=page.locator("(//*[name()='svg'][@class='p-icon p-dropdown-trigger-icon'])[3]")
+
         //Btn
         this.sign_In = page.locator("(//input[@name='signInSubmitButton'])[2]")
         this.Profile = page.locator("//p[text()='ONA Super Admin']")
@@ -96,7 +98,7 @@ export class Click {
 
 //dropdownOption
        this.artistic = page.locator("//span[text()='Artistic']")
-       this.absto = page.locator("//span[text()='ABSTO']")
+       this.absto = page.locator("//div[@id='pv_id_86'][1]")
     }
 
     //Link
@@ -104,6 +106,9 @@ export class Click {
 
         if (linkName === "addBrand") {
             await this.addBrand.click();
+        }
+        else if (linkName === "brandInfo") {
+            await this.brandInfo.click();
         }
         else if (linkName === "addProduct") {
             await this.addProduct.click();
@@ -182,9 +187,9 @@ export class Click {
             await this.selectSupplier.click();
         }
         else if (str === "brand") {
-            await this.selectBrand.click();
+            await this.brand.click();
         }
-        
+
     }
 
     //Btn
@@ -212,17 +217,15 @@ export class Click {
 
     }
 
-//dropdownOption
-async dropdownOption(str: string): Promise<void> {
+    //dropdownOption
+    async dropdownOption(str: string): Promise<void> {
 
-    if (str === "artistic") {
-        await this.artistic.click();
+        if (str === "artistic") {
+            await this.artistic.click();
+        }
+        if (str === "absto") {
+            await this.absto.click();
+        }
+
     }
-    if (str === "absto") {
-        await this.absto.click();
-    }
-
-
-
-}
 }
