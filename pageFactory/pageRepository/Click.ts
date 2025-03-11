@@ -35,8 +35,8 @@ export class Click {
     private readonly kebabMenu: Locator
     private readonly Edit: Locator
     private readonly Sort: Locator
-    private readonly supplier: Locator
-    private readonly brand: Locator
+    private readonly selectSupplier: Locator
+    private readonly selectBrand: Locator
 
     //Btn
     private readonly sign_In: Locator
@@ -83,8 +83,8 @@ export class Click {
         this.kebabMenu = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/span[1]")
         this.Edit = page.locator("//button[normalize-space()='Edit']")
         this.Sort = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
-        this.supplier = page.locator("//div[@name='SupplierId']")
-        this.brand=page.locator("(//*[name()='svg'][@class='p-icon p-dropdown-trigger-icon'])[3]")
+        this.selectSupplier = page.locator("//div[@name='SupplierId']")
+        this.selectBrand = page.locator("(//*[name()='svg'][@class='p-icon p-dropdown-trigger-icon'])[3]")
 
         //Btn
         this.sign_In = page.locator("(//input[@name='signInSubmitButton'])[2]")
@@ -94,9 +94,9 @@ export class Click {
         this.Reset = page.locator("//button[normalize-space()='Reset']")
         this.signOut = page.locator("//button[@aria-label='Sign Out']")
 
-//dropdownOption
-       this.artistic = page.locator("//span[text()='Artistic']")
-       this.absto = page.locator("//div[@id='pv_id_86'][1]")
+        //dropdownOption
+        this.artistic = page.locator("//span[text()='Artistic']")
+        this.absto = page.locator("//div[@id='pv_id_86'][1]")
     }
 
     //Link
@@ -178,13 +178,13 @@ export class Click {
         else if (str === "Sort") {
             await this.Sort.click();
         }
-        else if (str === "supplier") {
-            await this.supplier.click();
+        else if (str === "selectSupplier") {
+            await this.selectSupplier.click();
         }
-        else if (str === "brand") {
-            await this.brand.click();
+        else if (str === "selectBrand") {
+            await this.selectBrand.click();
         }
-        
+
     }
 
     //Btn
@@ -212,15 +212,15 @@ export class Click {
 
     }
 
-//dropdownOption
-async dropdownOption(str: string): Promise<void> {
+    //dropdownOption
+    async dropdownOption(str: string): Promise<void> {
 
-    if (str === "artistic") {
-        await this.artistic.click();
-    }
-    if (str === "absto") {
-        await this.absto.click();
-    }
+        if (str === "artistic") {
+            await this.artistic.click();
+        }
+        if (str === "absto") {
+            await this.absto.click();
+        }
 
-}
+    }
 }

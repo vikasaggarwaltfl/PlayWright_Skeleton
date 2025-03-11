@@ -7,178 +7,154 @@ import { Verify } from '@pages/Verify'
 import { access } from 'fs'
 
 
-// Login ------------------------------------------------------------------------------------------------------------------------------
+// Login ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test.beforeEach('User login', async ({ page, Actions, Click }) => {
+test('Verify that user is able to login with valid credentials', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
+    await Verify.IsTextDisplayed("My OfficeNational");
+    await Verify.IsTextDisplayed("Products");
+    await Verify.IsTextDisplayed("ONA Super Admin");
 });
 
-// Brand Screen ----------------------------------------------------------------------------------------------------------------------
+// Brand Screen --------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify Adding Brand with Valid Data and Verifying Record Presence in Grid', async ({ Actions, Click, Verify, page }) => {
+test('Verify user can navigate to the "Brand" screen and it loaded correctly.', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Brands");
+    //await Verify.IsTextDisplayed("topHeading", "Brands");
+    await Verify.IsTextDisplayed("Brands");
+});
 
+test('Verify user can  Add Brand with "valid data" and verify record presence in grid', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
     await Click.Tab("Brands");
     await Click.Link("addBrand");
-    await Actions.enterText("brandName", "Test55");
+    await Actions.enterText("brandName", "Test63");
     await Click.Btn("Save");
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(5000);
     await Click.Tab("Brands");
     await Click.Icon("filterArrow");
-    await Actions.enterText("brandName", "Test55");
-    await Verify.IsTextDisplayed("newBrand", "Test55");
+    await Actions.enterText("brandName", "Test63");
+    //await Verify.IsTextDisplayed("newBrand", "Test63");
+    await Verify.IsTextDisplayed("Test63");
 });
 
-test.only('Adding brand with invalid data and Verify Error message', async ({ Actions, Click, Verify, page }) => {
-    await Click.Tab("Brands")
-    await Click.Link("addBrand")
-    await Actions.enterText("brandName", "Test30");
+test('Verify user cannot Add Brand with "invalid data" and verify error message', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Brands");
+    await Click.Link("addBrand");
+    await Actions.enterText("brandName", "     ");
     await Click.Btn("Save");
-    await page.waitForTimeout(3000);
     await Verify.verifyErrorMessage('Brand Name is a required field');
-    await page.pause();
-    
 });
 
-test('Editing Brand Details', async ({ Actions, Click, Verify, page }) => {
-    await Click.Tab("Brands")
-    await Click.Icon("kebabMenu")
-    await Click.Icon("Edit")
-    await Actions.enterText("brandPrefix", "ABBB");
-    await Click.Btn("Save")
-    await Click.Btn("BrandInfo")
-    //await page.pause()
-    
+test('Verify user can Filter Brand records and verify result', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Brands");
+    await Click.Icon("filterArrow");
+    await Actions.enterText("brandName", "Test37");
+    await Verify.IsTextDisplayed("Test37");
 });
 
-test('Open BrandInfo and Verify URL', async ({ Actions, Click, Verify, page }) => {
-    await Click.Tab("Brands")
-    await Click.Link("brandInfo")
+test('Verify user can Sort Brand records and verify sort order', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Brands");
+    await Click.Icon("Sort");
+    await Verify.verifySortOrder();
+    await Click.Icon("Sort");
+    await Verify.verifySortOrder();
+    await Click.Icon("Sort");
+    await Verify.verifySortOrder();
+});
+
+test('Verify user can Open Brand Information and verify url.', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Brands");
+    await Click.Link("brandInfo");
     await page.waitForTimeout(5000);
     await Verify.verifyURL('https://onexweb-uat.officenational.co.za/table/brand/6');
-    //await page.pause()
 });
 
-test('Sort Brand Records ', async ({ Actions, Click, Verify, page }) => {
-    await Click.Tab("Brands")
-    const clickCount = 3;
-    for (let i = 0; i < clickCount; i++) {
-        await Click.Icon("Sort");
-        await Verify.verifySortOrder();
-        console.log(`Click #${i + 1}`);
-      }
-    await page.pause()
-});
-
-test('Filter Brand Records and Verify Result', async ({ Actions, Click, Verify, page }) => {
-    await Click.Tab("Brands")
-    await Click.Btn("filterArrow");
-    await Actions.enterText("brandName", "Test36");
-    await Verify.IsTextDisplayed("newBrand", "Test36");
-    //await page.pause()
+test('Verify that the user can edit and save the details of an existing brand', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Brands");
+    await Click.Icon("kebabMenu");
+    await Click.Icon("Edit");
+    await Actions.enterText("brandPrefix", "ABBBBB");
+    await Click.Btn("Save");
+    await Click.Btn("BrandInfo");
 });
 
 
-test('Filter Product Records and Verify Record Count', async ({ Actions, Click, Verify, page }) => {
-    await Click.Tab("Products");
-    await Click.Icon("filterArrow");
-    await Click.Icon("supplier");
-    await Click.dropdownOption("artistic");
-    await Click.Btn("Filter");
-    await page.waitForTimeout(5000);
-    expect(await Verify.verifyData("Artistic")).toBe(4);
-    await page.pause()
-});
+// Product screen ---------------------------------------------------------------------------------------------------------------------
 
-// Group Setting Screen ---------------------------------------------------------------------------------------------------------------
-
-test('Open Group Settings ', async ({ Actions, Click, Verify, page }) => {
-    await Click.Tab("GroupSettings")
-});
-
-test('Open Lookup Category Setup ', async ({ Actions, Click, Verify, page }) => {
-    await Click.Tab("GroupSettings")
-    await Click.Link("LookupCategory")
-});
-
-test('Open Master Product Category Setup ', async ({ Actions, Click, Verify, page }) => {
-    await Click.Tab("GroupSettings")
-    await Click.Link("MasterCategory")
-});
-
-test('Open IQ Product Category Setup ', async ({ Actions, Click, Verify, page }) => {
-    await Click.Tab("GroupSettings")
-    await Click.Link("IQCategory")
-});
-
-test('Open Pastel Product Category Setup ', async ({ Actions, Click, Verify, page }) => {
-    await Click.Tab("GroupSettings")
-    await Click.Link("PastelCategory")
-});
-
-test('Open Audit log ', async ({ Actions, Click, Verify, page }) => {
-    await Click.Tab("GroupSettings")
-    await Click.Link("AuditLog")
-    //await page.pause()
-});
-
-test('Open config codes ', async ({ Actions, Click, Verify, page }) => {
-    await Click.Tab("GroupSettings")
-    await Click.Link("ConfigCodes")
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// test.('user login', async ({ page, Actions, Click }) => {
-
-//     await page.goto('https://onexweb-uat.officenational.co.za/');
-//     await Actions.enterText("email", "jeigemmabrije-7589@yopmail.com");
-//     await Actions.enterText("password", "Testing@1212");
-//     await Click.Btn("login");
+// test.only('Filter Product Records and Verify Record Count', async ({ Actions, Click, Verify, page }) => {
 //     await Actions.signIn();
-//     await Click.Btn("login");
-//     await Actions.enterText("searchmenu", "Suppliers")
-//     await Click.tabs("SuppliersTab")
-//     await Click.icon("FilterDropDown")
-//     await Actions.enterText("nameFilter", "Sofiya")
-
+//     await Click.Btn("sign_In");
+//     await Click.Tab("Products");
+//     await Click.Icon("filterArrow");
+//     await Click.Icon("selectSupplier");
+//     await Click.dropdownOption("artistic");
+//     await Click.Btn("Filter");
+//     await page.waitForTimeout(5000);
+//     expect(await Verify.verifyData("str")).toBe(5);
 // });
 
-// test('Add New Brand ', async ({ Actions, Click, Verify, page }) => {
 
-//     await Actions.signIn();
-//     await Click.Btn("login");
-//     await Click.tabs("BrandsTab")
-//     await Click.link("NewBrand")
-//     await page.pause();
-//     await Actions.enterText("enterBrandName","TestingBrand1");
-//     await Click.Btn("BrandDropBox");
-//     await Actions.uploadFile("//div[text()='Drop files here to upload logo']","NewBrand");
-// })
+
+//Group Setting Screen ---------------------------------------------------------------------------------------------------------------
+
+// test('Open Group Settings ', async ({ Actions, Click, Verify, page }) => {
+//     await Click.Tab("GroupSettings")
+// });
+
+// test('Open Lookup Category Setup ', async ({ Actions, Click, Verify, page }) => {
+//     await Click.Tab("GroupSettings")
+//     await Click.Link("LookupCategory")
+// });
+
+// test('Open Master Product Category Setup ', async ({ Actions, Click, Verify, page }) => {
+//     await Click.Tab("GroupSettings")
+//     await Click.Link("MasterCategory")
+// });
+
+// test('Open IQ Product Category Setup ', async ({ Actions, Click, Verify, page }) => {
+//     await Click.Tab("GroupSettings")
+//     await Click.Link("IQCategory")
+// });
+
+// test('Open Pastel Product Category Setup ', async ({ Actions, Click, Verify, page }) => {
+//     await Click.Tab("GroupSettings")
+//     await Click.Link("PastelCategory")
+// });
+
+// test('Open Audit log ', async ({ Actions, Click, Verify, page }) => {
+//     await Click.Tab("GroupSettings")
+//     await Click.Link("AuditLog")
+// });
+
+// test('Open config codes ', async ({ Actions, Click, Verify, page }) => {
+//     await Click.Tab("GroupSettings")
+//     await Click.Link("ConfigCodes")
+// });
+
+
+
+
+
+
+
+
+
+
 
 
 

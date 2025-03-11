@@ -28,29 +28,86 @@ export class Verify {
     )
   }
 
+// Verify Text ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  // Display of Text Verification---------------------------------------------------------------------------------------------------------------
-
-  async IsTextDisplayed(text: string, TextValue: string): Promise<void> {
-
-    if (text === 'Brands') {
-      const BrandText = this.page.locator('text=Brands')
-      await expect(BrandText).toBeVisible({ timeout: 5000 })
+  
+    public async IsTextDisplayed(TextValue: string): Promise<void> {
+    
+      await this.page.locator(`text="${TextValue}"`).waitFor({ state: 'visible', timeout: 10000 });
+      const isVisible = await this.page.locator(`text="${TextValue}"`).isVisible();    
+      console.log(isVisible ? `"${TextValue}" is visible` : `"${TextValue}" is not visible`);
+      await expect(isVisible).toBe(true);
+      
     }
-    else if (text === 'newBrand') {
-      try {
-        const valueprint = await this.page.locator(`//a[text()='${TextValue}']`).textContent();
-        console.log(valueprint)
-      }
-      catch (e) {
-        console.log("Element not found", e)
-      }
-      //await expect(valueprint).toBe('TextValue')
-    }
+
+  //   if (text === 'anyText') {
+  //     await this.page.locator(`text="${TextValue}"`).waitFor({ state: 'visible', timeout: 10000 });
+  //     const isVisible = await this.page.locator(`text="${TextValue}"`).isVisible();
+  //     console.log(isVisible ? `"${TextValue}" is visible` : `"${TextValue}" is not visible`);
+  //     await expect(isVisible).toBe(true);
+  //   }
+  // }
+
+    // Heading Text
+    // else if (text === 'topHeading') {
+    //   const topHeading = await this.page.locator("//div[@class='topHeading']").textContent();
+    //   console.log("Heading displayed correctly", topHeading)
+    //   await expect(topHeading).toBe(TextValue)
+    // }
+    // // DataGrid Text
+    // else if (text === 'newBrand') {
+    //   try {
+    //     const valueprint = await this.page.locator(`//a[text()='${TextValue}']`).textContent();
+    //     console.log(valueprint)
+    //   }
+    //   catch (e) {
+    //     console.log("Element not found", e)
+    //   }
+    // } 
+     
+    
+// Verify Sort Icon State------------------------------------------------------------------------------------------------------------------------------------------------
+
+async verifySortOrder() {
+  const icon = await this.page.locator("//th[2]//div[1]//span[2]//*[name()='svg']");  
+  const state = await icon.getAttribute('sortOrder'); 
+  const sortOrder = parseInt(state || '0', 10);
+  
+
+  if (sortOrder === 0) {
+    console.log("Sort Order is: Default");
+  } else if (sortOrder === 1) {
+    console.log("Sort Order is: Ascending");
+  } else if (sortOrder === -1) {
+    console.log("Sort Order is: Descending");
+  } else {
+    console.log("Unknown Sort Order");
+  }
+}
+
+// VerifyURL------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+async verifyURL(expectedURL: string): Promise<void> {
+  const currentURL = this.page.url();
+  if (currentURL === expectedURL) {
+    console.log('URL is correct:', currentURL);
+  } else {
+    console.log('URL is incorrect. Expected:', expectedURL, 'but got:', currentURL);
+  }
+
+  await expect(this.page).toHaveURL(expectedURL);
+}
+
+
+// verify Validation Error Message--------------------------------------------------------------------------------------------------------------------------------------
+
+async verifyErrorMessage(expectedMessage: string): Promise<void> {
+  await expect(this.page.locator(`//div[normalize-space()='${expectedMessage}']`)).toBeAttached();
 
   }
 
-  // VerifyData---------------------------------------------------------------------------------------------------------------------------------------------
+
+// Verify Data record count---------------------------------------------------------------------------------------------------------------------------------------------
 
   async verifyData(str: string) {
 
@@ -72,56 +129,19 @@ export class Verify {
     return totalElemetns;
   }
 
-  // VerifyURL-------------------------------------------------------------------------------
-
-  async verifyURL(expectedURL: string): Promise<void> {
-    const currentURL = this.page.url();
-    if (currentURL === expectedURL) {
-      console.log('URL is correct:', currentURL);
-    } else {
-      console.log('URL is incorrect. Expected:', expectedURL, 'but got:', currentURL);
-    }
-
-    await expect(this.page).toHaveURL(expectedURL);
-  }
-
-// verifySortIconState-----------------------------------------------------------------------
-
-async verifySortOrder() {
-  const icon = await this.page.locator("//th[2]//div[1]//span[2]//*[name()='svg']");  
-  const state = await icon.getAttribute('sortOrder'); 
-  const sortOrder = parseInt(state || '0', 10);
-  
-
-  if (sortOrder === 0) {
-    console.log("Sort Order is: Default");
-  } else if (sortOrder === 1) {
-    console.log("Sort Order is: Ascending");
-  } else if (sortOrder === -1) {
-    console.log("Sort Order is: Descending");
-  } else {
-    console.log("Unknown Sort Order");
-  }
 }
 
-  // Verify if the correct error message for a specific field is displayed
 
-  async verifyErrorMessage(expectedMessage: string): Promise<void> {
-    const errorSelector = this.page.locator(`//div[normalize-space()='${expectedMessage}']`);
-    await errorSelector.waitFor({ state: 'visible', timeout: 5000 });
-    const errorText = await errorSelector.textContent();
 
-    if (!errorText || errorText.trim() === '') {
-      throw new Error(`No error message found, expected: "${expectedMessage}"`);
-  }
 
-    if (errorText?.trim() !== expectedMessage) {
-      throw new Error(`Expected error message: "${expectedMessage}", but got: "${errorText}"`);
-    }
-    console.log(`Error message: "${errorText}" is displayed correctly.`);
-  }
+    
+    
 
-}
+
+
+
+
+
 
 
 

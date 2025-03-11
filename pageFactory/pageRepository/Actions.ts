@@ -41,6 +41,7 @@ export class Actions {
         await this.page.goto('https://onexweb-uat.officenational.co.za/')
         await this.enterText("email", "greitraragrevo-2086@yopmail.com");
         await this.enterText("password", "SuperAdmin@123");
+        
     }
 
 //Entering Text------------------------------------------------------------------------------------------------------------------------------------
@@ -55,7 +56,8 @@ export class Actions {
         }
         if (textBoxName === "brandName") {
 
-            await this.brandName.fill(text);
+            //await this.brandName.fill(text);
+            await this.brandName.fill(text, { timeout: 60000 });
         }
         if (textBoxName === "brandPrefix") {
 
