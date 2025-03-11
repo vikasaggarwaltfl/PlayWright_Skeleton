@@ -85,8 +85,8 @@ export class Click {
         this.kebabMenu = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/span[1]")
         this.Edit = page.locator("//button[normalize-space()='Edit']")
         this.Sort = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
-        this.supplier = page.locator("//div[@name='SupplierId']")
-        this.brand=page.locator("(//*[name()='svg'][@class='p-icon p-dropdown-trigger-icon'])[3]")
+        this.selectSupplier = page.locator("//div[@name='SupplierId']")
+        this.selectBrand=page.locator("(//*[name()='svg'][@class='p-icon p-dropdown-trigger-icon'])[3]")
 
         //Btn
         this.sign_In = page.locator("(//input[@name='signInSubmitButton'])[2]")
@@ -186,8 +186,8 @@ export class Click {
         else if (str === "selectSupplier") {
             await this.selectSupplier.click();
         }
-        else if (str === "brand") {
-            await this.brand.click();
+        else if (str === "selectBrand") {
+            await this.selectBrand.click();
         }
 
     }

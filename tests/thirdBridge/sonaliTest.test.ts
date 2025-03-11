@@ -34,7 +34,7 @@ test('Verify user can  Add Brand with "valid data" and verify record presence in
     await Click.Link("addBrand");
     await Actions.enterText("brandName", "Test63");
     await Click.Btn("Save");
-    await page.waitForTimeout(5000);
+    //await page.waitForTimeout(10000);
     await Click.Tab("Brands");
     await Click.Icon("filterArrow");
     await Actions.enterText("brandName", "Test63");
@@ -88,6 +88,7 @@ test('Verify that the user can edit and save the details of an existing brand', 
     await Click.Tab("Brands");
     await Click.Icon("kebabMenu");
     await Click.Icon("Edit");
+    //await page.waitForTimeout(5000);
     await Actions.enterText("brandPrefix", "ABBBBB");
     await Click.Btn("Save");
     await Click.Btn("BrandInfo");
