@@ -8,7 +8,8 @@
     "thirdBridge": "npx playwright test --config=config/thirdBridge.config.ts",
     "test": "npx playwright test ",
     "akshaya": "npx playwright test tests/thirdBridge/akshayaTest.test.ts",
-    "sonali": "npx playwright test tests/thirdBridge/sonaliTest.test.ts"
+    "sonali": "npx playwright test tests/thirdBridge/sonaliTest.test.ts",
+    "common": "npx playwright test tests/thirdBridge/commonTest.test.ts"
   },
   "keywords": [],
   "author": "",
