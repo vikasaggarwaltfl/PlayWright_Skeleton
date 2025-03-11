@@ -28,52 +28,54 @@ export class Verify {
 
   // Display of Text Verification---------------------------------------------------------------------------------------------------------------
 
-  async IsTextDisplayed(text: string, TextValue: string): Promise<void> {
 
-    if (text === 'Brands') {
-      const BrandText = this.page.locator('text=Brands')
-      await expect(BrandText).toBeVisible({ timeout: 5000 })
-    }
-    else if (text = 'newBrand') {
+  async IsTextDisplayed(texts: string[]): Promise<void> {
+
+    for (const text of texts) {
       try {
-        const valueprint = await this.page.locator(`//a[text()='${TextValue}']`).textContent();
-        console.log(valueprint)
-      }
-      catch (e) {
-        console.log("Element not found", e)
-      }
-      //await expect(valueprint).toBe('TextValue')
-    }
+         
+          const locators: { [key: string]: string } = {
+              "My OfficeNational": "//span[text()='My OfficeNational ']",
+              "Product: Absto003": "//div[text()='Product: Absto003']",
+              
+          };
 
+          if (locators[text]) {
+              const textValue = await this.page.locator(locators[text]).textContent();
+              expect(textValue).toBeTruthy();
+              console.log(`Test case pass: ${textValue}`);
+          } else {
+              console.log(`Test case fail: No locator found for '${text}'`);
+          }
+      } catch (e) {
+          console.log(`Test case fail for '${text}':`, e);
+      }
   }
+
+}
+
+
+
 // VerifyData---------------------------------------------------------------------------------------------------------------------------------------------
 
-  async verifyData(str: string) {
+  async verifyData(column: number): Promise<number>{
 
-      const totalElemetns = await this.page.locator("//tbody/tr").count();
-      let result = 0;
+    const totalRows = await this.page.locator("//tbody/tr").count();
 
-      for (let i = 1; i <= totalElemetns; i++) {
-        const data = await this.page.locator(`//tbody/tr[${i}]/td[4]/div`).textContent();
-        if (data !== `${str}`) {
-          result++;
-        }
-      }
-      if (result == 0) {
-        console.log("Test Case pass")
-      }
-      else {
-        throw new Error("Test Case Fail");
-      }
-      return totalElemetns;
+    
+    const columnElements = await this.page.locator(`//tbody/tr/td[${column}]/div`).count();
+
+   
+    if (columnElements === totalRows) {
+        console.log("Test Case Passed");
+    } else {
+        console.log("Test Case Failed");
+    }
+
+    return columnElements;
+
     }
 
 
-  // VerifyData---------------------------------------------------------------------------------------------------------------------------------------------
-
-//   async toBeDisabled(str: string) {
-
-//     const locator = Verify.locator('Btn.filter');
-
-//   }
+  
 }

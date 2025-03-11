@@ -18,6 +18,7 @@ export class Click {
     private readonly pastelCategory: Locator
     private readonly auditLog: Locator
     private readonly configCodes: Locator
+    private readonly productInfo: Locator
 
     //Tab 
     private readonly Dashboard: Locator
@@ -34,8 +35,8 @@ export class Click {
     private readonly kebabMenu: Locator
     private readonly Edit: Locator
     private readonly Sort: Locator
-    private readonly supplier: Locator
-    private readonly brand: Locator
+    private readonly selectSupplier: Locator
+    private readonly selectBrand: Locator
 
     //Btn
     private readonly sign_In: Locator
@@ -65,9 +66,10 @@ export class Click {
         this.pastelCategory = page.locator("//a[normalize-space()='Pastel Product Category Setup']")
         this.auditLog = page.locator("//a[normalize-space()='Audit Log']")
         this.configCodes = page.locator("//a[normalize-space()='Config Codes']")
+        this.productInfo = page.locator("//a[text()='Absto003']")
 
         //Tab
-        this.Dashboard = page.locator("//span[text()='Dashboard']")
+        this.Dashboard = page.locator("//span[text()='DashbproductInfooard']")
         this.Brands = page.locator("//span[text()='Brands']")
         this.Products = page.locator("//span[text()='Products']")
         this.Catalogues = page.locator("//span[text()='Catalogues']")
@@ -77,24 +79,24 @@ export class Click {
 
         //Icon
         this.chevronLeft = page.locator("//span[class='p-input-icon text-[10px] pi pi-chevron-left']")
-        this.filterArrow = page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])[1]")
+        this.filterArrow = page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])")
         this.kebabMenu = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/span[1]")
         this.Edit = page.locator("//button[normalize-space()='Edit']")
         this.Sort = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
-        this.supplier = page.locator("//div[@name='SupplierId']")
-        this.brand=page.locator("(//*[name()='svg'][@class='p-icon p-dropdown-trigger-icon'])[3]")
-
+        this.selectSupplier = page.locator("//div[@name='SupplierId']")
+        this.selectBrand=page.locator("//div[@name='BrandId']")
+        
         //Btn
         this.sign_In = page.locator("(//input[@name='signInSubmitButton'])[2]")
         this.Profile = page.locator("//p[text()='ONA Super Admin']")
         this.Save = page.locator("//button[normalize-space()='Save']")
         this.Filter = page.locator("//button[normalize-space()='Filter']")
-        this.Reset = page.locator("//button[normalize-space()='Reset']")
+        this.Reset = page.locator("//button[@class='mediumOutlinedDistructiveBtn']")
         this.signOut = page.locator("//button[@aria-label='Sign Out']")
 
 //dropdownOption
        this.artistic = page.locator("//span[text()='Artistic']")
-       this.absto = page.locator("//div[@id='pv_id_86'][1]")
+       this.absto = page.locator("//span[text()='ABSTO']")
     }
 
     //Link
@@ -126,6 +128,9 @@ export class Click {
         }
         if (linkName === "configCodes") {
             await this.configCodes.click();
+        }
+        if (linkName === "productInfo") {
+            await this.productInfo.click();
         }
     }
 
@@ -173,11 +178,11 @@ export class Click {
         else if (str === "Sort") {
             await this.Sort.click();
         }
-        else if (str === "supplier") {
-            await this.supplier.click();
+        else if (str === "selectSupplier") {
+            await this.selectSupplier.click();
         }
         else if (str === "brand") {
-            await this.brand.click();
+            await this.selectBrand.click();
         }
         
     }

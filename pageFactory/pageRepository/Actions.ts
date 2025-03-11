@@ -30,7 +30,7 @@ export class Actions {
         this.USERNAME_EDITBOX = page.locator("#signInFormUsername").last();
         this.PASSWORD_EDITBOX = page.locator("#signInFormPassword").last(); 
         this.brandName = page.locator("//input[@placeholder='Brand Name']") 
-        this.productName = page.locator("//input[@id='SupplierCode']")
+        this.productName = page.locator("//input[@name='OnStockCode']")
         
         
     }
