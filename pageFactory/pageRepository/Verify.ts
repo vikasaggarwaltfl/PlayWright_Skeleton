@@ -40,30 +40,7 @@ export class Verify {
       
     }
 
-  //   if (text === 'anyText') {
-  //     await this.page.locator(`text="${TextValue}"`).waitFor({ state: 'visible', timeout: 10000 });
-  //     const isVisible = await this.page.locator(`text="${TextValue}"`).isVisible();
-  //     console.log(isVisible ? `"${TextValue}" is visible` : `"${TextValue}" is not visible`);
-  //     await expect(isVisible).toBe(true);
-  //   }
-  // }
 
-    // Heading Text
-    // else if (text === 'topHeading') {
-    //   const topHeading = await this.page.locator("//div[@class='topHeading']").textContent();
-    //   console.log("Heading displayed correctly", topHeading)
-    //   await expect(topHeading).toBe(TextValue)
-    // }
-    // // DataGrid Text
-    // else if (text === 'newBrand') {
-    //   try {
-    //     const valueprint = await this.page.locator(`//a[text()='${TextValue}']`).textContent();
-    //     console.log(valueprint)
-    //   }
-    //   catch (e) {
-    //     console.log("Element not found", e)
-    //   }
-    // } 
      
     
 // Verify Sort Icon State------------------------------------------------------------------------------------------------------------------------------------------------
@@ -109,30 +86,31 @@ async verifyErrorMessage(expectedMessage: string): Promise<void> {
 
 // Verify Data record count---------------------------------------------------------------------------------------------------------------------------------------------
 
-  async verifyData(str: string) {
+  
+async verifyData(str: string) {
 
-    const totalElemetns = await this.page.locator("//tbody/tr").count();
-    let result = 0;
+  const totalElemetns = await this.page.locator("//tbody/tr").count();
+  let result = 0;
 
-    for (let i = 1; i <= totalElemetns; i++) {
-      const data = await this.page.locator(`//tbody/tr[${i}]/td[4]/div`).textContent();
-      if (data !== `${str}`) {
-        result++;
-      }
+  for (let i = 1; i <= totalElemetns; i++) {
+    const data = await this.page.locator(`//tbody/tr[${i}]/td[4]/div`).textContent();
+    if (data !== `${str}`) {
+      result++;
     }
-    if (result == 0) {
-      console.log("Test Case pass")
-    }
-    else {
-      throw new Error("Test Case Fail");
-    }
-    return totalElemetns;
   }
-
+  if (result == 0) {
+    console.log("Test Case pass")
+  }
+  else {
+    throw new Error("Test Case Fail");
+  }
+  return totalElemetns;
 }
 
 
 
+
+}
 
     
     

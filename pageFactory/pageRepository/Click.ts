@@ -86,7 +86,7 @@ export class Click {
         this.Edit = page.locator("//button[normalize-space()='Edit']")
         this.Sort = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
         this.selectSupplier = page.locator("//div[@name='SupplierId']")
-        this.selectBrand=page.locator("(//*[name()='svg'][@class='p-icon p-dropdown-trigger-icon'])[3]")
+        this.selectBrand=page.locator("//div[@name='BrandId']")
 
         //Btn
         this.sign_In = page.locator("(//input[@name='signInSubmitButton'])[2]")
@@ -98,7 +98,7 @@ export class Click {
 
 //dropdownOption
        this.artistic = page.locator("//span[text()='Artistic']")
-       this.absto = page.locator("//div[@id='pv_id_86'][1]")
+       this.absto = page.locator("//span[text()='ABSTO']")
     }
 
     //Link
