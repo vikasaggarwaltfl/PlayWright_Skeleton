@@ -51,7 +51,7 @@ test('Verify that by clicking on the reset button, the filter button is disabled
 });
 
       
-test.only('Verify that the user is able to edit the product', async ({ Actions, Click,Verify,page}) => {
+test('Verify that the user is able to edit the product', async ({ Actions, Click,Verify,page}) => {
   await Actions.signIn();
   await Click.Btn("sign_In");
   await Click.Tab("Products");
@@ -60,9 +60,8 @@ test.only('Verify that the user is able to edit the product', async ({ Actions, 
   await Click.Link("productInfo");
   await Click.Icon("Edit");
   await Actions.enterText("productCatalogueTitle", "Testing0044");
-  await page.pause();
   await Click.Btn("Save");
-  await page.waitForTimeout(5000);
+  await Verify.IsTextDisplayed("Products saved!");
  
 
   

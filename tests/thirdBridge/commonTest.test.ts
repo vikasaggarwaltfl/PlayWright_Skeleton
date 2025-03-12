@@ -79,7 +79,7 @@ test('Verify user can Open Brand Information and verify url.', async ({ Actions,
     await Verify.verifyURL('https://onexweb-uat.officenational.co.za/table/brand/6');
 });
 
-test.only('Verify that the user can edit and save the details of an existing brand', async ({ Actions, Click, Verify, page }) => {
+test('Verify that the user can edit and save the details of an existing brand', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Brands");
@@ -112,8 +112,31 @@ test('Verify that by clicking on a Product,that Product screen is visible correc
     await Click.Icon("selectBrand");
     await Click.dropdownOption("absto");
     await Click.Btn("Filter");
-    await page.waitForTimeout(5000);
-    expect(await Verify.verifyData("Artistic")).toBe(5);
-          
+    await page.waitForTimeout(6000);
+    expect(await Verify.verifyData("Artistic")).toBe(5);    
     });
 
+    test('Verify that by clicking on the reset button, the filter button is disabled', async ({ Actions, Click,Verify,page}) => {
+        await Actions.signIn();
+        await Click.Btn("sign_In");
+        await Click.Tab("Products");
+        await Click.Icon("filterArrow");
+        await Actions.enterText("productName", "Absto003");
+        await Click.Btn("Reset");
+        await Click.Icon("filterArrow");
+        await Verify.verifyDisabledButton("Filter");
+      });
+      
+            
+      test('Verify that the user is able to edit the product', async ({ Actions, Click,Verify,page}) => {
+        await Actions.signIn();
+        await Click.Btn("sign_In");
+        await Click.Tab("Products");
+        await Click.Icon("filterArrow");
+        await Actions.enterText("productName", "Absto003");
+        await Click.Link("productInfo");
+        await Click.Icon("Edit");
+        await Actions.enterText("productCatalogueTitle", "Testing0044");
+        await Click.Btn("Save");
+        await Verify.IsTextDisplayed("Products saved!");
+      });
