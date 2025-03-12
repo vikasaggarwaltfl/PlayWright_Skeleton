@@ -79,7 +79,7 @@ test('Verify user can Open Brand Information and verify url.', async ({ Actions,
     await Verify.verifyURL('https://onexweb-uat.officenational.co.za/table/brand/6');
 });
 
-test('Verify that the user can edit and save the details of an existing brand', async ({ Actions, Click, Verify, page }) => {
+test.only('Verify that the user can edit and save the details of an existing brand', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Brands");

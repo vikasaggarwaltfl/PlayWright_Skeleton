@@ -93,8 +93,8 @@ export class Click {
         this.Profile = page.locator("//p[text()='ONA Super Admin']")
         this.Save = page.locator("//button[normalize-space()='Save']")
         this.Filter = page.locator("//button[normalize-space()='Filter']")
-        this.Reset = page.locator("//button[@class='mediumOutlinedDistructiveBtn']")
-        this.signOut = page.locator("//button[@aria-label='Sign Out']")
+        this.Reset = page.locator("//button[normalize-space()='Reset']")
+        this.signOut = page.locator("//button[normalize-space()='Sign Out']")
 
 //dropdownOption
        this.artistic = page.locator("//span[text()='Artistic']")

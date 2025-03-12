@@ -23,7 +23,7 @@ await page.waitForTimeout(5000);
 await Verify.IsTextDisplayed("Product: Absto003");
 });
 
-test.only('Verify that by selecting Filter, the filtered screen is displayed as expected', async ({ Actions, Click,Verify,page}) => {
+test('Verify that by selecting Filter, the filtered screen is displayed as expected', async ({ Actions, Click,Verify,page}) => {
 await Actions.signIn();
 await Click.Btn("sign_In");
 await page.waitForLoadState("domcontentloaded");
@@ -38,16 +38,32 @@ expect(await Verify.verifyData("Artistic")).toBe(5);
       
 });
 
-// test('Verify that by clicking on the reset button, the datas are reseted', async ({ Actions, Click,Verify,page}) => {
-//   await Actions.signIn();
-//   await Click.Btn("sign_In");
-//   await Click.Tab("Products");
-//   await Click.Icon("filterArrow");
-//   await Actions.enterText("productName", "Absto003");
-//   await Click.Btn("Reset");
-//   await page.waitForTimeout(5000);
-//   expect(await Verify.verifyData(4)).toBe(10);
-// });
+test('Verify that by clicking on the reset button, the filter button is disabled', async ({ Actions, Click,Verify,page}) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("Products");
+  await Click.Icon("filterArrow");
+  await Actions.enterText("productName", "Absto003");
+  await Click.Btn("Reset");
+  await Click.Icon("filterArrow");
+  await Verify.verifyDisabledButton("Filter");
+  
+});
 
       
+test.only('Verify that the user is able to edit the product', async ({ Actions, Click,Verify,page}) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("Products");
+  await Click.Icon("filterArrow");
+  await Actions.enterText("productName", "Absto003");
+  await Click.Link("productInfo");
+  await Click.Icon("Edit");
+  await Actions.enterText("productCatalogueTitle", "Testing0044");
+  await page.pause();
+  await Click.Btn("Save");
+  await page.waitForTimeout(5000);
+ 
 
+  
+});
