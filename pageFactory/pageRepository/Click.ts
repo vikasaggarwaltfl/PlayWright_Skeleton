@@ -29,6 +29,7 @@ export class Click {
     private readonly groupSettings: Locator
     private readonly Imports: Locator
     private readonly Exports: Locator
+    private readonly productWIP: Locator
 
     //Icon 
     private readonly chevronLeft: Locator
@@ -38,6 +39,7 @@ export class Click {
     private readonly Sort: Locator
     private readonly selectSupplier: Locator
     private readonly selectBrand: Locator
+    private readonly notes: Locator
 
     //Btn
     private readonly sign_In: Locator
@@ -46,6 +48,7 @@ export class Click {
     private readonly Filter: Locator
     private readonly Reset: Locator
     private readonly signOut: Locator
+    private readonly addNote: Locator
 
     //dropdownOption
     private readonly artistic: Locator
@@ -78,6 +81,7 @@ export class Click {
         this.groupSettings = page.locator("//span[text()='Group Settings']")
         this.Imports = page.locator("//span[text()='Imports']")
         this.Exports = page.locator("//span[text()='Exports']")
+        this.productWIP = page.locator("//a[text()='Product WIP']")
 
         //Icon
         this.chevronLeft = page.locator("//span[class='p-input-icon text-[10px] pi pi-chevron-left']")
@@ -87,6 +91,7 @@ export class Click {
         this.Sort = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
         this.selectSupplier = page.locator("//div[@name='SupplierId']")
         this.selectBrand=page.locator("//div[@name='BrandId']")
+        this.notes=page.locator("//span[@class='p-button-icon pi pi-comments']")
 
         //Btn
         this.sign_In = page.locator("(//input[@name='signInSubmitButton'])[2]")
@@ -95,7 +100,7 @@ export class Click {
         this.Filter = page.locator("//button[normalize-space()='Filter']")
         this.Reset = page.locator("//button[normalize-space()='Reset']")
         this.signOut = page.locator("//button[normalize-space()='Sign Out']")
-
+        this.addNote=page.locator("//button[normalize-space()='Add Note']")
 //dropdownOption
        this.artistic = page.locator("//span[text()='Artistic']")
        this.absto = page.locator("//span[text()='ABSTO']")
@@ -164,6 +169,9 @@ export class Click {
         else if (str === "Exports") {
             await this.Exports.click();
         }
+        else if (str === "productWIP") {
+            await this.productWIP.click();
+        }
     }
 
     //Icon
@@ -189,7 +197,9 @@ export class Click {
         else if (str === "selectBrand") {
             await this.selectBrand.click();
         }
-
+        else if (str === "notes") {
+            await this.notes.click();
+        }
     }
 
     //Btn
@@ -214,7 +224,9 @@ export class Click {
         else if (str === "signOut") {
             await this.signOut.click();
         }
-
+        else if (str === "addNote") {
+            await this.addNote.click();
+        }
     }
 
     //dropdownOption

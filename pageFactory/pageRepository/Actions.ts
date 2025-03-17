@@ -23,6 +23,7 @@ export class Actions {
     private readonly brandPrefix: Locator
     private readonly productName: Locator
     private readonly productCatalogueTitle: Locator
+    private readonly productWIPnotes: Locator
 
     
     
@@ -35,7 +36,7 @@ export class Actions {
         this.brandPrefix = page.locator("//input[@placeholder='Prefix']")
         this.productName = page.locator("//input[@id='SupplierCode']")
         this.productCatalogueTitle = page.locator("//input[@name='CatalogueTitle']")
-
+        this.productWIPnotes = page.locator("//textarea[@placeholder='Enter a note']")
         
         
     }
@@ -73,6 +74,10 @@ export class Actions {
         if (textBoxName === "productCatalogueTitle") {
 
             await this.productCatalogueTitle.fill(text);
+        }
+        if (textBoxName === "productWIPnotes") {
+
+            await this.productWIPnotes.fill(text);
         }
     }
  }

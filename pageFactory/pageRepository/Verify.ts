@@ -116,7 +116,11 @@ async verifyDisabledButton(buttonName: string) {
   await expect(isDisabled).toBe(true);
 
 }
+//Verify screenshot--------------------------------------------------------------------------------------
 
-
-      
+async verifyScreenshot(page: Page, imagename: string) {
+  await page.screenshot({ path: `tests/thirdBridge/screenshots/${imagename}.png` });
+  await expect(page).toHaveScreenshot({ name: imagename, maxDiffPixels: 4000 });
+  
+} 
 }

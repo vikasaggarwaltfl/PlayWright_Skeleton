@@ -9,6 +9,7 @@ await Actions.signIn();
 await Click.Btn("sign_In");
 await page.waitForTimeout(5000);
 await Verify.IsTextDisplayed("My OfficeNational");
+
  
   });
 
@@ -62,7 +63,32 @@ test('Verify that the user is able to edit the product', async ({ Actions, Click
   await Actions.enterText("productCatalogueTitle", "Testing0044");
   await Click.Btn("Save");
   await Verify.IsTextDisplayed("Products saved!");
- 
+ });
 
+test.only('Verify that the user is able to add a note in a popup window',async ({Actions, Click,Verify,page})=>{
   
+
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("Products");
+  await page.setDefaultTimeout(30000)
+ 
+  await Click.Tab("productWIP");
+  await page.waitForTimeout(5000);
+  await page.waitForLoadState("domcontentloaded");
+ 
+  await Click.Icon("filterArrow");
+  await page.setDefaultTimeout(30000)
+  await Actions.enterText("productName", "Absto001");
+  //await page.waitForTimeout(2000);
+  await Click.Icon("notes");
+  //await page.waitForTimeout(2000);
+  await page.waitForLoadState("domcontentloaded");
+  await Actions.enterText("productWIPnotes", "Hi");
+  //await Click.Btn("addNote");
+ // await page.waitForTimeout(5000);
+  //await Verify.verifyScreenshot(page,"example5.png");
+
+
 });
+
