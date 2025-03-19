@@ -40,7 +40,9 @@ export class Click {
     private readonly selectSupplier: Locator
     private readonly selectBrand: Locator
     private readonly notes: Locator
-
+    private readonly download: Locator
+    private readonly remove: Locator;
+    
     //Btn
     private readonly sign_In: Locator
     private readonly Profile: Locator
@@ -92,6 +94,8 @@ export class Click {
         this.selectSupplier = page.locator("//div[@name='SupplierId']")
         this.selectBrand=page.locator("//div[@name='BrandId']")
         this.notes=page.locator("//span[@class='p-button-icon pi pi-comments']")
+        this.download = page.locator("//i[@class='pi pi-download text-xl text-green-700']")
+        this.remove = page.locator("//i[@class='pi pi-times text-xl text-red-700']")
 
         //Btn
         this.sign_In = page.locator("(//input[@name='signInSubmitButton'])[2]")
@@ -198,8 +202,16 @@ export class Click {
             await this.selectBrand.click();
         }
         else if (str === "notes") {
-            await this.notes.click();
+        await this.notes.click();
         }
+        else if (str === "download") {
+            await this.download.click();
+        }
+        else if (str === "remove") {
+            await this.remove.click();
+        }
+
+
     }
 
     //Btn

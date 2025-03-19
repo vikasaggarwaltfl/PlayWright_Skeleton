@@ -94,20 +94,37 @@ test('Verify that the user can edit and save the details of an existing brand', 
     await Click.Btn("BrandInfo");
 });
 
+test.only('Verify user should upload brand logo and verify success message', async ({ Actions, Click, Verify, page}) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Brands");
+    await Click.Link("addBrand");
+    await Actions.enterText("brandName", "Tanishq");
+    const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';  
+    const filePath: string = './tests/thirdBridge/testsamples/logo.png';
+    await Actions.uploadFile(page, uploadAreaSelector, filePath);
+    await Verify.IsTextDisplayed("File successfully uploaded!");
+});
 
-// Product screen ---------------------------------------------------------------------------------------------------------------------
 
-// test.only('Filter Product Records and Verify Record Count', async ({ Actions, Click, Verify, page }) => {
-//     await Actions.signIn();
-//     await Click.Btn("sign_In");
-//     await Click.Tab("Products");
-//     await Click.Icon("filterArrow");
-//     await Click.Icon("selectSupplier");
-//     await Click.dropdownOption("artistic");
-//     await Click.Btn("Filter");
-//     await page.waitForTimeout(5000);
-//     expect(await Verify.verifyData("str")).toBe(5);
-// });
+test.only('Verify user should download and remove brand logo ', async ({ Actions, Click, Verify, page}) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Brands");
+    await Click.Link("addBrand");
+    await Actions.enterText("brandName", "Tanishq");
+    const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';  
+    const filePath: string = './tests/thirdBridge/testsamples/logo.png';
+    await Actions.uploadFile(page, uploadAreaSelector, filePath);
+    await Verify.IsTextDisplayed("File successfully uploaded!");
+    await page.waitForTimeout(3000);
+    await Click.Icon("download")
+    await page.waitForTimeout(3000);
+    await Click.Icon("remove");
+    await page.pause();
+});
+
+
 
 
 

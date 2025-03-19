@@ -92,14 +92,14 @@ test('Verify that the user can edit and save the details of an existing brand', 
 
 // Product Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify that by clicking on a Product,that Product screen is visible correctly.', async ({ Actions, Click,Verify,page}) => {
+test.only('Verify that by clicking on a Product,that Product screen is visible correctly.', async ({ Actions, Click,Verify,page}) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Products");
     await Click.Icon("filterArrow");
     await Actions.enterText("productName", "Absto003");
     await Click.Link("productInfo");
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(6000);
     await Verify.IsTextDisplayed("Product: Absto003");
     });
     
@@ -128,13 +128,14 @@ test('Verify that by clicking on a Product,that Product screen is visible correc
       });
       
             
-      test('Verify that the user is able to edit the product', async ({ Actions, Click,Verify,page}) => {
+      test.only('Verify that the user is able to edit the product', async ({ Actions, Click,Verify,page}) => {
         await Actions.signIn();
         await Click.Btn("sign_In");
         await Click.Tab("Products");
         await Click.Icon("filterArrow");
         await Actions.enterText("productName", "Absto003");
         await Click.Link("productInfo");
+        await page.waitForTimeout(6000);
         await Click.Icon("Edit");
         await Actions.enterText("productCatalogueTitle", "Testing0044");
         await Click.Btn("Save");
