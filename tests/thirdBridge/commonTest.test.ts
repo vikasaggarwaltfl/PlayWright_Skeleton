@@ -186,3 +186,24 @@ test('Verify that by clicking on a Product,that Product screen is visible correc
         await Click.Btn("Save");
         await Verify.IsTextDisplayed("Products saved!");
       });
+
+      test('Verify that the user is able to add a note in a popup window',async ({Actions, Click,Verify,page})=>{
+  
+
+        await Actions.signIn();
+        await Click.Btn("sign_In");
+        await Click.Tab("Products");
+        await Click.Tab("productWIP");
+        await page.waitForTimeout(3000);
+        await Click.Icon("filterArrow");
+        await Actions.enterText("productName", "Absto001" );
+        await Click.Btn("Filter");
+        await page.waitForTimeout(2000);
+        await Click.Icon("notes");
+        await page.waitForLoadState("networkidle");
+        await Actions.enterText("productWIPnotes", "Hello");
+        await page.waitForLoadState("networkidle");
+        await Click.Btn("addNote");
+        await page.waitForTimeout(2000);
+        await Verify.verifyScreenshot(page,"notesPopupWindow.png");
+      });
