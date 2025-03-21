@@ -19,25 +19,57 @@ test('Verify that user is able to login with valid credentials', async ({ page, 
 
 // Brand Screen --------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify user can navigate to the "Brand" screen and it loaded correctly.', async ({ Actions, Click, Verify, page }) => {
+test('Verify user can navigate to the "Brand" screen and verify screen displayed correctly', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Brands");
-    await Verify.IsTextDisplayed("Brands");
+    await page.waitForTimeout(3000);
+    await Verify.verifyURL("https://onexweb-uat.officenational.co.za/table/brand_view");
+    await Verify.IsTextDisplayed("Add Brand");
 });
 
-test('Verify user can  Add Brand with "valid data" and verify record presence in grid', async ({ Actions, Click, Verify, page }) => {
+test('Verify that the user can apply a filter and check the presence of records in the data grid.', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Brands");
+    await Click.Icon("filterArrow");
+    await Actions.enterText("brandName", "Test37");
+    await Verify.IsTextDisplayed("Test37");
+});
+
+test('Verify user can Sort Brand records and verify sort order  of records.', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Brands");
+    await Click.Icon("Sort");
+    await Verify.verifySortOrder();
+    await Click.Icon("Sort");
+    await Verify.verifySortOrder();
+    await Click.Icon("Sort");
+    await Verify.verifySortOrder();
+});
+
+test('Verify user can navigate to Brand Information and verify its correct display', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Brands");
+    await Click.Link("brandInfo");
+    await page.waitForTimeout(5000);
+    await Verify.verifyURL('https://onexweb-uat.officenational.co.za/table/brand/6');
+    await Verify.IsTextDisplayed('Brand: ABSTO')
+});
+
+test('Verify user can Add Brand with "valid data" and verify Success message', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Brands");
     await Click.Link("addBrand");
-    await Actions.enterText("brandName", "Test63");
+    await Actions.enterText("brandName", "Test92");
     await Click.Btn("Save");
-    await Click.Tab("Brands");
-    await Click.Icon("filterArrow");
-    await Actions.enterText("brandName", "Test63");
-    await Verify.IsTextDisplayed("Test63");
+    await Verify.IsTextDisplayed('Saved Successfully');
+    
 });
+
 
 test('Verify user cannot Add Brand with "invalid data" and verify error message', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
@@ -47,36 +79,7 @@ test('Verify user cannot Add Brand with "invalid data" and verify error message'
     await Actions.enterText("brandName", "     ");
     await Click.Btn("Save");
     await Verify.verifyErrorMessage('Brand Name is a required field');
-});
-
-test('Verify user can Filter Brand records and verify result', async ({ Actions, Click, Verify, page }) => {
-    await Actions.signIn();
-    await Click.Btn("sign_In");
-    await Click.Tab("Brands");
-    await Click.Icon("filterArrow");
-    await Actions.enterText("brandName", "Test37");
-    await Verify.IsTextDisplayed("Test37");
-});
-
-test('Verify user can Sort Brand records and verify sort order', async ({ Actions, Click, Verify, page }) => {
-    await Actions.signIn();
-    await Click.Btn("sign_In");
-    await Click.Tab("Brands");
-    await Click.Icon("Sort");
-    await Verify.verifySortOrder();
-    await Click.Icon("Sort");
-    await Verify.verifySortOrder();
-    await Click.Icon("Sort");
-    await Verify.verifySortOrder();
-});
-
-test('Verify user can Open Brand Information and verify url.', async ({ Actions, Click, Verify, page }) => {
-    await Actions.signIn();
-    await Click.Btn("sign_In");
-    await Click.Tab("Brands");
-    await Click.Link("brandInfo");
-    await page.waitForTimeout(5000);
-    await Verify.verifyURL('https://onexweb-uat.officenational.co.za/table/brand/6');
+    await Verify.IsTextDisplayed('Validation failed')
 });
 
 test('Verify that the user can edit and save the details of an existing brand', async ({ Actions, Click, Verify, page }) => {
@@ -85,9 +88,52 @@ test('Verify that the user can edit and save the details of an existing brand', 
     await Click.Tab("Brands");
     await Click.Icon("kebabMenu");
     await Click.Icon("Edit");
-    await Actions.enterText("brandPrefix", "ABBBBB");
+    await Actions.enterText("brandPrefix", "AAA");
     await Click.Btn("Save");
     await Click.Btn("BrandInfo");
+    await page.waitForTimeout(3000);
+    await Verify.IsTextDisplayed("Brand saved");
+    await page.pause();
+});
+
+test('Verify user can upload brand logo and verify success message', async ({ Actions, Click, Verify, page}) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Brands");
+    await Click.Link("addBrand");
+    await Actions.enterText("brandName", "Tanishq");
+    const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';  
+    const filePath: string = './tests/thirdBridge/testsamples/logo.png';
+    await Actions.uploadFile(page, uploadAreaSelector, filePath);
+    await Verify.IsTextDisplayed("File successfully uploaded!");
+});
+
+test('Verify user can download uploaded brand logo file ', async ({ Actions, Click, Verify, page}) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Brands");
+    await Click.Link("addBrand");
+    await Actions.enterText("brandName", "Tanishq");
+    const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';  
+    const filePath: string = './tests/thirdBridge/testsamples/logo.png';
+    await Actions.uploadFile(page, uploadAreaSelector, filePath);
+    await page.waitForTimeout(3000);
+    await Click.Icon("download")
+    
+});
+
+test('Verify user can remove uploaded brand logo file ', async ({ Actions, Click, Verify, page}) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Brands");
+    await Click.Link("addBrand");
+    await Actions.enterText("brandName", "Tanishq");
+    const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';  
+    const filePath: string = './tests/thirdBridge/testsamples/logo.png';
+    await Actions.uploadFile(page, uploadAreaSelector, filePath);
+    await page.waitForTimeout(3000);
+    await Click.Icon("remove");
+    await Verify.IsTextDisplayed("Drop files here to upload logo")
 });
 
 // Product Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
