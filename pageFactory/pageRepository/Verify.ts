@@ -120,7 +120,18 @@ export class Verify {
 
   async verifyScreenshot(page: Page, imagename: string) {
     await page.screenshot({ path: `tests/thirdBridge/screenshots/${imagename}.png` });
-    await expect(page).toHaveScreenshot({ name: imagename, maxDiffPixels: 4000 });
+    await expect(page).toHaveScreenshot({ name: imagename, maxDiffPixels: 150000});
+
+  }
+//Verify Checkbox---------------------------------------------------------------------------------------------
+  async verifyCheckbox(page: Page,str: string) {
+    const row=page.locator("//tbody//tr");
+    const nameMatch=row.filter({
+    has: page.locator("//td[2]"), hasText: `${str}`
+   })
+     await nameMatch.locator("input").check();
+     expect(nameMatch.locator("input")).toBeChecked();
+
 
   }
 

@@ -26,6 +26,7 @@ export class Actions {
     private readonly productName: Locator
     private readonly productCatalogueTitle: Locator
     private readonly productWIPnotes: Locator
+   
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -39,6 +40,7 @@ export class Actions {
         this.productName = page.locator("//input[@id='SupplierCode']")
         this.productCatalogueTitle = page.locator("//input[@name='CatalogueTitle']")
         this.productWIPnotes = page.locator("//textarea[@placeholder='Enter a note']")
+   
         
     }
 
@@ -81,6 +83,7 @@ export class Actions {
 
             await this.productWIPnotes.fill(text);
         }
+        
     }
 
 // File Upload

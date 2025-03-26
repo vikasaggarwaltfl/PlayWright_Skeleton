@@ -30,7 +30,6 @@ await Click.Btn("sign_In");
 await page.waitForLoadState("domcontentloaded");
 await Click.Tab("Products");
 await Click.Icon("filterArrow"); 
-await page.pause();
 await Click.Icon("selectBrand");
 await Click.dropdownOption("absto");
 await Click.Btn("Filter");
@@ -84,4 +83,19 @@ test('Verify that the user is able to edit the product', async ({ Actions, Click
   await Click.Btn("addNote");
   await page.waitForTimeout(2000);
   await Verify.verifyScreenshot(page,"notesPopupWindow.png");
+});
+
+test('Verify that the user is able to check and uncheck a checkbox',async({Actions, Click,Verify,page})=>{
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("Products");
+  await Click.Tab("productAdmin");
+  await page.waitForTimeout(3000);
+  await Click.Icon("productAdminFilterArrow");
+  await Actions.enterText("productName", "Absto001");
+  await page.waitForTimeout(3000);
+  await Click.Btn("Filter");
+  await page.waitForTimeout(3000);
+  await Verify.verifyCheckbox(page,"Absto001");
+
 });

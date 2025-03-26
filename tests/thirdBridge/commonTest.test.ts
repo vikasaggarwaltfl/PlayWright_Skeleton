@@ -155,10 +155,15 @@ test('Verify that by clicking on a Product,that Product screen is visible correc
     await page.waitForLoadState("domcontentloaded");
     await Click.Tab("Products");
     await Click.Icon("filterArrow"); 
+    await page.waitForTimeout(3000);
     await Click.Icon("selectBrand");
+    await page.waitForTimeout(2000);
     await Click.dropdownOption("absto");
+    await page.waitForTimeout(2000);
     await Click.Btn("Filter");
+    await page.waitForTimeout(2000);
     expect(await Verify.verifyData("Artistic")).toBe(5);    
+    
     });
 
     test('Verify that by clicking on the reset button, the filter button is disabled', async ({ Actions, Click,Verify,page}) => {
@@ -196,7 +201,8 @@ test('Verify that by clicking on a Product,that Product screen is visible correc
         await Click.Tab("productWIP");
         await page.waitForTimeout(3000);
         await Click.Icon("filterArrow");
-        await Actions.enterText("productName", "Absto001" );
+        await page.waitForTimeout(2000);
+        await Actions.enterText("productName", "Absto007" );
         await Click.Btn("Filter");
         await page.waitForTimeout(2000);
         await Click.Icon("notes");
@@ -206,4 +212,19 @@ test('Verify that by clicking on a Product,that Product screen is visible correc
         await Click.Btn("addNote");
         await page.waitForTimeout(2000);
         await Verify.verifyScreenshot(page,"notesPopupWindow.png");
+      });
+      
+      test('Verify that the user is able to check and uncheck a checkbox',async({Actions, Click,Verify,page})=>{
+        await Actions.signIn();
+        await Click.Btn("sign_In");
+        await Click.Tab("Products");
+        await Click.Tab("productAdmin");
+        await page.waitForTimeout(3000);
+        await Click.Icon("productAdminFilterArrow");
+        await Actions.enterText("productName", "Absto001");
+        await page.waitForTimeout(3000);
+        await Click.Btn("Filter");
+        await page.waitForTimeout(3000);
+        await Verify.verifyCheckbox(page,"Absto001");
+      
       });

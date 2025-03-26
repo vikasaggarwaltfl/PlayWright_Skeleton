@@ -30,10 +30,12 @@ export class Click {
     private readonly Imports: Locator
     private readonly Exports: Locator
     private readonly productWIP: Locator
+    private readonly productAdmin: Locator
 
     //Icon 
     private readonly chevronLeft: Locator
     private readonly filterArrow: Locator
+    private readonly productAdminFilterArrow: Locator
     private readonly kebabMenu: Locator
     private readonly Edit: Locator
     private readonly Sort: Locator
@@ -42,6 +44,8 @@ export class Click {
     private readonly notes: Locator
     private readonly download: Locator
     private readonly remove: Locator;
+   
+    
     
     //Btn
     private readonly sign_In: Locator
@@ -56,7 +60,7 @@ export class Click {
     private readonly artistic: Locator
     private readonly absto: Locator
 
-
+    
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
@@ -84,10 +88,12 @@ export class Click {
         this.Imports = page.locator("//span[text()='Imports']")
         this.Exports = page.locator("//span[text()='Exports']")
         this.productWIP = page.locator("//a[text()='Product WIP']")
+        this.productAdmin = page.locator("//a[text()='Product Admin']")
 
         //Icon
         this.chevronLeft = page.locator("//span[class='p-input-icon text-[10px] pi pi-chevron-left']")
         this.filterArrow = page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])")
+        this.productAdminFilterArrow = page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])[2]");
         this.kebabMenu = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/span[1]")
         this.Edit = page.locator("//button[normalize-space()='Edit']")
         this.Sort = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
@@ -96,6 +102,7 @@ export class Click {
         this.notes=page.locator("//span[@class='p-button-icon pi pi-comments']")
         this.download = page.locator("//i[@class='pi pi-download text-xl text-green-700']")
         this.remove = page.locator("//i[@class='pi pi-times text-xl text-red-700']")
+        
 
         //Btn
         this.sign_In = page.locator("(//input[@name='signInSubmitButton'])[2]")
@@ -105,9 +112,13 @@ export class Click {
         this.Reset = page.locator("//button[normalize-space()='Reset']")
         this.signOut = page.locator("//button[normalize-space()='Sign Out']")
         this.addNote=page.locator("//button[normalize-space()='Add Note']")
-//dropdownOption
+
+       //dropdownOption
        this.artistic = page.locator("//span[text()='Artistic']")
        this.absto = page.locator("//span[text()='ABSTO']")
+
+      
+       
     }
 
     //Link
@@ -176,6 +187,9 @@ export class Click {
         else if (str === "productWIP") {
             await this.productWIP.click();
         }
+        else if (str === "productAdmin") {
+            await this.productAdmin.click();
+        }
     }
 
     //Icon
@@ -185,6 +199,9 @@ export class Click {
         }
         else if (str === "filterArrow") {
             await this.filterArrow.click();
+        }
+        else if (str === "productAdminFilterArrow") {
+            await this.productAdminFilterArrow.click();
         }
         else if (str === "kebabMenu") {
             await this.kebabMenu.click();
@@ -210,7 +227,7 @@ export class Click {
         else if (str === "remove") {
             await this.remove.click();
         }
-
+        
 
     }
 
@@ -251,5 +268,18 @@ export class Click {
             await this.absto.click();
         }
 
+
     }
+
+    //checkboxOption
+
+    // async checkboxOption(str:string, page:Page): Promise<void{
+
+    //      await page.locator("//tbody/tr");
+    
+    // }
+
+
 }
+        
+
