@@ -5,6 +5,7 @@ import { Actions } from '@pages/Actions'
 import { Click } from '@pages/Click'
 import { Verify } from '@pages/Verify'
 import { access } from 'fs'
+import { Paths } from '@pages/files/paths'
 
 
 // Login ----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -64,7 +65,7 @@ test('Verify user can Add Brand with "valid data" and verify Success message', a
     await Click.Btn("sign_In");
     await Click.Tab("Brands");
     await Click.Link("addBrand");
-    await Actions.enterText("brandName", "Test92");
+    await Actions.enterText("brandName", "Test118");
     await Click.Btn("Save");
     await Verify.IsTextDisplayed('Saved Successfully');
     
@@ -90,9 +91,8 @@ test('Verify that the user can edit and save the details of an existing brand', 
     await Click.Icon("Edit");
     await Actions.enterText("brandPrefix", "AAA");
     await Click.Btn("Save");
-    await Click.Btn("BrandInfo");
     await page.waitForTimeout(3000);
-    await Verify.IsTextDisplayed("Brand saved");
+    await Verify.IsTextDisplayed("Brands saved!");
     await page.pause();
 });
 
@@ -103,8 +103,9 @@ test('Verify user can upload brand logo and verify success message', async ({ Ac
     await Click.Link("addBrand");
     await Actions.enterText("brandName", "Tanishq");
     const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';  
-    const filePath: string = './tests/thirdBridge/testsamples/logo.png';
-    await Actions.uploadFile(page, uploadAreaSelector, filePath);
+
+    //const filePath: string = './tests/thirdBridge/testsamples/logo.png';
+    await Actions.uploadFile(page, uploadAreaSelector, Paths.BrandLogo);
     await Verify.IsTextDisplayed("File successfully uploaded!");
 });
 

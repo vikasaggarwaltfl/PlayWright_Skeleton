@@ -65,9 +65,9 @@ test('Verify user can  Add Brand with "valid data" and verify Success message', 
     await Click.Btn("sign_In");
     await Click.Tab("Brands");
     await Click.Link("addBrand");
-    await Actions.enterText("brandName", "Test80");
+    await Actions.enterText("brandName", "Test");
     await Click.Btn("Save");
-    await Verify.IsTextDisplayed(" Saved Successfully ");
+    await Verify.IsTextDisplayed('Saved Successfully');
     await page.pause();
 });
 
@@ -88,10 +88,12 @@ test('Verify that the user can edit and save the details of an existing brand', 
     await Click.Tab("Brands");
     await Click.Icon("kebabMenu");
     await Click.Icon("Edit");
-    await Actions.enterText("brandPrefix", "ABBBB");
+    await Actions.enterText("brandPrefix","A2");
     await Click.Btn("Save");
-    await Click.Btn("BrandInfo");
+    await Verify.IsTextDisplayed('Brands saved!')
+    ///await page.pause();
 });
+
 
 test('Verify user can upload brand logo and verify success message', async ({ Actions, Click, Verify, page}) => {
     await Actions.signIn();
