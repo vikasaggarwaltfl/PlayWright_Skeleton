@@ -18,6 +18,7 @@ export class Verify {
   constructor(page: Page, context: BrowserContext) {
     this.page = page
     this.context = context
+    
 
   }
   // Display of Error message---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -33,7 +34,7 @@ export class Verify {
     )
   }
 
-  // Verify Text ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+  // Verify any Text on screen----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   async IsTextDisplayed(TextValue: string): Promise<void> {
 
@@ -85,7 +86,7 @@ export class Verify {
   }
 
 
-  // Verify Data record count---------------------------------------------------------------------------------------------------------------------------------------------
+  // Verify record count from data grid---------------------------------------------------------------------------------------------------------------------------------------------
 
   async verifyData(str: string) {
 
@@ -131,11 +132,14 @@ export class Verify {
    })
      await nameMatch.locator("input").check();
      expect(nameMatch.locator("input")).toBeChecked();
-
-
   }
 
+//Verify loading icon visibility.
+  async isLoadingVisible(page) {
+    const loadingIcon = page.locator("//span[normalize-space(text())='Refresh']"); 
+    await expect(loadingIcon).toBeVisible();  
+    console.log('Loading icon is visible!');
 
-
-
+  }
+  
 }

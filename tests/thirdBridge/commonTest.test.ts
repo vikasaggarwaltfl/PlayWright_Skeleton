@@ -18,7 +18,7 @@ test('Verify that user is able to login with valid credentials', async ({ page, 
     await Verify.IsTextDisplayed("ONA Super Admin");
 });
 
-// Brand Screen --------------------------------------------------------------------------------------------------------------------------------------------------
+/// Brand Screen --------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify user can navigate to the "Brand" screen and verify screen displayed correctly', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
@@ -60,17 +60,16 @@ test('Verify user can navigate to Brand Information and verify its correct displ
     await Verify.IsTextDisplayed('Brand: ABSTO')
 });
 
-test('Verify user can Add Brand with "valid data" and verify Success message', async ({ Actions, Click, Verify, page }) => {
+test('Verify user can  Add Brand with "valid data" and verify Success message', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Brands");
     await Click.Link("addBrand");
-    await Actions.enterText("brandName", "Test118");
+    await Actions.enterText("brandName", "Test133");
     await Click.Btn("Save");
+   // await page.waitForTimeout(5000);
     await Verify.IsTextDisplayed('Saved Successfully');
-    
 });
-
 
 test('Verify user cannot Add Brand with "invalid data" and verify error message', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
@@ -89,12 +88,11 @@ test('Verify that the user can edit and save the details of an existing brand', 
     await Click.Tab("Brands");
     await Click.Icon("kebabMenu");
     await Click.Icon("Edit");
-    await Actions.enterText("brandPrefix", "AAA");
+    await Actions.enterText("brandPrefix","A2");
     await Click.Btn("Save");
-    await page.waitForTimeout(3000);
-    await Verify.IsTextDisplayed("Brands saved!");
-    await page.pause();
+    await Verify.IsTextDisplayed('Brands saved!')
 });
+
 
 test('Verify user can upload brand logo and verify success message', async ({ Actions, Click, Verify, page}) => {
     await Actions.signIn();
@@ -103,8 +101,7 @@ test('Verify user can upload brand logo and verify success message', async ({ Ac
     await Click.Link("addBrand");
     await Actions.enterText("brandName", "Tanishq");
     const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';  
-
-    //const filePath: string = './tests/thirdBridge/testsamples/logo.png';
+    const filePath: string = './tests/thirdBridge/testsamples/logo.png';
     await Actions.uploadFile(page, uploadAreaSelector, Paths.BrandLogo);
     await Verify.IsTextDisplayed("File successfully uploaded!");
 });
@@ -117,10 +114,10 @@ test('Verify user can download uploaded brand logo file ', async ({ Actions, Cli
     await Actions.enterText("brandName", "Tanishq");
     const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';  
     const filePath: string = './tests/thirdBridge/testsamples/logo.png';
-    await Actions.uploadFile(page, uploadAreaSelector, filePath);
+    await Actions.uploadFile(page, uploadAreaSelector, Paths.BrandLogo);
     await page.waitForTimeout(3000);
     await Click.Icon("download")
-    
+    await page.waitForTimeout(3000);
 });
 
 test('Verify user can remove uploaded brand logo file ', async ({ Actions, Click, Verify, page}) => {
@@ -131,11 +128,21 @@ test('Verify user can remove uploaded brand logo file ', async ({ Actions, Click
     await Actions.enterText("brandName", "Tanishq");
     const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';  
     const filePath: string = './tests/thirdBridge/testsamples/logo.png';
-    await Actions.uploadFile(page, uploadAreaSelector, filePath);
+    await Actions.uploadFile(page, uploadAreaSelector, Paths.BrandLogo);
     await page.waitForTimeout(3000);
     await Click.Icon("remove");
     await Verify.IsTextDisplayed("Drop files here to upload logo")
 });
+
+test('Verify refresh data grid and verify loading icon visibility ', async ({ Actions, Click, Verify, page}) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Brands");
+    await Click.Btn("Refresh");
+    await page.waitForTimeout(3000);
+    await Verify.isLoadingVisible(page);
+});
+
 
 // Product Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -144,35 +151,31 @@ test('Verify that by clicking on a Product,that Product screen is visible correc
     await Click.Btn("sign_In");
     await Click.Tab("Products");
     await Click.Icon("filterArrow");
-    await Actions.enterText("productName", "Absto003");
+    await Actions.enterText("productName", "Absto007");
     await Click.Btn("Filter");
     await Click.Link("productInfo");
-    await Verify.IsTextDisplayed("Product: Absto003");
+    await Verify.IsTextDisplayed("Product: Absto007");
     });
     
     test('Verify that by selecting Filter, the filtered screen is displayed as expected', async ({ Actions, Click,Verify,page}) => {
-    await Actions.signIn();
-    await Click.Btn("sign_In");
-    await page.waitForLoadState("domcontentloaded");
-    await Click.Tab("Products");
-    await Click.Icon("filterArrow"); 
-    await page.waitForTimeout(3000);
-    await Click.Icon("selectBrand");
-    await page.waitForTimeout(2000);
-    await Click.dropdownOption("absto");
-    await page.waitForTimeout(2000);
-    await Click.Btn("Filter");
-    await page.waitForTimeout(2000);
-    expect(await Verify.verifyData("Artistic")).toBe(5);    
-    
-    });
+        await Actions.signIn();
+        await Click.Btn("sign_In");
+        await page.waitForLoadState("domcontentloaded");
+        await Click.Tab("Products");
+        await Click.Icon("filterArrow"); 
+        await Click.Icon("selectBrand");
+        await Click.dropdownOption("absto");
+        await Click.Btn("Filter");
+        await page.waitForTimeout(5000);
+        expect(await Verify.verifyData("Artistic")).toBe(5); 
+        });
 
     test('Verify that by clicking on the reset button, the filter button is disabled', async ({ Actions, Click,Verify,page}) => {
         await Actions.signIn();
         await Click.Btn("sign_In");
         await Click.Tab("Products");
         await Click.Icon("filterArrow");
-        await Actions.enterText("productName", "Absto003");
+        await Actions.enterText("productName", "Absto007");
         await Click.Btn("Reset");
         await Click.Icon("filterArrow");
         await Verify.verifyDisabledButton("Filter");
@@ -184,31 +187,29 @@ test('Verify that by clicking on a Product,that Product screen is visible correc
         await Click.Btn("sign_In");
         await Click.Tab("Products");
         await Click.Icon("filterArrow");
-        await Actions.enterText("productName", "Absto003");
+        await Actions.enterText("productName", "Absto007");
         await Click.Btn("Filter");
         await Click.Link("productInfo");
         await Click.Icon("Edit");
         await Actions.enterText("productCatalogueTitle", "Testing0044");
         await Click.Btn("Save");
+        await page.waitForTimeout(2000)
         await Verify.IsTextDisplayed("Products saved!");
       });
 
       test('Verify that the user is able to add a note in a popup window',async ({Actions, Click,Verify,page})=>{
-  
-
         await Actions.signIn();
         await Click.Btn("sign_In");
         await Click.Tab("Products");
         await Click.Tab("productWIP");
         await page.waitForTimeout(3000);
         await Click.Icon("filterArrow");
-        await page.waitForTimeout(2000);
-        await Actions.enterText("productName", "Absto007" );
+        await Actions.enterText("productName", "J202500b" );
         await Click.Btn("Filter");
         await page.waitForTimeout(2000);
         await Click.Icon("notes");
         await page.waitForLoadState("networkidle");
-        await Actions.enterText("productWIPnotes", "Hello");
+        await Actions.enterText("productWIPnotes", "good morning");
         await page.waitForLoadState("networkidle");
         await Click.Btn("addNote");
         await page.waitForTimeout(2000);

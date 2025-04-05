@@ -6,6 +6,7 @@ import { Actions } from '@pages/Actions'
 import { Click } from '@pages/Click'
 import { Verify } from '@pages/Verify'
 import { access } from 'fs'
+import { Paths } from '@pages/files/paths'
 
 
 // Login ----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -65,10 +66,11 @@ test('Verify user can  Add Brand with "valid data" and verify Success message', 
     await Click.Btn("sign_In");
     await Click.Tab("Brands");
     await Click.Link("addBrand");
-    await Actions.enterText("brandName", "Test");
+    await Actions.enterText("brandName", "Test123");
     await Click.Btn("Save");
+    //await page.waitForTimeout(4000)
     await Verify.IsTextDisplayed('Saved Successfully');
-    await page.pause();
+    
 });
 
 test('Verify user cannot Add Brand with "invalid data" and verify error message', async ({ Actions, Click, Verify, page }) => {
@@ -103,7 +105,8 @@ test('Verify user can upload brand logo and verify success message', async ({ Ac
     await Actions.enterText("brandName", "Tanishq");
     const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';  
     const filePath: string = './tests/thirdBridge/testsamples/logo.png';
-    await Actions.uploadFile(page, uploadAreaSelector, filePath);
+    await Actions.uploadFile(page, uploadAreaSelector, Paths.BrandLogo);
+    //await Actions.uploadFile(page, uploadAreaSelector, filePath);
     await Verify.IsTextDisplayed("File successfully uploaded!");
 });
 
@@ -115,7 +118,8 @@ test('Verify user can download uploaded brand logo file ', async ({ Actions, Cli
     await Actions.enterText("brandName", "Tanishq");
     const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';  
     const filePath: string = './tests/thirdBridge/testsamples/logo.png';
-    await Actions.uploadFile(page, uploadAreaSelector, filePath);
+    await Actions.uploadFile(page, uploadAreaSelector, Paths.BrandLogo);
+    //await Actions.uploadFile(page, uploadAreaSelector, filePath);
     //await Verify.IsTextDisplayed("File successfully uploaded!");
     await page.waitForTimeout(3000);
     await Click.Icon("download")
@@ -130,12 +134,56 @@ test('Verify user can remove uploaded brand logo file ', async ({ Actions, Click
     await Actions.enterText("brandName", "Tanishq");
     const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';  
     const filePath: string = './tests/thirdBridge/testsamples/logo.png';
-    await Actions.uploadFile(page, uploadAreaSelector, filePath);
+    await Actions.uploadFile(page, uploadAreaSelector, Paths.BrandLogo);
+    //await Actions.uploadFile(page, uploadAreaSelector, filePath);
     //await Verify.IsTextDisplayed("File successfully uploaded!");
     await page.waitForTimeout(3000);
     await Click.Icon("remove");
     await Verify.IsTextDisplayed("Drop files here to upload logo")
 });
+
+test('Verify refresh data grid and verify loading icon visibility ', async ({ Actions, Click, Verify, page}) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Brands");
+    await Click.Btn("Refresh");
+    await page.waitForTimeout(3000);
+    await Verify.isLoadingVisible(page);
+});
+
+test.only('Verify user signout successfully ', async ({ Actions, Click, Verify, page}) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Verify.IsTextDisplayed("Dashboard")
+    await Click.Btn("Profile");
+    await Click.Btn("signOut")
+    await Verify.IsTextDisplayed("Sign in")
+    //await page.waitForURL(loginPageUrl);
+    
+});
+
+
+
+// test.only('Verify that the user can navigate through pagination', async ({ Actions, Click, Verify, page}) => {
+//     await Actions.signIn();
+//     await Click.Btn("sign_In");
+//     await Click.Tab("Brands");
+//     await Click.clickOnPageNumber(page, 2);
+//     await Verify.verifyPageNumber(page, 2);
+//     await Click.clickNext(page);
+//     await Verify.verifyPageNumber(page, 3);
+//     await Click.clickDoubleNext(page);
+//     await Verify.verifyPageNumber(page, 4);
+//     await Click.clickPrevious(page);
+//     await Verify.verifyPageNumber(page, 3);
+//     await Click.clickDoublePrevious(page);
+//     await Verify.verifyPageNumber(page, 2);
+
+// });
+
+
+
+
 
 
 

@@ -2,6 +2,8 @@ import { Page, BrowserContext, Locator, expect } from '@playwright/test'
 import * as dotenv from 'dotenv'
 import { get } from 'http'
 import { waitForDebugger } from 'inspector'
+const actions = require('./Actions');
+
 dotenv.config()
 
 export class Click {
@@ -55,6 +57,7 @@ export class Click {
     private readonly Reset: Locator
     private readonly signOut: Locator
     private readonly addNote: Locator
+    private readonly refresh: Locator
 
     //dropdownOption
     private readonly artistic: Locator
@@ -77,7 +80,7 @@ export class Click {
         this.pastelCategory = page.locator("//a[normalize-space()='Pastel Product Category Setup']")
         this.auditLog = page.locator("//a[normalize-space()='Audit Log']")
         this.configCodes = page.locator("//a[normalize-space()='Config Codes']")
-        this.productInfo = page.locator("//a[text()='Absto003']")
+        this.productInfo = page.locator("//a[text()='Absto007']")
 
         //Tab
         this.Dashboard = page.locator("//span[text()='DashbproductInfooard']")
@@ -110,9 +113,12 @@ export class Click {
         this.Save = page.locator("//button[normalize-space()='Save']")
         this.Filter = page.locator("//button[normalize-space()='Filter']")
         this.Reset = page.locator("//button[normalize-space()='Reset']")
+        
+        //this.Profile = page.locator("//div.border-2.rounded-full.border-primary-50.bg-[#F59E0B].text-white");
+
         this.signOut = page.locator("//button[normalize-space()='Sign Out']")
         this.addNote=page.locator("//button[normalize-space()='Add Note']")
-
+        
        //dropdownOption
        this.artistic = page.locator("//span[text()='Artistic']")
        this.absto = page.locator("//span[text()='ABSTO']")
@@ -256,6 +262,10 @@ export class Click {
         else if (str === "addNote") {
             await this.addNote.click();
         }
+        else if (str === "refresh") {
+            await this.refresh.click();
+        }
+
     }
 
     //dropdownOption
@@ -267,10 +277,10 @@ export class Click {
         if (str === "absto") {
             await this.absto.click();
         }
-
-
     }
 
+
+    
     //checkboxOption
 
     // async checkboxOption(str:string, page:Page): Promise<void{
@@ -281,5 +291,7 @@ export class Click {
 
 
 }
+
+
         
 
