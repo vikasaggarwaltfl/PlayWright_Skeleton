@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv';
 import { connect } from 'http2';
 import * as path from 'path';
 import fs from 'fs';
-
+import { Paths } from '@pages/files/paths'
 
 
 dotenv.config();
@@ -104,6 +104,12 @@ export class Actions {
         }
     }
 
+
+//Image Upload--------------------------------------------------------------------------------------
+async ImageUpload(page: Page, fileType: String): Promise<void> {
+    await page.locator("input[type='file']").setInputFiles(Paths[`${fileType}`]);
+    
+  }
 
     
 }

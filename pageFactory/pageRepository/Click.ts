@@ -33,6 +33,7 @@ export class Click {
     private readonly Exports: Locator
     private readonly productWIP: Locator
     private readonly productAdmin: Locator
+    private readonly productMedia: Locator
 
     //Icon 
     private readonly chevronLeft: Locator
@@ -58,6 +59,8 @@ export class Click {
     private readonly signOut: Locator
     private readonly addNote: Locator
     private readonly refresh: Locator
+    private readonly uploadImage: Locator
+    private readonly submit: Locator
 
     //dropdownOption
     private readonly artistic: Locator
@@ -113,6 +116,9 @@ export class Click {
         this.Save = page.locator("//button[normalize-space()='Save']")
         this.Filter = page.locator("//button[normalize-space()='Filter']")
         this.Reset = page.locator("//button[normalize-space()='Reset']")
+        this.uploadImage = page.locator("//button[text()='Upload Image']")
+        this.productMedia = page.locator("//a[text()='Product Media']");
+        this.submit = page.locator("//span[text()='Submit']");
         
         //this.Profile = page.locator("//div.border-2.rounded-full.border-primary-50.bg-[#F59E0B].text-white");
 
@@ -196,6 +202,9 @@ export class Click {
         else if (str === "productAdmin") {
             await this.productAdmin.click();
         }
+        else if (str === "productMedia") {
+            await this.productMedia.click();
+        }
     }
 
     //Icon
@@ -264,6 +273,12 @@ export class Click {
         }
         else if (str === "refresh") {
             await this.refresh.click();
+        }
+        else if (str === "uploadImage") {
+            await this.uploadImage.click();
+        }
+        else if (str === "submit") {
+            await this.submit.click();
         }
 
     }

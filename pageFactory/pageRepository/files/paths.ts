@@ -1,5 +1,5 @@
 export const Paths:any = {
  
-    BrandLogo: "./tests/thirdBridge/testsamples/logo.png"
-
+    BrandLogo: "./tests/thirdBridge/testsamples/logo.png",
+    ProductMedia: "./tests/thirdBridge/testsamples/product.jpg"
 }

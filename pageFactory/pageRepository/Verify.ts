@@ -3,6 +3,8 @@ import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import { connect } from 'http2';
 import * as path from 'path';
+import { Paths } from '@pages/files/paths'
+
 
 
 function escapeCSS(input: string): string {
@@ -117,6 +119,14 @@ export class Verify {
     await expect(isDisabled).toBe(true);
 
   }
+  //Verify enabled button---------------------------------------------------------------------------------------------------------------------------------------------------
+
+  async verifyEnabledButton(buttonName: string) {
+    const button = await this.page.locator(`//button[normalize-space()='${buttonName}']`);
+    const isDisabled = await button.isDisabled();
+    console.log(!isDisabled ? `${buttonName} is enabled` : `${buttonName} is not enabled`);
+    await expect(isDisabled).toBe(false);
+  }
   //Verify screenshot--------------------------------------------------------------------------------------
 
   async verifyScreenshot(page: Page, imagename: string) {
@@ -125,7 +135,7 @@ export class Verify {
 
   }
 //Verify Checkbox---------------------------------------------------------------------------------------------
-  async verifyCheckbox(page: Page,str: string) {
+  async verifyCheckbox(page: Page,str: string):Promise<void>  {
     const row=page.locator("//tbody//tr");
     const nameMatch=row.filter({
     has: page.locator("//td[2]"), hasText: `${str}`
@@ -142,4 +152,10 @@ export class Verify {
 
   }
   
+  //Verify ImageUpload---------------------------------------------------------------------------------------
+async verifyImageUpload(page: Page) :Promise<void> {
+  await expect(page.locator('img[src*="img_"]')).toBeVisible();
+
+}
+
 }
