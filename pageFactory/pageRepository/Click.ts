@@ -22,6 +22,7 @@ export class Click {
     private readonly auditLog: Locator
     private readonly configCodes: Locator
     private readonly productInfo: Locator
+   
 
     //Tab 
     private readonly Dashboard: Locator
@@ -47,6 +48,7 @@ export class Click {
     private readonly notes: Locator
     private readonly download: Locator
     private readonly remove: Locator;
+    //private readonly pagination: Locator;
    
     
     
@@ -61,6 +63,7 @@ export class Click {
     private readonly refresh: Locator
     private readonly uploadImage: Locator
     private readonly submit: Locator
+    private readonly addProductsWIP: Locator
 
     //dropdownOption
     private readonly artistic: Locator
@@ -84,6 +87,7 @@ export class Click {
         this.auditLog = page.locator("//a[normalize-space()='Audit Log']")
         this.configCodes = page.locator("//a[normalize-space()='Config Codes']")
         this.productInfo = page.locator("//a[text()='Absto007']")
+        
 
         //Tab
         this.Dashboard = page.locator("//span[text()='DashbproductInfooard']")
@@ -108,6 +112,7 @@ export class Click {
         this.notes=page.locator("//span[@class='p-button-icon pi pi-comments']")
         this.download = page.locator("//i[@class='pi pi-download text-xl text-green-700']")
         this.remove = page.locator("//i[@class='pi pi-times text-xl text-red-700']")
+        //this.pagination = page.locator(".p-paginator-page");
         
 
         //Btn
@@ -119,6 +124,7 @@ export class Click {
         this.uploadImage = page.locator("//button[text()='Upload Image']")
         this.productMedia = page.locator("//a[text()='Product Media']");
         this.submit = page.locator("//span[text()='Submit']");
+        this.addProductsWIP = page.locator("//div[text() = ' Add Products WIP']")
         
         //this.Profile = page.locator("//div.border-2.rounded-full.border-primary-50.bg-[#F59E0B].text-white");
 
@@ -243,6 +249,7 @@ export class Click {
             await this.remove.click();
         }
         
+        
 
     }
 
@@ -279,6 +286,9 @@ export class Click {
         }
         else if (str === "submit") {
             await this.submit.click();
+        }
+        else if (str === "addProductsWIP") {
+            await this.addProductsWIP.click();
         }
 
     }

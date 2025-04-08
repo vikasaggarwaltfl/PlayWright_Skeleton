@@ -6,59 +6,12 @@ import { Verify } from '@pages/Verify'
 
 
 
-test.only('Verify if the pagination of the table is working as expected', async ({ Actions, Click, Verify, page }) => {
-  await Actions.signIn();
-  await Click.Btn("sign_In");
-  
-  // Navigate to Products tab
-  await Click.Tab("Products");
-  
-  // Wait for the page to load completely
-  await page.waitForLoadState("networkidle");
-  
-  // Get the pagination elements
-  const paginatorLocator = page.locator(".p-paginator-page");
-  
-  // Wait for pagination to be visible
-  await paginatorLocator.first().waitFor({ state: 'visible' });
-  
-  // Iterate through all pages
-  const totalPages = await paginatorLocator.count();
-  for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
-    if (pageIndex > 0) {
-      await paginatorLocator.nth(pageIndex).click();
-      await page.waitForLoadState("networkidle");
-    }
-  }
-});
 
 
-test.skip('Verify if user can successfully add product price WIP',async({Actions, Click,Verify,page})=>{
-  await Actions.signIn();
-  await Click.Btn("sign_In");
-  await Click.Tab("Products");
-  await Click.Tab("productPriceWIP");
-  await Click.Link("addProductPriceWIP");
-  await Click.Icon("selectSupplier");
-  await Click.dropdownOption("apexOn");
-  await Click.Icon("selectSupplierCode");
-  await Click.dropdownOption("absto002");
-  await Click.Btn("Save");
-  await Verify.IsTextDisplayed("Saved Successfully");
-  
-});
 
-test.skip('Verify the error message,when the user enters "invalid value" while adding Product Price WIP',async({Actions, Click,Verify,page})=>{
-  await Actions.signIn();
-  await Click.Btn("sign_In");
-  await Click.Tab("Products");
-  await Click.Tab("productPriceWIP");
-  await Click.Link("addProductPriceWIP");
-  await Click.Icon("selectSupplier");
-  await Click.dropdownOption("apexOn");
-  await Click.Btn("Save");
-  await Verify.verifyErrorMessage("Supplier Code is a required field");
-});
+
+
+
 
 
 

@@ -110,9 +110,20 @@ async ImageUpload(page: Page, fileType: String): Promise<void> {
     await page.locator("input[type='file']").setInputFiles(Paths[`${fileType}`]);
     
   }
+//Pagination numbers----------------------------------------------------------------------------------
+async pagination(page: Page): Promise<void> {
+    const paginatorLocator = page.locator(".p-paginator-page");
+    await paginatorLocator.first().waitFor({ state: 'visible' });
+    const totalPages = await paginatorLocator.count();
+    for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
+      if (pageIndex > 0) {
+        await paginatorLocator.nth(pageIndex).click();
+        await page.waitForLoadState("networkidle");
+      }
+    }
+  }
+  }
 
-    
-}
 
 
 

@@ -121,11 +121,10 @@ export class Verify {
   }
   //Verify enabled button---------------------------------------------------------------------------------------------------------------------------------------------------
 
-  async verifyEnabledButton(buttonName: string) {
-    const button = await this.page.locator(`//button[normalize-space()='${buttonName}']`);
-    const isDisabled = await button.isDisabled();
-    console.log(!isDisabled ? `${buttonName} is enabled` : `${buttonName} is not enabled`);
-    await expect(isDisabled).toBe(false);
+  async verifyEnabledIcon() :Promise<void> {
+   const Icon = await this.page.locator(`//button[@aria-label='Previous Page']//*[name()='svg']`);
+    await expect(Icon ).toBeEnabled();
+    console.log(Icon  ? `Icon is enabled` : `Icon is not enabled`);
   }
   //Verify screenshot--------------------------------------------------------------------------------------
 
@@ -157,5 +156,6 @@ async verifyImageUpload(page: Page) :Promise<void> {
   await expect(page.locator('img[src*="img_"]')).toBeVisible();
 
 }
+
 
 }
