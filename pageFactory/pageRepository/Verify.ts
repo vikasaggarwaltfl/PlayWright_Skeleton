@@ -20,7 +20,7 @@ export class Verify {
   constructor(page: Page, context: BrowserContext) {
     this.page = page
     this.context = context
-    
+
 
   }
   // Display of Error message---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -119,43 +119,52 @@ export class Verify {
     await expect(isDisabled).toBe(true);
 
   }
-  //Verify enabled button---------------------------------------------------------------------------------------------------------------------------------------------------
-
-  async verifyEnabledIcon() :Promise<void> {
-   const Icon = await this.page.locator(`//button[@aria-label='Previous Page']//*[name()='svg']`);
-    await expect(Icon ).toBeEnabled();
-    console.log(Icon  ? `Icon is enabled` : `Icon is not enabled`);
-  }
+  
   //Verify screenshot--------------------------------------------------------------------------------------
 
   async verifyScreenshot(page: Page, imagename: string) {
     await page.screenshot({ path: `tests/thirdBridge/screenshots/${imagename}.png` });
-    await expect(page).toHaveScreenshot({ name: imagename, maxDiffPixels: 150000});
+    await expect(page).toHaveScreenshot({ name: imagename, maxDiffPixels: 150000 });
 
   }
-//Verify Checkbox---------------------------------------------------------------------------------------------
-  async verifyCheckbox(page: Page,str: string):Promise<void>  {
-    const row=page.locator("//tbody//tr");
-    const nameMatch=row.filter({
-    has: page.locator("//td[2]"), hasText: `${str}`
-   })
-     await nameMatch.locator("input").check();
-     expect(nameMatch.locator("input")).toBeChecked();
+  //Verify Checkbox---------------------------------------------------------------------------------------------
+  async verifyCheckbox(page: Page, str: string): Promise<void> {
+    const row = page.locator("//tbody//tr");
+    const nameMatch = row.filter({
+      has: page.locator("//td[2]"), hasText: `${str}`
+    })
+    await nameMatch.locator("input").check();
+    expect(nameMatch.locator("input")).toBeChecked();
   }
 
-//Verify loading icon visibility.
+  //Verify loading icon visibility.
   async isLoadingVisible(page) {
-    const loadingIcon = page.locator("//span[normalize-space(text())='Refresh']"); 
-    await expect(loadingIcon).toBeVisible();  
+    const loadingIcon = page.locator("//span[normalize-space(text())='Refresh']");
+    await expect(loadingIcon).toBeVisible();
     console.log('Loading icon is visible!');
 
   }
-  
+
   //Verify ImageUpload---------------------------------------------------------------------------------------
-async verifyImageUpload(page: Page) :Promise<void> {
-  await expect(page.locator('img[src*="img_"]')).toBeVisible();
+  async verifyImageUpload(page: Page): Promise<void> {
+    await expect(page.locator('img[src*="img_"]')).toBeVisible();
 
-}
+  }
+  //Verify Pagination---------------------------------------------------------------------------------------
 
+  async verifyPagination(page: Page): Promise<void> {
+    const paginatorLocator = page.locator(".p-paginator-page");
+    await paginatorLocator.first().waitFor({ state: 'visible' });
+    const totalPages = await paginatorLocator.count();
+    for (let i = 0; i < totalPages; i++) {
+      const pageNumber = await paginatorLocator.nth(i).textContent();
+      expect(pageNumber).toBe((i + 1).toString());
+      await paginatorLocator.nth(i).click();
+      await page.waitForLoadState("networkidle");
+      const currentPageClass = await paginatorLocator.nth(i).getAttribute("class");
+      expect(currentPageClass).toContain("p-highlight");
+    }
+  }
 
+  
 }

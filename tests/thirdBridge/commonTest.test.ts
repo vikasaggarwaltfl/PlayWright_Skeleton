@@ -261,18 +261,7 @@ test ('Verify that the user is able to check and uncheck a checkbox', async ({ A
 
 });
 
-test.only('Verify if the pagination of the table is working as expected', async ({ Actions, Click, Verify, page }) => {
-    await Actions.signIn();
-    await Click.Btn("sign_In");
-    await Click.Tab("Products");
-    await Click.Tab("productWIP");
-    await page.waitForLoadState("networkidle");
-    await Actions.pagination(page);
-    await page.pause();
-    await Verify.verifyEnabledIcon();
-  });
-
-  test('Verify the error message,when the user enters "invalid value" while adding Product WIP',async({Actions, Click,Verify,page})=>{
+test('Verify the error message,when the user enters "invalid value" while adding Product WIP',async({Actions, Click,Verify,page})=>{
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Products");

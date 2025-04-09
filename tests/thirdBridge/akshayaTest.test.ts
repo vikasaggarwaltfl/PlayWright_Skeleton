@@ -5,11 +5,26 @@ import { expect } from '@playwright/test'
 import { Verify } from '@pages/Verify'
 
 
+test('Verify if the pagination of the table is working as expected', async ({ Actions, Click, Verify, page }) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("Products");
+  await Click.Tab("productWIP");
+ await Verify.verifyPagination(page);
+});
 
 
-
-
-
+test.only('Verify if the user is able to control a scrollbar', async ({ Actions, Click, Verify, page }) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("Products");
+  await page.pause();
+  await page.getByText('Footer text').scrollIntoViewIfNeeded();
+  await page.getByTestId('scrolling-container').hover();
+  await page.pause();
+  await page.mouse.wheel(0, 10);
+  await page.pause();
+});
 
 
 
