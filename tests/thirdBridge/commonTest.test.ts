@@ -285,3 +285,17 @@ test.only('Verify if the pagination of the table is working as expected', async 
     await Verify.verifyErrorMessage("Supplier is a required field");
   
   });
+
+  //Export Screen--------------------------------------------------------------------------------------------------------------------------------------------------------
+  
+  test('User should export products without filters', async ({ page, Actions, Click, Verify }) => {
+
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Exports");
+    await Click.Tab("exportProducts");
+    await Click.Btn("exportDataButton");  // Click export data button without applying any filters
+    await Verify.verifyExportDownloadStarted(); // Verify that a file is being downloaded
+    await page.pause();
+});
+

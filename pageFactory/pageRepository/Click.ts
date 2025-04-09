@@ -23,6 +23,15 @@ export class Click {
     private readonly configCodes: Locator
     private readonly productInfo: Locator
    
+    // Export Products locators
+    private readonly exportDataButton: Locator
+    private readonly clearFiltersButton: Locator
+    private readonly supplierDropdown: Locator
+    private readonly productStatusDropdown: Locator
+    private readonly brandDropdown: Locator
+    private readonly primaryCategoryDropdown: Locator
+    private readonly catalogueTypeDropdown: Locator
+    private readonly configCodeIdInput: Locator
 
     //Tab 
     private readonly Dashboard: Locator
@@ -32,6 +41,7 @@ export class Click {
     private readonly groupSettings: Locator
     private readonly Imports: Locator
     private readonly Exports: Locator
+    private readonly exportProducts: Locator
     private readonly productWIP: Locator
     private readonly productAdmin: Locator
     private readonly productMedia: Locator
@@ -76,27 +86,37 @@ export class Click {
         this.context = context
 
         //Link
-        this.addBrand = page.locator("//div[text()=' Add Brand']")
-        this.brandInfo = page.locator("//a[normalize-space()='ABSTO']")
-        this.addProduct = page.locator("//div[text()=' Add Product']")
-        this.addCatalogue = page.locator("//div[text()=' Add Catalogues']")
-        this.lookupCategory = page.locator("//a[normalize-space()='Lookup Category Setup']")
-        this.masterCategory = page.locator("//a[normalize-space()='Master Product Category Setup']")
-        this.iQCategory = page.locator("//a[normalize-space()='IQ Product Category Setup']")
-        this.pastelCategory = page.locator("//a[normalize-space()='Pastel Product Category Setup']")
-        this.auditLog = page.locator("//a[normalize-space()='Audit Log']")
-        this.configCodes = page.locator("//a[normalize-space()='Config Codes']")
+        this.addBrand = page.locator('a:has-text("Add Brand")')
+        this.brandInfo = page.locator('a:has-text("Brand Info")')
+        this.addProduct = page.locator('a:has-text("Add Product")')
+        this.addCatalogue = page.locator('a:has-text("Add Catalogue")')
+        this.lookupCategory = page.locator('a:has-text("Lookup Category")')
+        this.masterCategory = page.locator('a:has-text("Master Category")')
+        this.iQCategory = page.locator('a:has-text("IQ Category")')
+        this.pastelCategory = page.locator('a:has-text("Pastel Category")')
+        this.auditLog = page.locator('a:has-text("Audit Log")')
+        this.configCodes = page.locator('a:has-text("Config Codes")')
         this.productInfo = page.locator("//a[text()='Absto007']")
         
+        // Initialize Export Products locators
+        this.exportDataButton = page.locator('button:has-text("Export Data")')
+        this.clearFiltersButton = page.locator('button:has-text("Clear Filters")')
+        this.supplierDropdown = page.locator('//div[@title="Supplier"]//div//div[@class="p-multiselect-label-container"]')
+        this.productStatusDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Product Status"]')
+        this.brandDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Brand"]')
+        this.primaryCategoryDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Primary Category"]')
+        this.catalogueTypeDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Catalogue Type"]')
+        this.configCodeIdInput = page.locator('input[name="configCodeId"]')
 
         //Tab
-        this.Dashboard = page.locator("//span[text()='DashbproductInfooard']")
-        this.Brands = page.locator("//span[text()='Brands']")
-        this.Products = page.locator("//span[text()='Products']")
+        this.Dashboard = page.locator('a:has-text("Dashboard")')
+        this.Brands = page.locator('a:has-text("Brands")')
+        this.Products = page.locator('a:has-text("Products")')
         this.Catalogues = page.locator("//span[text()='Catalogues']")
         this.groupSettings = page.locator("//span[text()='Group Settings']")
         this.Imports = page.locator("//span[text()='Imports']")
-        this.Exports = page.locator("//span[text()='Exports']")
+        this.Exports = page.locator("//span[text()='Exports']")      
+        this.exportProducts = page.locator("//a[normalize-space()='Export Products']")
         this.productWIP = page.locator("//a[text()='Product WIP']")
         this.productAdmin = page.locator("//a[text()='Product Admin']")
 
@@ -211,6 +231,9 @@ export class Click {
         else if (str === "productMedia") {
             await this.productMedia.click();
         }
+        else if (str === "exportProducts") {
+            await this.exportProducts.click();
+        }
     }
 
     //Icon
@@ -290,6 +313,9 @@ export class Click {
         else if (str === "addProductsWIP") {
             await this.addProductsWIP.click();
         }
+        else if (str === "exportDataButton") {
+            await this.exportDataButton.click();
+        }
 
     }
 
@@ -304,8 +330,93 @@ export class Click {
         }
     }
 
+    // Export Products methods
+    async clickExportDataButton() {
+        await this.exportDataButton.click();
+    }
 
-    
+    async clickClearFiltersButton() {
+        await this.clearFiltersButton.click();
+    }
+
+    // Generic dropdown selection method
+    async selectFromDropdown(dropdownLocator: Locator, optionText: string, timeout: number = 5000) {
+        try {
+            // Click the dropdown to open it
+            await dropdownLocator.click();
+            
+            // Wait for the dropdown panel to be visible
+            await this.page.waitForSelector('.p-multiselect-panel', { state: 'visible', timeout });
+            
+            // Use a more specific locator for the option
+            const optionLocator = this.page.locator(`//div[contains(@class, "p-multiselect-panel")]//li[contains(@class, "p-multiselect-item")]//span[text()="${optionText}"]`);
+            
+            // Wait for the option to be visible and click it
+            await optionLocator.waitFor({ state: 'visible', timeout });
+            await optionLocator.click();
+            
+            // Wait for the dropdown panel to disappear (indicating selection is complete)
+            await this.page.waitForSelector('.p-multiselect-panel', { state: 'hidden', timeout });
+            
+            console.log(`Successfully selected option "${optionText}" from dropdown`);
+            return true;
+        } catch (error) {
+            console.error(`Failed to select option "${optionText}" from dropdown:`, error);
+            return false;
+        }
+    }
+
+    // Super generic dropdown selection method that can be used for any dropdown
+    async selectOptionFromAnyDropdown(dropdownSelector: string, optionText: string, timeout: number = 5000) {
+        try {
+            // Create a locator for the dropdown
+            const dropdownLocator = this.page.locator(dropdownSelector);
+            
+            // Click the dropdown to open it
+            await dropdownLocator.click();
+            
+            // Wait for the dropdown panel to be visible
+            await this.page.waitForSelector('.p-multiselect-panel', { state: 'visible', timeout });
+            
+            // Use a more specific locator for the option
+            const optionLocator = this.page.locator(`//div[contains(@class, "p-multiselect-panel")]//li[contains(@class, "p-multiselect-item")]//span[text()="${optionText}"]`);
+            
+            // Wait for the option to be visible and click it
+            await optionLocator.waitFor({ state: 'visible', timeout });
+            await optionLocator.click();
+            
+            // Wait for the dropdown panel to disappear (indicating selection is complete)
+            await this.page.waitForSelector('.p-multiselect-panel', { state: 'hidden', timeout });
+            
+            console.log(`Successfully selected option "${optionText}" from dropdown with selector "${dropdownSelector}"`);
+            return true;
+        } catch (error) {
+            console.error(`Failed to select option "${optionText}" from dropdown with selector "${dropdownSelector}":`, error);
+            return false;
+        }
+    }
+
+    // Specific dropdown selection methods using the generic method
+    async selectSupplierOption(optionText: string) {
+        return await this.selectFromDropdown(this.supplierDropdown, optionText);
+    }
+
+    async selectProductStatusOption(optionText: string) {
+        return await this.selectFromDropdown(this.productStatusDropdown, optionText);
+    }
+
+    async selectBrandOption(optionText: string) {
+        return await this.selectFromDropdown(this.brandDropdown, optionText);
+    }
+
+    async selectPrimaryCategoryOption(optionText: string) {
+        return await this.selectFromDropdown(this.primaryCategoryDropdown, optionText);
+    }
+
+    async selectCatalogueTypeOption(optionText: string) {
+        return await this.selectFromDropdown(this.catalogueTypeDropdown, optionText);
+    }
+
     //checkboxOption
 
     // async checkboxOption(str:string, page:Page): Promise<void{

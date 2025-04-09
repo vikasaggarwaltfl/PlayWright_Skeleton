@@ -15,13 +15,21 @@ export class Verify {
   readonly page: Page
   readonly context: BrowserContext
   readonly rows: Locator;
+  
+  // Export Products locators
+  private readonly supplierDropdown: Locator;
+  private readonly productStatusDropdown: Locator;
+  private readonly brandDropdown: Locator;
 
 
   constructor(page: Page, context: BrowserContext) {
     this.page = page
     this.context = context
     
-
+    // Initialize Export Products locators
+    this.supplierDropdown = page.locator('select[name="supplier"]');
+    this.productStatusDropdown = page.locator('select[name="productStatus"]');
+    this.brandDropdown = page.locator('select[name="brand"]');
   }
   // Display of Error message---------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -157,5 +165,34 @@ async verifyImageUpload(page: Page) :Promise<void> {
 
 }
 
+  // Export Products methods
+  async verifyExportDownloadStarted() {
+    const downloadPromise = this.page.waitForEvent('download');
+    const download = await downloadPromise;
+    expect(download.suggestedFilename()).toContain('.xlsx');
 
+     // Check if file is an Excel (.xlsx)
+     if (download.suggestedFilename().includes('.xlsx')) {
+      console.log('✅ Excel file downloaded successfully!');
+  } else {
+      console.log('❌ Downloaded file is not an Excel file.');
+  }
+  }
+
+  
+
+  async verifySupplierSelected(supplier: string) {
+    const selectedValue = await this.supplierDropdown.evaluate(el => (el as HTMLSelectElement).value);
+    expect(selectedValue).toBe(supplier);
+  }
+
+  async verifyProductStatusSelected(status: string) {
+    const selectedValue = await this.productStatusDropdown.evaluate(el => (el as HTMLSelectElement).value);
+    expect(selectedValue).toBe(status);
+  }
+
+  async verifyBrandSelected(brand: string) {
+    const selectedValue = await this.brandDropdown.evaluate(el => (el as HTMLSelectElement).value);
+    expect(selectedValue).toBe(brand);
+  }
 }
