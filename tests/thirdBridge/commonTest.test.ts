@@ -274,3 +274,25 @@ test('Verify the error message,when the user enters "invalid value" while adding
     await Verify.verifyErrorMessage("Supplier is a required field");
   
   });
+
+  test('Verify if the pagination of the table is working as expected', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Products");
+    await Click.Tab("productWIP");
+   await Verify.verifyPagination(page);
+  });
+
+  //Export Screen--------------------------------------------------------------------------------------------------------------------------------------------------------
+  
+  test('User should export products without filters', async ({ page, Actions, Click, Verify }) => {
+
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Exports");
+    await Click.Tab("exportProducts");
+    await Click.Btn("exportDataButton");  // Click export data button without applying any filters
+    await Verify.verifyExportDownloadStarted(); // Verify that a file is being downloaded
+    await page.pause();
+});
+

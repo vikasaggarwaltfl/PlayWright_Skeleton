@@ -15,12 +15,17 @@ export class Verify {
   readonly page: Page
   readonly context: BrowserContext
   readonly rows: Locator;
+  
+  // Export Products locators
+  private readonly supplierDropdown: Locator;
+  private readonly productStatusDropdown: Locator;
+  private readonly brandDropdown: Locator;
 
 
   constructor(page: Page, context: BrowserContext) {
     this.page = page
     this.context = context
-
+    
 
   }
   // Display of Error message---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -166,5 +171,5 @@ export class Verify {
     }
   }
 
-  
+
 }

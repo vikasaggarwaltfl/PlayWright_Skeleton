@@ -9,49 +9,70 @@ import { access } from 'fs'
 import { Paths } from '@pages/files/paths'
 
 
-// Login ----------------------------------------------------------------------------------------------------------------------------------------------------------
+    test('User should export products without filters', async ({ page, Actions, Click, Verify }) => {
 
-test('Verify that user can Add new Brand', async ({ page, Actions, Click, Verify }) => {
-   
-    await page.goto('https://onexweb-uat.officenational.co.za/')
-    await Actions.enterText('email', 'jeigemmabrije-7589@yopmail.com')
-    await Actions.enterText('password', 'Testing@1212')
-    await Click.Btn('sign_In')
+        await Actions.signIn();
+        await Click.Btn("sign_In");
+        await Click.Tab("Exports");
+        await Click.Tab("exportProducts");
+        await Click.Btn("exportDataButton");  // Click export data button without applying any filters
+        await Verify.verifyExportDownloadStarted(); // Verify that a file is being downloaded
+        await page.pause();
+    });
 
-    // Navigate to Brands section (assuming it's in Group Settings)
-    await Click.tabs('GroupSettingsTab') 
 
-    await Actions.enterText('searchmenu', 'Brands')
-    
-    // Click on Add Brand button
-    await Click.Btn('addBrandBtn')
-    
-    // Fill in brand details
-    const brandName = `Test Brand ${Date.now()}`  // Using timestamp to ensure unique name //incorrect
-    await Actions.enterText('brandName', brandName)
-    await Actions.enterText('brandDescription', 'This is a test brand description') // incorrect
-    
-    // Upload brand logo if required
-    // await Actions.uploadFile('brandLogo', 'path/to/logo.png')
-    
-    // Save the brand
-    await Click.Btn('saveBrand')
-    
-    // Verify brand was created successfully
-    await Verify.successMessage('Brand created successfully')
-    
-    // Verify brand appears in the list
-    await Actions.enterText('searchBrand', brandName)
+    test.only('User should apply filters and export products', async ({ page, Actions, Click, Verify }) => {
+        await Actions.signIn();
+        await Click.Btn("sign_In");
+        // Apply filters first
+        await Actions.selectSupplier('Artistic');
+        await Actions.selectProductStatus('IN');
+        
+        // Verify filters are applied
+        await Verify.verifySupplierSelected('Artistic');
+        await Verify.verifyProductStatusSelected('IN');
+        
+        // Clear filters
+        //await Click.clickClearFiltersButton();
+        
+        // Click export data button
+        await Click.clickExportDataButton();
+        
+        // Verify that a file is being downloaded
+        await Verify.verifyExportDownloadStarted();
+    });
 
-    await Verify.elementVisible(brandName)
-    
-    // Clean up - optional: delete the created brand
-    // await Click.icon('deleteIcon')
-    // await Click.Btn('confirmDelete')
-    // Logout
-    await Click.Btn('ProfileBtn')
-    await Click.Btn('SignoutBtn')
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // // Brand Screen --------------------------------------------------------------------------------------------------------------------------------------------------
