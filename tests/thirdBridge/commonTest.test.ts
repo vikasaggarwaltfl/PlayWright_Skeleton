@@ -295,4 +295,15 @@ test('Verify the error message,when the user enters "invalid value" while adding
     await Verify.verifyExportDownloadStarted(); // Verify that a file is being downloaded
     await page.pause();
 });
-
+//Group settings screen-----------------------------------------------------------------------------------------
+test ('Verify if the collapse all button is working as expected', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("groupSettings");
+    await Click.Link("masterCategory");
+    await Click.Icon("masterCategoryArrow");
+    await page.waitForLoadState("networkidle");
+    await Verify.verifyCollapseAllButton(page);
+    
+  });
+  

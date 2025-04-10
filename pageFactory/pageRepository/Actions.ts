@@ -123,22 +123,7 @@ async ImageUpload(page: Page, fileType: String): Promise<void> {
     await page.locator("input[type='file']").setInputFiles(Paths[`${fileType}`]);
     
   }
-<<<<<<< HEAD
 
-  }
-=======
-//Pagination numbers----------------------------------------------------------------------------------
-async pagination(page: Page): Promise<void> {
-    const paginatorLocator = page.locator(".p-paginator-page");
-    await paginatorLocator.first().waitFor({ state: 'visible' });
-    const totalPages = await paginatorLocator.count();
-    for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
-      if (pageIndex > 0) {
-        await paginatorLocator.nth(pageIndex).click();
-        await page.waitForLoadState("networkidle");
-      }
-    }
-  }
 
     // Export Products methods
     // async navigateToExportPage() {
@@ -169,7 +154,6 @@ async pagination(page: Page): Promise<void> {
         await this.configCodeIdInput.fill(configCodeId);
     }
 }
->>>>>>> f83777634609bcf9e2943e189bc6b8a80458497c
 
 
 

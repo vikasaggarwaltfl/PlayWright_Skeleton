@@ -15,7 +15,7 @@ export class Verify {
   readonly page: Page
   readonly context: BrowserContext
   readonly rows: Locator;
-  
+
   // Export Products locators
   private readonly supplierDropdown: Locator;
   private readonly productStatusDropdown: Locator;
@@ -25,7 +25,7 @@ export class Verify {
   constructor(page: Page, context: BrowserContext) {
     this.page = page
     this.context = context
-    
+
 
   }
   // Display of Error message---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -124,7 +124,7 @@ export class Verify {
     await expect(isDisabled).toBe(true);
 
   }
-  
+
   //Verify screenshot--------------------------------------------------------------------------------------
 
   async verifyScreenshot(page: Page, imagename: string) {
@@ -170,6 +170,19 @@ export class Verify {
       expect(currentPageClass).toContain("p-highlight");
     }
   }
-
-
+//Verify Collapse All Button---------------------------------------------------------------------------------------
+  async verifyCollapseAllButton(page: Page): Promise<void> {
+    const collapseAllButton = page.locator("//span[text()='Collapse All']");
+    await collapseAllButton.waitFor({ state: 'visible' });
+    const expandableSections = page.locator('.p-datatable-row-expansion');
+    const initialExpandedCount = await expandableSections.count();
+    console.log(`Found ${initialExpandedCount} expanded sections before collapse`);
+    if (initialExpandedCount > 0) {
+      await collapseAllButton.click();
+      await page.waitForTimeout(500);
+      const finalExpandedCount = await expandableSections.count();
+      console.log(`Number of expanded sections after collapse: ${finalExpandedCount}`);
+      expect(finalExpandedCount).toBe(0);
+    }
+  }
 }

@@ -45,6 +45,7 @@ export class Click {
     private readonly productWIP: Locator
     private readonly productAdmin: Locator
     private readonly productMedia: Locator
+    
 
     //Icon 
     private readonly chevronLeft: Locator
@@ -58,7 +59,8 @@ export class Click {
     private readonly notes: Locator
     private readonly download: Locator
     private readonly remove: Locator;
-    //private readonly pagination: Locator;
+    private readonly masterCategoryArrow: Locator
+    
    
     
     
@@ -72,8 +74,10 @@ export class Click {
     private readonly addNote: Locator
     private readonly refresh: Locator
     private readonly uploadImage: Locator
+    private readonly uploadVideo: Locator
     private readonly submit: Locator
     private readonly addProductsWIP: Locator
+    
 
     //dropdownOption
     private readonly artistic: Locator
@@ -91,7 +95,8 @@ export class Click {
         this.addProduct = page.locator('a:has-text("Add Product")')
         this.addCatalogue = page.locator('a:has-text("Add Catalogue")')
         this.lookupCategory = page.locator('a:has-text("Lookup Category")')
-        this.masterCategory = page.locator('a:has-text("Master Category")')
+        //this.masterCategory = page.locator('a:has-text("Master Category")')
+        this.masterCategory = page.locator("//a[text()='Master Product Category Setup']")
         this.iQCategory = page.locator('a:has-text("IQ Category")')
         this.pastelCategory = page.locator('a:has-text("Pastel Category")')
         this.auditLog = page.locator('a:has-text("Audit Log")')
@@ -132,7 +137,7 @@ export class Click {
         this.notes=page.locator("//span[@class='p-button-icon pi pi-comments']")
         this.download = page.locator("//i[@class='pi pi-download text-xl text-green-700']")
         this.remove = page.locator("//i[@class='pi pi-times text-xl text-red-700']")
-        //this.pagination = page.locator(".p-paginator-page");
+        this.masterCategoryArrow = page.locator("//tbody/tr[1]/td[1]/button[1]/i[1]")
         
 
         //Btn
@@ -142,9 +147,11 @@ export class Click {
         this.Filter = page.locator("//button[normalize-space()='Filter']")
         this.Reset = page.locator("//button[normalize-space()='Reset']")
         this.uploadImage = page.locator("//button[text()='Upload Image']")
+        this.uploadVideo = page.locator("//button[text()='Upload Video']")
         this.productMedia = page.locator("//a[text()='Product Media']");
         this.submit = page.locator("//span[text()='Submit']");
         this.addProductsWIP = page.locator("//div[text() = ' Add Products WIP']")
+        
         
         //this.Profile = page.locator("//div.border-2.rounded-full.border-primary-50.bg-[#F59E0B].text-white");
 
@@ -272,7 +279,9 @@ export class Click {
             await this.remove.click();
         }
         
-        
+        else if (str === "masterCategoryArrow") {
+            await this.masterCategoryArrow.click();
+        }
 
     }
 
@@ -307,6 +316,9 @@ export class Click {
         else if (str === "uploadImage") {
             await this.uploadImage.click();
         }
+        else if (str === "uploadVideo") {
+            await this.uploadVideo.click();
+        }
         else if (str === "submit") {
             await this.submit.click();
         }
@@ -316,6 +328,7 @@ export class Click {
         else if (str === "exportDataButton") {
             await this.exportDataButton.click();
         }
+        
 
     }
 

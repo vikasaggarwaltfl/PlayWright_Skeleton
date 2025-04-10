@@ -8,19 +8,29 @@ import { Verify } from '@pages/Verify'
 
 
 
-test.only('Verify if the user is able to control a scrollbar', async ({ Actions, Click, Verify, page }) => {
+
+
+test ('Verify if the user can upload a video and view it in cloudflare stream', async ({ Actions, Click, Verify, page }) => {
   await Actions.signIn();
-  await Click.Btn("sign_In");
-  await Click.Tab("Products");
-  await page.pause();
-  await page.getByText('Footer text').scrollIntoViewIfNeeded();
-  await page.getByTestId('scrolling-container').hover();
-  await page.pause();
-  await page.mouse.wheel(0, 10);
-  await page.pause();
+    await Click.Btn("sign_In");
+    await Click.Tab("Products");
+    await Click.Tab("productMedia");
+    await page.waitForTimeout(5000);
+    await Click.Icon("filterArrow");
+    await Actions.enterText("productName", "Absto007");
+    await Click.Btn("Filter");
+    await Click.Link("productInfo");
+    await page.waitForLoadState("networkidle");
+    await Click.Btn("uploadVideo");
+    await Actions.ImageUpload(page, "ProductVideo");
+    await page.waitForLoadState("networkidle");
+    await Click.Btn("submit");
+    await page.waitForLoadState("networkidle");
+    await page.pause();
+   
+   
+  
 });
-
-
 
 
 
