@@ -5,33 +5,58 @@ import { expect } from '@playwright/test'
 import { Verify } from '@pages/Verify'
 
 
-
-
-
-
-
-test ('Verify if the user can upload a video and view it in cloudflare stream', async ({ Actions, Click, Verify, page }) => {
+test.only('Verify if the user can delete a file', async ({ Actions, Click, Verify, page }) => {
   await Actions.signIn();
-    await Click.Btn("sign_In");
-    await Click.Tab("Products");
-    await Click.Tab("productMedia");
-    await page.waitForTimeout(5000);
-    await Click.Icon("filterArrow");
-    await Actions.enterText("productName", "Absto007");
-    await Click.Btn("Filter");
-    await Click.Link("productInfo");
-    await page.waitForLoadState("networkidle");
-    await Click.Btn("uploadVideo");
-    await Actions.ImageUpload(page, "ProductVideo");
-    await page.waitForLoadState("networkidle");
-    await Click.Btn("submit");
-    await page.waitForLoadState("networkidle");
-    await page.pause();
-   
-   
-  
+  await Click.Btn("sign_In");
+  await Click.Tab("Products");
+  await Click.Tab("productMedia");
+  await page.waitForTimeout(5000);
+  await Click.Icon("filterArrow");
+  await Actions.enterText("productName", "Absto007");
+  await Click.Btn("Filter");
+  await Click.Link("productInfo");
+  //await page.waitForLoadState("networkidle");
+await page.pause();
+  await Click.Link("videoPreview");
+  await page.pause();
+  //await page.waitForLoadState("networkidle");
+  await Click.Btn("delete");
+  await page.pause();
+  //await page.waitForLoadState("networkidle");
 });
 
+
+
+
+// test('Verify if the user can view an uploaded file', async ({ Actions, Click, Verify, page }) => {
+//   await Actions.signIn();
+//   await Click.Btn("sign_In");
+//   await Click.Tab("Products");
+//   await Click.Tab("productMedia");
+//   await page.waitForTimeout(5000);
+//   await Click.Icon("filterArrow");
+//   await Actions.enterText("productName", "Absto007");
+//   await Click.Btn("Filter");
+//   await Click.Link("productInfo");
+//   await page.waitForLoadState("networkidle");
+//   await Click.Btn("view");
+//   await page.waitForLoadState("networkidle");
+//   await Verify.verifyTitle(page, "OneX");
+//   await page.waitForLoadState("networkidle");
+// });
+
+//  test('Verify if user can add pastel product category', async ({ Actions, Click, Verify, page }) => {
+//   await Actions.signIn();
+//   await Click.Btn("sign_In");
+//   await Click.Tab("groupSettings");
+//   await Click.Link("pastelCategory");
+//   await Click.Link("addPastelProduct")
+//   await Actions.enterText("pastelCode", "1996");
+//  await Click.Icon("primaryCategoryFilterArrow");
+//   await Click.dropdownOption("businessTechnology");
+//   await Click.Btn("Save")
+//   await Verify.IsTextDisplayed("Saved Successfully");
+// });
 
 
 

@@ -185,4 +185,12 @@ export class Verify {
       expect(finalExpandedCount).toBe(0);
     }
   }
+
+  //Verify title---------------------------------------------------------------------------------------
+  async verifyTitle(page: Page, expectedTitle: string): Promise<void> {
+    await page.waitForTimeout(5000);
+    const title = await page.title();
+    console.log(title);
+    expect(title).toContain(expectedTitle);
+  }
 }

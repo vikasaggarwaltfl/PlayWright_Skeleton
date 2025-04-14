@@ -19,9 +19,12 @@ export class Click {
     private readonly masterCategory: Locator
     private readonly iQCategory: Locator
     private readonly pastelCategory: Locator
+    private readonly addPastelProduct: Locator
     private readonly auditLog: Locator
     private readonly configCodes: Locator
     private readonly productInfo: Locator
+    private readonly videoPreview: Locator
+    
    
     // Export Products locators
     private readonly exportDataButton: Locator
@@ -60,6 +63,7 @@ export class Click {
     private readonly download: Locator
     private readonly remove: Locator;
     private readonly masterCategoryArrow: Locator
+    private readonly primaryCategoryFilterArrow: Locator
     
    
     
@@ -77,11 +81,15 @@ export class Click {
     private readonly uploadVideo: Locator
     private readonly submit: Locator
     private readonly addProductsWIP: Locator
+    private readonly view: Locator
+    private readonly delete: Locator
+
     
 
     //dropdownOption
     private readonly artistic: Locator
     private readonly absto: Locator
+    private readonly businessTechnology: Locator
 
     
 
@@ -98,10 +106,13 @@ export class Click {
         //this.masterCategory = page.locator('a:has-text("Master Category")')
         this.masterCategory = page.locator("//a[text()='Master Product Category Setup']")
         this.iQCategory = page.locator('a:has-text("IQ Category")')
-        this.pastelCategory = page.locator('a:has-text("Pastel Category")')
+       // this.pastelCategory = page.locator('a:has-text("Pastel Category")')
+        this.pastelCategory = page.locator("//a[text()='Pastel Product Category Setup']")
+        this.addPastelProduct = page.locator("//div[text()=' Add Pastel Product Category']")
         this.auditLog = page.locator('a:has-text("Audit Log")')
         this.configCodes = page.locator('a:has-text("Config Codes")')
         this.productInfo = page.locator("//a[text()='Absto007']")
+        this.videoPreview = page.locator("(//div[@class='font-bold text-black text-[12px]'][normalize-space()='Unreviewed'])[2]")
         
         // Initialize Export Products locators
         this.exportDataButton = page.locator('button:has-text("Export Data")')
@@ -138,6 +149,7 @@ export class Click {
         this.download = page.locator("//i[@class='pi pi-download text-xl text-green-700']")
         this.remove = page.locator("//i[@class='pi pi-times text-xl text-red-700']")
         this.masterCategoryArrow = page.locator("//tbody/tr[1]/td[1]/button[1]/i[1]")
+        this.primaryCategoryFilterArrow = page.locator("(//div[@class='p-dropdown-trigger'])[1]")
         
 
         //Btn
@@ -151,6 +163,8 @@ export class Click {
         this.productMedia = page.locator("//a[text()='Product Media']");
         this.submit = page.locator("//span[text()='Submit']");
         this.addProductsWIP = page.locator("//div[text() = ' Add Products WIP']")
+        this.view = page.locator("//div[text()='View']")
+        this.delete = page.locator("//span[text()='Delete']")
         
         
         //this.Profile = page.locator("//div.border-2.rounded-full.border-primary-50.bg-[#F59E0B].text-white");
@@ -161,6 +175,7 @@ export class Click {
        //dropdownOption
        this.artistic = page.locator("//span[text()='Artistic']")
        this.absto = page.locator("//span[text()='ABSTO']")
+       this.businessTechnology = page.locator("//span[text()='Business Technology']")
 
       
        
@@ -193,6 +208,9 @@ export class Click {
         else if (linkName === "pastelCategory") {
             await this.pastelCategory.click();
         }
+        else if (linkName === "addPastelProduct") {
+            await this.addPastelProduct.click();
+        }
         else if (linkName === "auditLog") {
             await this.auditLog.click();
         }
@@ -201,6 +219,9 @@ export class Click {
         }
         if (linkName === "productInfo") {
             await this.productInfo.click();
+        }
+        if (linkName === "videoPreview ") {
+            await this.videoPreview.click();
         }
     }
 
@@ -282,6 +303,9 @@ export class Click {
         else if (str === "masterCategoryArrow") {
             await this.masterCategoryArrow.click();
         }
+        else if (str === "primaryCategoryFilterArrow") {
+            await this.primaryCategoryFilterArrow.click();
+        }
 
     }
 
@@ -328,7 +352,12 @@ export class Click {
         else if (str === "exportDataButton") {
             await this.exportDataButton.click();
         }
-        
+        else if (str === "view") {
+            await this.view.click();
+        }
+        else if (str === "delete") {
+            await this.delete.click();
+        }
 
     }
 
@@ -340,6 +369,9 @@ export class Click {
         }
         if (str === "absto") {
             await this.absto.click();
+        }
+        if (str === "businessTechnology") {
+            await this.businessTechnology.click();
         }
     }
 

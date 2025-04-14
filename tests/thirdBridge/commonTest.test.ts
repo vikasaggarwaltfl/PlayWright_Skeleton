@@ -226,6 +226,22 @@ test('Verify if user can successfully upload a file in Product Media', async ({ 
     await Verify.verifyImageUpload(page);
 
 });
+test('Verify if the user can view an uploaded file', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Products");
+    await Click.Tab("productMedia");
+    await page.waitForTimeout(5000);
+    await Click.Icon("filterArrow");
+    await Actions.enterText("productName", "Absto007");
+    await Click.Btn("Filter");
+    await Click.Link("productInfo");
+    await page.waitForLoadState("networkidle");
+    await Click.Btn("view");
+    await page.waitForLoadState("networkidle");
+    await Verify.verifyTitle(page, "OneX");
+    await page.waitForLoadState("networkidle");
+  });
 
 test('Verify that the user is able to add a note in a popup window', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
@@ -296,7 +312,7 @@ test('Verify the error message,when the user enters "invalid value" while adding
     await page.pause();
 });
 //Group settings screen-----------------------------------------------------------------------------------------
-test ('Verify if the collapse all button is working as expected', async ({ Actions, Click, Verify, page }) => {
+test('Verify if the collapse all button is working as expected', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("groupSettings");
@@ -306,4 +322,18 @@ test ('Verify if the collapse all button is working as expected', async ({ Actio
     await Verify.verifyCollapseAllButton(page);
     
   });
+
+  test('Verify if user can add pastel product category', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("groupSettings");
+    await Click.Link("pastelCategory");
+    await Click.Link("addPastelProduct")
+    await Actions.enterText("pastelCode", "1996");
+    await Click.Icon("primaryCategoryFilterArrow");
+    await Click.dropdownOption("businessTechnology");
+    await Click.Btn("Save")
+    await Verify.IsTextDisplayed("Saved Successfully");
+  });
+  
   
