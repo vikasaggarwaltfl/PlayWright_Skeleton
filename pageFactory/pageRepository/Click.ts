@@ -1,4 +1,5 @@
 import { Page, BrowserContext, Locator, expect } from '@playwright/test'
+import { info } from 'console';
 import * as dotenv from 'dotenv'
 import { get } from 'http'
 import { waitForDebugger } from 'inspector'
@@ -45,6 +46,9 @@ export class Click {
     private readonly Imports: Locator
     private readonly Exports: Locator
     private readonly exportProducts: Locator
+    private readonly exportProductPrices: Locator
+    private readonly exportIQProducts: Locator
+    private readonly exportPastelProducts: Locator
     private readonly productWIP: Locator
     private readonly productAdmin: Locator
     private readonly productMedia: Locator
@@ -98,8 +102,9 @@ export class Click {
         this.context = context
 
         //Link
-        this.addBrand = page.locator('a:has-text("Add Brand")')
-        this.brandInfo = page.locator('a:has-text("Brand Info")')
+        this.addBrand = page.locator("//div[@class='flex flex-row items-center gap-2']");
+        this.brandInfo = page.locator("//a[normalize-space()='ABSTO']")
+
         this.addProduct = page.locator('a:has-text("Add Product")')
         this.addCatalogue = page.locator('a:has-text("Add Catalogue")')
         this.lookupCategory = page.locator('a:has-text("Lookup Category")')
@@ -131,8 +136,11 @@ export class Click {
         this.Catalogues = page.locator("//span[text()='Catalogues']")
         this.groupSettings = page.locator("//span[text()='Group Settings']")
         this.Imports = page.locator("//span[text()='Imports']")
-        this.Exports = page.locator("//span[text()='Exports']")      
+        this.Exports = page.locator("//span[text()='Exports']")  
         this.exportProducts = page.locator("//a[normalize-space()='Export Products']")
+        this.exportProductPrices = page.locator("//a[normalize-space()='Export Prices']")
+        this.exportIQProducts = page.locator("//a[normalize-space()='Export IQ']")
+        this.exportPastelProducts = page.locator("//a[normalize-space()='Export Pastel']")
         this.productWIP = page.locator("//a[text()='Product WIP']")
         this.productAdmin = page.locator("//a[text()='Product Admin']")
 
@@ -261,6 +269,13 @@ export class Click {
         }
         else if (str === "exportProducts") {
             await this.exportProducts.click();
+        }
+        else if (str === "exportProductPrices") {
+            await this.exportProductPrices.click();
+        }else if (str === "exportIQProducts") {
+            await this.exportIQProducts.click();
+        }else if (str === "exportPastelProducts") {
+            await this.exportPastelProducts.click();
         }
     }
 

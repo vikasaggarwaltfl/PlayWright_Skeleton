@@ -1,5 +1,3 @@
-
-
 import test from '@lib/BaseTest'
 import { expect } from '@playwright/test'
 import { Actions } from '@pages/Actions'
@@ -8,74 +6,106 @@ import { Verify } from '@pages/Verify'
 import { access } from 'fs'
 import { Paths } from '@pages/files/paths'
 
+test.setTimeout(120000); // 2 minutes
 
-    test('User should export products without filters', async ({ page, Actions, Click, Verify }) => {
+test.only('User should export all products', async ({ page, Actions, Click, Verify }) => {
+    console.log('Starting Product export test...');
+    // Navigate to Export Products page
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Exports");
+    await Click.Tab("exportProducts");
+    // Wait for the page to be ready
+    await page.waitForLoadState('networkidle');
+    //await page.waitForTimeout(10000);//await page.waitForTimeout(10000);
+    // Click
+    await Click.Btn("exportDataButton");
+    // Verify that the download started
+    const downloadStarted = await Verify.verifyExportData(180000);
+    expect(downloadStarted).toBe(true);
+});
 
-        await Actions.signIn();
-        await Click.Btn("sign_In");
-        await Click.Tab("Exports");
-        await Click.Tab("exportProducts");
-        await Click.Btn("exportDataButton");  // Click export data button without applying any filters
-        await Verify.verifyExportDownloadStarted(); // Verify that a file is being downloaded
-        await page.pause();
-    });
+test.setTimeout(120000);
+test('should export all product prices', async ({ page, Actions, Click, Verify }) => {
+    console.log('Starting product price export test...');
+    
+    // Navigate to Export Products page
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Exports");
+    await Click.Tab("exportProductPrices");
+    
+    // Wait for the page to be ready
+    await page.waitForLoadState('networkidle');
+    //await page.waitForTimeout(10000);
+    
+    // Click export data button
+    await Click.Btn("exportDataButton");
+    
+    // Verify that the download started with increased timeout
+    const downloadStarted = await Verify.verifyExportData(180000); // 3 minutes timeout
+    expect(downloadStarted).toBe(true);
+});
+
+test.setTimeout(120000);
+test.only('should export all IQ products', async ({ page, Actions, Click, Verify }) => {
+    console.log('Starting IQ product export test...');
+    
+    // Navigate to Export Products page
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Exports");
+    await Click.Tab("exportIQProducts");
+    
+    // Wait for the page to be ready
+    await page.waitForLoadState('networkidle');
+    //await page.waitForTimeout(10000);
+    
+    // Click export data button
+    await Click.Btn("exportDataButton");
+    
+    // Verify that the download started with increased timeout
+    const downloadStarted = await Verify.verifyExportData(180000);
+    expect(downloadStarted).toBe(true);
+});
+
+test.setTimeout(120000);
+test('should export all Pastel products', async ({ page, Actions, Click, Verify }) => {
+    console.log('Starting Pastel product export test...');
+    
+    // Navigate to Export Products page
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Exports");
+    await Click.Tab("exportPastelProducts");
+    
+    // Wait for the page to be ready
+    await page.waitForLoadState('networkidle');
+    //await page.waitForTimeout(10000);
+    
+    // Click export data button
+    await Click.Btn("exportDataButton");
+    
+    // Verify that the download started with increased timeout
+    const downloadStarted = await Verify.verifyExportData(180000);
+    expect(downloadStarted).toBe(true);
+});
 
 
-    test.only('User should apply filters and export products', async ({ page, Actions, Click, Verify }) => {
-        await Actions.signIn();
-        await Click.Btn("sign_In");
-        // Apply filters first
-        await Actions.selectSupplier('Artistic');
-        await Actions.selectProductStatus('IN');
-        
-        // Verify filters are applied
-        await Verify.verifySupplierSelected('Artistic');
-        await Verify.verifyProductStatusSelected('IN');
-        
-        // Clear filters
-        //await Click.clickClearFiltersButton();
-        
-        // Click export data button
-        await Click.clickExportDataButton();
-        
-        // Verify that a file is being downloaded
-        await Verify.verifyExportDownloadStarted();
-    });
 
 
+   
+// Login ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
+// test('Verify that user is able to login with valid credentials', async ({ page, Actions, Click, Verify }) => {
+//     await Actions.signIn();
+//     await Click.Btn("sign_In");
+//     await Verify.IsTextDisplayed("My OfficeNational");
+//     await Verify.IsTextDisplayed("Products");
+//     await Verify.IsTextDisplayed("ONA Super Admin");
+// });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // Brand Screen --------------------------------------------------------------------------------------------------------------------------------------------------
+// /// Brand Screen --------------------------------------------------------------------------------------------------------------------------------------------------
 
 // test('Verify user can navigate to the "Brand" screen and verify screen displayed correctly', async ({ Actions, Click, Verify, page }) => {
 //     await Actions.signIn();
@@ -91,8 +121,8 @@ import { Paths } from '@pages/files/paths'
 //     await Click.Btn("sign_In");
 //     await Click.Tab("Brands");
 //     await Click.Icon("filterArrow");
-//     await Actions.enterText("brandName", "Test37");
-//     await Verify.IsTextDisplayed("Test37");
+//     await Actions.enterText("brandName", "Test38");
+//     await Verify.IsTextDisplayed("Test38");
 // });
 
 // test('Verify user can Sort Brand records and verify sort order  of records.', async ({ Actions, Click, Verify, page }) => {
@@ -106,27 +136,15 @@ import { Paths } from '@pages/files/paths'
 //     await Click.Icon("Sort");
 //     await Verify.verifySortOrder();
 // });
-
-// test('Verify user can navigate to Brand Information and verify its correct display', async ({ Actions, Click, Verify, page }) => {
-//     await Actions.signIn();
-//     await Click.Btn("sign_In");
-//     await Click.Tab("Brands");
-//     await Click.Link("brandInfo");
-//     await page.waitForTimeout(5000);
-//     await Verify.verifyURL('https://onexweb-uat.officenational.co.za/table/brand/6');
-//     await Verify.IsTextDisplayed('Brand: ABSTO')
-// });
-
 // test('Verify user can  Add Brand with "valid data" and verify Success message', async ({ Actions, Click, Verify, page }) => {
 //     await Actions.signIn();
 //     await Click.Btn("sign_In");
 //     await Click.Tab("Brands");
 //     await Click.Link("addBrand");
-//     await Actions.enterText("brandName", "Test123");
+//     await Actions.enterText("brandName", "Test135");
 //     await Click.Btn("Save");
-//     //await page.waitForTimeout(4000)
+//     // await page.waitForTimeout(5000);
 //     await Verify.IsTextDisplayed('Saved Successfully');
-    
 // });
 
 // test('Verify user cannot Add Brand with "invalid data" and verify error message', async ({ Actions, Click, Verify, page }) => {
@@ -146,59 +164,63 @@ import { Paths } from '@pages/files/paths'
 //     await Click.Tab("Brands");
 //     await Click.Icon("kebabMenu");
 //     await Click.Icon("Edit");
-//     await Actions.enterText("brandPrefix","A2");
+//     await Actions.enterText("brandPrefix", "A2");
 //     await Click.Btn("Save");
 //     await Verify.IsTextDisplayed('Brands saved!')
-//     ///await page.pause();
 // });
 
 
-// test('Verify user can upload brand logo and verify success message', async ({ Actions, Click, Verify, page}) => {
+// test('Verify user can upload brand logo and verify success message', async ({ Actions, Click, Verify, page }) => {
 //     await Actions.signIn();
 //     await Click.Btn("sign_In");
 //     await Click.Tab("Brands");
 //     await Click.Link("addBrand");
 //     await Actions.enterText("brandName", "Tanishq");
-//     const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';  
+//     const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';
 //     const filePath: string = './tests/thirdBridge/testsamples/logo.png';
 //     await Actions.uploadFile(page, uploadAreaSelector, Paths.BrandLogo);
-//     //await Actions.uploadFile(page, uploadAreaSelector, filePath);
 //     await Verify.IsTextDisplayed("File successfully uploaded!");
 // });
 
-// test('Verify user can download uploaded brand logo file ', async ({ Actions, Click, Verify, page}) => {
+// test('Verify user can download uploaded brand logo file ', async ({ Actions, Click, Verify, page }) => {
 //     await Actions.signIn();
 //     await Click.Btn("sign_In");
 //     await Click.Tab("Brands");
 //     await Click.Link("addBrand");
 //     await Actions.enterText("brandName", "Tanishq");
-//     const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';  
+//     const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';
 //     const filePath: string = './tests/thirdBridge/testsamples/logo.png';
 //     await Actions.uploadFile(page, uploadAreaSelector, Paths.BrandLogo);
-//     //await Actions.uploadFile(page, uploadAreaSelector, filePath);
-//     //await Verify.IsTextDisplayed("File successfully uploaded!");
 //     await page.waitForTimeout(3000);
 //     await Click.Icon("download")
 //     await page.waitForTimeout(3000);
 // });
 
-// test('Verify user can remove uploaded brand logo file ', async ({ Actions, Click, Verify, page}) => {
+// test('Verify user can remove uploaded brand logo file ', async ({ Actions, Click, Verify, page }) => {
 //     await Actions.signIn();
 //     await Click.Btn("sign_In");
 //     await Click.Tab("Brands");
 //     await Click.Link("addBrand");
 //     await Actions.enterText("brandName", "Tanishq");
-//     const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';  
+//     const uploadAreaSelector: string = '//div[@class="flex flex-col items-center gap-2"]';
 //     const filePath: string = './tests/thirdBridge/testsamples/logo.png';
 //     await Actions.uploadFile(page, uploadAreaSelector, Paths.BrandLogo);
-//     //await Actions.uploadFile(page, uploadAreaSelector, filePath);
-//     //await Verify.IsTextDisplayed("File successfully uploaded!");
 //     await page.waitForTimeout(3000);
 //     await Click.Icon("remove");
 //     await Verify.IsTextDisplayed("Drop files here to upload logo")
 // });
 
-// test('Verify refresh data grid and verify loading icon visibility ', async ({ Actions, Click, Verify, page}) => {
+// test('Verify user can navigate to Brand Information and verify its correct display', async ({ Actions, Click, Verify, page }) => {
+//     await Actions.signIn();
+//     await Click.Btn("sign_In");
+//     await Click.Tab("Brands");
+//     await Click.Link("brandInfo");
+//     await page.waitForTimeout(5000);
+//     await Verify.verifyURL('https://onexweb-uat.officenational.co.za/table/brand/6');
+//     await Verify.IsTextDisplayed('Brand: ABSTO')
+// });
+
+// test('Verify refresh data grid and verify loading icon visibility ', async ({ Actions, Click, Verify, page }) => {
 //     await Actions.signIn();
 //     await Click.Btn("sign_In");
 //     await Click.Tab("Brands");
@@ -206,6 +228,40 @@ import { Paths } from '@pages/files/paths'
 //     await page.waitForTimeout(3000);
 //     await Verify.isLoadingVisible(page);
 // });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // test.only('Verify user signout successfully ', async ({ Actions, Click, Verify, page}) => {
 //     await Actions.signIn();
@@ -217,8 +273,6 @@ import { Paths } from '@pages/files/paths'
 //     //await page.waitForURL(loginPageUrl);
     
 // });
-
-
 
 // test.only('Verify that the user can navigate through pagination', async ({ Actions, Click, Verify, page}) => {
 //     await Actions.signIn();
@@ -236,14 +290,6 @@ import { Paths } from '@pages/files/paths'
 //     await Verify.verifyPageNumber(page, 2);
 
 // });
-
-
-
-
-
-
-
-
 
 
 

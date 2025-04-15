@@ -34,8 +34,8 @@ test('Verify that the user can apply a filter and check the presence of records 
     await Click.Btn("sign_In");
     await Click.Tab("Brands");
     await Click.Icon("filterArrow");
-    await Actions.enterText("brandName", "Test37");
-    await Verify.IsTextDisplayed("Test37");
+    await Actions.enterText("brandName", "Test38");
+    await Verify.IsTextDisplayed("Test38");
 });
 
 test('Verify user can Sort Brand records and verify sort order  of records.', async ({ Actions, Click, Verify, page }) => {
@@ -49,25 +49,13 @@ test('Verify user can Sort Brand records and verify sort order  of records.', as
     await Click.Icon("Sort");
     await Verify.verifySortOrder();
 });
-
-test('Verify user can navigate to Brand Information and verify its correct display', async ({ Actions, Click, Verify, page }) => {
-    await Actions.signIn();
-    await Click.Btn("sign_In");
-    await Click.Tab("Brands");
-    await Click.Link("brandInfo");
-    await page.waitForTimeout(5000);
-    await Verify.verifyURL('https://onexweb-uat.officenational.co.za/table/brand/6');
-    await Verify.IsTextDisplayed('Brand: ABSTO')
-});
-
 test('Verify user can  Add Brand with "valid data" and verify Success message', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Brands");
     await Click.Link("addBrand");
-    await Actions.enterText("brandName", "Test133");
+    await Actions.enterText("brandName", "Test136");
     await Click.Btn("Save");
-    // await page.waitForTimeout(5000);
     await Verify.IsTextDisplayed('Saved Successfully');
 });
 
@@ -134,6 +122,16 @@ test('Verify user can remove uploaded brand logo file ', async ({ Actions, Click
     await Verify.IsTextDisplayed("Drop files here to upload logo")
 });
 
+test('Verify user can navigate to Brand Information and verify its correct display', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Brands");
+    await Click.Link("brandInfo");
+    await page.waitForTimeout(5000);
+    await Verify.verifyURL('https://onexweb-uat.officenational.co.za/table/brand/6');
+    await Verify.IsTextDisplayed('Brand: ABSTO')
+});
+
 test('Verify refresh data grid and verify loading icon visibility ', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -143,7 +141,6 @@ test('Verify refresh data grid and verify loading icon visibility ', async ({ Ac
     await Verify.isLoadingVisible(page);
 });
 
-
 // Product Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that by clicking on a Product,that Product screen is visible correctly.', async ({ Actions, Click, Verify, page }) => {
@@ -151,10 +148,10 @@ test('Verify that by clicking on a Product,that Product screen is visible correc
     await Click.Btn("sign_In");
     await Click.Tab("Products");
     await Click.Icon("filterArrow");
-    await Actions.enterText("productName", "Absto007");
+    await Actions.enterText("productName", "Absto008");
     await Click.Btn("Filter");
     await Click.Link("productInfo");
-    await Verify.IsTextDisplayed("Product: Absto007");
+    await Verify.IsTextDisplayed("Product: Absto008");
 });
 test('Verify that the user is able to sort the products', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
@@ -301,16 +298,24 @@ test('Verify the error message,when the user enters "invalid value" while adding
 
   //Export Screen--------------------------------------------------------------------------------------------------------------------------------------------------------
   
-  test('User should export products without filters', async ({ page, Actions, Click, Verify }) => {
-
+  test.setTimeout(120000); 
+  test('User should export all products', async ({ page, Actions, Click, Verify }) => {
+    console.log('Starting Product export test...');
+    // Navigate to Export Products page
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Exports");
     await Click.Tab("exportProducts");
-    await Click.Btn("exportDataButton");  // Click export data button without applying any filters
-    await Verify.verifyExportDownloadStarted(); // Verify that a file is being downloaded
-    await page.pause();
-});
+    // Wait for the page to be ready
+    await page.waitForLoadState('networkidle');
+    //await page.waitForTimeout(10000);
+    await Click.Btn("exportDataButton");
+    // Verify that the download started
+    const downloadStarted = await Verify.verifyExportData(180000);
+    expect(downloadStarted).toBe(true);
+    
+ });
+
 //Group settings screen-----------------------------------------------------------------------------------------
 test('Verify if the collapse all button is working as expected', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
@@ -329,7 +334,7 @@ test('Verify if the collapse all button is working as expected', async ({ Action
     await Click.Tab("groupSettings");
     await Click.Link("pastelCategory");
     await Click.Link("addPastelProduct")
-    await Actions.enterText("pastelCode", "1996");
+    await Actions.enterText("pastelCode", "1997");
     await Click.Icon("primaryCategoryFilterArrow");
     await Click.dropdownOption("businessTechnology");
     await Click.Btn("Save")

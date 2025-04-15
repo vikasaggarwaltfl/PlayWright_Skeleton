@@ -25,7 +25,7 @@ export class Verify {
   constructor(page: Page, context: BrowserContext) {
     this.page = page
     this.context = context
-
+    
 
   }
   // Display of Error message---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -132,29 +132,53 @@ export class Verify {
     await expect(page).toHaveScreenshot({ name: imagename, maxDiffPixels: 150000 });
 
   }
-  //Verify Checkbox---------------------------------------------------------------------------------------------
+
+  // Verify Export Download Started------------------------------------------------------------------------------------------
+  async verifyExportData(timeout: number = 120000): Promise<boolean> {
+    try {
+      // Wait for the download event to be triggered
+      const download = await this.page.waitForEvent('download', { timeout });
+      
+      // Log the download information
+      console.log(`Download started: ${download.suggestedFilename()}`);
+      
+      // Verify that the file is an Excel file
+      expect(download.suggestedFilename()).toContain('.xlsx');
+      
+      // Wait for the download to complete
+      const path = await download.path();
+      console.log(`Exported Successfully: ${path}`);
+      
+      return true;
+    } catch (error) {
+      console.error('Error verifying export download:', error);
+      return false;
+    }
+  }
+
+//Verify Checkbox---------------------------------------------------------------------------------------------
   async verifyCheckbox(page: Page, str: string): Promise<void> {
     const row = page.locator("//tbody//tr");
     const nameMatch = row.filter({
-      has: page.locator("//td[2]"), hasText: `${str}`
-    })
-    await nameMatch.locator("input").check();
-    expect(nameMatch.locator("input")).toBeChecked();
+    has: page.locator("//td[2]"), hasText: `${str}`
+   })
+     await nameMatch.locator("input").check();
+     expect(nameMatch.locator("input")).toBeChecked();
   }
 
-  //Verify loading icon visibility.
+  //Verify loading icon visibility-----------------------------------------------------------------------------------
   async isLoadingVisible(page) {
-    const loadingIcon = page.locator("//span[normalize-space(text())='Refresh']");
-    await expect(loadingIcon).toBeVisible();
+    const loadingIcon = page.locator("//span[normalize-space(text())='Refresh']"); 
+    await expect(loadingIcon).toBeVisible();  
     console.log('Loading icon is visible!');
 
   }
-
+  
   //Verify ImageUpload---------------------------------------------------------------------------------------
   async verifyImageUpload(page: Page): Promise<void> {
-    await expect(page.locator('img[src*="img_"]')).toBeVisible();
+  await expect(page.locator('img[src*="img_"]')).toBeVisible();
 
-  }
+}
   //Verify Pagination---------------------------------------------------------------------------------------
 
   async verifyPagination(page: Page): Promise<void> {
