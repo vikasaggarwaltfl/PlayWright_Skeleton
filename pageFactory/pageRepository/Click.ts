@@ -87,6 +87,7 @@ export class Click {
     private readonly addProductsWIP: Locator
     private readonly view: Locator
     private readonly delete: Locator
+    private readonly subDelete: Locator
 
     
 
@@ -173,6 +174,7 @@ export class Click {
         this.addProductsWIP = page.locator("//div[text() = ' Add Products WIP']")
         this.view = page.locator("//div[text()='View']")
         this.delete = page.locator("//span[text()='Delete']")
+        this.subDelete = page.locator("(//span[@class='p-button-label'][normalize-space()='Delete'])[1]")
         
         
         //this.Profile = page.locator("//div.border-2.rounded-full.border-primary-50.bg-[#F59E0B].text-white");
@@ -373,6 +375,11 @@ export class Click {
         else if (str === "delete") {
             await this.delete.click();
         }
+        else if (str === "subDelete") {
+            await this.subDelete.click();
+        }
+
+
 
     }
 

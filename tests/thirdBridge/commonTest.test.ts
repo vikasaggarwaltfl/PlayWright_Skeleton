@@ -141,17 +141,17 @@ test('Verify refresh data grid and verify loading icon visibility ', async ({ Ac
     await Verify.isLoadingVisible(page);
 });
 
-// Product Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
+// Products Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that by clicking on a Product,that Product screen is visible correctly.', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Products");
     await Click.Icon("filterArrow");
-    await Actions.enterText("productName", "Absto008");
+    await Actions.enterText("productName", "Absto007");
     await Click.Btn("Filter");
     await Click.Link("productInfo");
-    await Verify.IsTextDisplayed("Product: Absto008");
+    await Verify.IsTextDisplayed("Product: Absto007");
 });
 test('Verify that the user is able to sort the products', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
@@ -187,7 +187,7 @@ test('Verify that by clicking on the reset button, the filter button is disabled
 });
 
 
-test('Verify that the user is able to edit the product', async ({ Actions, Click, Verify, page }) => {
+test('Verify that the user is able to edit the product entering valid data', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Products");
@@ -201,8 +201,9 @@ test('Verify that the user is able to edit the product', async ({ Actions, Click
     await page.waitForTimeout(2000)
     await Verify.IsTextDisplayed("Products saved!");
 });
+//Product Media screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify if user can successfully upload a file in Product Media', async ({ Actions, Click, Verify, page }) => {
+test('Verify if user can successfully upload image in Product Media', async ({ Actions, Click, Verify, page }) => {
 
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -223,12 +224,12 @@ test('Verify if user can successfully upload a file in Product Media', async ({ 
     await Verify.verifyImageUpload(page);
 
 });
-test('Verify if the user can view an uploaded file', async ({ Actions, Click, Verify, page }) => {
+test('Verify if the user can view an uploaded file in Product Media', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Products");
     await Click.Tab("productMedia");
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(4000);
     await Click.Icon("filterArrow");
     await Actions.enterText("productName", "Absto007");
     await Click.Btn("Filter");
@@ -239,6 +240,46 @@ test('Verify if the user can view an uploaded file', async ({ Actions, Click, Ve
     await Verify.verifyTitle(page, "OneX");
     await page.waitForLoadState("networkidle");
   });
+
+  test('Verify if the user can delete the uploaded file in Product Media', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Products");
+    await Click.Tab("productMedia");
+    await page.waitForTimeout(5000);
+    await Click.Icon("filterArrow");
+    await Actions.enterText("productName", "Absto007");
+    await Click.Btn("Filter");
+    await Click.Link("productInfo");
+    await page.waitForTimeout(5000);
+    await Click.Icon("Edit");
+    await page.waitForTimeout(4000);
+    await Click.Btn("delete");
+    await page.waitForTimeout(3000);
+    await Click.Btn("subDelete");
+    await Verify.IsTextDisplayed("Upload Brochure");
+
+  });
+
+  test('Verify that the user cannot upload invalid file in the Product Media', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Products");
+    await Click.Tab("productMedia");
+    await page.waitForTimeout(5000);
+    await Click.Icon("filterArrow");
+    await Actions.enterText("productName", "Absto007");
+    await Click.Btn("Filter");
+    await Click.Link("productInfo");
+    await page.waitForLoadState("networkidle");
+    await Click.Btn("uploadImage");
+    await Actions.ImageUpload(page, "SamplePDF");
+    await page.waitForLoadState("networkidle");
+    await Click.Btn("submit");
+    await Verify.IsTextDisplayed("Could not add image");
+    });
+
+//Product WIP Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that the user is able to add a note in a popup window', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
@@ -259,6 +300,22 @@ test('Verify that the user is able to add a note in a popup window', async ({ Ac
     await Verify.verifyScreenshot(page, "notesPopupWindow.png");
 });
 
+test('Verify the error message,when the user enters "invalid value" while adding Product WIP',async({Actions, Click,Verify,page})=>{
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Products");
+    await Click.Tab("productWIP");
+    await Click.Btn("addProductsWIP");
+    await page.waitForLoadState("networkidle");
+    await Actions.enterText("productName", "Absto007");
+    await Click.Btn("Save");
+    await page.waitForLoadState("networkidle");
+    await Verify.verifyErrorMessage("Supplier is a required field");
+  
+  });
+
+//Product Admin Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
+
 test ('Verify that the user is able to check and uncheck a checkbox', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -274,27 +331,15 @@ test ('Verify that the user is able to check and uncheck a checkbox', async ({ A
 
 });
 
-test('Verify the error message,when the user enters "invalid value" while adding Product WIP',async({Actions, Click,Verify,page})=>{
-    await Actions.signIn();
-    await Click.Btn("sign_In");
-    await Click.Tab("Products");
-    await Click.Tab("productWIP");
-    await Click.Btn("addProductsWIP");
-    await page.waitForLoadState("networkidle");
-    await Actions.enterText("productName", "Absto007");
-    await Click.Btn("Save");
-    await page.waitForLoadState("networkidle");
-    await Verify.verifyErrorMessage("Supplier is a required field");
-  
-  });
-
-  test('Verify if the pagination of the table is working as expected', async ({ Actions, Click, Verify, page }) => {
+test('Verify if the pagination of the table is working as expected', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Products");
     await Click.Tab("productWIP");
    await Verify.verifyPagination(page);
   });
+
+
 
   //Export Screen--------------------------------------------------------------------------------------------------------------------------------------------------------
   
