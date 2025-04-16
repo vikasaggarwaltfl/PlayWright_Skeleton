@@ -24,7 +24,7 @@ export class Click {
     private readonly auditLog: Locator
     private readonly configCodes: Locator
     private readonly productInfo: Locator
-    private readonly videoPreview: Locator
+   
     
    
     // Export Products locators
@@ -89,6 +89,8 @@ export class Click {
     private readonly view: Locator
     private readonly delete: Locator
     private readonly subDelete: Locator
+    private readonly reject: Locator
+    private readonly accept: Locator
 
     
 
@@ -119,7 +121,7 @@ export class Click {
         this.auditLog = page.locator('a:has-text("Audit Log")')
         this.configCodes = page.locator('a:has-text("Config Codes")')
         this.productInfo = page.locator("//a[text()='Absto007']")
-        this.videoPreview = page.locator("(//div[@class='font-bold text-black text-[12px]'][normalize-space()='Unreviewed'])[2]")
+       
         
         // Initialize Export Products locators
         this.exportDataButton = page.locator('button:has-text("Export Data")')
@@ -176,7 +178,9 @@ export class Click {
         this.view = page.locator("//div[text()='View']")
         this.delete = page.locator("//span[text()='Delete']")
         this.subDelete = page.locator("(//span[@class='p-button-label'][normalize-space()='Delete'])[1]")
-        
+        this.reject = page.locator("//button[text()=' Reject']")
+        this.accept = page.locator("//button[text()=' Accept']")
+
         
         //this.Profile = page.locator("//div.border-2.rounded-full.border-primary-50.bg-[#F59E0B].text-white");
 
@@ -231,9 +235,7 @@ export class Click {
         if (linkName === "productInfo") {
             await this.productInfo.click();
         }
-        if (linkName === "videoPreview ") {
-            await this.videoPreview.click();
-        }
+        
     }
 
     //Tab
@@ -378,6 +380,13 @@ export class Click {
         }
         else if (str === "subDelete") {
             await this.subDelete.click();
+        }
+        else if (str === "reject") {
+            await this.reject.click();
+        }
+        
+        else if (str === "accept") {
+            await this.accept.click();
         }
 
 

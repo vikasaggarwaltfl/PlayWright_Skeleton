@@ -176,9 +176,18 @@ export class Verify {
   
   //Verify ImageUpload---------------------------------------------------------------------------------------
   async verifyImageUpload(page: Page): Promise<void> {
-  await expect(page.locator('img[src*="img_"]')).toBeVisible();
+    await page.waitForSelector('img[src*="img_"]', { state: 'visible' });
+    const images = page.locator('img[src*="img_"]');
+    const count = await images.count();
+    if (count === 0) {
+      throw new Error('No images found with the expected pattern');
+    }
+    const lastImage = images.nth(count - 1);
+    await expect(lastImage).toBeVisible();
+    const src = await lastImage.getAttribute('src');
+    console.log(`Found ${count} images. Verifying the most recent one with src: ${src}`);
+  }
 
-}
   //Verify Pagination---------------------------------------------------------------------------------------
 
   async verifyPagination(page: Page): Promise<void> {

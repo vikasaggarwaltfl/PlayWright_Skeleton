@@ -203,7 +203,7 @@ test('Verify that the user is able to edit the product entering valid data', asy
 });
 //Product Media screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify if user can successfully upload image in Product Media', async ({ Actions, Click, Verify, page }) => {
+test ('Verify if user can successfully upload image in Product Media', async ({ Actions, Click, Verify, page }) => {
 
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -312,6 +312,47 @@ test('Verify the error message,when the user enters "invalid value" while adding
     await page.waitForLoadState("networkidle");
     await Verify.verifyErrorMessage("Supplier is a required field");
   
+  });
+
+  //Product Price WIP Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
+  test('Verify if user can reject a product and the ARM status changes to reject', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Products");
+    await Click.Tab("productPriceWIP");
+    await page.waitForLoadState("networkidle");
+    await Click.Icon("filterArrow");
+    await Actions.enterText("onCode", "3M11175");
+    await Click.Btn("Filter");
+    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
+    await page.waitForTimeout(6000); 
+    await Click.Icon("productKebabMenu");
+    await page.waitForTimeout(3000); 
+    await Click.Btn("reject");
+    await page.waitForLoadState("networkidle");
+    await Verify.IsTextDisplayed("Rejected Successfully");
+  });
+    
+    test ('Verify if a user can accept the product',async({Actions, Click,Verify,page})=>{
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Products");
+    await Click.Tab("productPriceWIP");
+    await page.waitForLoadState("networkidle");
+    await Click.Icon("filterArrow");
+    await Actions.enterText("onCode", "Absto006");
+    await Click.Btn("Filter");
+    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
+    await page.waitForTimeout(6000); 
+    await Click.Icon("productKebabMenu");
+    await page.waitForTimeout(3000); 
+    await Click.Btn("accept");
+    await page.waitForLoadState("networkidle");
+    await Verify.IsTextDisplayed("Accepted Successfully");
+    
   });
 
 //Product Admin Screen----------------------------------------------------------------------------------------------------------------------------------------------------------

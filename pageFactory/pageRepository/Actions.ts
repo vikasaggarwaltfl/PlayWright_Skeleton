@@ -27,6 +27,8 @@ export class Actions {
     private readonly productCatalogueTitle: Locator
     private readonly productWIPnotes: Locator
     private readonly pastelCode: Locator
+    private readonly onCode: Locator
+
     // Export Products locators
     private readonly supplierDropdown: Locator;
     private readonly productStatusDropdown: Locator;
@@ -49,6 +51,8 @@ export class Actions {
         this.productCatalogueTitle = page.locator("//input[@name='CatalogueTitle']")
         this.productWIPnotes = page.locator("//textarea[@placeholder='Enter a note']")
         this.pastelCode = page.locator("//input[@name='PastelCode']")
+        this.onCode = page.locator("//input[@id='OnStockCode']")
+
         
         // Initialize Export Products locators
         this.supplierDropdown = page.locator('//div[@title="Supplier"]//div//div[@class="p-multiselect-label-container"]');
@@ -102,6 +106,11 @@ export class Actions {
 
             await this.pastelCode.fill(text);
         }
+        if (textBoxName === "onCode") {
+
+            await this.onCode.fill(text);
+        }
+
     }
 
     // File Upload
