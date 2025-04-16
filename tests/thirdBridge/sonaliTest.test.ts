@@ -6,89 +6,72 @@ import { Verify } from '@pages/Verify'
 import { access } from 'fs'
 import { Paths } from '@pages/files/paths'
 
-test.setTimeout(120000); // 2 minutes
-
-test.only('User should export all products', async ({ page, Actions, Click, Verify }) => {
+test.setTimeout(120000); 
+test.only('export all products', async ({ page, Actions, Click, Verify }) => {
     console.log('Starting Product export test...');
-    // Navigate to Export Products page
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Exports");
     await Click.Tab("exportProducts");
-    // Wait for the page to be ready
     await page.waitForLoadState('networkidle');
-    //await page.waitForTimeout(10000);//await page.waitForTimeout(10000);
-    // Click
+    const supplierSelected = await Click.selectDropdownOption(Click.supplierDropdown, 'Artistic', 18000);
+    expect(supplierSelected).toBe(true);
+    await page.waitForTimeout(5000);
     await Click.Btn("exportDataButton");
-    // Verify that the download started
     const downloadStarted = await Verify.verifyExportData(180000);
-    expect(downloadStarted).toBe(true);
+    await expect(downloadStarted).toBe(true);
 });
 
 test.setTimeout(120000);
-test('should export all product prices', async ({ page, Actions, Click, Verify }) => {
+test.only('export product prices', async ({ page, Actions, Click, Verify }) => {
     console.log('Starting product price export test...');
-    
-    // Navigate to Export Products page
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Exports");
     await Click.Tab("exportProductPrices");
-    
-    // Wait for the page to be ready
     await page.waitForLoadState('networkidle');
-    //await page.waitForTimeout(10000);
-    
-    // Click export data button
+    const supplierSelected = await Click.selectDropdownOption(Click.supplierDropdown, 'Artistic', 18000);
+    expect(supplierSelected).toBe(true);
+    await page.waitForTimeout(5000);
     await Click.Btn("exportDataButton");
-    
-    // Verify that the download started with increased timeout
-    const downloadStarted = await Verify.verifyExportData(180000); // 3 minutes timeout
-    expect(downloadStarted).toBe(true);
+    const downloadStarted = await Verify.verifyExportData(180000); 
+    await expect(downloadStarted).toBe(true);
 });
 
 test.setTimeout(120000);
-test.only('should export all IQ products', async ({ page, Actions, Click, Verify }) => {
+test('export IQ products', async ({ page, Actions, Click, Verify }) => {
     console.log('Starting IQ product export test...');
-    
-    // Navigate to Export Products page
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Exports");
     await Click.Tab("exportIQProducts");
-    
-    // Wait for the page to be ready
     await page.waitForLoadState('networkidle');
-    //await page.waitForTimeout(10000);
-    
-    // Click export data button
+    await page.waitForTimeout(5000);
+    const statusSelected = await Click.selectDropdownOption(Click.statusesDropdown,'IM',18000);
+    expect(statusSelected).toBe(true);
+    await page.waitForTimeout(7000);
     await Click.Btn("exportDataButton");
-    
-    // Verify that the download started with increased timeout
     const downloadStarted = await Verify.verifyExportData(180000);
-    expect(downloadStarted).toBe(true);
+    await expect(downloadStarted).toBe(true);
+    await page.pause();
+
 });
 
 test.setTimeout(120000);
-test('should export all Pastel products', async ({ page, Actions, Click, Verify }) => {
+test('export all Pastel products', async ({ page, Actions, Click, Verify }) => {
     console.log('Starting Pastel product export test...');
-    
-    // Navigate to Export Products page
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Exports");
     await Click.Tab("exportPastelProducts");
-    
-    // Wait for the page to be ready
     await page.waitForLoadState('networkidle');
-    //await page.waitForTimeout(10000);
-    
-    // Click export data button
+    const statusSelected = await Click.selectDropdownOption(Click.statusesDropdown,'IM',18000);
+    expect(statusSelected).toBe(true);
+    await page.waitForTimeout(7000);
     await Click.Btn("exportDataButton");
-    
-    // Verify that the download started with increased timeout
     const downloadStarted = await Verify.verifyExportData(180000);
-    expect(downloadStarted).toBe(true);
+    await expect(downloadStarted).toBe(true);
+    await page.pause();
 });
 
 

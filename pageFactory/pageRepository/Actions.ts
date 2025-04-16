@@ -129,35 +129,8 @@ async ImageUpload(page: Page, fileType: String): Promise<void> {
     
   }
 
-
-    // Export Products methods
-    // async navigateToExportPage() {
-    //     await this.page.goto('https://onexweb-uat.officenational.co.za/export/stock_export_view');
-    // }
-
-    async selectSupplier(supplier: string) {
-        await this.supplierDropdown.selectOption(supplier);
-    }
-
-    async selectProductStatus(status: string) {
-        await this.productStatusDropdown.selectOption(status);
-    }
-
-    async selectBrand(brand: string) {
-        await this.brandDropdown.selectOption(brand);
-    }
-
-    async selectPrimaryCategory(category: string) {
-        await this.primaryCategoryDropdown.selectOption(category);
-    }
-
-    async selectCatalogueType(type: string) {
-        await this.catalogueTypeDropdown.selectOption(type);
-    }
-
-    async enterConfigCodeId(configCodeId: string) {
-        await this.configCodeIdInput.fill(configCodeId);
-    }
+  
+    
 }
 
 

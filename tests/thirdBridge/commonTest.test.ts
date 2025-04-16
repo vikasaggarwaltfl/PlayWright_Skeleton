@@ -54,7 +54,7 @@ test('Verify user can  Add Brand with "valid data" and verify Success message', 
     await Click.Btn("sign_In");
     await Click.Tab("Brands");
     await Click.Link("addBrand");
-    await Actions.enterText("brandName", "Test136");
+    await Actions.enterText("brandName", "Test150");
     await Click.Btn("Save");
     await Verify.IsTextDisplayed('Saved Successfully');
 });
@@ -344,22 +344,37 @@ test('Verify if the pagination of the table is working as expected', async ({ Ac
   //Export Screen--------------------------------------------------------------------------------------------------------------------------------------------------------
   
   test.setTimeout(120000); 
-  test('User should export all products', async ({ page, Actions, Click, Verify }) => {
+test('export all products', async ({ page, Actions, Click, Verify }) => {
     console.log('Starting Product export test...');
-    // Navigate to Export Products page
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Exports");
     await Click.Tab("exportProducts");
-    // Wait for the page to be ready
     await page.waitForLoadState('networkidle');
-    //await page.waitForTimeout(10000);
+    const supplierSelected = await Click.selectDropdownOption(Click.supplierDropdown, 'Artistic', 18000);
+    expect(supplierSelected).toBe(true);
+    await page.waitForTimeout(5000);
     await Click.Btn("exportDataButton");
-    // Verify that the download started
     const downloadStarted = await Verify.verifyExportData(180000);
-    expect(downloadStarted).toBe(true);
-    
- });
+    await expect(downloadStarted).toBe(true);
+});
+
+test.setTimeout(120000);
+test('export product prices', async ({ page, Actions, Click, Verify }) => {
+    console.log('Starting product price export test...');
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Exports");
+    await Click.Tab("exportProductPrices");
+    await page.waitForLoadState('networkidle');
+    const supplierSelected = await Click.selectDropdownOption(Click.supplierDropdown, 'Artistic', 18000);
+    expect(supplierSelected).toBe(true);
+    await page.waitForTimeout(5000);
+    await Click.Btn("exportDataButton");
+    const downloadStarted = await Verify.verifyExportData(180000); 
+    await expect(downloadStarted).toBe(true);
+});
+
 
 //Group settings screen-----------------------------------------------------------------------------------------
 test('Verify if the collapse all button is working as expected', async ({ Actions, Click, Verify, page }) => {
@@ -379,7 +394,7 @@ test('Verify if the collapse all button is working as expected', async ({ Action
     await Click.Tab("groupSettings");
     await Click.Link("pastelCategory");
     await Click.Link("addPastelProduct")
-    await Actions.enterText("pastelCode", "1997");
+    await Actions.enterText("pastelCode", "8892");
     await Click.Icon("primaryCategoryFilterArrow");
     await Click.dropdownOption("businessTechnology");
     await Click.Btn("Save")

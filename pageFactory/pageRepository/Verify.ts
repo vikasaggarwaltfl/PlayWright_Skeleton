@@ -134,7 +134,7 @@ export class Verify {
   }
 
   // Verify Export Download Started------------------------------------------------------------------------------------------
-  async verifyExportData(timeout: number = 120000): Promise<boolean> {
+  async verifyExportData(timeout: number = 130000): Promise<boolean> {
     try {
       // Wait for the download event to be triggered
       const download = await this.page.waitForEvent('download', { timeout });

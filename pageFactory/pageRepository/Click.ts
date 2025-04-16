@@ -30,8 +30,8 @@ export class Click {
     // Export Products locators
     private readonly exportDataButton: Locator
     private readonly clearFiltersButton: Locator
-    private readonly supplierDropdown: Locator
-    private readonly productStatusDropdown: Locator
+    public readonly supplierDropdown: Locator
+    private readonly statusesDropdown: Locator
     private readonly brandDropdown: Locator
     private readonly primaryCategoryDropdown: Locator
     private readonly catalogueTypeDropdown: Locator
@@ -68,6 +68,7 @@ export class Click {
     private readonly remove: Locator;
     private readonly masterCategoryArrow: Locator
     private readonly primaryCategoryFilterArrow: Locator
+    
     
    
     
@@ -124,7 +125,7 @@ export class Click {
         this.exportDataButton = page.locator('button:has-text("Export Data")')
         this.clearFiltersButton = page.locator('button:has-text("Clear Filters")')
         this.supplierDropdown = page.locator('//div[@title="Supplier"]//div//div[@class="p-multiselect-label-container"]')
-        this.productStatusDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Product Status"]')
+        this.statusesDropdown = page.locator('//div[@title="Statuses"]//div//div[@class="p-multiselect-label-container"]')
         this.brandDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Brand"]')
         this.primaryCategoryDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Primary Category"]')
         this.catalogueTypeDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Catalogue Type"]')
@@ -152,7 +153,7 @@ export class Click {
         this.kebabMenu = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/span[1]")
         this.Edit = page.locator("//button[normalize-space()='Edit']")
         this.Sort = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
-        this.selectSupplier = page.locator("//div[@name='SupplierId']")
+        this.selectSupplier = page.locator("//div[@name='Supplier']")
         this.selectBrand=page.locator("//div[@name='BrandId']")
         this.notes=page.locator("//span[@class='p-button-icon pi pi-comments']")
         this.download = page.locator("//i[@class='pi pi-download text-xl text-green-700']")
@@ -323,7 +324,7 @@ export class Click {
         else if (str === "primaryCategoryFilterArrow") {
             await this.primaryCategoryFilterArrow.click();
         }
-
+       
     }
 
     //Btn
@@ -396,8 +397,8 @@ export class Click {
             await this.businessTechnology.click();
         }
     }
-
-    // Export Products methods
+    
+    // Export Products --------------------------------------------------------------------------------------------------------------------------
     async clickExportDataButton() {
         await this.exportDataButton.click();
     }
@@ -406,93 +407,31 @@ export class Click {
         await this.clearFiltersButton.click();
     }
 
-    // Generic dropdown selection method
-    async selectFromDropdown(dropdownLocator: Locator, optionText: string, timeout: number = 5000) {
+    //Select Dropdown Option from any dropdown-----------------------------------------------------------------------------------------------------
+
+    public async selectDropdownOption(dropdownLocator: Locator, optionText: string, timeout: number = 10000): Promise<boolean> {
         try {
-            // Click the dropdown to open it
             await dropdownLocator.click();
-            
-            // Wait for the dropdown panel to be visible
-            await this.page.waitForSelector('.p-multiselect-panel', { state: 'visible', timeout });
-            
-            // Use a more specific locator for the option
+            await this.page.waitForSelector('//div[contains(@class, "p-multiselect-panel")]', { 
+                state: 'visible', 
+                timeout: timeout 
+            });
             const optionLocator = this.page.locator(`//div[contains(@class, "p-multiselect-panel")]//li[contains(@class, "p-multiselect-item")]//span[text()="${optionText}"]`);
-            
-            // Wait for the option to be visible and click it
-            await optionLocator.waitFor({ state: 'visible', timeout });
+            await optionLocator.waitFor({ state: 'visible', timeout: timeout });
             await optionLocator.click();
-            
-            // Wait for the dropdown panel to disappear (indicating selection is complete)
-            await this.page.waitForSelector('.p-multiselect-panel', { state: 'hidden', timeout });
-            
-            console.log(`Successfully selected option "${optionText}" from dropdown`);
+            const closeDropdown = this.page.locator('//button[@aria-label="Close"]//*[name()="svg"]');
+            await closeDropdown.click();
+            await this.page.waitForSelector('//div[contains(@class, "p-multiselect-panel")]', { 
+                state: 'hidden', 
+                timeout: timeout 
+            });
+            console.log(`Successfully selected option: ${optionText}`);
             return true;
         } catch (error) {
-            console.error(`Failed to select option "${optionText}" from dropdown:`, error);
+            console.error(`Error selecting option ${optionText}:`, error);
             return false;
         }
     }
-
-    // Super generic dropdown selection method that can be used for any dropdown
-    async selectOptionFromAnyDropdown(dropdownSelector: string, optionText: string, timeout: number = 5000) {
-        try {
-            // Create a locator for the dropdown
-            const dropdownLocator = this.page.locator(dropdownSelector);
-            
-            // Click the dropdown to open it
-            await dropdownLocator.click();
-            
-            // Wait for the dropdown panel to be visible
-            await this.page.waitForSelector('.p-multiselect-panel', { state: 'visible', timeout });
-            
-            // Use a more specific locator for the option
-            const optionLocator = this.page.locator(`//div[contains(@class, "p-multiselect-panel")]//li[contains(@class, "p-multiselect-item")]//span[text()="${optionText}"]`);
-            
-            // Wait for the option to be visible and click it
-            await optionLocator.waitFor({ state: 'visible', timeout });
-            await optionLocator.click();
-            
-            // Wait for the dropdown panel to disappear (indicating selection is complete)
-            await this.page.waitForSelector('.p-multiselect-panel', { state: 'hidden', timeout });
-            
-            console.log(`Successfully selected option "${optionText}" from dropdown with selector "${dropdownSelector}"`);
-            return true;
-        } catch (error) {
-            console.error(`Failed to select option "${optionText}" from dropdown with selector "${dropdownSelector}":`, error);
-            return false;
-        }
-    }
-
-    // Specific dropdown selection methods using the generic method
-    async selectSupplierOption(optionText: string) {
-        return await this.selectFromDropdown(this.supplierDropdown, optionText);
-    }
-
-    async selectProductStatusOption(optionText: string) {
-        return await this.selectFromDropdown(this.productStatusDropdown, optionText);
-    }
-
-    async selectBrandOption(optionText: string) {
-        return await this.selectFromDropdown(this.brandDropdown, optionText);
-    }
-
-    async selectPrimaryCategoryOption(optionText: string) {
-        return await this.selectFromDropdown(this.primaryCategoryDropdown, optionText);
-    }
-
-    async selectCatalogueTypeOption(optionText: string) {
-        return await this.selectFromDropdown(this.catalogueTypeDropdown, optionText);
-    }
-
-    //checkboxOption
-
-    // async checkboxOption(str:string, page:Page): Promise<void{
-
-    //      await page.locator("//tbody/tr");
-    
-    // }
-
-
 }
 
 
