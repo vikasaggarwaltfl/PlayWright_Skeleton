@@ -53,7 +53,7 @@ export class Click {
     private readonly productWIP: Locator
     private readonly productAdmin: Locator
     private readonly productMedia: Locator
-    
+    private readonly productPriceWIP: Locator
 
     //Icon 
     private readonly chevronLeft: Locator
@@ -69,7 +69,7 @@ export class Click {
     private readonly remove: Locator;
     private readonly masterCategoryArrow: Locator
     private readonly primaryCategoryFilterArrow: Locator
-    
+    private readonly productKebabMenu: Locator
     
    
     //Btn
@@ -151,12 +151,15 @@ export class Click {
         this.exportPastelProducts = page.locator("//a[normalize-space()='Export Pastel']")
         this.productWIP = page.locator("//a[text()='Product WIP']")
         this.productAdmin = page.locator("//a[text()='Product Admin']")
+        this.productPriceWIP = page.locator("//a[text()='Product Price WIP']")
+
 
         //Icon
         this.chevronLeft = page.locator("//span[class='p-input-icon text-[10px] pi pi-chevron-left']")
         this.filterArrow = page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])")
         this.productAdminFilterArrow = page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])[2]");
         this.kebabMenu = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/span[1]")
+        this.productKebabMenu = page.locator("//span[@class='p-button-icon pi pi-ellipsis-v']")
         this.Edit = page.locator("//button[normalize-space()='Edit']")
         this.Sort = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
         this.selectSupplier = page.locator("//div[@name='Supplier']")
@@ -286,8 +289,13 @@ export class Click {
             await this.exportProductPrices.click();
         }else if (str === "exportIQProducts") {
             await this.exportIQProducts.click();
+
         }else if (str === "exportPastelProducts") {
             await this.exportPastelProducts.click();
+        }
+
+        else if (str === "productPriceWIP") {
+            await this.productPriceWIP.click();
         }
     }
 
@@ -333,6 +341,10 @@ export class Click {
         else if (str === "primaryCategoryFilterArrow") {
             await this.primaryCategoryFilterArrow.click();
         }
+        else if (str === "productKebabMenu") {
+            await this.productKebabMenu.click();
+        }
+
        
     }
 

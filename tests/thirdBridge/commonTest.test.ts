@@ -335,7 +335,7 @@ test('Verify the error message,when the user enters "invalid value" while adding
     await Verify.IsTextDisplayed("Rejected Successfully");
   });
     
-    test ('Verify if a user can accept the product',async({Actions, Click,Verify,page})=>{
+    test('Verify if a user can accept the product',async({Actions, Click,Verify,page})=>{
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Products");
