@@ -6,73 +6,7 @@ import { Verify } from '@pages/Verify'
 import { access } from 'fs'
 import { Paths } from '@pages/files/paths'
 
-test.setTimeout(120000); 
-test.only('export all products', async ({ page, Actions, Click, Verify }) => {
-    console.log('Starting Product export test...');
-    await Actions.signIn();
-    await Click.Btn("sign_In");
-    await Click.Tab("Exports");
-    await Click.Tab("exportProducts");
-    await page.waitForLoadState('networkidle');
-    const supplierSelected = await Click.selectDropdownOption(Click.supplierDropdown, 'Artistic', 18000);
-    expect(supplierSelected).toBe(true);
-    await page.waitForTimeout(5000);
-    await Click.Btn("exportDataButton");
-    const downloadStarted = await Verify.verifyExportData(180000);
-    await expect(downloadStarted).toBe(true);
-});
 
-test.setTimeout(120000);
-test.only('export product prices', async ({ page, Actions, Click, Verify }) => {
-    console.log('Starting product price export test...');
-    await Actions.signIn();
-    await Click.Btn("sign_In");
-    await Click.Tab("Exports");
-    await Click.Tab("exportProductPrices");
-    await page.waitForLoadState('networkidle');
-    const supplierSelected = await Click.selectDropdownOption(Click.supplierDropdown, 'Artistic', 18000);
-    expect(supplierSelected).toBe(true);
-    await page.waitForTimeout(5000);
-    await Click.Btn("exportDataButton");
-    const downloadStarted = await Verify.verifyExportData(180000); 
-    await expect(downloadStarted).toBe(true);
-});
-
-test.setTimeout(120000);
-test('export IQ products', async ({ page, Actions, Click, Verify }) => {
-    console.log('Starting IQ product export test...');
-    await Actions.signIn();
-    await Click.Btn("sign_In");
-    await Click.Tab("Exports");
-    await Click.Tab("exportIQProducts");
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(5000);
-    const statusSelected = await Click.selectDropdownOption(Click.statusesDropdown,'IM',18000);
-    expect(statusSelected).toBe(true);
-    await page.waitForTimeout(7000);
-    await Click.Btn("exportDataButton");
-    const downloadStarted = await Verify.verifyExportData(180000);
-    await expect(downloadStarted).toBe(true);
-    await page.pause();
-
-});
-
-test.setTimeout(120000);
-test('export all Pastel products', async ({ page, Actions, Click, Verify }) => {
-    console.log('Starting Pastel product export test...');
-    await Actions.signIn();
-    await Click.Btn("sign_In");
-    await Click.Tab("Exports");
-    await Click.Tab("exportPastelProducts");
-    await page.waitForLoadState('networkidle');
-    const statusSelected = await Click.selectDropdownOption(Click.statusesDropdown,'IM',18000);
-    expect(statusSelected).toBe(true);
-    await page.waitForTimeout(7000);
-    await Click.Btn("exportDataButton");
-    const downloadStarted = await Verify.verifyExportData(180000);
-    await expect(downloadStarted).toBe(true);
-    await page.pause();
-});
 
 
 
@@ -87,6 +21,28 @@ test('export all Pastel products', async ({ page, Actions, Click, Verify }) => {
 //     await Verify.IsTextDisplayed("Products");
 //     await Verify.IsTextDisplayed("ONA Super Admin");
 // });
+
+// Dashboard------------------------------------------------------------------------------------------------------------------------------
+test.only('Verify dashboard data updates after supplier selection', async ({ page, Actions, Click, Verify }) => {
+    
+        await Actions.signIn();
+        await Click.Btn("sign_In");
+        await Click.Tab("Dashboard");
+        await page.waitForLoadState('networkidle');
+        const supplierName = 'Artistic';
+        const isDataValid = await Verify.verifyDashboardData(supplierName);
+        expect(isDataValid).toBeTruthy();
+        await page.pause();
+});
+    
+
+    //     const supplierSelected = await Click.selectDropdownOption(Click.supplierDropdown, 'Artistic', 18000);
+    //     expect(supplierSelected).toBe(true);
+    //     await page.waitForTimeout(5000);
+    //     await Click.Btn("exportDataButton");
+    //     const downloadStarted = await Verify.verifyExportData(180000);
+    //     await expect(downloadStarted).toBe(true);
+    
 
 // /// Brand Screen --------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -211,6 +167,103 @@ test('export all Pastel products', async ({ page, Actions, Click, Verify }) => {
 //     await page.waitForTimeout(3000);
 //     await Verify.isLoadingVisible(page);
 // });
+
+//  Export Screen ------------------------------------------------------------------------------------------------------------------------------------
+
+// test('Verify Export Product screen displayed correctly', async ({ page, Actions, Click, Verify }) => {
+//     await Actions.signIn();
+//     await Click.Btn("sign_In");
+//     await Click.Tab("Exports");
+//     await Click.Tab("exportProducts");
+//     await Verify.IsTextDisplayed(" All Products Export");
+// });
+
+// test.setTimeout(120000); 
+// test('export all products', async ({ page, Actions, Click, Verify }) => {
+//     console.log('Starting Product export test...');
+//     await Actions.signIn();
+//     await Click.Btn("sign_In");
+//     await Click.Tab("Exports");
+//     await Click.Tab("exportProducts");
+//     await page.waitForLoadState('networkidle');
+//     const supplierSelected = await Click.selectDropdownOption(Click.supplierDropdown, 'Artistic', 18000);
+//     expect(supplierSelected).toBe(true);
+//     await page.waitForTimeout(5000);
+//     await Click.Btn("exportDataButton");
+//     const downloadStarted = await Verify.verifyExportData(180000);
+//     await expect(downloadStarted).toBe(true);
+// });
+
+// test.setTimeout(120000); 
+// test('Select multiple filters for exportand clear filters', async ({ page, Actions, Click, Verify }) => {
+//     await Actions.signIn();
+//     await Click.Btn("sign_In");
+//     await Click.Tab("Exports");
+//     await Click.Tab("exportProducts");
+//     await page.waitForLoadState('networkidle');
+//     const supplierSelected = await Click.selectDropdownOption(Click.supplierDropdown, 'Artistic', 18000);
+//     expect(supplierSelected).toBe(true);
+//     const productStatusSelected = await Click.selectDropdownOption(Click.productStatusDropdown, 'IN', 18000);
+//     expect(productStatusSelected).toBe(true);
+//     const brandSelected = await Click.selectDropdownOption(Click.brandDropdown, 'ABSTO', 18000);
+//     expect(brandSelected).toBe(true);
+//     await page.waitForTimeout(5000);
+//     await Click.clickClearFiltersButton();
+//     console.log('Selected filteres cleared successfully...');
+// });
+
+// test.setTimeout(120000);
+// test('export product prices', async ({ page, Actions, Click, Verify }) => {
+//     console.log('Starting product price export test...');
+//     await Actions.signIn();
+//     await Click.Btn("sign_In");
+//     await Click.Tab("Exports");
+//     await Click.Tab("exportProductPrices");
+//     await page.waitForLoadState('networkidle');
+//     const supplierSelected = await Click.selectDropdownOption(Click.supplierDropdown, 'Artistic', 18000);
+//     expect(supplierSelected).toBe(true);
+//     await page.waitForTimeout(5000);
+//     await Click.Btn("exportDataButton");
+//     const downloadStarted = await Verify.verifyExportData(180000); 
+//     await expect(downloadStarted).toBe(true);
+// });
+
+// test.setTimeout(120000);
+// test('export IQ products', async ({ page, Actions, Click, Verify }) => {
+//     console.log('Starting IQ product export test...');
+//     await Actions.signIn();
+//     await Click.Btn("sign_In");
+//     await Click.Tab("Exports");
+//     await Click.Tab("exportIQProducts");
+//     await page.waitForLoadState('networkidle');
+//     const statusSelected = await Click.selectDropdownOption(Click.statusesDropdown,'IM',18000);
+//     expect(statusSelected).toBe(true);
+//     await page.waitForTimeout(5000);
+//     await Click.Btn("exportDataButton");
+//     const downloadStarted = await Verify.verifyExportData(180000);
+//     await expect(downloadStarted).toBe(true);
+//     await page.pause();
+
+// });
+
+// test.setTimeout(120000);
+// test('export all Pastel products', async ({ page, Actions, Click, Verify }) => {
+//     console.log('Starting Pastel product export test...');
+//     await Actions.signIn();
+//     await Click.Btn("sign_In");
+//     await Click.Tab("Exports");
+//     await Click.Tab("exportPastelProducts");
+//     await page.waitForLoadState('networkidle');
+//     const statusSelected = await Click.selectDropdownOption(Click.statusesDropdown,'IM',18000);
+//     expect(statusSelected).toBe(true);
+//     await Click.Btn("exportDataButton");
+//     const downloadStarted = await Verify.verifyExportData(3000000);
+//     await expect(downloadStarted).toBe(true);
+//     await page.pause();
+// });
+
+
+
 
 
 

@@ -31,10 +31,11 @@ export class Click {
     private readonly exportDataButton: Locator
     private readonly clearFiltersButton: Locator
     public readonly supplierDropdown: Locator
-    private readonly statusesDropdown: Locator
-    private readonly brandDropdown: Locator
-    private readonly primaryCategoryDropdown: Locator
-    private readonly catalogueTypeDropdown: Locator
+    public readonly statusesDropdown: Locator
+    public readonly productStatusDropdown: Locator
+    public readonly brandDropdown: Locator
+    public readonly primaryCategoryDropdown: Locator
+    public readonly catalogueTypeDropdown: Locator
     private readonly configCodeIdInput: Locator
 
     //Tab 
@@ -71,8 +72,6 @@ export class Click {
     
     
    
-    
-    
     //Btn
     private readonly sign_In: Locator
     private readonly Profile: Locator
@@ -92,14 +91,17 @@ export class Click {
     private readonly reject: Locator
     private readonly accept: Locator
 
-    
 
     //dropdownOption
     private readonly artistic: Locator
     private readonly absto: Locator
     private readonly businessTechnology: Locator
 
-    
+    // Dashboard locators
+    public readonly totalProductsCard: Locator
+    public readonly activeProductsCard: Locator
+    public readonly inactiveProductsCard: Locator
+    public readonly pendingProductsCard: Locator
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
@@ -126,8 +128,10 @@ export class Click {
         // Initialize Export Products locators
         this.exportDataButton = page.locator('button:has-text("Export Data")')
         this.clearFiltersButton = page.locator('button:has-text("Clear Filters")')
+
         this.supplierDropdown = page.locator('//div[@title="Supplier"]//div//div[@class="p-multiselect-label-container"]')
         this.statusesDropdown = page.locator('//div[@title="Statuses"]//div//div[@class="p-multiselect-label-container"]')
+        this.productStatusDropdown = page.locator('//div[@title="Product Status"]//div//div[@class="p-multiselect-trigger"]')
         this.brandDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Brand"]')
         this.primaryCategoryDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Primary Category"]')
         this.catalogueTypeDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Catalogue Type"]')
@@ -192,8 +196,11 @@ export class Click {
        this.absto = page.locator("//span[text()='ABSTO']")
        this.businessTechnology = page.locator("//span[text()='Business Technology']")
 
-      
-       
+       // Dashboard locators
+       this.totalProductsCard = page.locator('//div[contains(@class, "card")]//div[contains(text(), "Total Products")]')
+       this.activeProductsCard = page.locator('//div[contains(@class, "card")]//div[contains(text(), "Active Products")]')
+       this.inactiveProductsCard = page.locator('//div[contains(@class, "card")]//div[contains(text(), "Inactive Products")]')
+       this.pendingProductsCard = page.locator('//div[contains(@class, "card")]//div[contains(text(), "Pending Products")]')
     }
 
     //Link

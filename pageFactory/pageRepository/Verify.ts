@@ -226,4 +226,48 @@ export class Verify {
     console.log(title);
     expect(title).toContain(expectedTitle);
   }
+
+  //Verify Dashboard Data Analytics-----------------------------------------------------------------------------------------------------------
+
+  async verifyDashboardData(supplierName: string): Promise<boolean> {
+    try {
+        // Wait for the supplier dropdown to be visible
+        await this.page.waitForSelector('//span[@aria-label="All Suppliers"]', { timeout: 10000 });
+        
+        // Click the supplier dropdown
+        await this.page.locator('//span[@aria-label="All Suppliers"]').click();
+        
+        // Wait for the dropdown panel to be visible
+        await this.page.waitForSelector('//div[contains(@class, "p-dropdown-panel")]', { timeout: 10000 });
+        
+        // Select the supplier
+        await this.page.locator(`//div[contains(@class, "p-dropdown-panel")]//li[contains(@class, "p-dropdown-item")]//span[text()="${supplierName}"]`).click();
+        
+        // Wait for the data to update
+        await this.page.waitForTimeout(5000);
+        
+        // Verify that the cards are visible and contain numbers
+        const products = await this.page.locator('//body/div/div/div/div/div/div/div[2]/div[1]').textContent();
+        const totalImages = await this.page.locator('//body/div/div/div/div/div/div/div[3]/div[1]').textContent();
+        const totalVideos = await this.page.locator('//body//div//div[6]').textContent();
+        const totalDocuments = await this.page.locator('//body//div//div[11]').textContent();
+        
+        // Verify that the values are numbers
+        const isProductsValid = !isNaN(Number(products));
+        const isTotalImagesValid = !isNaN(Number(totalImages));
+        const isTotalVideosValid = !isNaN(Number(totalVideos));
+        const isTotalDocumentsValid = !isNaN(Number(totalDocuments));
+        
+        console.log(`Dashboard data for ${supplierName}:`);
+        console.log(`Products: ${products}`);
+        console.log(`Total Images: ${totalImages}`);
+        console.log(`Total Videos: ${totalVideos}`);
+        console.log(`Total Documents: ${totalDocuments}`);
+        
+        return isProductsValid && isTotalImagesValid && isTotalVideosValid && isTotalDocumentsValid;
+    } catch (error) {
+        console.error('Error verifying dashboard data:', error);
+        return false;
+    }
+  }
 }
