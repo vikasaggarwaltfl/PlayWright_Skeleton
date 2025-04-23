@@ -437,7 +437,7 @@ export class Click {
 
     //Select Dropdown Option from any dropdown-----------------------------------------------------------------------------------------------------
 
-    public async selectDropdownOption(dropdownLocator: Locator, optionText: string, timeout: number = 10000): Promise<boolean> {
+    async selectDropdownOption(dropdownLocator: Locator, optionText: string, timeout: number = 10000): Promise<boolean> {
         try {
             await dropdownLocator.click();
             await this.page.waitForSelector('//div[contains(@class, "p-multiselect-panel")]', { 

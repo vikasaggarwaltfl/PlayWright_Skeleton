@@ -229,7 +229,7 @@ export class Verify {
 
   //Verify Dashboard Data Analytics-----------------------------------------------------------------------------------------------------------
 
-  async verifyDashboardData(supplierName: string): Promise<boolean> {
+  async verifyDashboardDataAnalystics(supplierName: string): Promise<boolean> {
     try {
         // Wait for the supplier dropdown to be visible
         await this.page.waitForSelector('//span[@aria-label="All Suppliers"]', { timeout: 10000 });

@@ -30,7 +30,7 @@ test.only('Verify dashboard data updates after supplier selection', async ({ pag
         await Click.Tab("Dashboard");
         await page.waitForLoadState('networkidle');
         const supplierName = 'Artistic';
-        const isDataValid = await Verify.verifyDashboardData(supplierName);
+        const isDataValid = await Verify.verifyDashboardDataAnalystics(supplierName);
         expect(isDataValid).toBeTruthy();
         await page.pause();
 });

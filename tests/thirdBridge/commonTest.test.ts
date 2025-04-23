@@ -54,7 +54,7 @@ test('Verify user can  Add Brand with "valid data" and verify Success message', 
     await Click.Btn("sign_In");
     await Click.Tab("Brands");
     await Click.Link("addBrand");
-    await Actions.enterText("brandName", "Test150");
+    await Actions.enterText("brandName", "Test152");
     await Click.Btn("Save");
     await Verify.IsTextDisplayed('Saved Successfully');
 });
@@ -383,9 +383,16 @@ test('Verify if the pagination of the table is working as expected', async ({ Ac
 
 
   //Export Screen--------------------------------------------------------------------------------------------------------------------------------------------------------
-  
-  test.setTimeout(120000); 
-test('export all products', async ({ page, Actions, Click, Verify }) => {
+test('Verify Export Product screen displayed correctly', async ({ page, Actions, Click, Verify }) => {
+        await Actions.signIn();
+        await Click.Btn("sign_In");
+        await Click.Tab("Exports");
+        await Click.Tab("exportProducts");
+        await Verify.IsTextDisplayed(" All Products Export");
+}); 
+
+test.setTimeout(120000); 
+test('Verify that user can export products and Verify downloaded file', async ({ page, Actions, Click, Verify }) => {
     console.log('Starting Product export test...');
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -400,8 +407,26 @@ test('export all products', async ({ page, Actions, Click, Verify }) => {
     await expect(downloadStarted).toBe(true);
 });
 
+test.setTimeout(120000); 
+test('Verify user can select multiple filters for export and clear filters', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Exports");
+    await Click.Tab("exportProducts");
+    await page.waitForLoadState('networkidle');
+    const supplierSelected = await Click.selectDropdownOption(Click.supplierDropdown, 'Artistic', 18000);
+    expect(supplierSelected).toBe(true);
+    const productStatusSelected = await Click.selectDropdownOption(Click.productStatusDropdown, 'IN', 18000);
+    expect(productStatusSelected).toBe(true);
+    const brandSelected = await Click.selectDropdownOption(Click.brandDropdown, 'ABSTO', 18000);
+    expect(brandSelected).toBe(true);
+    await page.waitForTimeout(5000);
+    await Click.clickClearFiltersButton();
+    console.log('Selected filteres cleared successfully...');
+});
+
 test.setTimeout(120000);
-test('export product prices', async ({ page, Actions, Click, Verify }) => {
+test('Verify that user can export product prices and Verify downloaded file', async ({ page, Actions, Click, Verify }) => {
     console.log('Starting product price export test...');
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -414,6 +439,39 @@ test('export product prices', async ({ page, Actions, Click, Verify }) => {
     await Click.Btn("exportDataButton");
     const downloadStarted = await Verify.verifyExportData(180000); 
     await expect(downloadStarted).toBe(true);
+});
+
+test.setTimeout(120000);
+test('Verify that user can export IQ products and verify downloaded file', async ({ page, Actions, Click, Verify }) => {
+    console.log('Starting IQ product export test...');
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Exports");
+    await Click.Tab("exportIQProducts");
+    await page.waitForLoadState('networkidle');
+    const statusSelected = await Click.selectDropdownOption(Click.statusesDropdown,'IM',18000);
+    expect(statusSelected).toBe(true);
+    await page.waitForTimeout(5000);
+    await Click.Btn("exportDataButton");
+    const downloadStarted = await Verify.verifyExportData(180000);
+    await expect(downloadStarted).toBe(true);
+    
+});
+
+test.setTimeout(120000);
+test('Verify that user can export Pastel products and verify downloaded file', async ({ page, Actions, Click, Verify }) => {
+    console.log('Starting Pastel product export test...');
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Exports");
+    await Click.Tab("exportPastelProducts");
+    await page.waitForLoadState('networkidle');
+    const statusSelected = await Click.selectDropdownOption(Click.statusesDropdown,'IM',18000);
+    expect(statusSelected).toBe(true);
+    await Click.Btn("exportDataButton");
+    const downloadStarted = await Verify.verifyExportData(30000000);
+    await expect(downloadStarted).toBe(true);
+
 });
 
 
@@ -435,7 +493,7 @@ test('Verify if the collapse all button is working as expected', async ({ Action
     await Click.Tab("groupSettings");
     await Click.Link("pastelCategory");
     await Click.Link("addPastelProduct")
-    await Actions.enterText("pastelCode", "8892");
+    await Actions.enterText("pastelCode", "8895");
     await Click.Icon("primaryCategoryFilterArrow");
     await Click.dropdownOption("businessTechnology");
     await Click.Btn("Save")
