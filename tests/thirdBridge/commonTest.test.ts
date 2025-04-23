@@ -476,6 +476,22 @@ test('Verify that user can export Pastel products and verify downloaded file', a
 
 
 //Group settings screen-----------------------------------------------------------------------------------------
+
+// Lookup Category Setup Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify sorting of "Lookup Category Setup" data using sort icons.', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("groupSettings");
+    await Click.Link("lookupCategory");
+    await Click.Icon("Sort");
+    await Verify.verifySortOrder();
+    await Click.Icon("Sort");
+    await Verify.verifySortOrder();
+    
+  });
+
+// Master Category Setup Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 test('Verify if the collapse all button is working as expected', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -487,17 +503,49 @@ test('Verify if the collapse all button is working as expected', async ({ Action
     
   });
 
+  // Pastel Category Setup Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
   test('Verify if user can add pastel product category', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("groupSettings");
     await Click.Link("pastelCategory");
     await Click.Link("addPastelProduct")
-    await Actions.enterText("pastelCode", "8895");
+    await Actions.enterText("pastelCode", "2025");
     await Click.Icon("primaryCategoryFilterArrow");
     await Click.dropdownOption("businessTechnology");
     await Click.Btn("Save")
     await Verify.IsTextDisplayed("Saved Successfully");
   });
+
+//Imports screen----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test ('Verify if the import screen is displayed as expected ', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Imports");
+    await Verify.IsTextDisplayed("Imports");
+    
+  });
+  
+  test ('Verify that user can download "Import template"', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Imports");
+    await Click.Tab("importProducts");
+    await Click.Btn("Download");
+    await Verify.importData(page);
+  });
+  
+  test ('Verify user can import an empty file successfully"', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Imports");
+    await Click.Tab("importProducts");
+    await Click.Btn("importFile");
+    await Actions.ImageUpload(page, "SampleXLS"); 
+    await Click.Btn("validateAndImport");
+    await Verify.IsTextDisplayed("Successfully imported 0 records");
+  });
+  
   
   

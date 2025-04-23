@@ -24,6 +24,7 @@ export class Click {
     private readonly auditLog: Locator
     private readonly configCodes: Locator
     private readonly productInfo: Locator
+    
    
     
    
@@ -54,6 +55,8 @@ export class Click {
     private readonly productAdmin: Locator
     private readonly productMedia: Locator
     private readonly productPriceWIP: Locator
+    private readonly importProducts: Locator
+    
 
     //Icon 
     private readonly chevronLeft: Locator
@@ -70,6 +73,10 @@ export class Click {
     private readonly masterCategoryArrow: Locator
     private readonly primaryCategoryFilterArrow: Locator
     private readonly productKebabMenu: Locator
+    private readonly bulkOperationsArrow: Locator
+    private readonly productAdminDropdown1: Locator
+    private readonly productAdminDropdown2: Locator
+
     
    
     //Btn
@@ -90,12 +97,23 @@ export class Click {
     private readonly subDelete: Locator
     private readonly reject: Locator
     private readonly accept: Locator
+    private readonly submitBulkProducts: Locator
+    private readonly yes: Locator
+    private readonly Download   : Locator
+    private readonly importFile : Locator
+    private readonly validateAndImport : Locator
+    
+
 
 
     //dropdownOption
     private readonly artistic: Locator
     private readonly absto: Locator
     private readonly businessTechnology: Locator
+    private readonly tags: Locator
+    private readonly All: Locator
+
+
 
     // Dashboard locators
     public readonly totalProductsCard: Locator
@@ -113,7 +131,8 @@ export class Click {
 
         this.addProduct = page.locator('a:has-text("Add Product")')
         this.addCatalogue = page.locator('a:has-text("Add Catalogue")')
-        this.lookupCategory = page.locator('a:has-text("Lookup Category")')
+       // this.lookupCategory = page.locator('a:has-text("Lookup Category")')
+        this.lookupCategory = page.locator("//a[text()='Lookup Category Setup']")
         //this.masterCategory = page.locator('a:has-text("Master Category")')
         this.masterCategory = page.locator("//a[text()='Master Product Category Setup']")
         this.iQCategory = page.locator('a:has-text("IQ Category")')
@@ -152,6 +171,7 @@ export class Click {
         this.productWIP = page.locator("//a[text()='Product WIP']")
         this.productAdmin = page.locator("//a[text()='Product Admin']")
         this.productPriceWIP = page.locator("//a[text()='Product Price WIP']")
+        this.importProducts = page.locator("//a[text()='Import Products']")
 
 
         //Icon
@@ -169,7 +189,9 @@ export class Click {
         this.remove = page.locator("//i[@class='pi pi-times text-xl text-red-700']")
         this.masterCategoryArrow = page.locator("//tbody/tr[1]/td[1]/button[1]/i[1]")
         this.primaryCategoryFilterArrow = page.locator("(//div[@class='p-dropdown-trigger'])[1]")
-        
+        this.bulkOperationsArrow = page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])[1]")
+        this.productAdminDropdown1 = page.locator("//span[text()='Select fields to update']")  
+        this.productAdminDropdown2 = page.locator("//div[text()='Tags']") 
 
         //Btn
         this.sign_In = page.locator("(//input[@name='signInSubmitButton'])[2]")
@@ -186,13 +208,17 @@ export class Click {
         this.delete = page.locator("//span[text()='Delete']")
         this.subDelete = page.locator("(//span[@class='p-button-label'][normalize-space()='Delete'])[1]")
         this.reject = page.locator("//button[text()=' Reject']")
-        this.accept = page.locator("//button[text()=' Accept']")
-
-        
+        this.accept = page.locator("//button[text()=' Accept']")  
         //this.Profile = page.locator("//div.border-2.rounded-full.border-primary-50.bg-[#F59E0B].text-white");
-
         this.signOut = page.locator("//button[normalize-space()='Sign Out']")
         this.addNote=page.locator("//button[normalize-space()='Add Note']")
+        this.submitBulkProducts = page.locator("//span[text()='Submit Bulk Products Processing']")
+        this.yes = page.locator("//span[text()='Yes']")
+        this.Download = page.locator("//a[text()=' Download Import Template ']")
+        this.importFile = page.locator("//p[text()='Import File']")
+        this.validateAndImport = page.locator("//p[text()='Validate & Import']")
+
+
         
        //dropdownOption
        this.artistic = page.locator("//span[text()='Artistic']")
@@ -297,6 +323,10 @@ export class Click {
         else if (str === "productPriceWIP") {
             await this.productPriceWIP.click();
         }
+
+        else if (str === "importProducts") {
+            await this.importProducts.click();
+        }
     }
 
     //Icon
@@ -344,6 +374,17 @@ export class Click {
         else if (str === "productKebabMenu") {
             await this.productKebabMenu.click();
         }
+        else if (str === "bulkOperationsArrow") {
+            await this.bulkOperationsArrow.click();
+        }
+        else if (str === "productAdminDropdown1") {
+            await this.productAdminDropdown1.click();
+         }
+
+         else if (str === "productAdminDropdown2") {
+            await this.productAdminDropdown2.click();
+         }
+
 
        
     }
@@ -408,6 +449,22 @@ export class Click {
             await this.accept.click();
         }
 
+        else if (str === "submitBulkProducts") {
+            await this.submitBulkProducts.click();
+        }
+        else if (str === "yes") {
+            await this.yes.click();
+        }
+        else if (str === "Download") {
+            await this.Download.click();
+        }
+        else if (str === "importFile") {
+            await this.importFile.click();
+        }
+       
+        else if (str === "validateAndImport") {
+            await this.validateAndImport.click();
+        }
 
 
     }
@@ -424,6 +481,15 @@ export class Click {
         if (str === "businessTechnology") {
             await this.businessTechnology.click();
         }
+
+        if (str === "tags") {
+            await this.tags.click();
+        }
+        if (str === "All") {
+            await this.All.click();
+            
+        }
+
     }
     
     // Export Products --------------------------------------------------------------------------------------------------------------------------

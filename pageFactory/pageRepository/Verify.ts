@@ -270,4 +270,20 @@ export class Verify {
         return false;
     }
   }
+
+
+  //Verify Import Data---------------------------------------------------------------------------------------
+  async importData(page: Page): Promise<void> {
+    try {  
+      const download = await page.waitForEvent('download', { timeout: 30000 });
+      const downloadPath = await download.path();
+      console.log(`File downloaded successfully to: ${downloadPath}`);   
+      expect(downloadPath).toBeTruthy();
+    } catch (error) {
+      console.error('Error verifying import template download:', error);
+      throw error;
+    }
+  }
+
+
 }
