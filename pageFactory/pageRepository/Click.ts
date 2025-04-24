@@ -24,10 +24,10 @@ export class Click {
     private readonly auditLog: Locator
     private readonly configCodes: Locator
     private readonly productInfo: Locator
-    
-   
-    
-   
+
+
+
+
     // Export Products locators
     private readonly exportDataButton: Locator
     private readonly clearFiltersButton: Locator
@@ -56,7 +56,7 @@ export class Click {
     private readonly productMedia: Locator
     private readonly productPriceWIP: Locator
     private readonly importProducts: Locator
-    
+
 
     //Icon 
     private readonly chevronLeft: Locator
@@ -74,11 +74,11 @@ export class Click {
     private readonly primaryCategoryFilterArrow: Locator
     private readonly productKebabMenu: Locator
     private readonly bulkOperationsArrow: Locator
-    private readonly productAdminDropdown1: Locator
-    private readonly productAdminDropdown2: Locator
+    private readonly productAdminDropdown: Locator
+    private readonly iQCategoryEdit: Locator
 
-    
-   
+
+
     //Btn
     private readonly sign_In: Locator
     private readonly Profile: Locator
@@ -99,10 +99,11 @@ export class Click {
     private readonly accept: Locator
     private readonly submitBulkProducts: Locator
     private readonly yes: Locator
-    private readonly Download   : Locator
-    private readonly importFile : Locator
-    private readonly validateAndImport : Locator
-    
+    private readonly Download: Locator
+    private readonly importFile: Locator
+    private readonly validateAndImport: Locator
+    private readonly Add: Locator
+
 
 
 
@@ -110,7 +111,7 @@ export class Click {
     private readonly artistic: Locator
     private readonly absto: Locator
     private readonly businessTechnology: Locator
-    private readonly tags: Locator
+    private readonly Tags: Locator
     private readonly All: Locator
 
 
@@ -131,19 +132,20 @@ export class Click {
 
         this.addProduct = page.locator('a:has-text("Add Product")')
         this.addCatalogue = page.locator('a:has-text("Add Catalogue")')
-       // this.lookupCategory = page.locator('a:has-text("Lookup Category")')
+        // this.lookupCategory = page.locator('a:has-text("Lookup Category")')
         this.lookupCategory = page.locator("//a[text()='Lookup Category Setup']")
         //this.masterCategory = page.locator('a:has-text("Master Category")')
         this.masterCategory = page.locator("//a[text()='Master Product Category Setup']")
-        this.iQCategory = page.locator('a:has-text("IQ Category")')
-       // this.pastelCategory = page.locator('a:has-text("Pastel Category")')
+        //this.iQCategory = page.locator('a:has-text("IQ Category")')
+        // this.pastelCategory = page.locator('a:has-text("Pastel Category")')
+        this.iQCategory = page.locator("//a[text()='IQ Product Category Setup']")
         this.pastelCategory = page.locator("//a[text()='Pastel Product Category Setup']")
         this.addPastelProduct = page.locator("//div[text()=' Add Pastel Product Category']")
         this.auditLog = page.locator('a:has-text("Audit Log")')
         this.configCodes = page.locator('a:has-text("Config Codes")')
         this.productInfo = page.locator("//a[text()='Absto007']")
-       
-        
+
+
         // Initialize Export Products locators
         this.exportDataButton = page.locator('button:has-text("Export Data")')
         this.clearFiltersButton = page.locator('button:has-text("Clear Filters")')
@@ -163,7 +165,7 @@ export class Click {
         this.Catalogues = page.locator("//span[text()='Catalogues']")
         this.groupSettings = page.locator("//span[text()='Group Settings']")
         this.Imports = page.locator("//span[text()='Imports']")
-        this.Exports = page.locator("//span[text()='Exports']")  
+        this.Exports = page.locator("//span[text()='Exports']")
         this.exportProducts = page.locator("//a[normalize-space()='Export Products']")
         this.exportProductPrices = page.locator("//a[normalize-space()='Export Prices']")
         this.exportIQProducts = page.locator("//a[normalize-space()='Export IQ']")
@@ -183,15 +185,16 @@ export class Click {
         this.Edit = page.locator("//button[normalize-space()='Edit']")
         this.Sort = page.locator("//th[2]//div[1]//span[2]//*[name()='svg']")
         this.selectSupplier = page.locator("//div[@name='Supplier']")
-        this.selectBrand=page.locator("//div[@name='BrandId']")
-        this.notes=page.locator("//span[@class='p-button-icon pi pi-comments']")
+        this.selectBrand = page.locator("//div[@name='BrandId']")
+        this.notes = page.locator("//span[@class='p-button-icon pi pi-comments']")
         this.download = page.locator("//i[@class='pi pi-download text-xl text-green-700']")
         this.remove = page.locator("//i[@class='pi pi-times text-xl text-red-700']")
         this.masterCategoryArrow = page.locator("//tbody/tr[1]/td[1]/button[1]/i[1]")
         this.primaryCategoryFilterArrow = page.locator("(//div[@class='p-dropdown-trigger'])[1]")
         this.bulkOperationsArrow = page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])[1]")
-        this.productAdminDropdown1 = page.locator("//span[text()='Select fields to update']")  
-        this.productAdminDropdown2 = page.locator("//div[text()='Tags']") 
+        this.productAdminDropdown = page.locator("//span[text()='Select fields to update']")
+        
+        this.iQCategoryEdit = page.locator("(//i)[15]")
 
         //Btn
         this.sign_In = page.locator("(//input[@name='signInSubmitButton'])[2]")
@@ -208,28 +211,31 @@ export class Click {
         this.delete = page.locator("//span[text()='Delete']")
         this.subDelete = page.locator("(//span[@class='p-button-label'][normalize-space()='Delete'])[1]")
         this.reject = page.locator("//button[text()=' Reject']")
-        this.accept = page.locator("//button[text()=' Accept']")  
+        this.accept = page.locator("//button[text()=' Accept']")
         //this.Profile = page.locator("//div.border-2.rounded-full.border-primary-50.bg-[#F59E0B].text-white");
         this.signOut = page.locator("//button[normalize-space()='Sign Out']")
-        this.addNote=page.locator("//button[normalize-space()='Add Note']")
-        this.submitBulkProducts = page.locator("//span[text()='Submit Bulk Products Processing']")
+        this.addNote = page.locator("//button[normalize-space()='Add Note']")
+        this.submitBulkProducts = page.locator("//button[normalize-space()='Submit Bulk Products Processing']")
         this.yes = page.locator("//span[text()='Yes']")
         this.Download = page.locator("//a[text()=' Download Import Template ']")
         this.importFile = page.locator("//p[text()='Import File']")
         this.validateAndImport = page.locator("//p[text()='Validate & Import']")
+        this.Add = page.locator("//span[text()='Add']")
 
 
-        
-       //dropdownOption
-       this.artistic = page.locator("//span[text()='Artistic']")
-       this.absto = page.locator("//span[text()='ABSTO']")
-       this.businessTechnology = page.locator("//span[text()='Business Technology']")
 
-       // Dashboard locators
-       this.totalProductsCard = page.locator('//div[contains(@class, "card")]//div[contains(text(), "Total Products")]')
-       this.activeProductsCard = page.locator('//div[contains(@class, "card")]//div[contains(text(), "Active Products")]')
-       this.inactiveProductsCard = page.locator('//div[contains(@class, "card")]//div[contains(text(), "Inactive Products")]')
-       this.pendingProductsCard = page.locator('//div[contains(@class, "card")]//div[contains(text(), "Pending Products")]')
+        //dropdownOption
+        this.artistic = page.locator("//span[text()='Artistic']")
+        this.absto = page.locator("//span[text()='ABSTO']")
+        this.businessTechnology = page.locator("//span[text()='Business Technology']")
+        this.Tags = page.locator("//div[contains(text(),'Tags')]")
+        this.All = page.locator("//div[@class='p-multiselect-header']//input[@aria-label='All items unselected']")
+
+        // Dashboard locators
+        this.totalProductsCard = page.locator('//div[contains(@class, "card")]//div[contains(text(), "Total Products")]')
+        this.activeProductsCard = page.locator('//div[contains(@class, "card")]//div[contains(text(), "Active Products")]')
+        this.inactiveProductsCard = page.locator('//div[contains(@class, "card")]//div[contains(text(), "Inactive Products")]')
+        this.pendingProductsCard = page.locator('//div[contains(@class, "card")]//div[contains(text(), "Pending Products")]')
     }
 
     //Link
@@ -271,7 +277,7 @@ export class Click {
         if (linkName === "productInfo") {
             await this.productInfo.click();
         }
-        
+
     }
 
     //Tab
@@ -313,10 +319,10 @@ export class Click {
         }
         else if (str === "exportProductPrices") {
             await this.exportProductPrices.click();
-        }else if (str === "exportIQProducts") {
+        } else if (str === "exportIQProducts") {
             await this.exportIQProducts.click();
 
-        }else if (str === "exportPastelProducts") {
+        } else if (str === "exportPastelProducts") {
             await this.exportPastelProducts.click();
         }
 
@@ -356,7 +362,7 @@ export class Click {
             await this.selectBrand.click();
         }
         else if (str === "notes") {
-        await this.notes.click();
+            await this.notes.click();
         }
         else if (str === "download") {
             await this.download.click();
@@ -364,7 +370,7 @@ export class Click {
         else if (str === "remove") {
             await this.remove.click();
         }
-        
+
         else if (str === "masterCategoryArrow") {
             await this.masterCategoryArrow.click();
         }
@@ -377,16 +383,16 @@ export class Click {
         else if (str === "bulkOperationsArrow") {
             await this.bulkOperationsArrow.click();
         }
-        else if (str === "productAdminDropdown1") {
-            await this.productAdminDropdown1.click();
-         }
+        else if (str === "productAdminDropdown") {
+            await this.productAdminDropdown.click();
+        }
+        else if (str === "iQCategoryEdit") {
+            await this.iQCategoryEdit.click();
+        }
 
-         else if (str === "productAdminDropdown2") {
-            await this.productAdminDropdown2.click();
-         }
 
 
-       
+
     }
 
     //Btn
@@ -444,7 +450,7 @@ export class Click {
         else if (str === "reject") {
             await this.reject.click();
         }
-        
+
         else if (str === "accept") {
             await this.accept.click();
         }
@@ -461,9 +467,13 @@ export class Click {
         else if (str === "importFile") {
             await this.importFile.click();
         }
-       
+
         else if (str === "validateAndImport") {
             await this.validateAndImport.click();
+        }
+
+        else if (str === "Add") {
+            await this.Add.click();
         }
 
 
@@ -482,16 +492,16 @@ export class Click {
             await this.businessTechnology.click();
         }
 
-        if (str === "tags") {
-            await this.tags.click();
+        if (str === "Tags") {
+            await this.Tags.click();
         }
         if (str === "All") {
             await this.All.click();
-            
+
         }
 
     }
-    
+
     // Export Products --------------------------------------------------------------------------------------------------------------------------
     async clickExportDataButton() {
         await this.exportDataButton.click();
@@ -506,18 +516,18 @@ export class Click {
     async selectDropdownOption(dropdownLocator: Locator, optionText: string, timeout: number = 10000): Promise<boolean> {
         try {
             await dropdownLocator.click();
-            await this.page.waitForSelector('//div[contains(@class, "p-multiselect-panel")]', { 
-                state: 'visible', 
-                timeout: timeout 
+            await this.page.waitForSelector('//div[contains(@class, "p-multiselect-panel")]', {
+                state: 'visible',
+                timeout: timeout
             });
             const optionLocator = this.page.locator(`//div[contains(@class, "p-multiselect-panel")]//li[contains(@class, "p-multiselect-item")]//span[text()="${optionText}"]`);
             await optionLocator.waitFor({ state: 'visible', timeout: timeout });
             await optionLocator.click();
             const closeDropdown = this.page.locator('//button[@aria-label="Close"]//*[name()="svg"]');
             await closeDropdown.click();
-            await this.page.waitForSelector('//div[contains(@class, "p-multiselect-panel")]', { 
-                state: 'hidden', 
-                timeout: timeout 
+            await this.page.waitForSelector('//div[contains(@class, "p-multiselect-panel")]', {
+                state: 'hidden',
+                timeout: timeout
             });
             console.log(`Successfully selected option: ${optionText}`);
             return true;
@@ -529,5 +539,5 @@ export class Click {
 }
 
 
-        
+
 

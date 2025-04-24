@@ -142,7 +142,7 @@ test('Verify that the user cannot upload invalid file in the Product Media', asy
   await page.waitForLoadState("networkidle");
   await Click.Btn("submit");
   await Verify.IsTextDisplayed("Could not add image");
-  });
+});
 
 //Product WIP Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -165,7 +165,7 @@ test('Verify that the user is able to add a note in a popup window', async ({ Ac
   await Verify.verifyScreenshot(page, "notesPopupWindow.png");
 });
 
-test('Verify the error message,when the user enters "invalid value" while adding Product WIP',async({Actions, Click,Verify,page})=>{
+test('Verify the error message,when the user enters "invalid value" while adding Product WIP', async ({ Actions, Click, Verify, page }) => {
   await Actions.signIn();
   await Click.Btn("sign_In");
   await Click.Tab("Products");
@@ -181,7 +181,7 @@ test('Verify the error message,when the user enters "invalid value" while adding
 
 //Product Admin Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test ('Verify that the user is able to check and uncheck a checkbox', async ({ Actions, Click, Verify, page }) => {
+test('Verify that the user is able to check and uncheck a checkbox', async ({ Actions, Click, Verify, page }) => {
   await Actions.signIn();
   await Click.Btn("sign_In");
   await Click.Tab("Products");
@@ -202,58 +202,17 @@ test('Verify that the user is able to perform bulk operations', async ({ Actions
   await Click.Btn("sign_In");
   await Click.Tab("Products");
   await Click.Tab("productAdmin");
-  
-  await page.waitForLoadState("networkidle");
-  await page.waitForLoadState("domcontentloaded");
-  await page.waitForTimeout(3000); 
   await Click.Icon("productAdminFilterArrow");
-  await page.waitForLoadState("networkidle");
-  await page.waitForLoadState("domcontentloaded");
-  //await page.waitForTimeout(6000);
   await Actions.enterText("productName", "Absto001");
-  await page.waitForLoadState("networkidle");
-  await page.waitForLoadState("domcontentloaded");
-  //await page.waitForTimeout(6000);
-  
   await Click.Btn("Filter");
-  await page.waitForLoadState("networkidle");
-  await page.waitForLoadState("domcontentloaded");
-  //await page.waitForTimeout(6000);
-  
-  
-  await page.waitForLoadState("networkidle");
-  await page.waitForLoadState("domcontentloaded");
-  //await page.waitForTimeout(6000);
-  
+  await Verify.verifyCheckbox(page, "Absto001");
   await Click.Icon("bulkOperationsArrow");
-  await page.waitForLoadState("networkidle");
-  await page.waitForLoadState("domcontentloaded");
-  //await page.waitForTimeout(6000);
-  
-  await Click.Icon("productAdminDropdown1");
-  await page.waitForLoadState("networkidle");
-  await page.waitForLoadState("domcontentloaded");
-  //await page.waitForTimeout(6000);
-  
-  await Click.dropdownOption("tags");
-  await page.waitForLoadState("networkidle");
-  await page.waitForLoadState("domcontentloaded");
-  await page.waitForTimeout(2000);
-  await Click.Icon("productAdminDropdown2");
-  await page.waitForLoadState("networkidle");
-  await page.waitForLoadState("domcontentloaded");
-  await Click.dropdownOption("All");
-  await page.waitForLoadState("networkidle");
-  await page.waitForLoadState("domcontentloaded");
+  await Click.Icon("productAdminDropdown");
+  await Click.dropdownOption("Tags");
   await Click.Btn("submitBulkProducts");
-  await page.waitForLoadState("networkidle");
-  await page.waitForLoadState("domcontentloaded");
-  //await page.waitForTimeout(2000);
   await Click.Btn("yes");
-  await page.waitForLoadState("networkidle");
-  await page.waitForLoadState("domcontentloaded");
   await Verify.verifyDisabledButton("submitBulkProducts");
-  
+
 });
 
 
@@ -265,7 +224,7 @@ test('Verify if the pagination of the table is working as expected', async ({ Ac
   await Click.Btn("sign_In");
   await Click.Tab("Products");
   await Click.Tab("productWIP");
- await Verify.verifyPagination(page);
+  await Verify.verifyPagination(page);
 });
 
 //Group settings screen-----------------------------------------------------------------------------------------
@@ -279,7 +238,7 @@ test('Verify sorting of "Lookup Category Setup" data using sort icons.', async (
   await Verify.verifySortOrder();
   await Click.Icon("Sort");
   await Verify.verifySortOrder();
-  
+
 });
 
 test('Verify if the collapse all button is working as expected', async ({ Actions, Click, Verify, page }) => {
@@ -290,7 +249,7 @@ test('Verify if the collapse all button is working as expected', async ({ Action
   await Click.Icon("masterCategoryArrow");
   await page.waitForLoadState("networkidle");
   await Verify.verifyCollapseAllButton(page);
-  
+
 });
 
 test('Verify if user can add pastel product category', async ({ Actions, Click, Verify, page }) => {
@@ -306,6 +265,30 @@ test('Verify if user can add pastel product category', async ({ Actions, Click, 
   await Verify.IsTextDisplayed("Saved Successfully");
 });
 
+test('Verify that the user cannot add a Department by filling invalid data.', async ({ Actions, Click, Verify, page }) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("groupSettings");
+  await Click.Link("iQCategory");
+  await Click.Btn("Add");
+  await Actions.enterText("IQcode", "1224");
+  await Click.Btn("Save");
+  await Verify.verifyErrorMessage("Department is a required field");
+
+});
+
+test('Verify that the user can Edit a Department by filling in valid data.', async ({ Actions, Click, Verify, page }) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("groupSettings");
+  await Click.Link("iQCategory");
+  await Click.Icon("iQCategoryEdit");
+  await Actions.enterText("IQcode", "1002");
+  await Click.Btn("Save");
+  await Verify.IsTextDisplayed("Record Saved Successfully");
+
+});
+
 
 //Imports screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -314,7 +297,7 @@ test('Verify if the import screen is displayed as expected ', async ({ Actions, 
   await Click.Btn("sign_In");
   await Click.Tab("Imports");
   await Verify.IsTextDisplayed("Imports");
-  
+
 });
 
 test('Verify that user can download "Import template"', async ({ Actions, Click, Verify, page }) => {
@@ -332,7 +315,7 @@ test('Verify user can import an empty file successfully"', async ({ Actions, Cli
   await Click.Tab("Imports");
   await Click.Tab("importProducts");
   await Click.Btn("importFile");
-  await Actions.ImageUpload(page, "SampleXLS"); 
+  await Actions.ImageUpload(page, "SampleXLS");
   await Click.Btn("validateAndImport");
   await Verify.IsTextDisplayed("Successfully imported 0 records");
 });

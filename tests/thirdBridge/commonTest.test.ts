@@ -538,7 +538,32 @@ test('Verify if the collapse all button is working as expected', async ({ Action
     await Click.Btn("Save")
     await Verify.IsTextDisplayed("Saved Successfully");
   });
+  // IQ Category Setup Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
+  test('Verify that the user cannot add a Department by filling invalid data.', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("groupSettings");
+    await Click.Link("iQCategory");
+    await Click.Btn("Add");
+    await Actions.enterText("IQcode", "1224");
+    await Click.Btn("Save");
+    await Verify.verifyErrorMessage("Department is a required field");
+  
+  });
+  
+  test('Verify that the user can Edit a Department by filling in valid data.', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("groupSettings");
+    await Click.Link("iQCategory");
+    await Click.Icon("iQCategoryEdit");
+    await Actions.enterText("IQcode", "1002");
+    await Click.Btn("Save");
+    await Verify.IsTextDisplayed("Record Saved Successfully");
+  
+  });
 
+  
 //Imports screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test ('Verify if the import screen is displayed as expected ', async ({ Actions, Click, Verify, page }) => {

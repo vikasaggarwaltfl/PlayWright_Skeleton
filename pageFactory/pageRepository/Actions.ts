@@ -28,6 +28,7 @@ export class Actions {
     private readonly productWIPnotes: Locator
     private readonly pastelCode: Locator
     private readonly onCode: Locator
+    private readonly IQcode: Locator
 
     // Export Products locators
     private readonly supplierDropdown: Locator;
@@ -52,6 +53,8 @@ export class Actions {
         this.productWIPnotes = page.locator("//textarea[@placeholder='Enter a note']")
         this.pastelCode = page.locator("//input[@name='PastelCode']")
         this.onCode = page.locator("//input[@id='OnStockCode']")
+        this.IQcode = page.locator("//input[@id='CategoryCode']")
+
 
         
         // Initialize Export Products locators
@@ -109,6 +112,11 @@ export class Actions {
         if (textBoxName === "onCode") {
 
             await this.onCode.fill(text);
+        }
+
+        if (textBoxName === "IQcode") {
+
+            await this.IQcode.fill(text);
         }
 
     }
