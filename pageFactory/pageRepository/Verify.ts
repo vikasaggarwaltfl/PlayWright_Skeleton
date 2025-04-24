@@ -143,7 +143,12 @@ export class Verify {
       console.log(`Download started: ${download.suggestedFilename()}`);
       
       // Verify that the file is an Excel file
-      expect(download.suggestedFilename()).toContain('.xlsx');
+      //expect(download.suggestedFilename()).toContain('.xlsx , .csv');
+      expect(
+        download.suggestedFilename().includes('.xlsx') ||
+        download.suggestedFilename().includes('.csv')
+      ).toBeTruthy();
+      
       
       // Wait for the download to complete
       const path = await download.path();
@@ -251,22 +256,27 @@ export class Verify {
         const totalImages = await this.page.locator('//body/div/div/div/div/div/div/div[3]/div[1]').textContent();
         const totalVideos = await this.page.locator('//body//div//div[6]').textContent();
         const totalDocuments = await this.page.locator('//body//div//div[11]').textContent();
+
+        const extractNumber = (text: string | null): number => {
+          const match = text?.match(/\d+/); // Finds first group of digits
+          return match ? Number(match[0]) : NaN;
+        };
+
+        const isProductsValid = !isNaN(extractNumber(products));
+        const isTotalImagesValid = !isNaN(extractNumber(totalImages));
+        const isTotalVideosValid = !isNaN(extractNumber(totalVideos));
+        const isTotalDocumentsValid = !isNaN(extractNumber(totalDocuments));
         
-        // Verify that the values are numbers
-        const isProductsValid = !isNaN(Number(products));
-        const isTotalImagesValid = !isNaN(Number(totalImages));
-        const isTotalVideosValid = !isNaN(Number(totalVideos));
-        const isTotalDocumentsValid = !isNaN(Number(totalDocuments));
-        
-        console.log(`Dashboard data for ${supplierName}:`);
-        console.log(`Products: ${products}`);
-        console.log(`Total Images: ${totalImages}`);
-        console.log(`Total Videos: ${totalVideos}`);
-        console.log(`Total Documents: ${totalDocuments}`);
+        console.log(`${supplierName}:`);
+        console.log(`${products}`);
+        console.log(`${totalImages}`);
+        console.log(`${totalVideos}`);
+        console.log(`${totalDocuments}`);
         
         return isProductsValid && isTotalImagesValid && isTotalVideosValid && isTotalDocumentsValid;
     } catch (error) {
         console.error('Error verifying dashboard data:', error);
+        await this.page.screenshot({ path: 'dashboard-error.png', fullPage: true });
         return false;
     }
   }

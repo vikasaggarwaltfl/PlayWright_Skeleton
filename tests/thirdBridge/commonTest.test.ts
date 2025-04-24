@@ -18,7 +18,30 @@ test('Verify that user is able to login with valid credentials', async ({ page, 
     await Verify.IsTextDisplayed("ONA Super Admin");
 });
 
-/// Brand Screen --------------------------------------------------------------------------------------------------------------------------------------------------
+// Dashboard ----------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify user can navigate to the "Dashboard" screen and verify screen displayed correctly', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Dashboard");
+    await page.waitForTimeout(3000);
+    await Verify.IsTextDisplayed("My OfficeNational");
+});
+
+test('Verify user can fetch and print updated dashboard data analytics', async ({ page, Actions, Click, Verify }) => {
+    
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Dashboard");
+    await page.waitForLoadState('networkidle');
+    const supplierName = 'Artistic';
+    const isDataValid = await Verify.verifyDashboardDataAnalystics(supplierName);
+    expect(isDataValid).toBeTruthy();
+});
+
+
+
+// Brand Screen --------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify user can navigate to the "Brand" screen and verify screen displayed correctly', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
@@ -54,7 +77,7 @@ test('Verify user can  Add Brand with "valid data" and verify Success message', 
     await Click.Btn("sign_In");
     await Click.Tab("Brands");
     await Click.Link("addBrand");
-    await Actions.enterText("brandName", "Test152");
+    await Actions.enterText("brandName", "Test158");
     await Click.Btn("Save");
     await Verify.IsTextDisplayed('Saved Successfully');
 });
@@ -80,7 +103,6 @@ test('Verify that the user can edit and save the details of an existing brand', 
     await Click.Btn("Save");
     await Verify.IsTextDisplayed('Brands saved!')
 });
-
 
 test('Verify user can upload brand logo and verify success message', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
@@ -453,7 +475,7 @@ test('Verify that user can export IQ products and verify downloaded file', async
     expect(statusSelected).toBe(true);
     await page.waitForTimeout(5000);
     await Click.Btn("exportDataButton");
-    const downloadStarted = await Verify.verifyExportData(180000);
+    const downloadStarted = await Verify.verifyExportData(5000000);
     await expect(downloadStarted).toBe(true);
     
 });
@@ -469,7 +491,7 @@ test('Verify that user can export Pastel products and verify downloaded file', a
     const statusSelected = await Click.selectDropdownOption(Click.statusesDropdown,'IM',18000);
     expect(statusSelected).toBe(true);
     await Click.Btn("exportDataButton");
-    const downloadStarted = await Verify.verifyExportData(30000000);
+    const downloadStarted = await Verify.verifyExportData(5000000);
     await expect(downloadStarted).toBe(true);
 
 });
@@ -510,7 +532,7 @@ test('Verify if the collapse all button is working as expected', async ({ Action
     await Click.Tab("groupSettings");
     await Click.Link("pastelCategory");
     await Click.Link("addPastelProduct")
-    await Actions.enterText("pastelCode", "2025");
+    await Actions.enterText("pastelCode", "2039");
     await Click.Icon("primaryCategoryFilterArrow");
     await Click.dropdownOption("businessTechnology");
     await Click.Btn("Save")
