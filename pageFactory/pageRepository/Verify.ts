@@ -117,13 +117,16 @@ export class Verify {
 
   //Verify disabled button---------------------------------------------------------------------------------------------------------------------------------------------------
 
-  async verifyDisabledButton(buttonName: string) {
-    const button = await this.page.locator(`//button[normalize-space()='${buttonName}']`);
-    const isDisabled = await button.isDisabled();
-    console.log(isDisabled ? `${buttonName} is disabled` : `${buttonName} is not disabled`);
-    await expect(isDisabled).toBe(true);
-
-  }
+ 
+    async verifyDisabledButton(buttonName: string) {
+      const button = await this.page.locator(`//button[normalize-space()='${buttonName}']`);
+      const isDisabled = await button.isDisabled();
+      console.log(isDisabled ? `${buttonName} is disabled` : `${buttonName} is not disabled`);
+      await expect(isDisabled).toBe(true);
+  
+    }
+  
+  
 
   //Verify screenshot--------------------------------------------------------------------------------------
 

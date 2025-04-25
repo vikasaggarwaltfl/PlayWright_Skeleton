@@ -56,6 +56,7 @@ export class Click {
     private readonly productMedia: Locator
     private readonly productPriceWIP: Locator
     private readonly importProducts: Locator
+    private readonly productAudit: Locator
 
 
     //Icon 
@@ -103,6 +104,7 @@ export class Click {
     private readonly importFile: Locator
     private readonly validateAndImport: Locator
     private readonly Add: Locator
+    private readonly copyToWip: Locator
 
 
 
@@ -174,6 +176,7 @@ export class Click {
         this.productAdmin = page.locator("//a[text()='Product Admin']")
         this.productPriceWIP = page.locator("//a[text()='Product Price WIP']")
         this.importProducts = page.locator("//a[text()='Import Products']")
+        this.productAudit = page.locator("//button[text()='Product Audit']")
 
 
         //Icon
@@ -192,8 +195,7 @@ export class Click {
         this.masterCategoryArrow = page.locator("//tbody/tr[1]/td[1]/button[1]/i[1]")
         this.primaryCategoryFilterArrow = page.locator("(//div[@class='p-dropdown-trigger'])[1]")
         this.bulkOperationsArrow = page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])[1]")
-        this.productAdminDropdown = page.locator("//span[text()='Select fields to update']")
-        
+        this.productAdminDropdown = page.locator("//span[text()='Select fields to update']") 
         this.iQCategoryEdit = page.locator("(//i)[15]")
 
         //Btn
@@ -221,7 +223,8 @@ export class Click {
         this.importFile = page.locator("//p[text()='Import File']")
         this.validateAndImport = page.locator("//p[text()='Validate & Import']")
         this.Add = page.locator("//span[text()='Add']")
-
+        this.copyToWip = page.locator("//button[text()=' Copy to WIP']")
+        this.refresh = page.locator("//span[normalize-space(text())='Refresh']")
 
 
         //dropdownOption
@@ -332,6 +335,9 @@ export class Click {
 
         else if (str === "importProducts") {
             await this.importProducts.click();
+        }
+        else if (str === "productAudit") {
+            await this.productAudit.click();
         }
     }
 
@@ -474,6 +480,9 @@ export class Click {
 
         else if (str === "Add") {
             await this.Add.click();
+        }
+        else if (str === "copyToWip") {
+            await this.copyToWip.click();
         }
 
 

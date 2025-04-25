@@ -77,7 +77,7 @@ test('Verify user can  Add Brand with "valid data" and verify Success message', 
     await Click.Btn("sign_In");
     await Click.Tab("Brands");
     await Click.Link("addBrand");
-    await Actions.enterText("brandName", "Test158");
+    await Actions.enterText("brandName", "Test600");
     await Click.Btn("Save");
     await Verify.IsTextDisplayed('Saved Successfully');
 });
@@ -336,46 +336,59 @@ test('Verify the error message,when the user enters "invalid value" while adding
   
   });
 
+  test('Verify if the pagination of the table is working as expected', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Products");
+    await Click.Tab("productWIP");
+   await Verify.verifyPagination(page);
+  });
+
+
   //Product Price WIP Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
  
-  test('Verify if user can reject a product and the ARM status changes to reject', async ({ Actions, Click, Verify, page }) => {
+  test.setTimeout(120000); 
+test('Verify if user can reject a product and the ARM status changes to reject', async ({ Actions, Click, Verify, page }) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("Products");
+  await Click.Icon("filterArrow");
+  await Actions.enterText("onCode", "3M11175");
+  await Click.Btn("Filter");
+  await Click.Icon("productKebabMenu");
+  await Click.Btn("copyToWip");
+  await Click.Tab("productPriceWIP");
+  await page.waitForTimeout(3000); 
+  await Click.Icon("filterArrow");
+  await Actions.enterText("onCode", "3M11175");
+  await Click.Btn("Filter");
+  await page.waitForTimeout(3000); 
+  await Click.Icon("productKebabMenu");
+  await Click.Btn("reject");
+  await Verify.IsTextDisplayed("Rejected Successfully");
+});
+
+test.setTimeout(120000); 
+  test('Verify if a user can accept the product',async({Actions, Click,Verify,page})=>{
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Products");
-    await Click.Tab("productPriceWIP");
-    await page.waitForLoadState("networkidle");
-    await Click.Icon("filterArrow");
-    await Actions.enterText("onCode", "3M11175");
-    await Click.Btn("Filter");
-    await page.waitForLoadState("networkidle");
-    await page.waitForLoadState("domcontentloaded");
-    await page.waitForTimeout(6000); 
-    await Click.Icon("productKebabMenu");
-    await page.waitForTimeout(3000); 
-    await Click.Btn("reject");
-    await page.waitForLoadState("networkidle");
-    await Verify.IsTextDisplayed("Rejected Successfully");
-  });
-    
-    test('Verify if a user can accept the product',async({Actions, Click,Verify,page})=>{
-    await Actions.signIn();
-    await Click.Btn("sign_In");
-    await Click.Tab("Products");
-    await Click.Tab("productPriceWIP");
-    await page.waitForLoadState("networkidle");
     await Click.Icon("filterArrow");
     await Actions.enterText("onCode", "Absto006");
     await Click.Btn("Filter");
-    await page.waitForLoadState("networkidle");
-    await page.waitForLoadState("domcontentloaded");
-    await page.waitForTimeout(6000); 
     await Click.Icon("productKebabMenu");
+    await Click.Btn("copyToWip");
+    await Click.Tab("productPriceWIP");
     await page.waitForTimeout(3000); 
+    await Click.Icon("filterArrow");
+    await Actions.enterText("onCode", "Absto006");
+    await Click.Btn("Filter");
+    await page.waitForTimeout(3000); 
+    await Click.Icon("productKebabMenu");
     await Click.Btn("accept");
-    await page.waitForLoadState("networkidle");
-    await Verify.IsTextDisplayed("Accepted Successfully");
-    
-  });
+  await Verify.IsTextDisplayed("Accepted Successfully");
+  
+});
 
 //Product Admin Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -394,14 +407,39 @@ test ('Verify that the user is able to check and uncheck a checkbox', async ({ A
 
 });
 
-test('Verify if the pagination of the table is working as expected', async ({ Actions, Click, Verify, page }) => {
+test('Verify that the user is able to perform bulk operations', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Products");
-    await Click.Tab("productWIP");
-   await Verify.verifyPagination(page);
+    await Click.Tab("productAdmin");
+    await Click.Icon("productAdminFilterArrow");
+    await Actions.enterText("productName", "Absto001");
+    await Click.Btn("Filter");
+    await Verify.verifyCheckbox(page, "Absto001");
+    await Click.Icon("bulkOperationsArrow");
+    await Click.Icon("productAdminDropdown");
+    await Click.dropdownOption("Tags");
+    await Click.Btn("submitBulkProducts");
+    await Click.Btn("yes");
+    await Verify.verifyDisabledButton("Submit Bulk Products Processing");
   });
 
+  //product Audit screen----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  test('Verify that the "Refresh" button refreshes the data', async ({ Actions, Click, Verify, page }) => {
+    await Actions.signIn();
+    await Click.Btn("sign_In");
+    await Click.Tab("Products");
+    await Click.Icon("filterArrow");
+    await Actions.enterText("productName", "Absto007");
+    await Click.Btn("Filter");
+    await Click.Link("productInfo");
+    await Click.Tab("productAudit");
+    await Click.Btn("refresh");
+    await Verify.isLoadingVisible(page);
+    
+    
+  });
 
 
   //Export Screen--------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -532,7 +570,7 @@ test('Verify if the collapse all button is working as expected', async ({ Action
     await Click.Tab("groupSettings");
     await Click.Link("pastelCategory");
     await Click.Link("addPastelProduct")
-    await Actions.enterText("pastelCode", "2039");
+    await Actions.enterText("pastelCode", "2065");
     await Click.Icon("primaryCategoryFilterArrow");
     await Click.dropdownOption("businessTechnology");
     await Click.Btn("Save")
