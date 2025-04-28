@@ -77,7 +77,7 @@ test('Verify user can  Add Brand with "valid data" and verify Success message', 
     await Click.Btn("sign_In");
     await Click.Tab("Brands");
     await Click.Link("addBrand");
-    await Actions.enterText("brandName", "Test600");
+    await Actions.enterText("brandName", "Test607");
     await Click.Btn("Save");
     await Verify.IsTextDisplayed('Saved Successfully');
 });
@@ -214,8 +214,9 @@ test('Verify that the user is able to edit the product entering valid data', asy
     await Click.Btn("sign_In");
     await Click.Tab("Products");
     await Click.Icon("filterArrow");
-    await Actions.enterText("productName", "Absto007");
+    await Actions.enterText("productName", "Absto009");
     await Click.Btn("Filter");
+    await Click.setProductName("Absto003");
     await Click.Link("productInfo");
     await Click.Icon("Edit");
     await Actions.enterText("productCatalogueTitle", "Testing0044");
@@ -392,7 +393,7 @@ test.setTimeout(120000);
 
 //Product Admin Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test ('Verify that the user is able to check and uncheck a checkbox', async ({ Actions, Click, Verify, page }) => {
+test ('Verify that the user is able to check a checkbox', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Products");
@@ -424,23 +425,58 @@ test('Verify that the user is able to perform bulk operations', async ({ Actions
     await Verify.verifyDisabledButton("Submit Bulk Products Processing");
   });
 
-  //product Audit screen----------------------------------------------------------------------------------------------------------------------------------------------------------
+//Products barcode Screen---------------------------------------------------------------------------------------------------------------------------------------------------------- 
+test('Verify that the user is able to add new barcode giving valid data', async ({ Actions, Click, Verify, page }) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("Products");
+  await Click.Icon("filterArrow");
+  await Actions.enterText("productName", "Absto002");
+  await Click.Btn("Filter"); 
+  await Click.setProductName("Absto002");
+  await Click.Link("productInfo");
+  await Click.Btn("Barcodes");
+  await Click.Btn("Add");
+  await Actions.enterText("barcodeInput", "1235");
+  await Click.Icon("productBarcodeDropdown");
+  await Click.dropdownOption("buyUnit");
+  await Click.Btn("Save");
+  await Verify.IsTextDisplayed("Record Saved Successfully");
+});
 
-  test('Verify that the "Refresh" button refreshes the data', async ({ Actions, Click, Verify, page }) => {
-    await Actions.signIn();
-    await Click.Btn("sign_In");
-    await Click.Tab("Products");
-    await Click.Icon("filterArrow");
-    await Actions.enterText("productName", "Absto007");
-    await Click.Btn("Filter");
-    await Click.Link("productInfo");
-    await Click.Tab("productAudit");
-    await Click.Btn("refresh");
-    await Verify.isLoadingVisible(page);
-    
-    
-  });
+// related products screen----------------------------------------------------------------------------------------------------------------------------------------------------------
+test('Verify that the user cannot add Related Product with invalid input data', async ({ Actions, Click, Verify, page }) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("Products");
+  await Click.Icon("filterArrow");
+  await Actions.enterText("productName", "Absto001");
+  await Click.Btn("Filter"); 
+  await Click.setProductName("Absto001");
+  await Click.Link("productInfo");
+  await Click.Btn("relatedProducts");
+  await Click.Btn("Add")
+  await Click.Icon("relatedOncodeDropdown");
+  await Click.dropdownOption("onCode");
+  await Click.Btn("Save");
+  await Verify.verifyErrorMessage("Relationship is a required field");
+});
 
+//product Audit screen----------------------------------------------------------------------------------------------------------------------------------------------------------
+test('Verify that the "Refresh" button refreshes the data', async ({ Actions, Click, Verify, page }) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("Products");
+  await Click.Icon("filterArrow");
+  await Actions.enterText("productName", "Absto004");
+  await Click.Btn("Filter");
+  await Click.setProductName("Absto004");
+  await Click.Link("productInfo");
+  await Click.Tab("productAudit");
+  await Click.Btn("refresh");
+  await Verify.isLoadingVisible(page);
+   
+});
 
   //Export Screen--------------------------------------------------------------------------------------------------------------------------------------------------------
 test('Verify Export Product screen displayed correctly', async ({ page, Actions, Click, Verify }) => {
@@ -570,7 +606,7 @@ test('Verify if the collapse all button is working as expected', async ({ Action
     await Click.Tab("groupSettings");
     await Click.Link("pastelCategory");
     await Click.Link("addPastelProduct")
-    await Actions.enterText("pastelCode", "2065");
+    await Actions.enterText("pastelCode", "2070");
     await Click.Icon("primaryCategoryFilterArrow");
     await Click.dropdownOption("businessTechnology");
     await Click.Btn("Save")

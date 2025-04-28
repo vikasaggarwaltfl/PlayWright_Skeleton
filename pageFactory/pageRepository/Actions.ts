@@ -29,6 +29,7 @@ export class Actions {
     private readonly pastelCode: Locator
     private readonly onCode: Locator
     private readonly IQcode: Locator
+    private readonly barcodeInput: Locator
 
     // Export Products locators
     private readonly supplierDropdown: Locator;
@@ -54,6 +55,7 @@ export class Actions {
         this.pastelCode = page.locator("//input[@name='PastelCode']")
         this.onCode = page.locator("//input[@id='OnStockCode']")
         this.IQcode = page.locator("//input[@id='CategoryCode']")
+        this.barcodeInput = page.locator("//input[@id='Barcode']")
 
 
         
@@ -117,6 +119,10 @@ export class Actions {
         if (textBoxName === "IQcode") {
 
             await this.IQcode.fill(text);
+        }
+        if (textBoxName === "barcodeInput") {
+
+            await this.barcodeInput.fill(text);
         }
 
     }

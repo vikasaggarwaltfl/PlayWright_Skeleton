@@ -256,7 +256,46 @@ test('Verify that the user is able to perform bulk operations', async ({ Actions
   await Click.Btn("yes");
   await Verify.verifyDisabledButton("Submit Bulk Products Processing");
 });
+//Products barcode Screen---------------------------------------------------------------------------------------------------------------------------------------------------------- 
+test('Verify that the user is able to add new barcode giving valid data', async ({ Actions, Click, Verify, page }) => {
 
+
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("Products");
+  await Click.Icon("filterArrow");
+  await Actions.enterText("productName", "Absto002");
+  await Click.Btn("Filter"); 
+  await Click.setProductName("Absto002");
+  await Click.Link("productInfo");
+  await Click.Btn("Barcodes");
+  await Click.Btn("Add");
+  await Actions.enterText("barcodeInput", "1235");
+  await Click.Icon("productBarcodeDropdown");
+  await Click.dropdownOption("buyUnit");
+  await Click.Btn("Save");
+  await Verify.IsTextDisplayed("Record Saved Successfully");
+
+
+});
+
+// related products screen----------------------------------------------------------------------------------------------------------------------------------------------------------
+test.only('Verify that the user cannot add Related Product with invalid input data', async ({ Actions, Click, Verify, page }) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("Products");
+  await Click.Icon("filterArrow");
+  await Actions.enterText("productName", "Absto001");
+  await Click.Btn("Filter"); 
+  await Click.setProductName("Absto001");
+  await Click.Link("productInfo");
+  await Click.Btn("relatedProducts");
+  await Click.Btn("Add");
+  await Click.Icon("relatedOncodeDropdown");
+  await Click.dropdownOption("onCode");
+  await Click.Btn("Save");
+  await Verify.verifyErrorMessage("Relationship is a required field");
+});
 //product Audit screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 test('Verify that the "Refresh" button refreshes the data', async ({ Actions, Click, Verify, page }) => {
   await Actions.signIn();

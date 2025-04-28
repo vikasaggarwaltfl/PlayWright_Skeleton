@@ -24,6 +24,8 @@ export class Click {
     private readonly auditLog: Locator
     private readonly configCodes: Locator
     private readonly productInfo: Locator
+    private productName: string = ''
+    
 
 
 
@@ -77,7 +79,10 @@ export class Click {
     private readonly bulkOperationsArrow: Locator
     private readonly productAdminDropdown: Locator
     private readonly iQCategoryEdit: Locator
-
+    private readonly productsDropdown: Locator
+    private readonly relatedOncodeDropdown: Locator
+   
+    
 
 
     //Btn
@@ -105,7 +110,8 @@ export class Click {
     private readonly validateAndImport: Locator
     private readonly Add: Locator
     private readonly copyToWip: Locator
-
+    private readonly Barcodes: Locator
+    private readonly relatedProducts: Locator
 
 
 
@@ -115,6 +121,9 @@ export class Click {
     private readonly businessTechnology: Locator
     private readonly Tags: Locator
     private readonly All: Locator
+    private readonly buyUnit: Locator
+    private readonly onCode: Locator
+    
 
 
 
@@ -131,7 +140,7 @@ export class Click {
         //Link
         this.addBrand = page.locator("//div[@class='flex flex-row items-center gap-2']");
         this.brandInfo = page.locator("//a[normalize-space()='ABSTO']")
-
+        this.productInfo = page.locator("//a[text()='']")  // Initialize with empty text
         this.addProduct = page.locator('a:has-text("Add Product")')
         this.addCatalogue = page.locator('a:has-text("Add Catalogue")')
         // this.lookupCategory = page.locator('a:has-text("Lookup Category")')
@@ -145,7 +154,6 @@ export class Click {
         this.addPastelProduct = page.locator("//div[text()=' Add Pastel Product Category']")
         this.auditLog = page.locator('a:has-text("Audit Log")')
         this.configCodes = page.locator('a:has-text("Config Codes")')
-        this.productInfo = page.locator("//a[text()='Absto007']")
 
 
         // Initialize Export Products locators
@@ -197,7 +205,10 @@ export class Click {
         this.bulkOperationsArrow = page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])[1]")
         this.productAdminDropdown = page.locator("//span[text()='Select fields to update']") 
         this.iQCategoryEdit = page.locator("(//i)[15]")
-
+        this.productsDropdown = page.locator("(//*[name()='svg'][@class='p-icon p-dropdown-trigger-icon'])[2]")
+        this.relatedOncodeDropdown = page.locator("(//span[contains(@aria-label,'Related ON Code')])[1]")  
+       
+        
         //Btn
         this.sign_In = page.locator("(//input[@name='signInSubmitButton'])[2]")
         this.Profile = page.locator("//p[text()='ONA Super Admin']")
@@ -225,7 +236,8 @@ export class Click {
         this.Add = page.locator("//span[text()='Add']")
         this.copyToWip = page.locator("//button[text()=' Copy to WIP']")
         this.refresh = page.locator("//span[normalize-space(text())='Refresh']")
-
+        this.Barcodes = page.locator("//button[text()='Barcodes']")
+        this.relatedProducts = page.locator("//button[text()='Related Products']")
 
         //dropdownOption
         this.artistic = page.locator("//span[text()='Artistic']")
@@ -233,6 +245,9 @@ export class Click {
         this.businessTechnology = page.locator("//span[text()='Business Technology']")
         this.Tags = page.locator("//div[contains(text(),'Tags')]")
         this.All = page.locator("//div[@class='p-multiselect-header']//input[@aria-label='All items unselected']")
+        this.buyUnit = page.locator(" //span[contains(text(),'Buy Unit')]")
+        this.onCode = page.locator("//span[normalize-space()='3M11175']")
+      
 
         // Dashboard locators
         this.totalProductsCard = page.locator('//div[contains(@class, "card")]//div[contains(text(), "Total Products")]')
@@ -243,7 +258,6 @@ export class Click {
 
     //Link
     async Link(linkName: String) {
-
         if (linkName === "addBrand") {
             await this.addBrand.click();
         }
@@ -278,9 +292,9 @@ export class Click {
             await this.configCodes.click();
         }
         if (linkName === "productInfo") {
-            await this.productInfo.click();
+            const productLocator = this.page.locator(`//a[text()='${this.productName}']`);
+            await productLocator.click();
         }
-
     }
 
     //Tab
@@ -395,8 +409,15 @@ export class Click {
         else if (str === "iQCategoryEdit") {
             await this.iQCategoryEdit.click();
         }
+        
+        else if (str === "productsDropdown") {
+            await this.productsDropdown.click();
+        }
 
-
+        else if (str === "relatedOncodeDropdown") {
+            await this.relatedOncodeDropdown.click();
+        }
+       
 
 
     }
@@ -484,6 +505,12 @@ export class Click {
         else if (str === "copyToWip") {
             await this.copyToWip.click();
         }
+        else if (str === "Barcodes") {
+            await this.Barcodes.click();
+        }
+        else if (str === "relatedProducts") {
+            await this.relatedProducts.click();
+        }
 
 
     }
@@ -508,7 +535,14 @@ export class Click {
             await this.All.click();
 
         }
+        if (str === "buyUnit") {
+            await this.buyUnit.click();
+        }
 
+        if (str === "onCode") {
+            await this.onCode.click();
+        }
+        
     }
 
     // Export Products --------------------------------------------------------------------------------------------------------------------------
@@ -544,6 +578,11 @@ export class Click {
             console.error(`Error selecting option ${optionText}:`, error);
             return false;
         }
+    }
+
+    // New method to set product name
+    async setProductName(productName: string) {
+        this.productName = productName;
     }
 }
 
