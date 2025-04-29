@@ -25,6 +25,7 @@ export class Click {
     private readonly configCodes: Locator
     private readonly productInfo: Locator
     private productName: string = ''
+    private readonly videoLink: Locator 
     
 
 
@@ -154,6 +155,7 @@ export class Click {
         this.addPastelProduct = page.locator("//div[text()=' Add Pastel Product Category']")
         this.auditLog = page.locator('a:has-text("Audit Log")')
         this.configCodes = page.locator('a:has-text("Config Codes")')
+        this.videoLink = page.locator("(//img)[6]")
 
 
         // Initialize Export Products locators
@@ -294,6 +296,9 @@ export class Click {
         if (linkName === "productInfo") {
             const productLocator = this.page.locator(`//a[text()='${this.productName}']`);
             await productLocator.click();
+        }
+        if (linkName === "videoLink") {
+            await this.videoLink.click();
         }
     }
 

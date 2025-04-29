@@ -144,6 +144,33 @@ test('Verify that the user cannot upload invalid file in the Product Media', asy
   await Verify.IsTextDisplayed("Could not add image");
 });
 
+
+
+
+
+test.only('Verify that the uploaded video is streaming on Cloudflarestream.com', async ({ Actions, Click, Verify, page }) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("Products");
+  await Click.Tab("productMedia");
+  await page.waitForTimeout(5000);
+  await Click.Icon("filterArrow");
+  await Actions.enterText("productName", "Absto002");
+  await Click.Btn("Filter");
+  await Click.setProductName("Absto002");
+  await Click.Link("productInfo");
+  await page.waitForLoadState("networkidle");
+  await Click.Link("videoLink")
+  await Click.Btn("view")
+  await page.waitForLoadState("networkidle");
+  const newwindow = await page.context().waitForEvent('page');
+  await newwindow.waitForLoadState("networkidle");
+  expect(await newwindow.url()).toContain("cloudflarestream.com");
+
+  await page.waitForLoadState("networkidle");
+  
+});
+
 //Product WIP Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that the user is able to add a note in a popup window', async ({ Actions, Click, Verify, page }) => {
@@ -271,7 +298,7 @@ test('Verify that the user is able to add new barcode giving valid data', async 
   await Click.Btn("Barcodes");
   await Click.Btn("Add");
   await Actions.enterText("barcodeInput", "1235");
-  await Click.Icon("productBarcodeDropdown");
+  await Click.Icon("productsDropdown");
   await Click.dropdownOption("buyUnit");
   await Click.Btn("Save");
   await Verify.IsTextDisplayed("Record Saved Successfully");
@@ -280,7 +307,7 @@ test('Verify that the user is able to add new barcode giving valid data', async 
 });
 
 // related products screen----------------------------------------------------------------------------------------------------------------------------------------------------------
-test.only('Verify that the user cannot add Related Product with invalid input data', async ({ Actions, Click, Verify, page }) => {
+test('Verify that the user cannot add Related Product with invalid input data', async ({ Actions, Click, Verify, page }) => {
   await Actions.signIn();
   await Click.Btn("sign_In");
   await Click.Tab("Products");
