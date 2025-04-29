@@ -172,6 +172,7 @@ test('Verify that by clicking on a Product,that Product screen is visible correc
     await Click.Icon("filterArrow");
     await Actions.enterText("productName", "Absto007");
     await Click.Btn("Filter");
+    await Click.setProductName("Absto007");
     await Click.Link("productInfo");
     await Verify.IsTextDisplayed("Product: Absto007");
 });
@@ -226,7 +227,7 @@ test('Verify that the user is able to edit the product entering valid data', asy
 });
 //Product Media screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test ('Verify if user can successfully upload image in Product Media', async ({ Actions, Click, Verify, page }) => {
+test('Verify if user can successfully upload image in Product Media', async ({ Actions, Click, Verify, page }) => {
 
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -236,6 +237,7 @@ test ('Verify if user can successfully upload image in Product Media', async ({ 
     await Click.Icon("filterArrow");
     await Actions.enterText("productName", "Absto007");
     await Click.Btn("Filter");
+    await Click.setProductName("Absto007")
     await Click.Link("productInfo");
     await page.waitForLoadState("networkidle");
     await Click.Btn("uploadImage");
@@ -256,6 +258,7 @@ test('Verify if the user can view an uploaded file in Product Media', async ({ A
     await Click.Icon("filterArrow");
     await Actions.enterText("productName", "Absto007");
     await Click.Btn("Filter");
+    await Click.setProductName("Absto007")
     await Click.Link("productInfo");
     await page.waitForLoadState("networkidle");
     await Click.Btn("view");
@@ -273,6 +276,7 @@ test('Verify if the user can view an uploaded file in Product Media', async ({ A
     await Click.Icon("filterArrow");
     await Actions.enterText("productName", "Absto007");
     await Click.Btn("Filter");
+    await Click.setProductName("Absto007")
     await Click.Link("productInfo");
     await page.waitForTimeout(5000);
     await Click.Icon("Edit");
@@ -293,6 +297,7 @@ test('Verify if the user can view an uploaded file in Product Media', async ({ A
     await Click.Icon("filterArrow");
     await Actions.enterText("productName", "Absto007");
     await Click.Btn("Filter");
+    await Click.setProductName("Absto007")
     await Click.Link("productInfo");
     await page.waitForLoadState("networkidle");
     await Click.Btn("uploadImage");
@@ -437,7 +442,7 @@ test('Verify that the user is able to add new barcode giving valid data', async 
   await Click.Link("productInfo");
   await Click.Btn("Barcodes");
   await Click.Btn("Add");
-  await Actions.enterText("barcodeInput", "1235");
+  await Actions.enterText("barcodeInput", "1237");
   await Click.Icon("productBarcodeDropdown");
   await Click.dropdownOption("buyUnit");
   await Click.Btn("Save");
@@ -606,7 +611,7 @@ test('Verify if the collapse all button is working as expected', async ({ Action
     await Click.Tab("groupSettings");
     await Click.Link("pastelCategory");
     await Click.Link("addPastelProduct")
-    await Actions.enterText("pastelCode", "2070");
+    await Actions.enterText("pastelCode", "2071");
     await Click.Icon("primaryCategoryFilterArrow");
     await Click.dropdownOption("businessTechnology");
     await Click.Btn("Save")
