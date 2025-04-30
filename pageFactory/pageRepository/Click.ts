@@ -60,6 +60,7 @@ export class Click {
     private readonly productPriceWIP: Locator
     private readonly importProducts: Locator
     private readonly productAudit: Locator
+    private readonly importProductBarcode: Locator
     
 
     //Icon 
@@ -188,6 +189,7 @@ export class Click {
         this.productPriceWIP = page.locator("//a[text()='Product Price WIP']")
         this.importProducts = page.locator("//a[text()='Import Products']")
         this.productAudit = page.locator("//button[text()='Product Audit']")
+        this.importProductBarcode = page.locator("//a[text()='Import Product Barcodes']")
 
 
         //Icon
@@ -358,6 +360,9 @@ export class Click {
         }
         else if (str === "productAudit") {
             await this.productAudit.click();
+        }
+        else if (str === "importProductBarcode") {
+            await this.importProductBarcode.click();
         }
     }
 

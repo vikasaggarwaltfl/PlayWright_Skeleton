@@ -714,5 +714,45 @@ test ('Verify if the import screen is displayed as expected ', async ({ Actions,
     await Verify.IsTextDisplayed("Successfully imported 0 records");
   });
   
-  
+  //Imports Products Barcode screen----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify if the import product barcode screen is displayed as expected ', async ({ Actions, Click, Verify, page }) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("Imports");
+  await Click.Tab("importProductBarcode");
+  await Verify.IsTextDisplayed("Product Barcode Import");
+
+});
+
+test('Verify that user can download "Import product barcode template"', async ({ Actions, Click, Verify, page }) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("Imports");
+  await Click.Tab("importProductBarcode");
+  await Click.Btn("Download");
+  await Verify.importData(page);
+});
+
+test('Verify user can import an empty barcode file successfully"', async ({ Actions, Click, Verify, page }) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("Imports");
+  await Click.Tab("importProductBarcode");
+  await Click.Btn("importFile");
+  await Actions.ImageUpload(page, "BarcodeFile");
+  await Click.Btn("validateAndImport");
+  await Verify.IsTextDisplayed("Successfully imported 0 records");
+});
+
+test('Verify that the user cannot import invalid linking product', async ({ Actions, Click, Verify, page }) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  await Click.Tab("Imports");
+  await Click.Tab("importProductBarcode");
+  await Click.Btn("importFile");
+  await Actions.ImageUpload(page, "InvalidBarcodeFile");
+  await Click.Btn("validateAndImport");
+  await Verify.IsTextDisplayed("Validation failed, please check data.");
+});
   
