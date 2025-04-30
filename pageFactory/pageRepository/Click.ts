@@ -60,7 +60,7 @@ export class Click {
     private readonly productPriceWIP: Locator
     private readonly importProducts: Locator
     private readonly productAudit: Locator
-
+    
 
     //Icon 
     private readonly chevronLeft: Locator
@@ -124,6 +124,7 @@ export class Click {
     private readonly All: Locator
     private readonly buyUnit: Locator
     private readonly onCode: Locator
+    private readonly screenDataExportBtn:Locator
     
 
 
@@ -240,7 +241,7 @@ export class Click {
         this.refresh = page.locator("//span[normalize-space(text())='Refresh']")
         this.Barcodes = page.locator("//button[text()='Barcodes']")
         this.relatedProducts = page.locator("//button[text()='Related Products']")
-
+        this.screenDataExportBtn = page.locator("//span[normalize-space()='Export']")
         //dropdownOption
         this.artistic = page.locator("//span[text()='Artistic']")
         this.absto = page.locator("//span[text()='ABSTO']")
@@ -516,6 +517,9 @@ export class Click {
         else if (str === "relatedProducts") {
             await this.relatedProducts.click();
         }
+        else if (str === "screenDataExportBtn") {
+            await this.screenDataExportBtn.click();
+        }
 
 
     }
@@ -558,7 +562,7 @@ export class Click {
     async clickClearFiltersButton() {
         await this.clearFiltersButton.click();
     }
-
+    
     //Select Dropdown Option from any dropdown-----------------------------------------------------------------------------------------------------
 
     async selectDropdownOption(dropdownLocator: Locator, optionText: string, timeout: number = 10000): Promise<boolean> {

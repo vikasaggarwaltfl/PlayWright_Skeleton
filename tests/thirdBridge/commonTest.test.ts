@@ -1,4 +1,3 @@
-
 import test from '@lib/BaseTest'
 import { expect } from '@playwright/test'
 import { Actions } from '@pages/Actions'
@@ -480,7 +479,6 @@ test('Verify that the "Refresh" button refreshes the data', async ({ Actions, Cl
   await Click.Tab("productAudit");
   await Click.Btn("refresh");
   await Verify.isLoadingVisible(page);
-   
 });
 
   //Export Screen--------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -492,8 +490,34 @@ test('Verify Export Product screen displayed correctly', async ({ page, Actions,
         await Verify.IsTextDisplayed(" All Products Export");
 }); 
 
+test('Verify user can export data from all screens sequentially without applying filter', async ({ page, Actions, Click, Verify }) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  // Export Products
+  await Click.Tab("Exports");
+  await Click.Tab("exportProducts");
+  await Click.Btn("exportDataButton");
+  const downloadStarted1 = await Verify.verifyExportData(180000);
+  expect(downloadStarted1).toBe(true);
+  // Export Product Prices
+  await Click.Tab("exportProductPrices");
+  await Click.Btn("exportDataButton");
+  const downloadStarted2 = await Verify.verifyExportData(180000);
+  expect(downloadStarted2).toBe(true);
+  // Export IQ Products
+  await Click.Tab("exportIQProducts");
+  await Click.Btn("exportDataButton");
+  const downloadStarted3 = await Verify.verifyExportData(5000000);
+  expect(downloadStarted3).toBe(true);
+  // Export Pastel Products
+  await Click.Tab("exportPastelProducts");
+  await Click.Btn("exportDataButton");
+  const downloadStarted4 = await Verify.verifyExportData(5000000);
+  expect(downloadStarted4).toBe(true);
+});
+
 test.setTimeout(120000); 
-test('Verify that user can export products and Verify downloaded file', async ({ page, Actions, Click, Verify }) => {
+test('Verify that user can export filtered products and Verify downloaded file', async ({ page, Actions, Click, Verify }) => {
     console.log('Starting Product export test...');
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -527,7 +551,7 @@ test('Verify user can select multiple filters for export and clear filters', asy
 });
 
 test.setTimeout(120000);
-test('Verify that user can export product prices and Verify downloaded file', async ({ page, Actions, Click, Verify }) => {
+test('Verify that user can export filtered product prices and Verify downloaded file', async ({ page, Actions, Click, Verify }) => {
     console.log('Starting product price export test...');
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -543,7 +567,7 @@ test('Verify that user can export product prices and Verify downloaded file', as
 });
 
 test.setTimeout(120000);
-test('Verify that user can export IQ products and verify downloaded file', async ({ page, Actions, Click, Verify }) => {
+test('Verify that user can export filtered IQ products and verify downloaded file', async ({ page, Actions, Click, Verify }) => {
     console.log('Starting IQ product export test...');
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -556,11 +580,10 @@ test('Verify that user can export IQ products and verify downloaded file', async
     await Click.Btn("exportDataButton");
     const downloadStarted = await Verify.verifyExportData(5000000);
     await expect(downloadStarted).toBe(true);
-    
 });
 
 test.setTimeout(120000);
-test('Verify that user can export Pastel products and verify downloaded file', async ({ page, Actions, Click, Verify }) => {
+test('Verify that user can export filtered Pastel products and verify downloaded file', async ({ page, Actions, Click, Verify }) => {
     console.log('Starting Pastel product export test...');
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -572,9 +595,27 @@ test('Verify that user can export Pastel products and verify downloaded file', a
     await Click.Btn("exportDataButton");
     const downloadStarted = await Verify.verifyExportData(5000000);
     await expect(downloadStarted).toBe(true);
-
 });
 
+test('Verify user can export data of perticuler screen one by one', async ({ Actions, Click, Verify, page }) => {
+  await Actions.signIn();
+  await Click.Btn("sign_In");
+  // Export Brands
+  await Click.Tab("Brands");
+  await Click.Btn("screenDataExportBtn");
+  const brandDownloadStarted = await Verify.verifyExportData(180000);
+  expect(brandDownloadStarted).toBe(true);
+  // Export Products
+  await Click.Tab("Products");
+  await Click.Btn("screenDataExportBtn");
+  const productDownloadStarted = await Verify.verifyExportData(180000);
+  expect(productDownloadStarted).toBe(true);
+  // Export Promotions
+  await Click.Tab("Promotions");
+  await Click.Btn("screenDataExportBtn");
+  const PromotionsDownloadStarted = await Verify.verifyExportData(180000);
+  expect(productDownloadStarted).toBe(true);
+});
 
 //Group settings screen-----------------------------------------------------------------------------------------
 
@@ -617,6 +658,7 @@ test('Verify if the collapse all button is working as expected', async ({ Action
     await Click.Btn("Save")
     await Verify.IsTextDisplayed("Saved Successfully");
   });
+
   // IQ Category Setup Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
   test('Verify that the user cannot add a Department by filling invalid data.', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
@@ -627,7 +669,6 @@ test('Verify if the collapse all button is working as expected', async ({ Action
     await Actions.enterText("IQcode", "1224");
     await Click.Btn("Save");
     await Verify.verifyErrorMessage("Department is a required field");
-  
   });
   
   test('Verify that the user can Edit a Department by filling in valid data.', async ({ Actions, Click, Verify, page }) => {
