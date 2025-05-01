@@ -14,7 +14,6 @@ interface MyObj {
     department: string;
 }
 
-
 export class Actions {
     readonly page: Page;
     readonly context: BrowserContext;
@@ -31,16 +30,7 @@ export class Actions {
     private readonly IQcode: Locator
     private readonly barcodeInput: Locator
 
-    // Export Products locators
-    private readonly supplierDropdown: Locator;
-    private readonly productStatusDropdown: Locator;
-    private readonly brandDropdown: Locator;
-    private readonly primaryCategoryDropdown: Locator;
-    private readonly catalogueTypeDropdown: Locator;
-    private readonly configCodeIdInput: Locator;
-
-
-
+    
     constructor(page: Page, context: BrowserContext) {
         this.page = page;
         this.context = context;
@@ -56,19 +46,10 @@ export class Actions {
         this.onCode = page.locator("//input[@id='OnStockCode']")
         this.IQcode = page.locator("//input[@id='CategoryCode']")
         this.barcodeInput = page.locator("//input[@id='Barcode']")
-
-
-        
-        // Initialize Export Products locators
-        this.supplierDropdown = page.locator('//div[@title="Supplier"]//div//div[@class="p-multiselect-label-container"]');
-        this.productStatusDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Product Status"]');
-        this.brandDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Brand"]');
-        this.primaryCategoryDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Primary Category"]');
-        this.catalogueTypeDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Catalogue Type"]');
-        this.configCodeIdInput = page.locator('input[name="configCodeId"]');
+           
     }
 
-    // Signin------------------------------------------------------------------------------------------------------------------------------------------
+    // Signin-----------------------------------------------------------------------------------------------------------------------------------------------------------------
     async signIn() {
         await this.page.goto('https://onexweb-uat.officenational.co.za/')
         await this.enterText("email", "greitraragrevo-2086@yopmail.com");
@@ -76,7 +57,7 @@ export class Actions {
 
     }
 
-    //Entering Text------------------------------------------------------------------------------------------------------------------------------------
+    //Entering Text--------------------------------------------------------------------------------------------------------------------------------------------------------------
     async enterText(textBoxName: string, text: string): Promise<void> {
 
         if (textBoxName === "email") {
@@ -123,11 +104,9 @@ export class Actions {
 
             await this.barcodeInput.fill(text);
         }
-
     }
 
-    // File Upload
-
+    // File Upload------------------------------------------------------------------------------------------------------------------------------------------------------------------
     async uploadFile(page: Page, uploadAreaSelector: string, filePath: string): Promise<void> {
         const uploadArea = await page.$(uploadAreaSelector);
         if (uploadArea) {
@@ -145,13 +124,10 @@ export class Actions {
     }
 
 
-//Image Upload--------------------------------------------------------------------------------------
+//Image Upload-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 async ImageUpload(page: Page, fileType: String): Promise<void> {
     await page.locator("input[type='file']").setInputFiles(Paths[`${fileType}`]);
-    
   }
-
-  
     
 }
 

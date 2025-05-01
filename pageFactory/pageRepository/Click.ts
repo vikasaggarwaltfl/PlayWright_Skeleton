@@ -25,22 +25,7 @@ export class Click {
     private readonly configCodes: Locator
     private readonly productInfo: Locator
     private productName: string = ''
-    private readonly videoLink: Locator 
-    
-
-
-
-
-    // Export Products locators
-    private readonly exportDataButton: Locator
-    private readonly clearFiltersButton: Locator
-    public readonly supplierDropdown: Locator
-    public readonly statusesDropdown: Locator
-    public readonly productStatusDropdown: Locator
-    public readonly brandDropdown: Locator
-    public readonly primaryCategoryDropdown: Locator
-    public readonly catalogueTypeDropdown: Locator
-    private readonly configCodeIdInput: Locator
+    private readonly videoLink: Locator
 
     //Tab 
     private readonly Dashboard: Locator
@@ -61,7 +46,7 @@ export class Click {
     private readonly importProducts: Locator
     private readonly productAudit: Locator
     private readonly importProductBarcode: Locator
-    
+
 
     //Icon 
     private readonly chevronLeft: Locator
@@ -83,11 +68,8 @@ export class Click {
     private readonly iQCategoryEdit: Locator
     private readonly productsDropdown: Locator
     private readonly relatedOncodeDropdown: Locator
-   
-    
 
-
-    //Btn
+    //Btn 
     private readonly sign_In: Locator
     private readonly Profile: Locator
     private readonly Save: Locator
@@ -114,8 +96,8 @@ export class Click {
     private readonly copyToWip: Locator
     private readonly Barcodes: Locator
     private readonly relatedProducts: Locator
-
-
+    private readonly exportDataButton: Locator
+    private readonly clearFiltersButton: Locator
 
     //dropdownOption
     private readonly artistic: Locator
@@ -125,16 +107,20 @@ export class Click {
     private readonly All: Locator
     private readonly buyUnit: Locator
     private readonly onCode: Locator
-    private readonly screenDataExportBtn:Locator
-    
+    private readonly screenDataExportBtn: Locator
+    public readonly supplierDropdown: Locator
+    public readonly statusesDropdown: Locator
+    public readonly productStatusDropdown: Locator
+    public readonly brandDropdown: Locator
+    public readonly primaryCategoryDropdown: Locator
+    public readonly catalogueTypeDropdown: Locator
 
-
-
-    // Dashboard locators
+    // Dashboard cards
     public readonly totalProductsCard: Locator
     public readonly activeProductsCard: Locator
     public readonly inactiveProductsCard: Locator
     public readonly pendingProductsCard: Locator
+
 
     constructor(page: Page, context: BrowserContext) {
         this.page = page
@@ -143,7 +129,7 @@ export class Click {
         //Link
         this.addBrand = page.locator("//div[@class='flex flex-row items-center gap-2']");
         this.brandInfo = page.locator("//a[normalize-space()='ABSTO']")
-        this.productInfo = page.locator("//a[text()='']")  
+        this.productInfo = page.locator("//a[text()='']")
         this.addProduct = page.locator('a:has-text("Add Product")')
         this.addCatalogue = page.locator('a:has-text("Add Catalogue")')
         this.lookupCategory = page.locator("//a[text()='Lookup Category Setup']")
@@ -155,18 +141,6 @@ export class Click {
         this.configCodes = page.locator('a:has-text("Config Codes")')
         this.videoLink = page.locator("(//img)[6]")
 
-
-        // Initialize Export Products locators
-        this.exportDataButton = page.locator('button:has-text("Export Data")')
-        this.clearFiltersButton = page.locator('button:has-text("Clear Filters")')
-
-        this.supplierDropdown = page.locator('//div[@title="Supplier"]//div//div[@class="p-multiselect-label-container"]')
-        this.statusesDropdown = page.locator('//div[@title="Statuses"]//div//div[@class="p-multiselect-label-container"]')
-        this.productStatusDropdown = page.locator('//div[@title="Product Status"]//div//div[@class="p-multiselect-trigger"]')
-        this.brandDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Brand"]')
-        this.primaryCategoryDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Primary Category"]')
-        this.catalogueTypeDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Catalogue Type"]')
-        this.configCodeIdInput = page.locator('input[name="configCodeId"]')
 
         //Tab
         this.Dashboard = page.locator('a:has-text("Dashboard")')
@@ -204,12 +178,11 @@ export class Click {
         this.masterCategoryArrow = page.locator("//tbody/tr[1]/td[1]/button[1]/i[1]")
         this.primaryCategoryFilterArrow = page.locator("(//div[@class='p-dropdown-trigger'])[1]")
         this.bulkOperationsArrow = page.locator("(//i[@class='transition-all duration-200 text-[12px] pi pi-chevron-down rotate-90'])[1]")
-        this.productAdminDropdown = page.locator("//span[text()='Select fields to update']") 
+        this.productAdminDropdown = page.locator("//span[text()='Select fields to update']")
         this.iQCategoryEdit = page.locator("(//i)[15]")
         this.productsDropdown = page.locator("(//*[name()='svg'][@class='p-icon p-dropdown-trigger-icon'])[2]")
-        this.relatedOncodeDropdown = page.locator("(//span[contains(@aria-label,'Related ON Code')])[1]")  
-       
-        
+        this.relatedOncodeDropdown = page.locator("(//span[contains(@aria-label,'Related ON Code')])[1]")
+
         //Btn
         this.sign_In = page.locator("(//input[@name='signInSubmitButton'])[2]")
         this.Profile = page.locator("//p[text()='ONA Super Admin']")
@@ -226,7 +199,6 @@ export class Click {
         this.subDelete = page.locator("(//span[@class='p-button-label'][normalize-space()='Delete'])[1]")
         this.reject = page.locator("//button[text()=' Reject']")
         this.accept = page.locator("//button[text()=' Accept']")
-        //this.Profile = page.locator("//div.border-2.rounded-full.border-primary-50.bg-[#F59E0B].text-white");
         this.signOut = page.locator("//button[normalize-space()='Sign Out']")
         this.addNote = page.locator("//button[normalize-space()='Add Note']")
         this.submitBulkProducts = page.locator("//button[normalize-space()='Submit Bulk Products Processing']")
@@ -240,6 +212,9 @@ export class Click {
         this.Barcodes = page.locator("//button[text()='Barcodes']")
         this.relatedProducts = page.locator("//button[text()='Related Products']")
         this.screenDataExportBtn = page.locator("//span[normalize-space()='Export']")
+        this.exportDataButton = page.locator('button:has-text("Export Data")')
+        this.clearFiltersButton = page.locator('button:has-text("Clear Filters")')
+
         //dropdownOption
         this.artistic = page.locator("//span[text()='Artistic']")
         this.absto = page.locator("//span[text()='ABSTO']")
@@ -248,16 +223,21 @@ export class Click {
         this.All = page.locator("//div[@class='p-multiselect-header']//input[@aria-label='All items unselected']")
         this.buyUnit = page.locator(" //span[contains(text(),'Buy Unit')]")
         this.onCode = page.locator("//span[normalize-space()='3M11175']")
-      
+        this.supplierDropdown = page.locator('//div[@title="Supplier"]//div//div[@class="p-multiselect-label-container"]')
+        this.statusesDropdown = page.locator('//div[@title="Statuses"]//div//div[@class="p-multiselect-label-container"]')
+        this.productStatusDropdown = page.locator('//div[@title="Product Status"]//div//div[@class="p-multiselect-trigger"]')
+        this.brandDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Brand"]')
+        this.primaryCategoryDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Primary Category"]')
+        this.catalogueTypeDropdown = page.locator('//div[@class="p-multiselect-label p-placeholder"][normalize-space()="Catalogue Type"]')
 
-        // Dashboard locators
+        // Dashboard cards
         this.totalProductsCard = page.locator('//div[contains(@class, "card")]//div[contains(text(), "Total Products")]')
         this.activeProductsCard = page.locator('//div[contains(@class, "card")]//div[contains(text(), "Active Products")]')
         this.inactiveProductsCard = page.locator('//div[contains(@class, "card")]//div[contains(text(), "Inactive Products")]')
         this.pendingProductsCard = page.locator('//div[contains(@class, "card")]//div[contains(text(), "Pending Products")]')
     }
 
-    //Link
+    //Link ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     async Link(linkName: String) {
         if (linkName === "addBrand") {
             await this.addBrand.click();
@@ -301,7 +281,7 @@ export class Click {
         }
     }
 
-    //Tab
+    //Tab --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     async Tab(str: string): Promise<void> {
 
         if (str === "Dashboard") {
@@ -362,7 +342,7 @@ export class Click {
         }
     }
 
-    //Icon
+    //Icon -------------------------------------------------------------------------------------------------------------------------------------------------------------------
     async Icon(str: string): Promise<void> {
         if (str === "chevronLeft") {
             await this.chevronLeft.click();
@@ -416,7 +396,7 @@ export class Click {
         else if (str === "iQCategoryEdit") {
             await this.iQCategoryEdit.click();
         }
-        
+
         else if (str === "productsDropdown") {
             await this.productsDropdown.click();
         }
@@ -424,12 +404,9 @@ export class Click {
         else if (str === "relatedOncodeDropdown") {
             await this.relatedOncodeDropdown.click();
         }
-       
-
-
     }
 
-    //Btn
+    //Btn --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     async Btn(str: string): Promise<void> {
 
         if (str === "sign_In") {
@@ -484,7 +461,6 @@ export class Click {
         else if (str === "reject") {
             await this.reject.click();
         }
-
         else if (str === "accept") {
             await this.accept.click();
         }
@@ -505,7 +481,6 @@ export class Click {
         else if (str === "validateAndImport") {
             await this.validateAndImport.click();
         }
-
         else if (str === "Add") {
             await this.Add.click();
         }
@@ -521,11 +496,15 @@ export class Click {
         else if (str === "screenDataExportBtn") {
             await this.screenDataExportBtn.click();
         }
-
-
+        else if (str === "exportDataButton") {
+            await this.exportDataButton.click();
+        }
+        else if (str === "clearFiltersButton") {
+            await this.clearFiltersButton.click();
+        }
     }
 
-    //dropdownOption
+    //dropdownOption------------------------------------------------------------------------------------------------------------------------------------------------------------
     async dropdownOption(str: string): Promise<void> {
 
         if (str === "artistic") {
@@ -537,34 +516,21 @@ export class Click {
         if (str === "businessTechnology") {
             await this.businessTechnology.click();
         }
-
         if (str === "Tags") {
             await this.Tags.click();
         }
         if (str === "All") {
             await this.All.click();
-
         }
         if (str === "buyUnit") {
             await this.buyUnit.click();
         }
-
         if (str === "onCode") {
             await this.onCode.click();
         }
-        
     }
 
-    // Export Products --------------------------------------------------------------------------------------------------------------------------
-    async clickExportDataButton() {
-        await this.exportDataButton.click();
-    }
-    async clickClearFiltersButton() {
-        await this.clearFiltersButton.click();
-    }
-    
-    //Select Dropdown Option from any dropdown-----------------------------------------------------------------------------------------------------
-
+    //Select Dropdown Option from any dropdown---------------------------------------------------------------------------------------------------------------------------------------
     async selectDropdownOption(dropdownLocator: Locator, optionText: string, timeout: number = 10000): Promise<boolean> {
         try {
             await dropdownLocator.click();
@@ -589,7 +555,7 @@ export class Click {
         }
     }
 
-    // New method to set product name
+    // New method to set product name-----------------------------------------------------------------------------------------------------------------------------------------------
     async setProductName(productName: string) {
         this.productName = productName;
     }
