@@ -30,7 +30,7 @@ export class Click {
         this.context = context
         this.loginBtn = page.locator("//span[text()='Login']")
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
-        this.createTransBtn =page.locator("//button[text()='Create Transaction']")
+        this.createTransBtn = page.locator("//button[text()=' Create Transaction ']")
         this.selectGroup = page.locator("//span[text()='Select a group']")
         this.selectGroupOption = page.locator("//span[text()='Test_Group']")
         this.selectBranch = page.locator("//span[text()='Select a branch']")
