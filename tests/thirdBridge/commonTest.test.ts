@@ -6,7 +6,6 @@ import { Verify } from '@pages/Verify'
 import { access } from 'fs'
 import { Paths } from '@pages/files/paths'
 
-
 // Login ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that user is able to login with valid credentials', async ({ page, Actions, Click, Verify }) => {
@@ -27,8 +26,7 @@ test('Verify user can navigate to the "Dashboard" screen and verify screen displ
     await Verify.IsTextDisplayed("My OfficeNational");
 });
 
-test('Verify user can fetch and print updated dashboard data analytics', async ({ page, Actions, Click, Verify }) => {
-    
+test('Verify user can fetch and print updated dashboard data analytics', async ({ page, Actions, Click, Verify }) => {  
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Dashboard");
@@ -37,8 +35,6 @@ test('Verify user can fetch and print updated dashboard data analytics', async (
     const isDataValid = await Verify.verifyDashboardDataAnalystics(supplierName);
     expect(isDataValid).toBeTruthy();
 });
-
-
 
 // Brand Screen --------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -71,12 +67,13 @@ test('Verify user can Sort Brand records and verify sort order  of records.', as
     await Click.Icon("Sort");
     await Verify.verifySortOrder();
 });
+
 test('Verify user can  Add Brand with "valid data" and verify Success message', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Brands");
     await Click.Link("addBrand");
-    await Actions.enterText("brandName", "Test607");
+    await Actions.enterText("brandName", "Test700");
     await Click.Btn("Save");
     await Verify.IsTextDisplayed('Saved Successfully');
 });
@@ -175,6 +172,7 @@ test('Verify that by clicking on a Product,that Product screen is visible correc
     await Click.Link("productInfo");
     await Verify.IsTextDisplayed("Product: Absto007");
 });
+
 test('Verify that the user is able to sort the products', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -184,6 +182,7 @@ test('Verify that the user is able to sort the products', async ({ Actions, Clic
     await Click.Icon("Sort");
     await Verify.verifySortOrder();
 });
+
 test('Verify that by selecting Filter, the filtered screen is displayed as expected', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -208,7 +207,6 @@ test('Verify that by clicking on the reset button, the filter button is disabled
     await Verify.verifyDisabledButton("Filter");
 });
 
-
 test('Verify that the user is able to edit the product entering valid data', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -224,10 +222,10 @@ test('Verify that the user is able to edit the product entering valid data', asy
     await page.waitForTimeout(2000)
     await Verify.IsTextDisplayed("Products saved!");
 });
+
 //Product Media screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify if user can successfully upload image in Product Media', async ({ Actions, Click, Verify, page }) => {
-
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("Products");
@@ -246,8 +244,8 @@ test('Verify if user can successfully upload image in Product Media', async ({ A
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(3000);
     await Verify.verifyImageUpload(page);
-
 });
+
 test('Verify if the user can view an uploaded file in Product Media', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -284,7 +282,6 @@ test('Verify if the user can view an uploaded file in Product Media', async ({ A
     await page.waitForTimeout(3000);
     await Click.Btn("subDelete");
     await Verify.IsTextDisplayed("Upload Brochure");
-
   });
 
   test('Verify that the user cannot upload invalid file in the Product Media', async ({ Actions, Click, Verify, page }) => {
@@ -304,6 +301,21 @@ test('Verify if the user can view an uploaded file in Product Media', async ({ A
     await page.waitForLoadState("networkidle");
     await Click.Btn("submit");
     await Verify.IsTextDisplayed("Could not add image");
+    });
+
+    test('Verify that the uploaded video is streaming on Cloudflarestream.com', async ({ Actions, Click, Verify, page,context }) => {
+      await Actions.signIn();
+      await Click.Btn("sign_In");
+      await Click.Tab("Products");
+      await Click.Tab("productMedia");
+      await page.waitForTimeout(5000);
+      await Click.Icon("filterArrow");
+      await Actions.enterText("productName", "Absto002");
+      await Click.Btn("Filter");
+      await Click.setProductName("Absto002");
+      await Click.Link("productInfo");
+      await Click.Link("videoLink");
+      await Verify.verifyWindowHandling(page, "View", "cloudflarestream.com");  
     });
 
 //Product WIP Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -337,8 +349,7 @@ test('Verify the error message,when the user enters "invalid value" while adding
     await Actions.enterText("productName", "Absto007");
     await Click.Btn("Save");
     await page.waitForLoadState("networkidle");
-    await Verify.verifyErrorMessage("Supplier is a required field");
-  
+    await Verify.verifyErrorMessage("Supplier is a required field"); 
   });
 
   test('Verify if the pagination of the table is working as expected', async ({ Actions, Click, Verify, page }) => {
@@ -391,8 +402,7 @@ test.setTimeout(120000);
     await page.waitForTimeout(3000); 
     await Click.Icon("productKebabMenu");
     await Click.Btn("accept");
-  await Verify.IsTextDisplayed("Accepted Successfully");
-  
+  await Verify.IsTextDisplayed("Accepted Successfully"); 
 });
 
 //Product Admin Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -409,7 +419,6 @@ test ('Verify that the user is able to check a checkbox', async ({ Actions, Clic
     await Click.Btn("Filter");
     await page.waitForTimeout(3000);
     await Verify.verifyCheckbox(page, "Absto001");
-
 });
 
 test('Verify that the user is able to perform bulk operations', async ({ Actions, Click, Verify, page }) => {
@@ -429,8 +438,9 @@ test('Verify that the user is able to perform bulk operations', async ({ Actions
     await Verify.verifyDisabledButton("Submit Bulk Products Processing");
   });
 
-//Products barcode Screen---------------------------------------------------------------------------------------------------------------------------------------------------------- 
-test('Verify that the user is able to add new barcode giving valid data', async ({ Actions, Click, Verify, page }) => {
+ //Products barcode Screen---------------------------------------------------------------------------------------------------------------------------------------------------------- 
+
+ test('Verify that the user is able to add new barcode giving valid data', async ({ Actions, Click, Verify, page }) => {
   await Actions.signIn();
   await Click.Btn("sign_In");
   await Click.Tab("Products");
@@ -441,14 +451,15 @@ test('Verify that the user is able to add new barcode giving valid data', async 
   await Click.Link("productInfo");
   await Click.Btn("Barcodes");
   await Click.Btn("Add");
-  await Actions.enterText("barcodeInput", "1237");
-  await Click.Icon("productBarcodeDropdown");
+  await Actions.enterText("barcodeInput", "1238");
+  await Click.Icon("productsDropdown");
   await Click.dropdownOption("buyUnit");
   await Click.Btn("Save");
   await Verify.IsTextDisplayed("Record Saved Successfully");
 });
 
 // related products screen----------------------------------------------------------------------------------------------------------------------------------------------------------
+
 test('Verify that the user cannot add Related Product with invalid input data', async ({ Actions, Click, Verify, page }) => {
   await Actions.signIn();
   await Click.Btn("sign_In");
@@ -467,6 +478,7 @@ test('Verify that the user cannot add Related Product with invalid input data', 
 });
 
 //product Audit screen----------------------------------------------------------------------------------------------------------------------------------------------------------
+
 test('Verify that the "Refresh" button refreshes the data', async ({ Actions, Click, Verify, page }) => {
   await Actions.signIn();
   await Click.Btn("sign_In");
@@ -482,7 +494,8 @@ test('Verify that the "Refresh" button refreshes the data', async ({ Actions, Cl
 });
 
   //Export Screen--------------------------------------------------------------------------------------------------------------------------------------------------------
-test('Verify Export Product screen displayed correctly', async ({ page, Actions, Click, Verify }) => {
+
+  test('Verify Export Product screen displayed correctly', async ({ page, Actions, Click, Verify }) => {
         await Actions.signIn();
         await Click.Btn("sign_In");
         await Click.Tab("Exports");
@@ -630,10 +643,10 @@ test('Verify sorting of "Lookup Category Setup" data using sort icons.', async (
     await Verify.verifySortOrder();
     await Click.Icon("Sort");
     await Verify.verifySortOrder();
-    
   });
 
 // Master Category Setup Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
+
 test('Verify if the collapse all button is working as expected', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -642,17 +655,17 @@ test('Verify if the collapse all button is working as expected', async ({ Action
     await Click.Icon("masterCategoryArrow");
     await page.waitForLoadState("networkidle");
     await Verify.verifyCollapseAllButton(page);
-    
   });
 
   // Pastel Category Setup Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
+  
   test('Verify if user can add pastel product category', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
     await Click.Tab("groupSettings");
     await Click.Link("pastelCategory");
     await Click.Link("addPastelProduct")
-    await Actions.enterText("pastelCode", "2071");
+    await Actions.enterText("pastelCode", "2077");
     await Click.Icon("primaryCategoryFilterArrow");
     await Click.dropdownOption("businessTechnology");
     await Click.Btn("Save")
@@ -660,6 +673,7 @@ test('Verify if the collapse all button is working as expected', async ({ Action
   });
 
   // IQ Category Setup Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
+  
   test('Verify that the user cannot add a Department by filling invalid data.', async ({ Actions, Click, Verify, page }) => {
     await Actions.signIn();
     await Click.Btn("sign_In");
@@ -680,7 +694,6 @@ test('Verify if the collapse all button is working as expected', async ({ Action
     await Actions.enterText("IQcode", "1002");
     await Click.Btn("Save");
     await Verify.IsTextDisplayed("Record Saved Successfully");
-  
   });
 
   
@@ -691,7 +704,6 @@ test ('Verify if the import screen is displayed as expected ', async ({ Actions,
     await Click.Btn("sign_In");
     await Click.Tab("Imports");
     await Verify.IsTextDisplayed("Imports");
-    
   });
   
   test ('Verify that user can download "Import template"', async ({ Actions, Click, Verify, page }) => {
@@ -722,7 +734,6 @@ test('Verify if the import product barcode screen is displayed as expected ', as
   await Click.Tab("Imports");
   await Click.Tab("importProductBarcode");
   await Verify.IsTextDisplayed("Product Barcode Import");
-
 });
 
 test('Verify that user can download "Import product barcode template"', async ({ Actions, Click, Verify, page }) => {

@@ -143,15 +143,11 @@ export class Click {
         //Link
         this.addBrand = page.locator("//div[@class='flex flex-row items-center gap-2']");
         this.brandInfo = page.locator("//a[normalize-space()='ABSTO']")
-        this.productInfo = page.locator("//a[text()='']")  // Initialize with empty text
+        this.productInfo = page.locator("//a[text()='']")  
         this.addProduct = page.locator('a:has-text("Add Product")')
         this.addCatalogue = page.locator('a:has-text("Add Catalogue")')
-        // this.lookupCategory = page.locator('a:has-text("Lookup Category")')
         this.lookupCategory = page.locator("//a[text()='Lookup Category Setup']")
-        //this.masterCategory = page.locator('a:has-text("Master Category")')
         this.masterCategory = page.locator("//a[text()='Master Product Category Setup']")
-        //this.iQCategory = page.locator('a:has-text("IQ Category")')
-        // this.pastelCategory = page.locator('a:has-text("Pastel Category")')
         this.iQCategory = page.locator("//a[text()='IQ Product Category Setup']")
         this.pastelCategory = page.locator("//a[text()='Pastel Product Category Setup']")
         this.addPastelProduct = page.locator("//div[text()=' Add Pastel Product Category']")
@@ -563,7 +559,6 @@ export class Click {
     async clickExportDataButton() {
         await this.exportDataButton.click();
     }
-
     async clickClearFiltersButton() {
         await this.clearFiltersButton.click();
     }

@@ -88,7 +88,6 @@ export class Actions {
         }
         if (textBoxName === "brandName") {
 
-            //await this.brandName.fill(text);
             await this.brandName.fill(text, { timeout: 60000 });
         }
         if (textBoxName === "brandPrefix") {

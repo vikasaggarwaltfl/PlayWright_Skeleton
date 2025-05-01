@@ -148,7 +148,7 @@ test('Verify that the user cannot upload invalid file in the Product Media', asy
 
 
 
-test.only('Verify that the uploaded video is streaming on Cloudflarestream.com', async ({ Actions, Click, Verify, page,context }) => {
+test ('Verify that the uploaded video is streaming on Cloudflarestream.com', async ({ Actions, Click, Verify, page,context }) => {
   await Actions.signIn();
   await Click.Btn("sign_In");
   await Click.Tab("Products");
@@ -159,18 +159,10 @@ test.only('Verify that the uploaded video is streaming on Cloudflarestream.com',
   await Click.Btn("Filter");
   await Click.setProductName("Absto002");
   await Click.Link("productInfo");
-  await page.waitForLoadState("networkidle");
-  
   await Click.Link("videoLink");
-  await page.waitForLoadState("networkidle");
-   const [newWindow] = await Promise.all([
-    context.waitForEvent('page'),
-     Click.Btn("view")]);
-  await newWindow.waitForLoadState("networkidle");
-  console.log("New window URL:", newWindow.url());
+  await Verify.verifyWindowHandling(page, "View", "cloudflarestream.com");
   
 });
-
 //Product WIP Screen----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that the user is able to add a note in a popup window', async ({ Actions, Click, Verify, page }) => {

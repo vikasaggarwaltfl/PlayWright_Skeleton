@@ -297,6 +297,16 @@ export class Verify {
       throw error;
     }
   }
-
-
+//verify window handling---------------------------------------------------------------------------------------
+async verifyWindowHandling(page: Page, buttonName: string, expectedUrlPattern: string): Promise<void> {
+  const [newWindow] = await Promise.all([
+    page.waitForEvent('popup'),
+    page.locator(`//div[text()='${buttonName}']`).click(), 
+  ]);
+  await newWindow.waitForLoadState("networkidle");
+  const actualURL = newWindow.url();
+  console.log("New window URL:", actualURL);
+  await expect(newWindow.url()).toContain(expectedUrlPattern);
+  await newWindow.close();
+}
 }
