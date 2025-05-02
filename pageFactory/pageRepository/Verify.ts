@@ -19,21 +19,20 @@ export class Verify {
       "//div[@class='modal-content background-customizable modal-content-mobile visible-xs visible-sm']//div[@class='modal-body']//div//div//div//div//p[@id='loginErrorMessage']",
     )
   }
-
-  async IsTextDisplayed(text: string): Promise<void> {
-    if (text === 'Sign in') {
-      const buttonText = await this.SignIn.getAttribute('value')
-      expect(buttonText).toBe('Sign in')
-    }
-    else if (text === 'ProdcutCategorySaved') {
-      expect(await this.page.locator("div[data-pc-section='message']")).toContainText("Please fix errors before submitting.")
-    }
+//verify url----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  async verifyURL(page: Page, url: string): Promise<void>{
+    await page.waitForURL(url, { timeout: 10000 })
+    const currentURL = page.url()
+    expect(currentURL).toBe(url)
   }
 
-  
-  async IsErrorPopUp(text: string): Promise<void> {
-    if (text === 'Incorrect username or password') {
-      await expect(this.ErrorPopUp).toBeVisible({ timeout: 5000 })
-    }
+//Verify error message----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  async verifyErrorMessage(expectedMessage: string): Promise<void> {
+    const errorElement = this.ErrorPopUp;
+    await expect(errorElement).toBeVisible({ timeout: 5000 });
+    await expect(errorElement).toHaveText(expectedMessage);
   }
+
+
+
 }
