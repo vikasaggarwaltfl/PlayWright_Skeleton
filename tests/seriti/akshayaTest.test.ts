@@ -12,10 +12,10 @@ test('Verify that the user can log in successfully with valid credentials.', asy
 });
 
 
-test('Verify that error message should displayed for Invalid inputs', async ({ page, Actions, Click,Verify }) => {
+test.only('Verify that error message should displayed for Invalid inputs', async ({ page, Actions, Click,Verify }) => {
     await Actions.signIn(" ");
     await Click.Btn("login");
-    await Verify.verifyErrorMessage("Username is a required field");
+    await Verify.verifyErrorMessage(page,"Username is a required field");
 
 });
 

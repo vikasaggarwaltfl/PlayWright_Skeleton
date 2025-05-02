@@ -20,20 +20,23 @@ export class Verify {
     )
   }
 //verify url----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  async verifyURL(page: Page, url: string): Promise<void>{
+    async verifyURL(page: Page, url: string): Promise<void>{
     await page.waitForURL(url, { timeout: 10000 })
     const currentURL = page.url()
     expect(currentURL).toBe(url)
   }
 
 //Verify error message----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  
-    async verifyErrorMessage(expectedMessage: string): Promise<void> {
-      await expect(this.page.locator(`//div[text()='${expectedMessage}']`)).toBeAttached();
-    }
+async verifyErrorMessage(page: Page, expectedMessage: string): Promise<void> {
+  const errorElement = page.locator(`//div[text()="${expectedMessage}"]`);
+  await errorElement.waitFor({ state: 'visible', timeout: 5000 });
+  const content = await errorElement.textContent();
+  expect(content).toBe(expectedMessage);
+  console.log(`"${expectedMessage}" is visible on the page`);
+}
     
 // Verify any Text on screen----------------------------------------------------------------------------------------------------------------------------------------------------------------
-async IsTextDisplayed(page: Page, TextValue: string): Promise<void> {
+  async IsTextDisplayed(page: Page, TextValue: string): Promise<void> {
   await expect(page.getByText(TextValue, { exact: true })).toBeVisible();
   console.log(`"${TextValue}" is visible on the page`);
 }
