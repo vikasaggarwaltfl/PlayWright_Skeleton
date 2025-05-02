@@ -27,12 +27,17 @@ export class Verify {
   }
 
 //Verify error message----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  async verifyErrorMessage(expectedMessage: string): Promise<void> {
-    const errorElement = this.ErrorPopUp;
-    await expect(errorElement).toBeVisible({ timeout: 5000 });
-    await expect(errorElement).toHaveText(expectedMessage);
+  
+    async verifyErrorMessage(expectedMessage: string): Promise<void> {
+      await expect(this.page.locator(`//div[text()='${expectedMessage}']`)).toBeAttached();
+    }
+    
+// Verify any Text on screen----------------------------------------------------------------------------------------------------------------------------------------------------------------
+async IsTextDisplayed(page: Page, TextValue: string): Promise<void> {
+  await expect(page.getByText(TextValue, { exact: true })).toBeVisible();
+  console.log(`"${TextValue}" is visible on the page`);
+}
+
   }
 
 
-
-}

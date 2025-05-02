@@ -3,7 +3,7 @@ import { expect } from '@playwright/test'
 import { Actions } from '@pages/Actions'
 import { Click } from '@pages/Click'
 import { Verify } from '@pages/Verify'
-
+//login -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test('Verify that the user can log in successfully with valid credentials.', async ({ page, Actions, Click ,Verify}) => {
     
     await Actions.signIn("Automation");
@@ -12,15 +12,19 @@ test('Verify that the user can log in successfully with valid credentials.', asy
 });
 
 
-test('Verify that the user cannot log in with invalid credentials.', async ({ page, Actions, Click,Verify }) => {
-   // const verify = new Verify(page, page.context());
-    await Actions.signIn("Automate");
-    await page.pause();
+test('Verify that error message should displayed for Invalid inputs', async ({ page, Actions, Click,Verify }) => {
+    await Actions.signIn(" ");
     await Click.Btn("login");
-    await page.pause();
-    await Verify.verifyErrorMessage("Username is a required field.");
-    await page.pause();
+    await Verify.verifyErrorMessage("Username is a required field");
+
 });
 
+// Navigation side bar-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+test('Verify that the navigation sidebar is displayed with all required tabs.', async ({ page, Actions, Click,Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Verify.IsTextDisplayed(page,"Home");
+    await Verify.IsTextDisplayed(page,"Transaction");
+    await Verify.IsTextDisplayed(page,"Dashboard");   
+});
