@@ -23,6 +23,7 @@ export class Actions {
     private readonly PASSWORD_EDITBOX: Locator;
     private readonly lastnameTextbox: Locator;
     private readonly searchMenu: Locator;
+    private readonly transactionSearchMenu: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -30,9 +31,11 @@ export class Actions {
         this.context = context;
         this.USERNAME_EDITBOX = page.locator("//input[@placeholder='Username']");
         this.PASSWORD_EDITBOX = page.locator("//input[@placeholder='Password']");
-        this.lastnameTextbox = page.locator("//input[@placeholder='Enter customer last name']").last();
+        this.lastnameTextbox = page.locator("//label[text()='Individual']/following::label[text()='Company']/following::input[@name='lastName']");
         this.searchMenu = page.locator("//input[@placeholder='Search']");
-
+        this.transactionSearchMenu = page.locator("//input[@placeholder='Transaction Number']");
+        
+        
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -54,6 +57,11 @@ export class Actions {
 
             await this.searchMenu.fill(text);
         }
+        else if (textBoxName === "transactionSearchMenu") {
+
+            await this.transactionSearchMenu.fill(text);
+        }
+        
 
     }
 

@@ -54,3 +54,21 @@ test ('Verify that the user can sign out by clicking on the "Sign Out" button.',
 });
 
 
+// Transaction page-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+test('Verify that the user can search for transactions using the transaction number in Quick access modal',async ({page, Actions, Click,Verify})=>{
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu","281620");
+    await Click.Btn("view");
+    await Verify.IsTextDisplayed(page,"Transaction 281620");
+});
+
+test ('Verify that the user select dropdowns and radio buttons on create transaction page',async ({page, Actions, Click,Verify})=>{
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.Btn("createTransaction")
+    await page.bringToFront();
+    await Click.dropdown("Select a group","Practise group")
+    await Click.dropdown("Select a branch","Practise branch")
+    await Click.radioButton("Company")
+  });

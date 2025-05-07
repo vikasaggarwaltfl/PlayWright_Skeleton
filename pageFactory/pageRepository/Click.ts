@@ -9,7 +9,7 @@ export class Click {
     readonly page: Page;
 
     //tabs--------------------------------------------------------------------------------------------------------
-
+    private readonly transaction: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     private readonly seritiLogo: Locator;
@@ -18,7 +18,11 @@ export class Click {
     //buttons--------------------------------------------------------------------------------------------------------
     private readonly login: Locator;
     private readonly signOut: Locator;
-
+    private readonly view: Locator;
+    private readonly createTransaction: Locator;
+   
+    
+   
 
 
 
@@ -29,6 +33,9 @@ export class Click {
         this.page = page
         this.context = context
 
+        //tabs--------------------------------------------------------------------------------------------------------
+        this.transaction = page.locator("//div[text()='Transaction']")
+
         //icon--------------------------------------------------------------------------------------------------------        
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
         this.testingFrameworks = page.locator("//p[text()='Testing Frameworks']")
@@ -36,6 +43,8 @@ export class Click {
         //buttons--------------------------------------------------------------------------------------------------------        
         this.login = page.locator("//span[text()='Login']")
         this.signOut = page.locator("//span[text()='Sign Out']")
+        this.view = page.locator("//span[text()='VIEW']")
+        this.createTransaction = page.locator("//span[@class='p-button-icon p-button-icon-left pi pi-plus']")
 
     }
 
@@ -56,13 +65,11 @@ export class Click {
     //tabs--------------------------------------------------------------------------------------------------------
     async tabs(str: string): Promise<void> {
 
-        // if (str === "DashboardTab") {
-        //     await this.dashboard.click();
-        // }
+        if (str === "transaction") {
+            await this.transaction.click();
+        }
 
-        // else if (str === "clickSearchOption") {
-        //     await this.clickSearchOption.click();
-        // }
+        
 
     }
 
@@ -86,9 +93,30 @@ export class Click {
         else if (str === "signOut") {
             await this.signOut.click();
         }
+        else if (str === "view") {
+            await this.view.click();
+        }
+        else if (str === "createTransaction") {
+            await this.createTransaction.click();
+        }
 
     };
 
+//dropdown--------------------------------------------------------------------------------------------------------
+async dropdown(value: string,selector: string): Promise<void> {
+   
+    await this.page.locator(`//span[text()='${value}']`).click();
+    await this.page.locator(`//span[normalize-space()='${selector}']`).click();
+}
+
+//radio button-------------------------------------------------------------------------------------------------------
+async radioButton(label: string): Promise<void> {
+    await this.page.getByLabel(`${label}`).check();
+}
 
 }
+
+
+
+
 
