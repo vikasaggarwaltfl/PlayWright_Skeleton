@@ -31,7 +31,7 @@ export class Actions {
         this.context = context;
         this.USERNAME_EDITBOX = page.locator("//input[@placeholder='Username']");
         this.PASSWORD_EDITBOX = page.locator("//input[@placeholder='Password']");
-        this.lastnameTextbox = page.locator("//label[text()='Individual']/following::label[text()='Company']/following::input[@name='lastName']");
+        this.lastnameTextbox = page.locator("//input[@name='companyName']");
         this.searchMenu = page.locator("//input[@placeholder='Search']");
         this.transactionSearchMenu = page.locator("//input[@placeholder='Transaction Number']");
         

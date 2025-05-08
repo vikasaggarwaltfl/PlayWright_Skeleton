@@ -33,9 +33,9 @@ test('Verify that the navigation sidebar is displayed with all required tabs.', 
 test('Verify that clicking on the "Seriti" logo navigates the user to the landing screen.',async ({page, Actions, Click,Verify})=>{
     await Actions.signIn("Automation");
     await Click.Btn("login");
+    await page.waitForTimeout(2000);
     await Click.icon("seritiLogo");
     await Verify.verifyURL(page,"https://seritiweb-mea-uat.seriti-int.com/transaction");
-
 });
 
 test('Verify that the user can search sidebar menu options using the search box.',async ({page, Actions, Click,Verify})=>{
@@ -45,7 +45,7 @@ test('Verify that the user can search sidebar menu options using the search box.
     await Verify.IsTextDisplayed(page,"My Reports");
 });
 
-test ('Verify that the user can sign out by clicking on the "Sign Out" button.',async ({page, Actions, Click,Verify})=>{
+test('Verify that the user can sign out by clicking on the "Sign Out" button.',async ({page, Actions, Click,Verify})=>{
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Click.icon("testingFrameworks");
@@ -63,12 +63,30 @@ test('Verify that the user can search for transactions using the transaction num
     await Verify.IsTextDisplayed(page,"Transaction 281620");
 });
 
-test ('Verify that the user select dropdowns and radio buttons on create transaction page',async ({page, Actions, Click,Verify})=>{
+test('Verify that the user can select dropdowns on create transaction page',async ({page, Actions, Click,Verify})=>{
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Click.Btn("createTransaction")
-    await page.bringToFront();
+    await Click.dropdown("Select a group","Practise group")
+    await Verify.verifyDropDown("Practise group")
+});
+
+test('Verify that the user can select radio buttons on create transaction page',async ({page, Actions, Click,Verify})=>{
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.Btn("createTransaction")
     await Click.dropdown("Select a group","Practise group")
     await Click.dropdown("Select a branch","Practise branch")
     await Click.radioButton("Company")
-  });
+    await Verify.verifyRadioButton("Company");
+});
+
+test.only('Verify that the "Branch" dropdown is disabled until a "Group" is selected',async ({page, Actions, Click,Verify})=>{   
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    const locator1 = page.locator("//span[@aria-disabled='true']");
+    await expect(locator1).toBeDisabled();
+    await Click.dropdown("Select a group (Blank for All)","Practise group")
+    const locator2 = page.locator("//span[@aria-disabled='false']");
+    await expect(locator2).toBeEnabled();
+});

@@ -112,6 +112,7 @@ async dropdown(value: string,selector: string): Promise<void> {
 //radio button-------------------------------------------------------------------------------------------------------
 async radioButton(label: string): Promise<void> {
     await this.page.getByLabel(`${label}`).check();
+    
 }
 
 }

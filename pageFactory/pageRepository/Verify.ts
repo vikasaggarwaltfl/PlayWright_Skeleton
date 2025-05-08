@@ -41,6 +41,19 @@ async verifyErrorMessage(page: Page, expectedMessage: string): Promise<void> {
   console.log(`"${TextValue}" is visible on the page`);
 }
 
+// Verify checkbox and readio button--------------------------------------------------------------------------------------------------------------------------------------------------
+async verifyRadioButton(labelname: string): Promise<void> {
+  const locator = this.page.getByLabel(`${labelname}`);
+  await expect(locator).toBeChecked();
+}
+
+// Verify dropdown------------------------------------------------------------------------------------------------------------------------------------------------------------------
+async verifyDropDown(dropdownName: string): Promise<void> {
+  const locator = this.page.locator(`//span[@aria-label='${dropdownName}']`);
+  await expect(locator).toHaveText(`${dropdownName}`);
+
+}
+
   }
 
 
