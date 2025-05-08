@@ -81,12 +81,11 @@ test('Verify that the user can select radio buttons on create transaction page',
     await Verify.verifyRadioButton("Company");
 });
 
-test.only('Verify that the "Branch" dropdown is disabled until a "Group" is selected',async ({page, Actions, Click,Verify})=>{   
+test('Verify that the "Branch" dropdown is disabled until a "Group" is selected',async ({page, Actions, Click,Verify})=>{   
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    const locator1 = page.locator("//span[@aria-disabled='true']");
-    await expect(locator1).toBeDisabled();
+    await Verify.verifyDisabledButton();
     await Click.dropdown("Select a group (Blank for All)","Practise group")
-    const locator2 = page.locator("//span[@aria-disabled='false']");
-    await expect(locator2).toBeEnabled();
+    await Verify.verifyEnabledButton("Select a branch (Blank for All)")
+    
 });
