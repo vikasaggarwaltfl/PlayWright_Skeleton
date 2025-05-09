@@ -79,6 +79,8 @@ test('Verify that the user can select radio buttons on create transaction page',
     await Click.dropdown("Select a branch","Practise branch")
     await Click.radioButton("Company")
     await Verify.verifyRadioButton("Company");
+   
+    
 });
 
 test('Verify that the "Branch" dropdown is disabled until a "Group" is selected',async ({page, Actions, Click,Verify})=>{   
@@ -88,4 +90,11 @@ test('Verify that the "Branch" dropdown is disabled until a "Group" is selected'
     await Click.dropdown("Select a group (Blank for All)","Practise group")
     await Verify.verifyEnabledButton("Select a branch (Blank for All)")
     
+});
+
+test('Verify that the user can filter using the date pickers',async ({page, Actions, Click,Verify})=>{
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.calendar(2);
+    await Click.calendar(2,8);
 });

@@ -14,6 +14,7 @@ export class Click {
     //icon--------------------------------------------------------------------------------------------------------
     private readonly seritiLogo: Locator;
     private readonly testingFrameworks: Locator;
+    
 
     //buttons--------------------------------------------------------------------------------------------------------
     private readonly login: Locator;
@@ -39,6 +40,7 @@ export class Click {
         //icon--------------------------------------------------------------------------------------------------------        
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
         this.testingFrameworks = page.locator("//p[text()='Testing Frameworks']")
+        
 
         //buttons--------------------------------------------------------------------------------------------------------        
         this.login = page.locator("//span[text()='Login']")
@@ -81,6 +83,7 @@ export class Click {
         else if (str === "testingFrameworks") {
             await this.testingFrameworks.click();
         }
+        
 
     }
 
@@ -115,8 +118,17 @@ async radioButton(label: string): Promise<void> {
     
 }
 
+//calendar-------------------------------------------------------------------------------------------------------
+async calendar(index: number, date?: number): Promise<void> {
+    if (date === undefined) {
+        // If only one parameter is provided, it's the index
+        await this.page.locator(`(//button[@aria-label='Choose Date'])[${index}]`).click();
+    } else {
+        // If both parameters are provided, it's the date selection
+        await this.page.locator(`(//span[@data-p-disabled='false'])[text()='${date}']`).click();
+    }
 }
-
+}
 
 
 
