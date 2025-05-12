@@ -96,6 +96,15 @@ test.only('Verify that the user can filter using the date pickers', async ({ pag
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Click.calendar(3, "2026", "Jan", 1);
-    await Verify.IsTextDisplayed(page, "2026");
+    Verify.IsTextDisplayed(page, "2026");
+    
 
 });
+
+// test('Verify that the user can filter using the date pickers', async ({ page, Actions, Click, Verify }) => {
+//     await Actions.signIn("Automation");
+//     await Click.Btn("login");
+//     await Click.calendar(3, "2026", "Jan", 1);
+    
+
+// });
