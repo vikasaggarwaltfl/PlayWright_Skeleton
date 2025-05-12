@@ -7,6 +7,7 @@ export class Click {
     //link--------------------------------------------------------------------------------------------------------
     readonly context: BrowserContext;
     readonly page: Page;
+    
 
     //tabs--------------------------------------------------------------------------------------------------------
     private readonly transaction: Locator;
@@ -33,7 +34,7 @@ export class Click {
         //link--------------------------------------------------------------------------------------------------------
         this.page = page
         this.context = context
-
+        
         //tabs--------------------------------------------------------------------------------------------------------
         this.transaction = page.locator("//div[text()='Transaction']")
 
@@ -56,11 +57,11 @@ export class Click {
 
     //link--------------------------------------------------------------------------------------------------------
     async link(linkName: String) {
-        // if (linkName === "MasterProductCategorySetup") {
-        //     await this.MasterProductCategorySetup.click();
+        // if (linkName === "calendarMonth") {
+        //     await this.calendarMonth.click();
         // }
-        // else if (linkName === 'IQProductCategorySetup') {
-        //     await this.IQProductCategorySetup.click();
+        // else if (linkName === 'calendarYear') {
+        //     await this.calendarYear.click();
         // }
 
     }
@@ -119,12 +120,19 @@ async radioButton(label: string): Promise<void> {
 }
 
 //calendar-------------------------------------------------------------------------------------------------------
-async calendar(index: number, date?: number): Promise<void> {
-    if (date === undefined) {
-        // If only one parameter is provided, it's the index
-        await this.page.locator(`(//button[@aria-label='Choose Date'])[${index}]`).click();
-    } else {
-        // If both parameters are provided, it's the date selection
+async calendar(index: number, year: string, month: string, date?: number): Promise<void> {
+    // First click the calendar button
+    await this.page.locator(`(//button[@aria-label='Choose Date'])[${index}]`).click();
+    
+    // Click the year picker and select year
+    await this.page.locator("//button[@aria-label='Choose Year']").click();
+    await this.page.locator(`//span[normalize-space()='${year}']`).click();
+    
+    // Select the month
+    await this.page.locator(`(//span[@data-pc-section='month'][text()='${month} '])`).click();
+    
+    // If date is provided, select it
+    if (date !== undefined) {
         await this.page.locator(`(//span[@data-p-disabled='false'])[text()='${date}']`).click();
     }
 }
