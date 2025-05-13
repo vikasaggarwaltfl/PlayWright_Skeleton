@@ -55,8 +55,8 @@ async verifyDropDown(dropdownName: string): Promise<void> {
 }
 
 // verify disabled button------------------------------------------------------------------------------------------------------------------------------------------------------------------
-async verifyDisabledButton(): Promise<void> {
-  const locator = this.page.locator("//span[@aria-disabled='true']");
+async verifyDisabledButton(buttonName: string): Promise<void> {
+  const locator = this.page.locator(`//span[text()='${buttonName}']`);
   await expect(locator).toBeDisabled();
   }
 

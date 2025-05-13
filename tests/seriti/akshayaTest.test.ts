@@ -86,13 +86,13 @@ test('Verify that the user can select radio buttons on create transaction page',
 test('Verify that the "Branch" dropdown is disabled until a "Group" is selected', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Verify.verifyDisabledButton();
+    await Verify.verifyDisabledButton("Select a branch (Blank for All)");
     await Click.dropdown("Select a group (Blank for All)", "Practise group")
     await Verify.verifyEnabledButton("Select a branch (Blank for All)")
 
 });
 
-test.only('Verify that the user can filter using the date pickers', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can filter using the date pickers', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Click.calendar(3, "2026", "Jan", 1);
@@ -101,10 +101,17 @@ test.only('Verify that the user can filter using the date pickers', async ({ pag
 
 });
 
-// test('Verify that the user can filter using the date pickers', async ({ page, Actions, Click, Verify }) => {
-//     await Actions.signIn("Automation");
-//     await Click.Btn("login");
-//     await Click.calendar(3, "2026", "Jan", 1);
+test('Verify that the user can reset applied serch on transactions', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.dropdown("Select a group (Blank for All)","Practise group");
+    await Click.dropdown("Select a branch (Blank for All)", "Practise branch");
+    await Click.calendar(1, "2025", "May", 8);
+    await Click.Btn("resetCriteria");
+    await page.pause();
+    await Verify.verifyDisabledButton("Select a branch (Blank for All)");
+
     
 
-// });
+ });
+

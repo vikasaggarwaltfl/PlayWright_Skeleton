@@ -22,6 +22,8 @@ export class Click {
     private readonly signOut: Locator;
     private readonly view: Locator;
     private readonly createTransaction: Locator;
+    private readonly resetCriteria: Locator;
+    
    
     
    
@@ -48,7 +50,7 @@ export class Click {
         this.signOut = page.locator("//span[text()='Sign Out']")
         this.view = page.locator("//span[text()='VIEW']")
         this.createTransaction = page.locator("//span[@class='p-button-icon p-button-icon-left pi pi-plus']")
-
+        this.resetCriteria = page.locator("//button[text()=' Reset Criteria ']")
     }
 
 
@@ -102,6 +104,9 @@ export class Click {
         }
         else if (str === "createTransaction") {
             await this.createTransaction.click();
+        }
+        else if (str === "resetCriteria") {
+            await this.resetCriteria.click();
         }
 
     };
