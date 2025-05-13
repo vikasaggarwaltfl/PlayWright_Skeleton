@@ -79,8 +79,6 @@ test('Verify that the user can select radio buttons on create transaction page',
     await Click.dropdown("Select a branch", "Practise branch")
     await Click.radioButton("Company")
     await Verify.verifyRadioButton("Company");
-
-
 });
 
 test('Verify that the "Branch" dropdown is disabled until a "Group" is selected', async ({ page, Actions, Click, Verify }) => {
@@ -89,7 +87,6 @@ test('Verify that the "Branch" dropdown is disabled until a "Group" is selected'
     await Verify.verifyDisabledButton("Select a branch (Blank for All)");
     await Click.dropdown("Select a group (Blank for All)", "Practise group")
     await Verify.verifyEnabledButton("Select a branch (Blank for All)")
-
 });
 
 test('Verify that the user can filter using the date pickers', async ({ page, Actions, Click, Verify }) => {
@@ -97,21 +94,61 @@ test('Verify that the user can filter using the date pickers', async ({ page, Ac
     await Click.Btn("login");
     await Click.calendar(3, "2026", "Jan", 1);
     Verify.IsTextDisplayed(page, "2026");
-    
 
 });
 
-test('Verify that the user can reset applied serch on transactions', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can reset applied search on transactions', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Click.dropdown("Select a group (Blank for All)","Practise group");
+    await Click.dropdown("Select a group (Blank for All)", "Practise group");
     await Click.dropdown("Select a branch (Blank for All)", "Practise branch");
     await Click.calendar(1, "2025", "May", 8);
     await Click.Btn("resetCriteria");
-    await page.pause();
     await Verify.verifyDisabledButton("Select a branch (Blank for All)");
 
-    
+});
 
- });
+test('Verify that the user can apply multiple filters to search for transactions', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.dropdown("Select a group (Blank for All)", "Practise group");
+    await Click.dropdown("Select a branch (Blank for All)", "Practise branch");
+    await Click.calendar(1, "2025", "May", 8);
+    await Click.Btn("search");
+    await page.pause();
+    await Verify.verifyDatacount(4);
+
+});
+
+//reports-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+test.only('Verify that the user can "Add" new Deal tracker report with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+     await Actions.enterText("searchMenu", "My Reports");
+    await page.pause();
+     await Click.chevronLeftArrow(1);
+    await page.pause();
+    await Click.chevronLeftArrow(2);
+    await page.pause();
+    await Click.tabs("dealTracker");
+    await page.pause();
+    await Click.Btn("addDealTrackerReport");
+    await page.pause();
+   // await page.locator("//span[text()='Group']").click();
+   await Click.icon("cancel");
+   await page.pause();
+     await Click.dropdown("Group","Practise group");
+    await page.pause();
+    await page.locator("(//div[@class='p-multiselect-label'])[5]").click();
+await page.pause();
+    // await page.pause();
+    // await Click.dropdown("All","Business Manager Staging");
+    // await page.pause();
+    // await Click.dropdown("All","practise company");
+    // await page.pause();
+    // await Click.dropdown("All","practise company");
+    // await page.pause();
+   
+
+});
 

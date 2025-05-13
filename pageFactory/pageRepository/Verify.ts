@@ -66,6 +66,13 @@ async verifyEnabledButton(buttonName: string): Promise<void> {
   await expect(locator).toBeEnabled();
 
 }
+// Verify record count from data grid---------------------------------------------------------------------------------------------------------------------------------------------
+  async verifyDatacount(expectedCount: number): Promise<void> {
+    const columnCells = this.page.locator("//table//tr/td[7]"); 
+    const count = await columnCells.count();
+    expect(count).toBe(expectedCount); 
+    console.log(`Number of rows in column 7: ${count}`);
+  }
 
 
 

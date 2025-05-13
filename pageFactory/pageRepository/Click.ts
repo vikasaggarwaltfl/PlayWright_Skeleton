@@ -11,11 +11,12 @@ export class Click {
 
     //tabs--------------------------------------------------------------------------------------------------------
     private readonly transaction: Locator;
+    private readonly dealTracker: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     private readonly seritiLogo: Locator;
     private readonly testingFrameworks: Locator;
-    
+    private readonly cancel: Locator;
 
     //buttons--------------------------------------------------------------------------------------------------------
     private readonly login: Locator;
@@ -23,6 +24,8 @@ export class Click {
     private readonly view: Locator;
     private readonly createTransaction: Locator;
     private readonly resetCriteria: Locator;
+    private readonly search: Locator;
+    private readonly addDealTrackerReport: Locator;
     
    
     
@@ -39,11 +42,12 @@ export class Click {
         
         //tabs--------------------------------------------------------------------------------------------------------
         this.transaction = page.locator("//div[text()='Transaction']")
+        this.dealTracker = page.locator("//div[text()='Deal Tracker Report']")
 
         //icon--------------------------------------------------------------------------------------------------------        
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
         this.testingFrameworks = page.locator("//p[text()='Testing Frameworks']")
-        
+        this.cancel = page.locator("//*[name()='path' and contains(@d,'M8.01186 7')]");
 
         //buttons--------------------------------------------------------------------------------------------------------        
         this.login = page.locator("//span[text()='Login']")
@@ -51,6 +55,8 @@ export class Click {
         this.view = page.locator("//span[text()='VIEW']")
         this.createTransaction = page.locator("//span[@class='p-button-icon p-button-icon-left pi pi-plus']")
         this.resetCriteria = page.locator("//button[text()=' Reset Criteria ']")
+        this.search = page.locator("//button[@aria-label='Search']")
+        this.addDealTrackerReport = page.locator("//div[text()=' Add Deal Tracker Report']");
     }
 
 
@@ -73,6 +79,10 @@ export class Click {
         if (str === "transaction") {
             await this.transaction.click();
         }
+        else if (str === "dealTracker") {
+            await this.dealTracker.click();
+        }
+        
 
         
 
@@ -86,7 +96,9 @@ export class Click {
         else if (str === "testingFrameworks") {
             await this.testingFrameworks.click();
         }
-        
+         else if (str === "cancel") {
+            await this.cancel.click();
+        }
 
     }
 
@@ -107,6 +119,13 @@ export class Click {
         }
         else if (str === "resetCriteria") {
             await this.resetCriteria.click();
+        }
+
+        else if (str === "search") {
+            await this.search.click();
+        }
+        else if (str === "addDealTrackerReport") {
+            await this.addDealTrackerReport.click();
         }
 
     };
@@ -141,8 +160,13 @@ async calendar(index: number, year: string, month: string, date?: number): Promi
         await this.page.locator(`(//span[@data-p-disabled='false'])[text()='${date}']`).click();
     }
 }
+
+//chevronLeft-------------------------------------------------------------------------------------------------------
+async chevronLeftArrow(index: number): Promise<void> {
+    await this.page.locator(`(//button[@class='flex flex-row items-center justify-center'])[${index}]`).click();
+
 }
 
 
 
-
+}
