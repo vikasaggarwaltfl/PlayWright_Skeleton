@@ -115,40 +115,47 @@ test('Verify that the user can apply multiple filters to search for transactions
     await Click.dropdown("Select a branch (Blank for All)", "Practise branch");
     await Click.calendar(1, "2025", "May", 8);
     await Click.Btn("search");
-    await page.pause();
+    await page.waitForTimeout(2000);
     await Verify.verifyDatacount(4);
 
 });
 
 //reports-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.only('Verify that the user can "Add" new Deal tracker report with valid data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can "Add" new Deal tracker report with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-     await Actions.enterText("searchMenu", "My Reports");
-    await page.pause();
-     await Click.chevronLeftArrow(1);
-    await page.pause();
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
-    await page.pause();
     await Click.tabs("dealTracker");
-    await page.pause();
     await Click.Btn("addDealTrackerReport");
+    await Click.icon("cancel");
+    await Click.dropdown("Group", "Practise group");
+    await page.waitForTimeout(2000);
+    await Click.checkbox(2, "Tebogo Lepelle");
+    await Click.calendar(1, "2025", "May", 8);
+    await page.waitForTimeout(2000);
+    await Click.calendar(2, "2025", "Jun", 8);
+    await Click.Btn("createDateYes");
+    await Click.Btn("inceptDateYes ")
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+
+});
+
+test.skip('Verify that the user can check or uncheck multiple checkbox', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("dealTracker");
+    await Click.Btn("addDealTrackerReport");
+    await Click.icon("cancel");
+    await Click.dropdown("Group", "Practise group");
+    await page.waitForTimeout(2000);
+    await Click.checkbox(2, "Tebogo Lepelle");
     await page.pause();
-   // await page.locator("//span[text()='Group']").click();
-   await Click.icon("cancel");
-   await page.pause();
-     await Click.dropdown("Group","Practise group");
-    await page.pause();
-    await page.locator("(//div[@class='p-multiselect-label'])[5]").click();
-await page.pause();
-    // await page.pause();
-    // await Click.dropdown("All","Business Manager Staging");
-    // await page.pause();
-    // await Click.dropdown("All","practise company");
-    // await page.pause();
-    // await Click.dropdown("All","practise company");
-    // await page.pause();
-   
 
 });
 

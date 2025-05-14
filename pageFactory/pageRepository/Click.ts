@@ -7,7 +7,10 @@ export class Click {
     //link--------------------------------------------------------------------------------------------------------
     readonly context: BrowserContext;
     readonly page: Page;
-    
+
+
+
+
 
     //tabs--------------------------------------------------------------------------------------------------------
     private readonly transaction: Locator;
@@ -26,10 +29,12 @@ export class Click {
     private readonly resetCriteria: Locator;
     private readonly search: Locator;
     private readonly addDealTrackerReport: Locator;
-    
-   
-    
-   
+    private readonly save: Locator;
+    private readonly createDateYes: Locator;
+    private readonly inceptDateYes: Locator;
+
+
+
 
 
 
@@ -39,7 +44,8 @@ export class Click {
         //link--------------------------------------------------------------------------------------------------------
         this.page = page
         this.context = context
-        
+
+
         //tabs--------------------------------------------------------------------------------------------------------
         this.transaction = page.locator("//div[text()='Transaction']")
         this.dealTracker = page.locator("//div[text()='Deal Tracker Report']")
@@ -57,6 +63,12 @@ export class Click {
         this.resetCriteria = page.locator("//button[text()=' Reset Criteria ']")
         this.search = page.locator("//button[@aria-label='Search']")
         this.addDealTrackerReport = page.locator("//div[text()=' Add Deal Tracker Report']");
+        this.save = page.locator("//span[text()='Save']");
+        this.createDateYes = page.locator("//div[@placeholder='Create Date']//span[@class='p-button-label'][normalize-space()='Yes']");
+        this.inceptDateYes = page.locator("//div[@placeholder='Incept Date']//span[@class='p-button-label'][normalize-space()='Yes']");
+
+
+
     }
 
 
@@ -82,9 +94,9 @@ export class Click {
         else if (str === "dealTracker") {
             await this.dealTracker.click();
         }
-        
 
-        
+
+
 
     }
 
@@ -96,7 +108,7 @@ export class Click {
         else if (str === "testingFrameworks") {
             await this.testingFrameworks.click();
         }
-         else if (str === "cancel") {
+        else if (str === "cancel") {
             await this.cancel.click();
         }
 
@@ -127,46 +139,78 @@ export class Click {
         else if (str === "addDealTrackerReport") {
             await this.addDealTrackerReport.click();
         }
-
+        else if (str === "save") {
+            await this.save.click();
+        }
+        else if (str === "createDateYes") {
+            await this.createDateYes.click();
+        }
+        else if (str === "inceptDateYes ") {
+            await this.inceptDateYes.click();
+        }
     };
 
-//dropdown--------------------------------------------------------------------------------------------------------
-async dropdown(value: string,selector: string): Promise<void> {
-   
-    await this.page.locator(`//span[text()='${value}']`).click();
-    await this.page.locator(`//span[normalize-space()='${selector}']`).click();
-}
+    //dropdown--------------------------------------------------------------------------------------------------------
+    async dropdown(value: string, selector: string): Promise<void> {
 
-//radio button-------------------------------------------------------------------------------------------------------
-async radioButton(label: string): Promise<void> {
-    await this.page.getByLabel(`${label}`).check();
-    
-}
-
-//calendar-------------------------------------------------------------------------------------------------------
-async calendar(index: number, year: string, month: string, date?: number): Promise<void> {
-    // First click the calendar button
-    await this.page.locator(`(//button[@aria-label='Choose Date'])[${index}]`).click();
-    
-    // Click the year picker and select year
-    await this.page.locator("//button[@aria-label='Choose Year']").click();
-    await this.page.locator(`//span[normalize-space()='${year}']`).click();
-    
-    // Select the month
-    await this.page.locator(`(//span[@data-pc-section='month'][text()='${month} '])`).click();
-    
-    // If date is provided, select it
-    if (date !== undefined) {
-        await this.page.locator(`(//span[@data-p-disabled='false'])[text()='${date}']`).click();
+        await this.page.locator(`//span[text()='${value}']`).click();
+        await this.page.locator(`//span[normalize-space()='${selector}']`).click();
     }
-}
 
-//chevronLeft-------------------------------------------------------------------------------------------------------
-async chevronLeftArrow(index: number): Promise<void> {
-    await this.page.locator(`(//button[@class='flex flex-row items-center justify-center'])[${index}]`).click();
+    //radio button-------------------------------------------------------------------------------------------------------
+    async radioButton(label: string): Promise<void> {
+        await this.page.getByLabel(`${label}`).check();
 
-}
+    }
 
+    //calendar-------------------------------------------------------------------------------------------------------
+    async calendar(index: number, year: string, month: string, date?: number): Promise<void> {
+        // First click the calendar button
+        await this.page.locator(`(//button[@aria-label='Choose Date'])[${index}]`).click();
 
+        // Click the year picker and select year
+        await this.page.locator("//button[@aria-label='Choose Year']").click();
+        await this.page.locator(`//span[normalize-space()='${year}']`).click();
+
+        // Select the month
+        await this.page.locator(`(//span[@data-pc-section='month'][text()='${month} '])`).click();
+
+        // If date is provided, select it
+        if (date !== undefined) {
+            await this.page.locator(`(//span[@data-p-disabled='false'])[text()='${date}']`).click();
+        }
+    }
+
+    //chevronLeft-------------------------------------------------------------------------------------------------------
+    async chevronLeftArrow(index: number): Promise<void> {
+        await this.page.locator(`(//button[@class='flex flex-row items-center justify-center'])[${index}]`).click();
+
+    }
+
+    //checkbox-----------------------------------------------------------------------------------------------------------
+    async checkbox(index: number, selectors: string[] | string): Promise<void> {
+        // Click the dropdown first
+        await this.page.locator(`(//div[@class='p-multiselect-label'])[${index}]`).click();
+
+        // If we want to select all items
+        if (selectors === 'All') {
+            await this.page.locator("(//input[@aria-label='All items selected'])[1]").click();
+        }
+        // If we have an array of selectors, select each one
+        else if (Array.isArray(selectors)) {
+            for (const selector of selectors) {
+                // await this.page.locator("(//input[@aria-label='All items selected'])[1]").click();
+                await this.page.locator(`//span[text()='${selector}']`).click();
+            }
+        }
+        // If we have a single selector
+        else {
+            await this.page.locator("(//input[@aria-label='All items selected'])[1]").click();
+            await this.page.locator(`//span[text()='${selectors}']`).click();
+        }
+
+        // Close the dropdown by clicking outside
+        await this.page.locator("body").click({ position: { x: 0, y: 0 } });
+    }
 
 }

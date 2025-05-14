@@ -43,7 +43,7 @@ async verifyErrorMessage(page: Page, expectedMessage: string): Promise<void> {
 
 // Verify checkbox and readio button--------------------------------------------------------------------------------------------------------------------------------------------------
 async verifyRadioButton(labelname: string): Promise<void> {
-  const locator = this.page.getByLabel(`${labelname}`);
+  const locator = this.page.getByLabel(labelname);
   await expect(locator).toBeChecked();
 }
 
@@ -75,5 +75,9 @@ async verifyEnabledButton(buttonName: string): Promise<void> {
   }
 
 
-
+// verify checkbox-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+async verifyCheckbox(selector: string): Promise<void> {
+    const locator = this.page.getByText(selector);
+    await expect(locator).toBeChecked();
+  }
 }
