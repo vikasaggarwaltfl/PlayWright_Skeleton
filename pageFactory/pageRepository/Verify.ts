@@ -36,12 +36,21 @@ async verifyErrorMessage(page: Page, expectedMessage: string): Promise<void> {
 }
     
 // Verify any Text on screen----------------------------------------------------------------------------------------------------------------------------------------------------------------
-  async IsTextDisplayed(page: Page, TextValue: string): Promise<void> {
-  await expect(page.getByText(TextValue, { exact: true })).toBeVisible();
-  console.log(`"${TextValue}" is visible on the page`);
+  async IsTextDisplayed(page: Page, TextValue: string | string[]): Promise<void> {
+    if (Array.isArray(TextValue)) {
+        // If TextValue is an array, verify each text value
+        for (const text of TextValue) {
+            await expect(page.getByText(text, { exact: true })).toBeVisible();
+            console.log(`"${text}" is visible on the page`);
+        }
+    } else {
+        // If TextValue is a single string
+        await expect(page.getByText(TextValue, { exact: true })).toBeVisible();
+        console.log(`"${TextValue}" is visible on the page`);
+    }
 }
 
-// Verify checkbox and readio button--------------------------------------------------------------------------------------------------------------------------------------------------
+// Verify radio button--------------------------------------------------------------------------------------------------------------------------------------------------
 async verifyRadioButton(labelname: string): Promise<void> {
   const locator = this.page.getByLabel(labelname);
   await expect(locator).toBeChecked();
@@ -68,16 +77,12 @@ async verifyEnabledButton(buttonName: string): Promise<void> {
 }
 // Verify record count from data grid---------------------------------------------------------------------------------------------------------------------------------------------
   async verifyDatacount(expectedCount: number): Promise<void> {
-    const columnCells = this.page.locator("//table//tr/td[7]"); 
+    const columnCells = this.page.locator("//table//tr/td[3]"); 
     const count = await columnCells.count();
     expect(count).toBe(expectedCount); 
-    console.log(`Number of rows in column 7: ${count}`);
+    console.log(`Number of rows in column 3: ${count}`);
   }
 
 
-// verify checkbox-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-async verifyCheckbox(selector: string): Promise<void> {
-    const locator = this.page.getByText(selector);
-    await expect(locator).toBeChecked();
-  }
+
 }

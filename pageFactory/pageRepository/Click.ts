@@ -8,10 +8,6 @@ export class Click {
     readonly context: BrowserContext;
     readonly page: Page;
 
-
-
-
-
     //tabs--------------------------------------------------------------------------------------------------------
     private readonly transaction: Locator;
     private readonly dealTracker: Locator;
@@ -20,6 +16,8 @@ export class Click {
     private readonly seritiLogo: Locator;
     private readonly testingFrameworks: Locator;
     private readonly cancel: Locator;
+    private readonly delete: Locator;
+    private readonly copy: Locator;
 
     //buttons--------------------------------------------------------------------------------------------------------
     private readonly login: Locator;
@@ -32,19 +30,15 @@ export class Click {
     private readonly save: Locator;
     private readonly createDateYes: Locator;
     private readonly inceptDateYes: Locator;
-
-
-
-
-
-
+    private readonly createDateNo: Locator;
+    private readonly inceptDateNO: Locator;
+    private readonly yes: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
         this.page = page
         this.context = context
-
 
         //tabs--------------------------------------------------------------------------------------------------------
         this.transaction = page.locator("//div[text()='Transaction']")
@@ -54,6 +48,8 @@ export class Click {
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
         this.testingFrameworks = page.locator("//p[text()='Testing Frameworks']")
         this.cancel = page.locator("//*[name()='path' and contains(@d,'M8.01186 7')]");
+        this.delete = page.locator("//tbody/tr[1]/td[1]/div[1]/button[2]");
+        this.copy = page.locator("//tbody/tr[1]/td[1]/div[1]/div[1]/button[1]/i[1]");
 
         //buttons--------------------------------------------------------------------------------------------------------        
         this.login = page.locator("//span[text()='Login']")
@@ -66,13 +62,11 @@ export class Click {
         this.save = page.locator("//span[text()='Save']");
         this.createDateYes = page.locator("//div[@placeholder='Create Date']//span[@class='p-button-label'][normalize-space()='Yes']");
         this.inceptDateYes = page.locator("//div[@placeholder='Incept Date']//span[@class='p-button-label'][normalize-space()='Yes']");
-
-
-
+        this.createDateNo = page.locator("//div[@placeholder='Create Date']//span[@class='p-button-label'][normalize-space()='No']");
+        this.inceptDateNO = page.locator("//div[@placeholder='Incept Date']//span[@class='p-button-label'][normalize-space()='No']");
+        this.yes = page.locator("//span[text()='Yes']");
+     
     }
-
-
-
 
 
     //link--------------------------------------------------------------------------------------------------------
@@ -111,6 +105,12 @@ export class Click {
         else if (str === "cancel") {
             await this.cancel.click();
         }
+         else if (str === "delete") {
+            await this.delete.click();
+        }
+        else if (str === "copy") {
+            await this.copy.click();
+        }
 
     }
 
@@ -147,6 +147,15 @@ export class Click {
         }
         else if (str === "inceptDateYes ") {
             await this.inceptDateYes.click();
+        }
+        else if (str === "createDateNo") {
+            await this.inceptDateYes.click();
+        }
+        else if (str === "inceptDateNo") {
+            await this.inceptDateYes.click();
+        }
+         else if (str === "yes") {
+            await this.yes.click();
         }
     };
 
@@ -192,14 +201,14 @@ export class Click {
         // Click the dropdown first
         await this.page.locator(`(//div[@class='p-multiselect-label'])[${index}]`).click();
 
-        // If we want to select all items
+        // If we want to deselect all checkboxes
         if (selectors === 'All') {
             await this.page.locator("(//input[@aria-label='All items selected'])[1]").click();
         }
-        // If we have an array of selectors, select each one
+        // If we have an array of selectors
         else if (Array.isArray(selectors)) {
+            await this.page.locator("(//input[@aria-label='All items selected'])[1]").click();
             for (const selector of selectors) {
-                // await this.page.locator("(//input[@aria-label='All items selected'])[1]").click();
                 await this.page.locator(`//span[text()='${selector}']`).click();
             }
         }

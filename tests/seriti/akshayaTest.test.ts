@@ -24,10 +24,8 @@ test('Verify that error message should displayed for Invalid inputs', async ({ p
 test('Verify that the navigation sidebar is displayed with all required tabs.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Verify.IsTextDisplayed(page, "Home");
-    await Verify.IsTextDisplayed(page, "Transaction");
-    await Verify.IsTextDisplayed(page, "Dashboard");
-});
+    await Verify.IsTextDisplayed(page, ["Home","Transaction","Dashboard"]);
+   });
 
 
 test('Verify that clicking on the "Seriti" logo navigates the user to the landing screen.', async ({ page, Actions, Click, Verify }) => {
@@ -94,6 +92,7 @@ test('Verify that the user can filter using the date pickers', async ({ page, Ac
     await Click.Btn("login");
     await Click.calendar(3, "2026", "Jan", 1);
     Verify.IsTextDisplayed(page, "2026");
+ 
 
 });
 
@@ -116,11 +115,27 @@ test('Verify that the user can apply multiple filters to search for transactions
     await Click.calendar(1, "2025", "May", 8);
     await Click.Btn("search");
     await page.waitForTimeout(2000);
-    await Verify.verifyDatacount(4);
+    await Verify.verifyDatacount(6);
 
 });
 
-//reports-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//reports>>DealTrackerReport-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+test('Verify that the user can check or uncheck multiple checkbox', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("dealTracker");
+    await Click.Btn("addDealTrackerReport");
+    await Click.icon("cancel");
+    await Click.dropdown("Group", "Practise group");
+    await page.waitForTimeout(2000);
+    await Click.checkbox(2, ["Tebogo Lepelle", "Winjit Staging Bm", "Business Manager Staging"]);
+    await Verify.IsTextDisplayed(page,["Tebogo Lepelle", "Winjit Staging Bm", "Business Manager Staging"]); 
+
+});
+
 test('Verify that the user can "Add" new Deal tracker report with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
@@ -133,9 +148,9 @@ test('Verify that the user can "Add" new Deal tracker report with valid data', a
     await Click.dropdown("Group", "Practise group");
     await page.waitForTimeout(2000);
     await Click.checkbox(2, "Tebogo Lepelle");
-    await Click.calendar(1, "2025", "May", 8);
+    await Click.calendar(1, "2025", "May", 10);
     await page.waitForTimeout(2000);
-    await Click.calendar(2, "2025", "Jun", 8);
+    await Click.calendar(2, "2025", "Jun", 11);
     await Click.Btn("createDateYes");
     await Click.Btn("inceptDateYes ")
     await Click.Btn("save");
@@ -143,19 +158,27 @@ test('Verify that the user can "Add" new Deal tracker report with valid data', a
 
 });
 
-test.skip('Verify that the user can check or uncheck multiple checkbox', async ({ page, Actions, Click, Verify }) => {
+test.skip('Verify that the user can "Copy"  Deal tracker report with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("dealTracker");
-    await Click.Btn("addDealTrackerReport");
-    await Click.icon("cancel");
-    await Click.dropdown("Group", "Practise group");
-    await page.waitForTimeout(2000);
-    await Click.checkbox(2, "Tebogo Lepelle");
-    await page.pause();
+    await Click.icon("copy");
+    await page.pause();   
+});
 
+test('Verify that the user can "Delete" a Deal tracker report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("dealTracker");
+    await Click.icon("delete");
+    await Click.Btn("yes");
+    await page.waitForTimeout(2000);
+    await Verify.verifyDatacount(3);
 });
 
