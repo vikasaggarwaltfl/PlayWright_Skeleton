@@ -4,19 +4,17 @@ import { Actions } from '@pages/Actions'
 import { Click } from '@pages/Click'
 import { Verify } from '@pages/Verify'
 //login -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test('Verify that the user can log in successfully with valid credentials.', async ({ page, Actions, Click, Verify }) => {
 
+test('Verify that the user can log in successfully with valid credentials.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Verify.verifyURL(page, "https://seritiweb-mea-uat.seriti-int.com/transaction");
 });
 
-
 test('Verify that error message should displayed for Invalid inputs', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn(" ");
     await Click.Btn("login");
-    await Verify.verifyErrorMessage(page, "Username is a required field");
-
+    await Verify.IsTextDisplayed(page, "Username is a required field");
 });
 
 // Navigation side bar-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -24,9 +22,8 @@ test('Verify that error message should displayed for Invalid inputs', async ({ p
 test('Verify that the navigation sidebar is displayed with all required tabs.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Verify.IsTextDisplayed(page, ["Home","Transaction","Dashboard"]);
-   });
-
+    await Verify.IsTextDisplayed(page, ["Home", "Transaction", "Dashboard"]);
+});
 
 test('Verify that clicking on the "Seriti" logo navigates the user to the landing screen.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
@@ -53,6 +50,7 @@ test('Verify that the user can sign out by clicking on the "Sign Out" button.', 
 
 
 // Transaction page-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 test('Verify that the user can search for transactions using the transaction number in Quick access modal', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
@@ -92,8 +90,6 @@ test('Verify that the user can filter using the date pickers', async ({ page, Ac
     await Click.Btn("login");
     await Click.calendar(3, "2026", "Jan", 1);
     Verify.IsTextDisplayed(page, "2026");
- 
-
 });
 
 test('Verify that the user can reset applied search on transactions', async ({ page, Actions, Click, Verify }) => {
@@ -104,7 +100,6 @@ test('Verify that the user can reset applied search on transactions', async ({ p
     await Click.calendar(1, "2025", "May", 8);
     await Click.Btn("resetCriteria");
     await Verify.verifyDisabledButton("Select a branch (Blank for All)");
-
 });
 
 test('Verify that the user can apply multiple filters to search for transactions', async ({ page, Actions, Click, Verify }) => {
@@ -115,11 +110,11 @@ test('Verify that the user can apply multiple filters to search for transactions
     await Click.calendar(1, "2025", "May", 8);
     await Click.Btn("search");
     await page.waitForTimeout(2000);
-    await Verify.verifyDatacount(6);
-
+    await Verify.verifyDatacount(8);
 });
 
-//reports>>DealTrackerReport-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//reports >> DealTrackerReport-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 test('Verify that the user can check or uncheck multiple checkbox', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
@@ -132,8 +127,7 @@ test('Verify that the user can check or uncheck multiple checkbox', async ({ pag
     await Click.dropdown("Group", "Practise group");
     await page.waitForTimeout(2000);
     await Click.checkbox(2, ["Tebogo Lepelle", "Winjit Staging Bm", "Business Manager Staging"]);
-    await Verify.IsTextDisplayed(page,["Tebogo Lepelle", "Winjit Staging Bm", "Business Manager Staging"]); 
-
+    await Verify.IsTextDisplayed(page, ["Tebogo Lepelle", "Winjit Staging Bm", "Business Manager Staging"]);
 });
 
 test('Verify that the user can "Add" new Deal tracker report with valid data', async ({ page, Actions, Click, Verify }) => {
@@ -155,10 +149,9 @@ test('Verify that the user can "Add" new Deal tracker report with valid data', a
     await Click.Btn("inceptDateYes ")
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Saved Successfully");
-
 });
 
-test.skip('Verify that the user can "Copy"  Deal tracker report with valid data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can "Copy"  Deal tracker report with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
@@ -166,7 +159,13 @@ test.skip('Verify that the user can "Copy"  Deal tracker report with valid data'
     await Click.chevronLeftArrow(2);
     await Click.tabs("dealTracker");
     await Click.icon("copy");
-    await page.pause();   
+    await Click.radioButton(["Group","Business Manager(s)","Start Date","Create Date",
+    "Taken-Up Finance Company(s)","Branch(es)","Salesperson(s)","End Date",
+    "Applied-To Finance Company(s)"]);
+    await Click.Btn("copying");
+    await page.waitForTimeout(5000);
+    await Click.Btn("save")
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
 test('Verify that the user can "Delete" a Deal tracker report', async ({ page, Actions, Click, Verify }) => {
@@ -180,5 +179,28 @@ test('Verify that the user can "Delete" a Deal tracker report', async ({ page, A
     await Click.Btn("yes");
     await page.waitForTimeout(2000);
     await Verify.verifyDatacount(3);
+});
+
+test('Verify that the user cannot "Edit" Deal tracker report with Invalid data.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("dealTracker");
+    await Click.icon("edit");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Notes is a required field");
+});
+
+//reports >> DOC-SummaryReport-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can "Add" new DOC Summary report with valid data.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docSummary");
 });
 

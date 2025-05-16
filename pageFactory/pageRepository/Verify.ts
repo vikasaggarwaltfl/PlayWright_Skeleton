@@ -28,7 +28,7 @@ export class Verify {
 
 //Verify error message----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 async verifyErrorMessage(page: Page, expectedMessage: string): Promise<void> {
-  const errorElement = page.locator(`//div[text()="${expectedMessage}"]`);
+  const errorElement = page.locator(`//span[text()="${expectedMessage}"]`);
   await errorElement.waitFor({ state: 'visible', timeout: 5000 });
   const content = await errorElement.textContent();
   expect(content).toBe(expectedMessage);

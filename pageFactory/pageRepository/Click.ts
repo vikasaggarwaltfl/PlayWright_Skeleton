@@ -11,6 +11,7 @@ export class Click {
     //tabs--------------------------------------------------------------------------------------------------------
     private readonly transaction: Locator;
     private readonly dealTracker: Locator;
+    private readonly docSummary: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     private readonly seritiLogo: Locator;
@@ -18,6 +19,7 @@ export class Click {
     private readonly cancel: Locator;
     private readonly delete: Locator;
     private readonly copy: Locator;
+    private readonly edit: Locator;
 
     //buttons--------------------------------------------------------------------------------------------------------
     private readonly login: Locator;
@@ -33,6 +35,9 @@ export class Click {
     private readonly createDateNo: Locator;
     private readonly inceptDateNO: Locator;
     private readonly yes: Locator;
+    private readonly copying: Locator;
+    private readonly selectAll: Locator;
+    private readonly deSelectAll: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -43,6 +48,7 @@ export class Click {
         //tabs--------------------------------------------------------------------------------------------------------
         this.transaction = page.locator("//div[text()='Transaction']")
         this.dealTracker = page.locator("//div[text()='Deal Tracker Report']")
+        this.docSummary = page.locator("//div[text()='DOC Summary Report']");
 
         //icon--------------------------------------------------------------------------------------------------------        
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
@@ -50,6 +56,7 @@ export class Click {
         this.cancel = page.locator("//*[name()='path' and contains(@d,'M8.01186 7')]");
         this.delete = page.locator("//tbody/tr[1]/td[1]/div[1]/button[2]");
         this.copy = page.locator("//tbody/tr[1]/td[1]/div[1]/div[1]/button[1]/i[1]");
+        this.edit = page.locator("//tr[@class='p-row-even']//i[@class='pi pi-pencil text-lg']");
 
         //buttons--------------------------------------------------------------------------------------------------------        
         this.login = page.locator("//span[text()='Login']")
@@ -65,6 +72,9 @@ export class Click {
         this.createDateNo = page.locator("//div[@placeholder='Create Date']//span[@class='p-button-label'][normalize-space()='No']");
         this.inceptDateNO = page.locator("//div[@placeholder='Incept Date']//span[@class='p-button-label'][normalize-space()='No']");
         this.yes = page.locator("//span[text()='Yes']");
+        this.copying = page.locator("//button[text()='Copy']");
+        this.selectAll = page.locator("//span[text()='Select All']");
+        this.deSelectAll = page.locator("//span[text()='De-select All']");
      
     }
 
@@ -88,7 +98,9 @@ export class Click {
         else if (str === "dealTracker") {
             await this.dealTracker.click();
         }
-
+        else if (str === "docSummary") {
+            await this.docSummary.click();
+        }
 
 
 
@@ -110,6 +122,9 @@ export class Click {
         }
         else if (str === "copy") {
             await this.copy.click();
+        }
+        else if (str === "edit") {
+            await this.edit.click();
         }
 
     }
@@ -157,6 +172,16 @@ export class Click {
          else if (str === "yes") {
             await this.yes.click();
         }
+         else if (str === "copying") {
+            await this.copying.click();
+        }
+        else if (str === "selectAll") {
+            await this.selectAll.click();
+        }
+        else if (str === "deSelectAll") {
+            await this.deSelectAll.click();
+        }
+
     };
 
     //dropdown--------------------------------------------------------------------------------------------------------
@@ -167,8 +192,19 @@ export class Click {
     }
 
     //radio button-------------------------------------------------------------------------------------------------------
-    async radioButton(label: string): Promise<void> {
-        await this.page.getByLabel(`${label}`).check();
+    async radioButton(label: string[] | string): Promise<void> {
+
+        if (Array.isArray(label)) {
+           
+            for (const labels of label) {
+                await this.page.getByLabel(`${labels}`).check();
+            }
+        }
+        // If we have a single label
+        else {
+           await this.page.getByLabel(`${label}`).check(); 
+        }
+        
 
     }
 
