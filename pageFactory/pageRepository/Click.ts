@@ -7,6 +7,7 @@ export class Click {
     //link--------------------------------------------------------------------------------------------------------
     readonly context: BrowserContext;
     readonly page: Page;
+    private readonly download: Locator;
 
     //tabs--------------------------------------------------------------------------------------------------------
     private readonly transaction: Locator;
@@ -20,6 +21,10 @@ export class Click {
     private readonly delete: Locator;
     private readonly copy: Locator;
     private readonly edit: Locator;
+    private readonly cancel2: Locator;
+    private readonly cancel3: Locator;
+    private readonly selectAll: Locator;
+    private readonly deSelectAll: Locator;
 
     //buttons--------------------------------------------------------------------------------------------------------
     private readonly login: Locator;
@@ -36,14 +41,14 @@ export class Click {
     private readonly inceptDateNO: Locator;
     private readonly yes: Locator;
     private readonly copying: Locator;
-    private readonly selectAll: Locator;
-    private readonly deSelectAll: Locator;
+    private readonly addDocSummaryReport: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
         this.page = page
         this.context = context
+        this.download = page.locator("//tbody/tr[1]/td[4]/a[1]");
 
         //tabs--------------------------------------------------------------------------------------------------------
         this.transaction = page.locator("//div[text()='Transaction']")
@@ -57,6 +62,10 @@ export class Click {
         this.delete = page.locator("//tbody/tr[1]/td[1]/div[1]/button[2]");
         this.copy = page.locator("//tbody/tr[1]/td[1]/div[1]/div[1]/button[1]/i[1]");
         this.edit = page.locator("//tr[@class='p-row-even']//i[@class='pi pi-pencil text-lg']");
+        this.cancel2 =  page.locator("(//*[name()='path'])[8]");
+        this.cancel3 = page.locator("(//*[name()='path'])[10]");
+        this.selectAll = page.locator("//span[text()='Select All']");
+        this.deSelectAll = page.locator("//span[text()='De-select All']");
 
         //buttons--------------------------------------------------------------------------------------------------------        
         this.login = page.locator("//span[text()='Login']")
@@ -75,15 +84,16 @@ export class Click {
         this.copying = page.locator("//button[text()='Copy']");
         this.selectAll = page.locator("//span[text()='Select All']");
         this.deSelectAll = page.locator("//span[text()='De-select All']");
+        this.addDocSummaryReport =  page.locator("//div[@class='flex flex-row gap-2 items-center']");
      
     }
 
 
     //link--------------------------------------------------------------------------------------------------------
     async link(linkName: String) {
-        // if (linkName === "calendarMonth") {
-        //     await this.calendarMonth.click();
-        // }
+        if (linkName === "download") {
+            await this.download.click();
+        }
         // else if (linkName === 'calendarYear') {
         //     await this.calendarYear.click();
         // }
@@ -125,6 +135,19 @@ export class Click {
         }
         else if (str === "edit") {
             await this.edit.click();
+        }
+         else if (str === "cancel2") {
+            await this.cancel2.click();
+        }
+        else if (str === "cancel3") {
+            await this.cancel3.click();
+        }
+
+         else if (str === "selectAll") {
+            await this.selectAll.click();
+        }
+         else if (str === "deSelectAll") {
+            await this.deSelectAll.click();
         }
 
     }
@@ -180,6 +203,9 @@ export class Click {
         }
         else if (str === "deSelectAll") {
             await this.deSelectAll.click();
+        }
+         else if (str === "addDocSummaryReport") {
+            await this.addDocSummaryReport.click();
         }
 
     };

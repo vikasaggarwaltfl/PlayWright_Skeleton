@@ -24,6 +24,7 @@ export class Actions {
     private readonly lastnameTextbox: Locator;
     private readonly searchMenu: Locator;
     private readonly transactionSearchMenu: Locator;
+    private readonly notes: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -34,6 +35,7 @@ export class Actions {
         this.lastnameTextbox = page.locator("(//input[@name='lastName'])[2]");
         this.searchMenu = page.locator("//input[@placeholder='Search']");
         this.transactionSearchMenu = page.locator("//input[@placeholder='Transaction Number']");
+        this.notes = page.locator("//input[@id='Notes']");
         
         
     }
@@ -60,6 +62,10 @@ export class Actions {
         else if (textBoxName === "transactionSearchMenu") {
 
             await this.transactionSearchMenu.fill(text);
+        }
+         else if (textBoxName === "notes") {
+
+            await this.notes.fill(text);
         }
         
 

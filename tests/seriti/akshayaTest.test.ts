@@ -202,5 +202,59 @@ test('Verify that the user can "Add" new DOC Summary report with valid data.', a
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("docSummary");
+    await Click.Btn("addDocSummaryReport");
+    await page.waitForTimeout(2000);
+    await Click.checkbox(2, ["Tebogo Lepelle", "Floyd Tshoma", "Hlayisani Shondlani"]);
+    await Click.icon("cancel2");
+    await Click.dropdown("Administrator Company", "Al Nova");
+    await Click.icon("cancel3");
+    await page.waitForTimeout(2000);
+    await Click.dropdown("Claim Company", "Ghayatta Dic");
+    await Click.calendar(1, "2025", "May", 25);
+    await page.waitForTimeout(2000);
+    await Click.calendar(2, "2025", "Jun", 30);
+    await Click.Btn("createDateYes");
+    await Click.Btn("inceptDateYes ")
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
+test('Verify that the user can "Copy" DOC Summery report with valid data', async ({ page, Actions, Click, Verify }) => {
+   await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docSummary");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await page.waitForTimeout(5000);
+    await Click.Btn("save")
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
+test('Verify that the user can "Edit" DOC Summery report with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docSummary");
+    await Click.icon("edit");
+    await Actions.enterText("notes","good eve");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "good eve");
+});
+
+test('Verify that the user can "download" DOC Summery report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docSummary");
+    await Click.link("download");
+    await page.pause();
 });
 
