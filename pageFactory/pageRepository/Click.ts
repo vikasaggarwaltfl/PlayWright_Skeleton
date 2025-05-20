@@ -13,6 +13,8 @@ export class Click {
     private readonly transaction: Locator;
     private readonly dealTracker: Locator;
     private readonly docSummary: Locator;
+    private readonly docReport: Locator;
+    private readonly financeReport: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     private readonly seritiLogo: Locator;
@@ -38,10 +40,11 @@ export class Click {
     private readonly createDateYes: Locator;
     private readonly inceptDateYes: Locator;
     private readonly createDateNo: Locator;
-    private readonly inceptDateNO: Locator;
+    private readonly inceptDateNo: Locator;
     private readonly yes: Locator;
     private readonly copying: Locator;
     private readonly addDocSummaryReport: Locator;
+    private readonly addDocReport: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -54,6 +57,9 @@ export class Click {
         this.transaction = page.locator("//div[text()='Transaction']")
         this.dealTracker = page.locator("//div[text()='Deal Tracker Report']")
         this.docSummary = page.locator("//div[text()='DOC Summary Report']");
+        this.docReport = page.locator("//div[@class='text-start'][normalize-space()='DOC Report']");
+        this.financeReport = page.locator("//div[contains(@class,'text-start')][normalize-space()='Finance Application Analysis Report']");
+
 
         //icon--------------------------------------------------------------------------------------------------------        
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
@@ -61,8 +67,8 @@ export class Click {
         this.cancel = page.locator("//*[name()='path' and contains(@d,'M8.01186 7')]");
         this.delete = page.locator("//tbody/tr[1]/td[1]/div[1]/button[2]");
         this.copy = page.locator("//tbody/tr[1]/td[1]/div[1]/div[1]/button[1]/i[1]");
-        this.edit = page.locator("//tr[@class='p-row-even']//i[@class='pi pi-pencil text-lg']");
-        this.cancel2 =  page.locator("(//*[name()='path'])[8]");
+        this.edit = page.locator("(//i[@class='pi pi-pencil text-lg'])[1]");
+        this.cancel2 = page.locator("(//*[name()='path'])[8]");
         this.cancel3 = page.locator("(//*[name()='path'])[10]");
         this.selectAll = page.locator("//span[text()='Select All']");
         this.deSelectAll = page.locator("//span[text()='De-select All']");
@@ -79,13 +85,14 @@ export class Click {
         this.createDateYes = page.locator("//div[@placeholder='Create Date']//span[@class='p-button-label'][normalize-space()='Yes']");
         this.inceptDateYes = page.locator("//div[@placeholder='Incept Date']//span[@class='p-button-label'][normalize-space()='Yes']");
         this.createDateNo = page.locator("//div[@placeholder='Create Date']//span[@class='p-button-label'][normalize-space()='No']");
-        this.inceptDateNO = page.locator("//div[@placeholder='Incept Date']//span[@class='p-button-label'][normalize-space()='No']");
+        this.inceptDateNo = page.locator("//div[@placeholder='Incept Date']//span[@class='p-button-label'][normalize-space()='No']");
         this.yes = page.locator("//span[text()='Yes']");
         this.copying = page.locator("//button[text()='Copy']");
         this.selectAll = page.locator("//span[text()='Select All']");
         this.deSelectAll = page.locator("//span[text()='De-select All']");
-        this.addDocSummaryReport =  page.locator("//div[@class='flex flex-row gap-2 items-center']");
-     
+        this.addDocSummaryReport = page.locator("//div[@class='flex flex-row gap-2 items-center']");
+        this.addDocReport = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
+
     }
 
 
@@ -111,7 +118,12 @@ export class Click {
         else if (str === "docSummary") {
             await this.docSummary.click();
         }
-
+        else if (str === "docReport") {
+            await this.docReport.click();
+        }
+        else if (str === "financeReport") {
+            await this.financeReport.click();
+        }
 
 
     }
@@ -127,7 +139,7 @@ export class Click {
         else if (str === "cancel") {
             await this.cancel.click();
         }
-         else if (str === "delete") {
+        else if (str === "delete") {
             await this.delete.click();
         }
         else if (str === "copy") {
@@ -136,17 +148,17 @@ export class Click {
         else if (str === "edit") {
             await this.edit.click();
         }
-         else if (str === "cancel2") {
+        else if (str === "cancel2") {
             await this.cancel2.click();
         }
         else if (str === "cancel3") {
             await this.cancel3.click();
         }
 
-         else if (str === "selectAll") {
+        else if (str === "selectAll") {
             await this.selectAll.click();
         }
-         else if (str === "deSelectAll") {
+        else if (str === "deSelectAll") {
             await this.deSelectAll.click();
         }
 
@@ -183,19 +195,19 @@ export class Click {
         else if (str === "createDateYes") {
             await this.createDateYes.click();
         }
-        else if (str === "inceptDateYes ") {
+        else if (str === "inceptDateYes") {
             await this.inceptDateYes.click();
         }
         else if (str === "createDateNo") {
-            await this.inceptDateYes.click();
+            await this.createDateNo.click();
         }
         else if (str === "inceptDateNo") {
-            await this.inceptDateYes.click();
+            await this.inceptDateNo.click();
         }
-         else if (str === "yes") {
+        else if (str === "yes") {
             await this.yes.click();
         }
-         else if (str === "copying") {
+        else if (str === "copying") {
             await this.copying.click();
         }
         else if (str === "selectAll") {
@@ -204,8 +216,11 @@ export class Click {
         else if (str === "deSelectAll") {
             await this.deSelectAll.click();
         }
-         else if (str === "addDocSummaryReport") {
+        else if (str === "addDocSummaryReport") {
             await this.addDocSummaryReport.click();
+        }
+        else if (str === "addDocReport") {
+            await this.addDocReport.click();
         }
 
     };
@@ -219,34 +234,27 @@ export class Click {
 
     //radio button-------------------------------------------------------------------------------------------------------
     async radioButton(label: string[] | string): Promise<void> {
-
         if (Array.isArray(label)) {
-           
             for (const labels of label) {
                 await this.page.getByLabel(`${labels}`).check();
             }
         }
         // If we have a single label
         else {
-           await this.page.getByLabel(`${label}`).check(); 
+            await this.page.getByLabel(`${label}`).check();
         }
-        
-
-    }
+}
 
     //calendar-------------------------------------------------------------------------------------------------------
     async calendar(index: number, year: string, month: string, date?: number): Promise<void> {
         // First click the calendar button
         await this.page.locator(`(//button[@aria-label='Choose Date'])[${index}]`).click();
-
         // Click the year picker and select year
         await this.page.locator("//button[@aria-label='Choose Year']").click();
         await this.page.locator(`//span[normalize-space()='${year}']`).click();
-
         // Select the month
         await this.page.locator(`(//span[@data-pc-section='month'][text()='${month} '])`).click();
-
-        // If date is provided, select it
+       // If date is provided, select it
         if (date !== undefined) {
             await this.page.locator(`(//span[@data-p-disabled='false'])[text()='${date}']`).click();
         }
@@ -255,14 +263,12 @@ export class Click {
     //chevronLeft-------------------------------------------------------------------------------------------------------
     async chevronLeftArrow(index: number): Promise<void> {
         await this.page.locator(`(//button[@class='flex flex-row items-center justify-center'])[${index}]`).click();
-
-    }
+}
 
     //checkbox-----------------------------------------------------------------------------------------------------------
     async checkbox(index: number, selectors: string[] | string): Promise<void> {
         // Click the dropdown first
         await this.page.locator(`(//div[@class='p-multiselect-label'])[${index}]`).click();
-
         // If we want to deselect all checkboxes
         if (selectors === 'All') {
             await this.page.locator("(//input[@aria-label='All items selected'])[1]").click();
@@ -279,7 +285,6 @@ export class Click {
             await this.page.locator("(//input[@aria-label='All items selected'])[1]").click();
             await this.page.locator(`//span[text()='${selectors}']`).click();
         }
-
         // Close the dropdown by clicking outside
         await this.page.locator("body").click({ position: { x: 0, y: 0 } });
     }
