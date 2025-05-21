@@ -127,7 +127,7 @@ test('Verify that the user can check or uncheck multiple checkbox', async ({ pag
     await Click.icon("cancel");
     await Click.dropdown("Group", "Practise group");
     await page.waitForTimeout(2000);
-    await Click.checkbox(2, ["Tebogo Lepelle", "Winjit Staging Bm", "Business Manager Staging"]);
+    await Click.checkboxWithAll(2, ["Tebogo Lepelle", "Winjit Staging Bm", "Business Manager Staging"]);
     await Verify.IsTextDisplayed(page, ["Tebogo Lepelle", "Winjit Staging Bm", "Business Manager Staging"]);
 });
 
@@ -142,7 +142,7 @@ test('Verify that the user can "Add" new Deal tracker report with valid data', a
     await Click.icon("cancel");
     await Click.dropdown("Group", "Practise group");
     await page.waitForTimeout(2000);
-    await Click.checkbox(2, "Tebogo Lepelle");
+    await Click.checkboxWithAll(2, "Tebogo Lepelle");
     await Click.calendar(1, "2025", "May", 10);
     await page.waitForTimeout(2000);
     await Click.calendar(2, "2025", "Jun", 11);
@@ -204,7 +204,7 @@ test('Verify that the user can "Add" new DOC Summary report with valid data.', a
     await Click.tabs("docSummary");
     await Click.Btn("addDocSummaryReport");
     await page.waitForTimeout(2000);
-    await Click.checkbox(2, ["Tebogo Lepelle", "Floyd Tshoma", "Hlayisani Shondlani"]);
+    await Click.checkboxWithAll(2, ["Tebogo Lepelle", "Floyd Tshoma", "Hlayisani Shondlani"]);
     await Click.icon("cancel2");
     await Click.dropdown("Administrator Company", "Al Nova");
     await Click.icon("cancel3");
@@ -241,9 +241,9 @@ test('Verify that the user can "Edit" DOC Summary report with valid data', async
     await Click.chevronLeftArrow(2);
     await Click.tabs("docSummary");
     await Click.icon("edit");
-    await Actions.enterText("notes", "good eve");
+    await Actions.enterText("notes", "Hello");
     await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "good eve");
+    await Verify.IsTextDisplayed(page, "Hello");
 });
 
 test('Verify that the user can "download" DOC Summary report', async ({ page, Actions, Click, Verify }) => {
@@ -271,8 +271,8 @@ test('Verify that the user can "Add" new DOC report with valid data', async ({ p
     await page.waitForTimeout(2000);
     await Click.calendar(2, "2025", "Jul", 26);
     await Click.Btn("inceptDateYes")
-    await Click.checkbox(5, "Vehicle");
-    await Click.checkbox(6, ["New Aftermarket", "Demo Aftermarket"])
+    await Click.checkboxWithAll(5, "Vehicle");
+    await Click.checkboxWithAll(6, ["New Aftermarket", "Demo Aftermarket"])
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
@@ -289,17 +289,71 @@ test('Verify that the user can "download" DOC report', async ({ page, Actions, C
 
 //reports >> Finance Reporting-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test.skip('Verify that the user can generate Finance Application Analysis Report by selecting valid details', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can generate Finance Application Analysis Report by selecting valid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(3);
     await Click.tabs("financeReport");
-    await Click.checkbox(1,"Practise group")
-    await Click.checkbox(3,"practise company")
+    await Click.checkboxWithAll(1,"Practise group")
+    await Click.checkboxWithAll(3,"practise company")
     await Click.calendar(1, "2025", "May", 20);
     await page.waitForTimeout(2000);
     await Click.calendar(2, "2025", "Jul", 26);
-    await Verify.verifyDownload('GENERATE_REPORT');
+    await Verify.verifyDownload('generateReport');
+});
+
+test('Verify that the user cannot generate Finance Application Analysis Report by selecting Invalid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(3);
+    await Click.tabs("financeReport");
+    await Click.checkboxWithAll(1,"Practise group")
+    await Click.checkboxWithAll(3,"practise company")
+    await Click.Btn("generateReport");
+    await Verify.verifyErrorMessage(page,"From Date is a required field");
+});
+
+//reports >> Admin report >> Banker user login report----------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can generate Banker User Login Report by selecting valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("bankerUserReport");
+    await Click.checkboxWithoutAll("Groups","Practise group");
+    await Click.checkboxWithoutAll("Branch","Practise branch");
+    await Click.checkboxWithoutAll("Finance Company","practise company");
+    await Click.checkboxWithoutAll("Role",["Banker","MAU banker"]);
+    await Click.Btn("includeActiveUsers");
+    await Verify.verifyDownload('generateReport');
+});
+
+//reports >> Admin report >> Supply data report----------------------------------------------------------------------------------------------------------------------------------------------------
+
+test.skip('Verify that the user can generate Supply Data Report by selecting valid details.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("supplyDataReport");
+    await Click.checkboxWithoutAll("Group","Practise group");
+    await Click.checkboxWithoutAll("Branch","Practise branch");
+    await Click.checkboxWithoutAll("Product Type","All");
+    await Click.checkboxWithoutAll("Product Sub Type", "Body Warranty");
+    await Click.checkboxWithoutAll("Product","Body Warranty");
+    await Click.checkboxWithoutAll("Administrator","practise company");
+    await Click.checkboxWithoutAll("Underwriter","practise company");
+    await Click.checkboxWithoutAll("Claims","practise company");
+    await Click.checkboxWithoutAll("Owner","practise company");
+    await Click.calendar(1, "2026", "Jul", 20);
+    await page.waitForTimeout(2000);
+    await Click.calendar(2, "2027", "Aug", 26);
+    await Verify.verifyDownload('generateReport');
 });

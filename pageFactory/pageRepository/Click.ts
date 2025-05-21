@@ -15,6 +15,8 @@ export class Click {
     private readonly docSummary: Locator;
     private readonly docReport: Locator;
     private readonly financeReport: Locator;
+    private readonly bankerUserReport: Locator;
+    private readonly supplyDataReport: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     private readonly seritiLogo: Locator;
@@ -45,6 +47,8 @@ export class Click {
     private readonly copying: Locator;
     private readonly addDocSummaryReport: Locator;
     private readonly addDocReport: Locator;
+    private readonly generateReport: Locator;
+    private readonly includeActiveUsers: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -59,7 +63,8 @@ export class Click {
         this.docSummary = page.locator("//div[text()='DOC Summary Report']");
         this.docReport = page.locator("//div[@class='text-start'][normalize-space()='DOC Report']");
         this.financeReport = page.locator("//div[contains(@class,'text-start')][normalize-space()='Finance Application Analysis Report']");
-
+        this.bankerUserReport = page.locator("//div[text()='Banker User Login Report']");
+        this.supplyDataReport = page.locator("//div[text()='Supply Data Report']");
 
         //icon--------------------------------------------------------------------------------------------------------        
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
@@ -92,7 +97,9 @@ export class Click {
         this.deSelectAll = page.locator("//span[text()='De-select All']");
         this.addDocSummaryReport = page.locator("//div[@class='flex flex-row gap-2 items-center']");
         this.addDocReport = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
-
+        this.generateReport = page.locator("//span[text()='Generate Report']");
+        this.includeActiveUsers = page.locator("div[placeholder='Include Active Users'] div[aria-label='Yes'] span[class='p-button-label']");
+        
     }
 
 
@@ -124,7 +131,12 @@ export class Click {
         else if (str === "financeReport") {
             await this.financeReport.click();
         }
-
+        else if (str === "bankerUserReport") {
+            await this.bankerUserReport.click();
+        }
+        else if (str === "supplyDataReport") {
+            await this.supplyDataReport.click();
+        }
 
     }
 
@@ -222,6 +234,12 @@ export class Click {
         else if (str === "addDocReport") {
             await this.addDocReport.click();
         }
+         else if (str === "generateReport") {
+            await this.generateReport.click();
+        }
+        else if (str === "includeActiveUsers") {
+            await this.includeActiveUsers.click();
+        }
 
     };
 
@@ -266,7 +284,7 @@ export class Click {
 }
 
     //checkbox-----------------------------------------------------------------------------------------------------------
-    async checkbox(index: number, selectors: string[] | string): Promise<void> {
+    async checkboxWithAll(index: number, selectors: string[] | string): Promise<void> {
         // Click the dropdown first
         await this.page.locator(`(//div[@class='p-multiselect-label'])[${index}]`).click();
         // If we want to deselect all checkboxes
@@ -283,6 +301,28 @@ export class Click {
         // If we have a single selector
         else {
             await this.page.locator("(//input[@aria-label='All items selected'])[1]").click();
+            await this.page.locator(`//span[text()='${selectors}']`).click();
+        }
+        // Close the dropdown by clicking outside
+        await this.page.locator("body").click({ position: { x: 0, y: 0 } });
+    }
+
+
+    async checkboxWithoutAll(Textvalue: string, selectors: string[] | string): Promise<void> {
+        // Click the dropdown first
+        await this.page.locator(`//div[contains(@class,'p-multiselect-label p-placeholder')][normalize-space()='${Textvalue}']`).click();
+        // If we want to select all checkboxes
+        if (selectors === 'All') {
+            await this.page.locator("//input[contains(@aria-label,'All items unselected')]").click();
+        }
+        // If we have an array of selectors
+        else if (Array.isArray(selectors)) {
+            for (const selector of selectors) {
+                await this.page.locator(`//span[text()='${selector}']`).click();
+            }
+        }
+        // If we have a single selector
+        else {
             await this.page.locator(`//span[text()='${selectors}']`).click();
         }
         // Close the dropdown by clicking outside

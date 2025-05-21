@@ -94,7 +94,7 @@ export class Verify {
     const downloadPromise = this.page.waitForEvent('download');
     if (value === DOWNLOAD_LINK) {
       await this.page.locator("//tbody/tr[1]/td[4]/a[1]").click();
-    } else if (value === GENERATE_REPORT) {
+    } else if(value === GENERATE_REPORT) {
       await this.page.locator("//span[text()='Generate Report']").click();
     }
     const download = await downloadPromise;
