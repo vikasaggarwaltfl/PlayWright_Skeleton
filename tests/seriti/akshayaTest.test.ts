@@ -296,8 +296,8 @@ test('Verify that the user can generate Finance Application Analysis Report by s
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(3);
     await Click.tabs("financeReport");
-    await Click.checkboxWithAll(1,"Practise group")
-    await Click.checkboxWithAll(3,"practise company")
+    await Click.checkboxWithAll(1, "Practise group")
+    await Click.checkboxWithAll(3, "practise company")
     await Click.calendar(1, "2025", "May", 20);
     await page.waitForTimeout(2000);
     await Click.calendar(2, "2025", "Jul", 26);
@@ -311,10 +311,10 @@ test('Verify that the user cannot generate Finance Application Analysis Report b
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(3);
     await Click.tabs("financeReport");
-    await Click.checkboxWithAll(1,"Practise group")
-    await Click.checkboxWithAll(3,"practise company")
+    await Click.checkboxWithAll(1, "Practise group")
+    await Click.checkboxWithAll(3, "practise company")
     await Click.Btn("generateReport");
-    await Verify.verifyErrorMessage(page,"From Date is a required field");
+    await Verify.verifyErrorMessage(page, "From Date is a required field");
 });
 
 //reports >> Admin report >> Banker user login report----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -326,34 +326,72 @@ test('Verify that the user can generate Banker User Login Report by selecting va
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(4);
     await Click.tabs("bankerUserReport");
-    await Click.checkboxWithoutAll("Groups","Practise group");
-    await Click.checkboxWithoutAll("Branch","Practise branch");
-    await Click.checkboxWithoutAll("Finance Company","practise company");
-    await Click.checkboxWithoutAll("Role",["Banker","MAU banker"]);
+    await Click.checkboxWithoutAll("Groups", "Practise group");
+    await Click.checkboxWithoutAll("Branch", "Practise branch");
+    await Click.checkboxWithoutAll("Finance Company", "practise company");
+    await Click.checkboxWithoutAll("Role", ["Banker", "MAU banker"]);
     await Click.Btn("includeActiveUsers");
     await Verify.verifyDownload('generateReport');
 });
 
 //reports >> Admin report >> Supply data report----------------------------------------------------------------------------------------------------------------------------------------------------
 
-test.skip('Verify that the user can generate Supply Data Report by selecting valid details.', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can generate Supply Data Report by selecting valid details.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(4);
     await Click.tabs("supplyDataReport");
-    await Click.checkboxWithoutAll("Group","Practise group");
-    await Click.checkboxWithoutAll("Branch","Practise branch");
-    await Click.checkboxWithoutAll("Product Type","All");
-    await Click.checkboxWithoutAll("Product Sub Type", "Body Warranty");
-    await Click.checkboxWithoutAll("Product","Body Warranty");
-    await Click.checkboxWithoutAll("Administrator","practise company");
-    await Click.checkboxWithoutAll("Underwriter","practise company");
-    await Click.checkboxWithoutAll("Claims","practise company");
-    await Click.checkboxWithoutAll("Owner","practise company");
-    await Click.calendar(1, "2026", "Jul", 20);
+    await page.waitForTimeout(3000);
+    await Click.checkboxWithoutAll("Group", "Practise group");
+    await page.waitForTimeout(3000);
+    await Click.checkboxWithoutAll("Branch", "Practise branch");
+    await page.waitForTimeout(3000);
+    await Click.checkboxWithoutAll("Product Type", "All");
     await page.waitForTimeout(2000);
+    await Click.checkboxWithoutAll("Product Sub Type", "Body Warranty");
+    await page.waitForTimeout(2000);
+    await Click.checkboxWithoutAll("Product", "Body Warranty");
+    await page.waitForTimeout(1000);
+    await Click.checkboxWithoutAll("Administrator", "practise company");
+    await page.waitForTimeout(1000);
+    await Click.checkboxWithoutAll("Underwriter", "practise company");
+    await page.waitForTimeout(1000);
+    await Click.checkboxWithoutAll("Claims", "practise company");
+    await page.waitForTimeout(1000);
+    await Click.checkboxWithoutAll("Owner", "practise company");
+    await page.waitForTimeout(1000);
+    await Click.calendar(1, "2026", "Jul", 20);
+    await page.waitForTimeout(1000);
     await Click.calendar(2, "2027", "Aug", 26);
     await Verify.verifyDownload('generateReport');
 });
+
+//reports >> Admin report >> Supply data report----------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can generate User name login report by selecting valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("usernameLoginReport");
+    await Click.dropdown("User", "admin@seritisolutions.com");
+    await Verify.verifyDownload('generateReport');
+});
+
+//report scheduler-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+test.only('Verify that the user can "Add" new Report Scheduler with valid data', async ({ page, Actions, Click, Verify }) => {        
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("reportScheduler");
+    await Click.Btn("addReportScheduler");
+    await page.pause();
+
+
+}
+);

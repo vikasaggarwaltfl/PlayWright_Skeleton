@@ -17,6 +17,8 @@ export class Click {
     private readonly financeReport: Locator;
     private readonly bankerUserReport: Locator;
     private readonly supplyDataReport: Locator;
+    private readonly usernameLoginReport: Locator;
+    private readonly reportScheduler: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     private readonly seritiLogo: Locator;
@@ -49,6 +51,7 @@ export class Click {
     private readonly addDocReport: Locator;
     private readonly generateReport: Locator;
     private readonly includeActiveUsers: Locator;
+    private readonly addReportScheduler: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -64,7 +67,9 @@ export class Click {
         this.docReport = page.locator("//div[@class='text-start'][normalize-space()='DOC Report']");
         this.financeReport = page.locator("//div[contains(@class,'text-start')][normalize-space()='Finance Application Analysis Report']");
         this.bankerUserReport = page.locator("//div[text()='Banker User Login Report']");
-        this.supplyDataReport = page.locator("//div[text()='Supply Data Report']");
+        this.supplyDataReport = page.locator("//div[text()='User Name Login Report']");
+        this.usernameLoginReport = page.locator("//div[text()='User Name Login Report']");
+        this.reportScheduler = page.locator("//div[@class='text-start'][normalize-space()='Report Scheduler']");
 
         //icon--------------------------------------------------------------------------------------------------------        
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
@@ -99,7 +104,7 @@ export class Click {
         this.addDocReport = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.generateReport = page.locator("//span[text()='Generate Report']");
         this.includeActiveUsers = page.locator("div[placeholder='Include Active Users'] div[aria-label='Yes'] span[class='p-button-label']");
-        
+        this.addReportScheduler = page.locator("//div[@class='p-splitbutton p-component']");
     }
 
 
@@ -137,7 +142,13 @@ export class Click {
         else if (str === "supplyDataReport") {
             await this.supplyDataReport.click();
         }
-
+        else if (str === "usernameLoginReport") {
+            await this.usernameLoginReport.click();
+        }
+        else if (str === "reportScheduler") {
+            await this.reportScheduler.click();
+        }
+        
     }
 
     //icon--------------------------------------------------------------------------------------------------------
@@ -239,6 +250,9 @@ export class Click {
         }
         else if (str === "includeActiveUsers") {
             await this.includeActiveUsers.click();
+        }
+        else if (str === "addReportScheduler") {
+            await this.addReportScheduler.click();
         }
 
     };
