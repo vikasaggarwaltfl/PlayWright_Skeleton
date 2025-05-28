@@ -343,23 +343,23 @@ test('Verify that the user can generate Supply Data Report by selecting valid de
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(4);
     await Click.tabs("supplyDataReport");
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(4000);
     await Click.checkboxWithoutAll("Group", "Practise group");
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(4000);
     await Click.checkboxWithoutAll("Branch", "Practise branch");
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(4000);
     await Click.checkboxWithoutAll("Product Type", "All");
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(4000);
     await Click.checkboxWithoutAll("Product Sub Type", "Body Warranty");
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(3000);
     await Click.checkboxWithoutAll("Product", "Body Warranty");
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(3000);
     await Click.checkboxWithoutAll("Administrator", "practise company");
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(2000);
     await Click.checkboxWithoutAll("Underwriter", "practise company");
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(2000);
     await Click.checkboxWithoutAll("Claims", "practise company");
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(2000);
     await Click.checkboxWithoutAll("Owner", "practise company");
     await page.waitForTimeout(1000);
     await Click.calendar(1, "2026", "Jul", 20);
@@ -382,7 +382,8 @@ test('Verify that the user can generate User name login report by selecting vali
 });
 
 //report scheduler-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.only('Verify that the user can "Add" new Report Scheduler with valid data', async ({ page, Actions, Click, Verify }) => {        
+
+test('Verify that the user cannot "Add" new Report Scheduler with invalid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
@@ -390,8 +391,62 @@ test.only('Verify that the user can "Add" new Report Scheduler with valid data',
     await Click.chevronLeftArrow(2);
     await Click.tabs("reportScheduler");
     await Click.Btn("addReportScheduler");
-    await page.pause();
+    await page.waitForTimeout(2000);
+    await Click.dropdown("Report Type", "Transaction Document Report");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Group is a required field");
+});
 
+test('Verify that the user can "Copy" Report Scheduler report with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("reportScheduler");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await page.waitForTimeout(5000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
 
-}
-);
+test('Verify that the user can "delete" Report Scheduler report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("reportScheduler");
+    await Click.icon("delete");
+    await Click.Btn("yes");
+    await page.waitForTimeout(2000);
+    await Verify.verifyDatacount(3);
+});
+
+test('Verify that the user can "edit" Report Scheduler report with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("reportScheduler");
+    await Click.icon("edit");
+    await page.waitForTimeout(2000);
+    await Click.dropdown("Weekly (Every Friday evening)", "Daily (Every night)");
+    await page.waitForTimeout(2000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Report Scheduler saved!");
+});
+
+test.skip('Verify that the user can filter Report Scheduler records and data grid gets updated', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("reportScheduler");
+   
+});
+

@@ -67,7 +67,7 @@ export class Click {
         this.docReport = page.locator("//div[@class='text-start'][normalize-space()='DOC Report']");
         this.financeReport = page.locator("//div[contains(@class,'text-start')][normalize-space()='Finance Application Analysis Report']");
         this.bankerUserReport = page.locator("//div[text()='Banker User Login Report']");
-        this.supplyDataReport = page.locator("//div[text()='User Name Login Report']");
+        this.supplyDataReport = page.locator("//div[text()='Supply Data Report']");
         this.usernameLoginReport = page.locator("//div[text()='User Name Login Report']");
         this.reportScheduler = page.locator("//div[@class='text-start'][normalize-space()='Report Scheduler']");
 
@@ -259,8 +259,9 @@ export class Click {
 
     //dropdown--------------------------------------------------------------------------------------------------------
     async dropdown(value: string, selector: string): Promise<void> {
-
+        // First click the dropdown
         await this.page.locator(`//span[text()='${value}']`).click();
+        // Then select the option
         await this.page.locator(`//span[normalize-space()='${selector}']`).click();
     }
 
