@@ -440,13 +440,62 @@ test('Verify that the user can "edit" Report Scheduler report with valid data', 
     await Verify.IsTextDisplayed(page, "Report Scheduler saved!");
 });
 
-test.skip('Verify that the user can filter Report Scheduler records and data grid gets updated', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can filter Report Scheduler records and data grid gets updated', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("reportScheduler");
-   
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("reportName", "Practise test");
+    await Click.Btn("apply");
+    await Verify.verifyDatacount(3);
+});
+
+test('Verify that the user can reset Report Scheduler records and data grid gets updated', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("reportScheduler");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("reportName", "Practise test");
+    await Click.Btn("apply");
+    await Click.Btn("reset");
+    await Verify.verifyDatacount(3);
+});
+
+//Template-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can "Add" new Template with valid data', async ({ page, Actions, Click, Verify }) => {       
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.tabs("template");
+    await Click.Btn("addTemplate");
+    await page.waitForTimeout(2000);
+    await Click.dropdown("Template Category", "Record of advice");
+    await Actions.enterText("templateName", "Template3"); 
+    await Actions.enterText("reportHeading", "Template3 Heading");
+    await Click.Btn("yes");
+    await Click.calendar(1, "2025", "Jul", 20);
+    await page.waitForTimeout(2000);
+    await Click.calendar(2, "2025", "Oct", 26);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
+test('Verify that the user can filter template details using the filter options', async ({ page, Actions, Click, Verify }) => {       
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.tabs("template");
+    await Click.icon("filterArrow");
+    await Actions.enterText("templateName", "my template"); 
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Verify.verifyDatacount(1);
 });
 

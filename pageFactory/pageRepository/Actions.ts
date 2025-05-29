@@ -25,6 +25,9 @@ export class Actions {
     private readonly searchMenu: Locator;
     private readonly transactionSearchMenu: Locator;
     private readonly notes: Locator;
+    private readonly templateName: Locator;
+    private readonly reportName: Locator;
+    private readonly reportHeading: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -36,8 +39,10 @@ export class Actions {
         this.searchMenu = page.locator("//input[@placeholder='Search']");
         this.transactionSearchMenu = page.locator("//input[@placeholder='Transaction Number']");
         this.notes = page.locator("//input[@id='Notes']");
-        
-        
+        this.templateName = page.locator("//input[@id='TemplateName']");
+        this.reportName = page.locator("//input[@id='CustomReportName']");
+        this.reportHeading = page.locator("//input[@id='ReportHeading']");
+
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -67,8 +72,19 @@ export class Actions {
 
             await this.notes.fill(text);
         }
-        
+        else if (textBoxName === "templateName") {
 
+            await this.templateName.fill(text);
+        }
+        else if (textBoxName === "reportName") {
+
+            await this.reportName.fill(text);
+        }
+        else if (textBoxName === "reportHeading") {
+
+            await this.reportHeading.fill(text);
+        }
+    
     }
 
     async signIn(userProfile: string) {

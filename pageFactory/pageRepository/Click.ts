@@ -19,6 +19,7 @@ export class Click {
     private readonly supplyDataReport: Locator;
     private readonly usernameLoginReport: Locator;
     private readonly reportScheduler: Locator;
+    private readonly template: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     private readonly seritiLogo: Locator;
@@ -31,6 +32,7 @@ export class Click {
     private readonly cancel3: Locator;
     private readonly selectAll: Locator;
     private readonly deSelectAll: Locator;
+    private readonly filterArrow: Locator;
 
     //buttons--------------------------------------------------------------------------------------------------------
     private readonly login: Locator;
@@ -52,7 +54,9 @@ export class Click {
     private readonly generateReport: Locator;
     private readonly includeActiveUsers: Locator;
     private readonly addReportScheduler: Locator;
-
+    private readonly apply: Locator;
+    private readonly reset: Locator;
+    private readonly addTemplate: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
@@ -70,6 +74,7 @@ export class Click {
         this.supplyDataReport = page.locator("//div[text()='Supply Data Report']");
         this.usernameLoginReport = page.locator("//div[text()='User Name Login Report']");
         this.reportScheduler = page.locator("//div[@class='text-start'][normalize-space()='Report Scheduler']");
+        this.template = page.locator("//div[contains(@class,'text-start')][normalize-space()='Template']");
 
         //icon--------------------------------------------------------------------------------------------------------        
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
@@ -82,6 +87,7 @@ export class Click {
         this.cancel3 = page.locator("(//*[name()='path'])[10]");
         this.selectAll = page.locator("//span[text()='Select All']");
         this.deSelectAll = page.locator("//span[text()='De-select All']");
+        this.filterArrow = page.locator("(//button[@class='w-4 h-4 flex justify-center items-center'])[1]");
 
         //buttons--------------------------------------------------------------------------------------------------------        
         this.login = page.locator("//span[text()='Login']")
@@ -105,6 +111,11 @@ export class Click {
         this.generateReport = page.locator("//span[text()='Generate Report']");
         this.includeActiveUsers = page.locator("div[placeholder='Include Active Users'] div[aria-label='Yes'] span[class='p-button-label']");
         this.addReportScheduler = page.locator("//div[@class='p-splitbutton p-component']");
+        this.apply = page.locator("//span[normalize-space()='Apply']");
+        this.reset = page.locator("//button[@aria-label='Reset']");
+        this.addTemplate = page.locator("//button[contains(@class,'p-button p-component p-splitbutton-defaultbutton')]");
+        
+
     }
 
 
@@ -148,7 +159,9 @@ export class Click {
         else if (str === "reportScheduler") {
             await this.reportScheduler.click();
         }
-        
+        else if (str === "template") {
+            await this.template.click();
+        }
     }
 
     //icon--------------------------------------------------------------------------------------------------------
@@ -183,6 +196,9 @@ export class Click {
         }
         else if (str === "deSelectAll") {
             await this.deSelectAll.click();
+        }
+        else if (str === "filterArrow") {
+            await this.filterArrow.click();
         }
 
     }
@@ -254,7 +270,15 @@ export class Click {
         else if (str === "addReportScheduler") {
             await this.addReportScheduler.click();
         }
-
+        else if (str === "apply") {
+            await this.apply.click();
+        } 
+        else if (str === "reset") {
+            await this.reset.click();
+        }
+        else if (str === "addTemplate") {
+            await this.addTemplate.click();
+        }
     };
 
     //dropdown--------------------------------------------------------------------------------------------------------
