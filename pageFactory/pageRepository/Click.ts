@@ -33,6 +33,7 @@ export class Click {
     private readonly selectAll: Locator;
     private readonly deSelectAll: Locator;
     private readonly filterArrow: Locator;
+    private readonly sort: Locator;
 
     //buttons--------------------------------------------------------------------------------------------------------
     private readonly login: Locator;
@@ -88,6 +89,8 @@ export class Click {
         this.selectAll = page.locator("//span[text()='Select All']");
         this.deSelectAll = page.locator("//span[text()='De-select All']");
         this.filterArrow = page.locator("(//button[@class='w-4 h-4 flex justify-center items-center'])[1]");
+        this.sort = page.locator("(//span[@data-pc-section='sort'])[1]");
+
 
         //buttons--------------------------------------------------------------------------------------------------------        
         this.login = page.locator("//span[text()='Login']")
@@ -199,6 +202,9 @@ export class Click {
         }
         else if (str === "filterArrow") {
             await this.filterArrow.click();
+        }
+        else if (str === "sort") {
+            await this.sort.click();
         }
 
     }

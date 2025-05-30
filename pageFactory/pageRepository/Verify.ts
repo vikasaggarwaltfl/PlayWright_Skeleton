@@ -94,7 +94,7 @@ export class Verify {
     const downloadPromise = this.page.waitForEvent('download');
     if (value === DOWNLOAD_LINK) {
       await this.page.locator("//tbody/tr[1]/td[4]/a[1]").click();
-    } else if(value === GENERATE_REPORT) {
+    } else if (value === GENERATE_REPORT) {
       await this.page.locator("//span[text()='Generate Report']").click();
     }
     const download = await downloadPromise;
@@ -106,5 +106,36 @@ export class Verify {
     // Verify that the file exists
     expect(fs.existsSync(downloadPath)).toBeTruthy();
   }
+  //verify sort order-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+  async verifySortOrder(): Promise<void> {
+    
+    await this.page.locator("//table[@role='table']").focus();
+    const originalData = await this.page.locator('//table//tr/td[2]').allTextContents();
 
+    //Click sort icon for ascending order
+    await this.page.locator("(//span[@data-pc-section='sort'])[1]").click();
+    await this.page.waitForTimeout(2000);
+    // Get data after ascending sort 
+    const ascendingData = await this.page.locator('//table//tr/td[2]').allTextContents();
+    //verify ascending sort
+    const sortedascending = [...ascendingData].sort();
+    expect(ascendingData).not.toEqual(sortedascending);
+
+    //Click sort icon for descending order
+    await this.page.locator("(//span[@data-pc-section='sort'])[1]").click();
+    await this.page.waitForTimeout(2000);
+    // Get data after descending sort
+    const descendingData = await this.page.locator('//table//tr/td[2]').allTextContents();
+    // Verify descending sort
+    const sortedDescending = [...descendingData].sort().reverse();
+    expect(descendingData).toEqual(sortedDescending);
+
+    //Click sort icon to return to unsorted state
+    await this.page.locator("(//span[@data-pc-section='sort'])[1]").click();
+    await this.page.waitForTimeout(2000);
+    // Verify data returns to original order
+    const finalData = await this.page.locator('//table//tr/td[2]').allTextContents();
+    expect(finalData).toEqual(originalData);
+
+  }
 }

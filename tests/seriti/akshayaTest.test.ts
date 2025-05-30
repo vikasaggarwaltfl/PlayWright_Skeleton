@@ -241,9 +241,9 @@ test('Verify that the user can "Edit" DOC Summary report with valid data', async
     await Click.chevronLeftArrow(2);
     await Click.tabs("docSummary");
     await Click.icon("edit");
-    await Actions.enterText("notes", "Hello");
+    await Actions.enterText("notes", "Hi");
     await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Hello");
+    await Verify.IsTextDisplayed(page, "Hi");
 });
 
 test('Verify that the user can "download" DOC Summary report', async ({ page, Actions, Click, Verify }) => {
@@ -499,3 +499,23 @@ test('Verify that the user can filter template details using the filter options'
     await Verify.verifyDatacount(1);
 });
 
+test('Verify that the user can reset template detailsby clicking on the reset button', async ({ page, Actions, Click, Verify }) => {       
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.tabs("template");
+    await Click.icon("filterArrow");
+    await Actions.enterText("templateName", "my template"); 
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.Btn("reset");
+    await page.waitForTimeout(2000);
+    await Verify.verifyDatacount(10);
+});
+
+test('Verify that the user can "sort" the template datas in the data grid', async ({ page, Actions, Click, Verify }) => {       
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.tabs("template");
+    await Verify.verifySortOrder();
+   
+});
