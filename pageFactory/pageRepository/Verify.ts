@@ -106,6 +106,7 @@ export class Verify {
     // Verify that the file exists
     expect(fs.existsSync(downloadPath)).toBeTruthy();
   }
+  
   //verify sort order-----------------------------------------------------------------------------------------------------------------------------------------------------------------
   async verifySortOrder(): Promise<void> {
     

@@ -34,6 +34,7 @@ export class Click {
     private readonly deSelectAll: Locator;
     private readonly filterArrow: Locator;
     private readonly sort: Locator;
+    private readonly backArrow: Locator;
 
     //buttons--------------------------------------------------------------------------------------------------------
     private readonly login: Locator;
@@ -58,6 +59,8 @@ export class Click {
     private readonly apply: Locator;
     private readonly reset: Locator;
     private readonly addTemplate: Locator;
+    private readonly templateLine: Locator;
+    private readonly add : Locator;
 
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
@@ -90,6 +93,7 @@ export class Click {
         this.deSelectAll = page.locator("//span[text()='De-select All']");
         this.filterArrow = page.locator("(//button[@class='w-4 h-4 flex justify-center items-center'])[1]");
         this.sort = page.locator("(//span[@data-pc-section='sort'])[1]");
+        this.backArrow = page.locator("//button[@class='border rounded-md w-9 h-9 border-primary-500']");
 
 
         //buttons--------------------------------------------------------------------------------------------------------        
@@ -117,8 +121,8 @@ export class Click {
         this.apply = page.locator("//span[normalize-space()='Apply']");
         this.reset = page.locator("//button[@aria-label='Reset']");
         this.addTemplate = page.locator("//button[contains(@class,'p-button p-component p-splitbutton-defaultbutton')]");
-        
-
+        this.templateLine = page.locator("//button[normalize-space()='Template Line']");
+        this.add = page.locator("//span[normalize-space()='Add']");
     }
 
 
@@ -206,6 +210,9 @@ export class Click {
         else if (str === "sort") {
             await this.sort.click();
         }
+        else if (str === "backArrow") {
+            await this.backArrow.click();
+        }
 
     }
 
@@ -285,12 +292,18 @@ export class Click {
         else if (str === "addTemplate") {
             await this.addTemplate.click();
         }
+        else if (str === "templateLine") {
+            await this.templateLine.click();
+        }
+        else if (str === "add") {
+            await this.add.click();
+        }
     };
 
     //dropdown--------------------------------------------------------------------------------------------------------
     async dropdown(value: string, selector: string): Promise<void> {
         // First click the dropdown
-        await this.page.locator(`//span[text()='${value}']`).click();
+       await this.page.locator(`//span[@aria-label='${value}']`).click();
         // Then select the option
         await this.page.locator(`//span[normalize-space()='${selector}']`).click();
     }

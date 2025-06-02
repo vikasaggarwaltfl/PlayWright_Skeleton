@@ -343,23 +343,23 @@ test('Verify that the user can generate Supply Data Report by selecting valid de
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(4);
     await Click.tabs("supplyDataReport");
-    await page.waitForTimeout(4000);
+    await page.waitForTimeout(3000);
     await Click.checkboxWithoutAll("Group", "Practise group");
-    await page.waitForTimeout(4000);
+    await page.waitForTimeout(3000);
     await Click.checkboxWithoutAll("Branch", "Practise branch");
-    await page.waitForTimeout(4000);
+    await page.waitForTimeout(3000);
     await Click.checkboxWithoutAll("Product Type", "All");
-    await page.waitForTimeout(4000);
+    await page.waitForTimeout(2000);
     await Click.checkboxWithoutAll("Product Sub Type", "Body Warranty");
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(2000);
     await Click.checkboxWithoutAll("Product", "Body Warranty");
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(2000);
     await Click.checkboxWithoutAll("Administrator", "practise company");
     await page.waitForTimeout(2000);
     await Click.checkboxWithoutAll("Underwriter", "practise company");
     await page.waitForTimeout(2000);
     await Click.checkboxWithoutAll("Claims", "practise company");
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(1000);
     await Click.checkboxWithoutAll("Owner", "practise company");
     await page.waitForTimeout(1000);
     await Click.calendar(1, "2026", "Jul", 20);
@@ -471,14 +471,14 @@ test('Verify that the user can reset Report Scheduler records and data grid gets
 
 //Template-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify that the user can "Add" new Template with valid data', async ({ page, Actions, Click, Verify }) => {       
+test('Verify that the user can "Add" new Template with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Click.tabs("template");
     await Click.Btn("addTemplate");
     await page.waitForTimeout(2000);
     await Click.dropdown("Template Category", "Record of advice");
-    await Actions.enterText("templateName", "Template3"); 
+    await Actions.enterText("templateName", "Template3");
     await Actions.enterText("reportHeading", "Template3 Heading");
     await Click.Btn("yes");
     await Click.calendar(1, "2025", "Jul", 20);
@@ -488,23 +488,23 @@ test('Verify that the user can "Add" new Template with valid data', async ({ pag
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
-test('Verify that the user can filter template details using the filter options', async ({ page, Actions, Click, Verify }) => {       
+test('Verify that the user can filter template details using the filter options', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Click.tabs("template");
     await Click.icon("filterArrow");
-    await Actions.enterText("templateName", "my template"); 
+    await Actions.enterText("templateName", "my template");
     await Click.Btn("apply");
     await page.waitForTimeout(2000);
     await Verify.verifyDatacount(1);
 });
 
-test('Verify that the user can reset template detailsby clicking on the reset button', async ({ page, Actions, Click, Verify }) => {       
+test('Verify that the user can reset template detailsby clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Click.tabs("template");
     await Click.icon("filterArrow");
-    await Actions.enterText("templateName", "my template"); 
+    await Actions.enterText("templateName", "my template");
     await Click.Btn("apply");
     await page.waitForTimeout(2000);
     await Click.Btn("reset");
@@ -512,10 +512,47 @@ test('Verify that the user can reset template detailsby clicking on the reset bu
     await Verify.verifyDatacount(10);
 });
 
-test('Verify that the user can "sort" the template datas in the data grid', async ({ page, Actions, Click, Verify }) => {       
+test('Verify that the user can "sort" the template datas in the data grid', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Click.tabs("template");
     await Verify.verifySortOrder();
-   
+});
+
+test('Verify that the user can "Copy" Template with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.tabs("template");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
+test('Verify that the user can "Edit" Template with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.tabs("template");
+    await Click.icon("edit");
+    await Click.Btn("templateLine");
+    await Click.Btn("add");
+    await Click.checkboxWithoutAll("Transaction Status", "Active");
+    await Click.dropdown("Category", "Finance");
+    await Click.calendar(1, "2026", "Jul", 22);
+    await page.waitForTimeout(2000);
+    await Click.calendar(2, "2026", "Oct", 1);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Active");
+});
+
+
+test('Verify that clicking on the back arrow, user is navigated to the template screen', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.tabs("template");
+    await Click.icon("edit");
+    await Click.icon("backArrow");
+    await page.waitForLoadState('networkidle');
+    await Verify.IsTextDisplayed(page, "Template Details");
 });
