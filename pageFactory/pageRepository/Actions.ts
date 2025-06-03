@@ -28,6 +28,7 @@ export class Actions {
     private readonly templateName: Locator;
     private readonly reportName: Locator;
     private readonly reportHeading: Locator;
+    private readonly groupName: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -42,6 +43,7 @@ export class Actions {
         this.templateName = page.locator("//input[@id='TemplateName']");
         this.reportName = page.locator("//input[@id='CustomReportName']");
         this.reportHeading = page.locator("//input[@id='ReportHeading']");
+        this.groupName = page.locator("//input[@id='GroupName']");
 
     }
 
@@ -83,6 +85,10 @@ export class Actions {
         else if (textBoxName === "reportHeading") {
 
             await this.reportHeading.fill(text);
+        }
+        else if (textBoxName === "groupName") {
+
+            await this.groupName.fill(text);
         }
     
     }

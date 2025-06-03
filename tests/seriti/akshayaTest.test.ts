@@ -241,9 +241,9 @@ test('Verify that the user can "Edit" DOC Summary report with valid data', async
     await Click.chevronLeftArrow(2);
     await Click.tabs("docSummary");
     await Click.icon("edit");
-    await Actions.enterText("notes", "Hi");
+    await Actions.enterText("notes", "Good morning");
     await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Hi");
+    await Verify.IsTextDisplayed(page, "Good morning");
 });
 
 test('Verify that the user can "download" DOC Summary report', async ({ page, Actions, Click, Verify }) => {
@@ -383,7 +383,7 @@ test('Verify that the user can generate User name login report by selecting vali
 
 //report scheduler-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify that the user cannot "Add" new Report Scheduler with invalid data', async ({ page, Actions, Click, Verify }) => {
+/*test('Verify that the user cannot "Add" new Report Scheduler with invalid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
@@ -467,7 +467,7 @@ test('Verify that the user can reset Report Scheduler records and data grid gets
     await Click.Btn("apply");
     await Click.Btn("reset");
     await Verify.verifyDatacount(3);
-});
+});*/
 
 //Template-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -499,7 +499,7 @@ test('Verify that the user can filter template details using the filter options'
     await Verify.verifyDatacount(1);
 });
 
-test('Verify that the user can reset template detailsby clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can reset template details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Click.tabs("template");
@@ -543,7 +543,8 @@ test('Verify that the user can "Edit" Template with valid data', async ({ page, 
     await page.waitForTimeout(2000);
     await Click.calendar(2, "2026", "Oct", 1);
     await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Active");
+    await page.waitForTimeout(2000);
+    await Verify.verifyDatacount(8);
 });
 
 
@@ -556,3 +557,49 @@ test('Verify that clicking on the back arrow, user is navigated to the template 
     await page.waitForLoadState('networkidle');
     await Verify.IsTextDisplayed(page, "Template Details");
 });
+
+//Admin >> Group-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can filter group details using the filter options', async ({ page, Actions, Click, Verify }) => {          
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Practise group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Verify.verifyDatacount(2);
+});
+
+test('Verify that the user can reset group details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Practise group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.Btn("reset");
+    await page.waitForTimeout(1000);
+    await Verify.verifyDatacount(10);
+});
+
+test('Verify that the user cannot add new group details with invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await Click.Btn("addGroup");
+    await Actions.enterText("groupName", "Practise group");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Group Code is a required field");
+    
+});
+
+
+

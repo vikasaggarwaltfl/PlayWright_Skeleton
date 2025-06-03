@@ -20,6 +20,7 @@ export class Click {
     private readonly usernameLoginReport: Locator;
     private readonly reportScheduler: Locator;
     private readonly template: Locator;
+    private readonly group: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     private readonly seritiLogo: Locator;
@@ -61,6 +62,7 @@ export class Click {
     private readonly addTemplate: Locator;
     private readonly templateLine: Locator;
     private readonly add : Locator;
+    private readonly addGroup: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
@@ -79,7 +81,8 @@ export class Click {
         this.usernameLoginReport = page.locator("//div[text()='User Name Login Report']");
         this.reportScheduler = page.locator("//div[@class='text-start'][normalize-space()='Report Scheduler']");
         this.template = page.locator("//div[contains(@class,'text-start')][normalize-space()='Template']");
-
+        this.group = page.locator("//div[contains(@class,'text-start')][normalize-space()='Group']");
+        
         //icon--------------------------------------------------------------------------------------------------------        
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
         this.testingFrameworks = page.locator("//p[text()='Testing Frameworks']")
@@ -123,6 +126,7 @@ export class Click {
         this.addTemplate = page.locator("//button[contains(@class,'p-button p-component p-splitbutton-defaultbutton')]");
         this.templateLine = page.locator("//button[normalize-space()='Template Line']");
         this.add = page.locator("//span[normalize-space()='Add']");
+        this.addGroup = page.locator("//button[contains(@class,'p-button p-component p-splitbutton-defaultbutton')]");
     }
 
 
@@ -136,6 +140,7 @@ export class Click {
         // }
 
     }
+
     //tabs--------------------------------------------------------------------------------------------------------
     async tabs(str: string): Promise<void> {
 
@@ -169,6 +174,10 @@ export class Click {
         else if (str === "template") {
             await this.template.click();
         }
+        else if (str === "group") {
+            await this.group.click();
+        }
+        
     }
 
     //icon--------------------------------------------------------------------------------------------------------
@@ -297,6 +306,9 @@ export class Click {
         }
         else if (str === "add") {
             await this.add.click();
+        }
+        else if (str === "addGroup") {
+            await this.addGroup.click();
         }
     };
 
