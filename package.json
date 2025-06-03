@@ -10,6 +10,8 @@
     "akshaya": "npx playwright test tests/thirdBridge/akshayaTest.test.ts",
     "sonali": "npx playwright test tests/thirdBridge/sonaliTest.test.ts",
     "common": "npx playwright test tests/thirdBridge/commonTest.test.ts"
+
+    
   },
   "keywords": [],
   "author": "",
@@ -34,6 +36,7 @@
     "pdfjs-dist-es5": "^2.13.216",
     "pg": "^8.11.5",
     "playwright-html": "^1.2.5",
+    "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
     "winston": "^3.13.0"
   },

@@ -14,7 +14,6 @@ test('Verify that user is able to login with valid credentials', async ({ page, 
   await Verify.IsTextDisplayed("My OfficeNational");
   await Verify.IsTextDisplayed("Products");
   await Verify.IsTextDisplayed("ONA Super Admin");
-});
 
 // Dashboard ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
