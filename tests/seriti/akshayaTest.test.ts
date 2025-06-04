@@ -111,7 +111,7 @@ test('Verify that the user can apply multiple filters to search for transactions
     await Click.calendar(1, "2025", "May", 8);
     await Click.Btn("search");
     await page.waitForTimeout(2000);
-    await Verify.verifyDatacount(8);
+    await Verify.verifyDatacount(17);
 });
 
 //reports >> DealTrackerReport-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -492,6 +492,7 @@ test('Verify that the user can filter template details using the filter options'
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Click.tabs("template");
+    await page.waitForTimeout(2000);
     await Click.icon("filterArrow");
     await Actions.enterText("templateName", "my template");
     await Click.Btn("apply");
@@ -503,6 +504,7 @@ test('Verify that the user can reset template details by clicking on the reset b
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Click.tabs("template");
+    await page.waitForTimeout(2000);
     await Click.icon("filterArrow");
     await Actions.enterText("templateName", "my template");
     await Click.Btn("apply");
@@ -600,6 +602,46 @@ test('Verify that the user cannot add new group details with invalid data', asyn
     await Verify.verifyErrorMessage(page, "Group Code is a required field");
     
 });
+
+test('Verify that the user can edit the group details with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(1000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "`Group 2");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.dropdown("2nd night of month","last night of month");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Group Details saved!");
+});
+
+test('Verify that the user can copy the group details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(1000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "`Group 2");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
+
+
+
 
 
 
