@@ -36,6 +36,8 @@ export class Click {
     private readonly filterArrow: Locator;
     private readonly sort: Locator;
     private readonly backArrow: Locator;
+    private readonly futureArrow: Locator;
+    private readonly reportSchedulerCopy: Locator;
 
     //buttons--------------------------------------------------------------------------------------------------------
     private readonly login: Locator;
@@ -63,6 +65,7 @@ export class Click {
     private readonly templateLine: Locator;
     private readonly add : Locator;
     private readonly addGroup: Locator;
+    private readonly groupLine: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
@@ -87,7 +90,7 @@ export class Click {
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
         this.testingFrameworks = page.locator("//p[text()='Testing Frameworks']")
         this.cancel = page.locator("//*[name()='path' and contains(@d,'M8.01186 7')]");
-        this.delete = page.locator("//tbody/tr[1]/td[1]/div[1]/button[2]");
+        this.delete = page.locator("//tbody/tr[3]/td[1]/div[1]/button[2]/i[1]");
         this.copy = page.locator("//tbody/tr[1]/td[1]/div[1]/div[1]/button[1]/i[1]");
         this.edit = page.locator("(//i[@class='pi pi-pencil text-lg'])[1]");
         this.cancel2 = page.locator("(//*[name()='path'])[8]");
@@ -97,6 +100,8 @@ export class Click {
         this.filterArrow = page.locator("(//button[@class='w-4 h-4 flex justify-center items-center'])[1]");
         this.sort = page.locator("(//span[@data-pc-section='sort'])[1]");
         this.backArrow = page.locator("//button[@class='border rounded-md w-9 h-9 border-primary-500']");
+        this.futureArrow = page.locator("//tbody/tr[2]/td[1]/button[1]");
+        this.reportSchedulerCopy = page.locator("(//button[@class='flex flex-col justify-center'])[2]");
 
 
         //buttons--------------------------------------------------------------------------------------------------------        
@@ -127,6 +132,7 @@ export class Click {
         this.templateLine = page.locator("//button[normalize-space()='Template Line']");
         this.add = page.locator("//span[normalize-space()='Add']");
         this.addGroup = page.locator("//button[contains(@class,'p-button p-component p-splitbutton-defaultbutton')]");
+        this.groupLine = page.locator("//button[normalize-space()='Group Line']");
     }
 
 
@@ -222,6 +228,12 @@ export class Click {
         else if (str === "backArrow") {
             await this.backArrow.click();
         }
+        else if (str === "futureArrow") {
+            await this.futureArrow.click();
+        }
+        else if (str === "reportSchedulerCopy") {
+            await this.reportSchedulerCopy.click();
+        }
 
     }
 
@@ -309,6 +321,9 @@ export class Click {
         }
         else if (str === "addGroup") {
             await this.addGroup.click();
+        }
+        else if (str === "groupLine") {
+            await this.groupLine.click();
         }
     };
 

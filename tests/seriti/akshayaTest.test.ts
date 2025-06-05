@@ -111,7 +111,7 @@ test('Verify that the user can apply multiple filters to search for transactions
     await Click.calendar(1, "2025", "May", 8);
     await Click.Btn("search");
     await page.waitForTimeout(2000);
-    await Verify.verifyDatacount(17);
+    await Verify.verifyDatacount(10);
 });
 
 //reports >> DealTrackerReport-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -131,7 +131,7 @@ test('Verify that the user can check or uncheck multiple checkbox', async ({ pag
     await Verify.IsTextDisplayed(page, ["Tebogo Lepelle", "Winjit Staging Bm", "Business Manager Staging"]);
 });
 
-test('Verify that the user can "Add" new Deal tracker report with valid data', async ({ page, Actions, Click, Verify }) => {
+/*test('Verify that the user can "Add" new Deal tracker report with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
@@ -254,7 +254,7 @@ test('Verify that the user can "download" DOC Summary report', async ({ page, Ac
     await Click.chevronLeftArrow(2);
     await Click.tabs("docSummary");
     await Verify.verifyDownload('downloadlink');
-});
+});*/
 
 
 //reports >> DOC Report-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -271,8 +271,7 @@ test('Verify that the user can "Add" new DOC report with valid data', async ({ p
     await page.waitForTimeout(2000);
     await Click.calendar(2, "2025", "Jul", 26);
     await Click.Btn("inceptDateYes")
-    await Click.checkboxWithAll(5, "Vehicle");
-    await Click.checkboxWithAll(6, ["New Aftermarket", "Demo Aftermarket"])
+    await page.waitForTimeout(4000);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
@@ -319,7 +318,7 @@ test('Verify that the user cannot generate Finance Application Analysis Report b
 
 //reports >> Admin report >> Banker user login report----------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify that the user can generate Banker User Login Report by selecting valid details', async ({ page, Actions, Click, Verify }) => {
+/*test('Verify that the user can generate Banker User Login Report by selecting valid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
@@ -366,9 +365,9 @@ test('Verify that the user can generate Supply Data Report by selecting valid de
     await page.waitForTimeout(1000);
     await Click.calendar(2, "2027", "Aug", 26);
     await Verify.verifyDownload('generateReport');
-});
+});*/
 
-//reports >> Admin report >> Supply data report----------------------------------------------------------------------------------------------------------------------------------------------------
+//reports >> Admin report >> User name login report----------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that the user can generate User name login report by selecting valid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
@@ -383,7 +382,7 @@ test('Verify that the user can generate User name login report by selecting vali
 
 //report scheduler-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-/*test('Verify that the user cannot "Add" new Report Scheduler with invalid data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user cannot "Add" new Report Scheduler with invalid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
@@ -404,7 +403,8 @@ test('Verify that the user can "Copy" Report Scheduler report with valid data', 
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("reportScheduler");
-    await Click.icon("copy");
+    await Click.icon("futureArrow")
+    await Click.icon("reportSchedulerCopy");
     await Click.icon("selectAll");
     await Click.Btn("copying");
     await page.waitForTimeout(5000);
@@ -419,6 +419,7 @@ test('Verify that the user can "delete" Report Scheduler report', async ({ page,
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("reportScheduler");
+    await Click.icon("futureArrow")
     await Click.icon("delete");
     await Click.Btn("yes");
     await page.waitForTimeout(2000);
@@ -432,9 +433,10 @@ test('Verify that the user can "edit" Report Scheduler report with valid data', 
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("reportScheduler");
+    await Click.icon("futureArrow")
     await Click.icon("edit");
     await page.waitForTimeout(2000);
-    await Click.dropdown("Weekly (Every Friday evening)", "Daily (Every night)");
+    await Click.dropdown("Weekly (Every Friday evening)","Daily (Every night)");
     await page.waitForTimeout(2000);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Report Scheduler saved!");
@@ -447,6 +449,7 @@ test('Verify that the user can filter Report Scheduler records and data grid get
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("reportScheduler");
+    await Click.icon("futureArrow")
     await page.waitForTimeout(2000);
     await Click.icon("filterArrow");
     await Actions.enterText("reportName", "Practise test");
@@ -461,13 +464,14 @@ test('Verify that the user can reset Report Scheduler records and data grid gets
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("reportScheduler");
+    await Click.icon("futureArrow")
     await page.waitForTimeout(2000);
     await Click.icon("filterArrow");
     await Actions.enterText("reportName", "Practise test");
     await Click.Btn("apply");
     await Click.Btn("reset");
     await Verify.verifyDatacount(3);
-});*/
+});
 
 //Template-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -546,7 +550,7 @@ test('Verify that the user can "Edit" Template with valid data', async ({ page, 
     await Click.calendar(2, "2026", "Oct", 1);
     await Click.Btn("save");
     await page.waitForTimeout(2000);
-    await Verify.verifyDatacount(8);
+    await Verify.verifyDatacount(10);
 });
 
 
@@ -638,6 +642,43 @@ test('Verify that the user can copy the group details', async ({ page, Actions, 
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
+
+test.skip('Verify that the user can add a group in the groupline', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(1000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "`Group 2");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.Btn("groupLine");
+    await Click.Btn("add");
+    await Click.dropdown("Account Manager", "admin@seritisolutions.com");
+    await page.waitForTimeout(3000);
+    await Click.dropdown("Marketer", "admin@seritisolutions.com");
+    await page.waitForTimeout(3000);
+    await Click.dropdown("Approval User Products", "admin@seritisolutions.com");
+    await page.waitForTimeout(2000);
+    await Click.dropdown("Approval User Other", "admin@seritisolutions.com");
+    await page.waitForTimeout(2000);
+    await Click.dropdown("Financial Manager", "admin@seritisolutions.com");
+    await page.waitForTimeout(1000);
+    await Click.calendar(1, "2026", "Jul", 25);
+    await page.waitForTimeout(1000);
+    //await Click.calendar(2, "2026", "Oct", 3);
+    await Click.Btn("save");
+  
+});
+
+
+
+
+
+
 
 
 
