@@ -31,6 +31,7 @@ test('Verify that clicking on the "Seriti" logo navigates the user to the landin
     await Click.Btn("login");
     await page.waitForTimeout(2000);
     await Click.icon("seritiLogo");
+    await page.waitForLoadState('networkidle');
     await Verify.verifyURL(page, "https://seritiweb-mea-uat.seriti-int.com/transaction");
 });
 
@@ -57,6 +58,7 @@ test('Verify that the user can search for transactions using the transaction num
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281651");
     await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
     await Verify.IsTextDisplayed(page, "Transaction 281651");
 });
 
@@ -81,6 +83,7 @@ test('Verify that the user can select radio buttons on create transaction page',
 test('Verify that the "Branch" dropdown is disabled until a "Group" is selected', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
+    await page.waitForTimeout(2000);
     await Verify.verifyDisabledButton("Select a branch (Blank for All)");
     await Click.dropdown("Select a group (Blank for All)", "Practise group")
     await Verify.verifyEnabledButton("Select a branch (Blank for All)")
@@ -436,7 +439,7 @@ test('Verify that the user can "edit" Report Scheduler report with valid data', 
     await Click.icon("futureArrow")
     await Click.icon("edit");
     await page.waitForTimeout(2000);
-    await Click.dropdown("Weekly (Every Friday evening)","Daily (Every night)");
+    await Click.dropdown("Daily (Every night)","Weekly (Every Friday evening)");
     await page.waitForTimeout(2000);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Report Scheduler saved!");
@@ -585,7 +588,8 @@ test('Verify that the user can reset group details by clicking on the reset butt
     await Actions.enterText("searchMenu", "Admin");
     await Click.chevronLeftArrow(1);
     await Click.tabs("group");
-    await Click.icon("filterArrow");
+    await page.waitForTimeout(1000);
+    await Click.icon("filterArrow");  
     await Actions.enterText("groupName", "Practise group");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
@@ -619,7 +623,7 @@ test('Verify that the user can edit the group details with valid data', async ({
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
-    await Click.dropdown("2nd night of month","last night of month");
+    await Click.dropdown("last night of month","2nd night of month");
     await page.waitForLoadState('networkidle');
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Group Details saved!");
@@ -643,33 +647,29 @@ test('Verify that the user can copy the group details', async ({ page, Actions, 
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
-test.skip('Verify that the user can add a group in the groupline', async ({ page, Actions, Click, Verify }) => {
+test.only('Verify that the user can add a group in the groupline', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
     await Click.chevronLeftArrow(1);
     await Click.tabs("group");
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(2000);
     await Click.icon("filterArrow");
     await Actions.enterText("groupName", "`Group 2");
     await Click.Btn("apply");
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(2000);
     await Click.icon("edit");
     await Click.Btn("groupLine");
     await Click.Btn("add");
-    await Click.dropdown("Account Manager", "admin@seritisolutions.com");
-    await page.waitForTimeout(3000);
-    await Click.dropdown("Marketer", "admin@seritisolutions.com");
-    await page.waitForTimeout(3000);
-    await Click.dropdown("Approval User Products", "admin@seritisolutions.com");
+    await Click.dropdown("Account Manager", "admin@seritisolutions.com");  
     await page.waitForTimeout(2000);
-    await Click.dropdown("Approval User Other", "admin@seritisolutions.com");
-    await page.waitForTimeout(2000);
-    await Click.dropdown("Financial Manager", "admin@seritisolutions.com");
+    await Click.dropdown("Marketer", "a1");
+    await Click.dropdown("Approval User Products", "abhaym@winjit.com");
+    await page.waitForTimeout(1000);
+    await Click.dropdown("Approval User Other", "45012741@mylife.unisa.ac.za");
+    await Click.dropdown("Financial Manager", "api@test.com");
     await page.waitForTimeout(1000);
     await Click.calendar(1, "2026", "Jul", 25);
-    await page.waitForTimeout(1000);
-    //await Click.calendar(2, "2026", "Oct", 3);
     await Click.Btn("save");
   
 });
