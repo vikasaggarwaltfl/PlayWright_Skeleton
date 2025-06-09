@@ -50,6 +50,14 @@ test('Verify that the user can sign out by clicking on the "Sign Out" button.', 
     await Verify.verifyURL(page, "https://seritiweb-mea-uat.seriti-int.com/auth/UserLogin");
 });
 
+test('Verify that Transaction Conversion Rate is present on the main dashboard', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await page.waitForTimeout(2000);
+    await Click.tabs("dashboard");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Transaction Conversion Rate");
+});
 
 // Transaction page-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -70,13 +78,13 @@ test('Verify that the user can select dropdowns on create transaction page', asy
     await Verify.verifyDropDown("Practise group")
 });
 
-test('Verify that the user can select radio buttons on create transaction page', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can select company radio button on create transaction page', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Click.Btn("createTransaction")
-    await Click.dropdown("Select a group", "Practise group")
-    await Click.dropdown("Select a branch", "Practise branch")
-    await Click.radioButton("Company")
+    await Click.Btn("createTransaction");
+    await Click.dropdown("Select a group", "Practise group");
+    await Click.dropdown("Select a branch", "Practise branch");
+    await Click.radioButton("Company");
     await Verify.verifyRadioButton("Company");
 });
 
@@ -582,6 +590,16 @@ test('Verify that the user can filter group details using the filter options', a
     await Verify.verifyDatacount(2);
 });
 
+test('Verify that group detail text is displayed when clicking on group tab', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Group Detailz");
+});
+
 test('Verify that the user can reset group details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
@@ -647,7 +665,7 @@ test('Verify that the user can copy the group details', async ({ page, Actions, 
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
-test.only('Verify that the user can add a group in the groupline', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can add a group in the groupline', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
