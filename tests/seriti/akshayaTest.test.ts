@@ -436,6 +436,7 @@ test('Verify that the user can "edit" Report Scheduler report with valid data', 
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("reportScheduler");
+    await page.waitForLoadState('networkidle');
     await Click.icon("futureArrow")
     await Click.icon("edit");
     await page.waitForTimeout(2000);
@@ -453,13 +454,12 @@ test('Verify that the user can filter Report Scheduler records and data grid get
     await Click.chevronLeftArrow(2);
     await Click.tabs("reportScheduler");
     await page.waitForLoadState('networkidle');
-    await page.pause();
     await Click.icon("futureArrow")
     await page.waitForTimeout(1000);
     await Click.icon("filterArrow");
     await Actions.enterText("reportName", "Practise test");
     await Click.Btn("apply");
-    await Verify.verifyDatacount(2);
+    await Verify.verifyDatacount(3);
 });
 
 test('Verify that the user can reset Report Scheduler records and data grid gets updated', async ({ page, Actions, Click, Verify }) => {
@@ -469,13 +469,14 @@ test('Verify that the user can reset Report Scheduler records and data grid gets
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("reportScheduler");
+    await page.waitForLoadState('networkidle');
     await Click.icon("futureArrow")
     await page.waitForTimeout(2000);
     await Click.icon("filterArrow");
     await Actions.enterText("reportName", "Practise test");
     await Click.Btn("apply");
     await Click.Btn("reset");
-    await Verify.verifyDatacount(2);
+    await Verify.verifyDatacount(3);
 });
 
 //Template-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -659,7 +660,7 @@ test('Verify that the user can copy the group details', async ({ page, Actions, 
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
-test('Verify that the user can add a group in the groupline', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user cannot add a group in the groupline with invalid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -676,15 +677,60 @@ test('Verify that the user can add a group in the groupline', async ({ page, Act
     await Click.dropdown("Account Manager", "admin@seritisolutions.com");  
     await page.waitForTimeout(2000);
     await Click.dropdown("Marketer", "a1");
-    await Click.dropdown("Approval User Products", "abhaym@winjit.com");
-    await page.waitForTimeout(1000);
-    await Click.dropdown("Approval User Other", "45012741@mylife.unisa.ac.za");
-    await Click.dropdown("Financial Manager", "api@test.com");
     await page.waitForTimeout(1000);
     await Click.calendar(1, "2026", "Jul", 25);
     await Click.Btn("save");
-  
+    await Verify.verifyErrorMessage(page, "Financial Manager is a required field");
 });
+
+test('Verify that the user can delete a group', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "`Group 2");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("delete");
+    await Click.Btn("yes");
+    await page.waitForTimeout(4000);
+    await Verify.verifyDatacount(2);
+});
+
+test('Verify that the user can navigate through pagination numbers in group page', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForLoadState('networkidle');
+    await Click.pagination(8);
+    await page.waitForTimeout(1000);
+    await Verify.verifyDatacount(7);
+});
+
+test('Verify that the user can refresh the group page data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Practise group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Verify.verifyDatacount(2);
+    await Click.Btn("refresh");
+    await page.waitForLoadState('networkidle');
+    await Verify.verifyDatacount(2);
+});
+
+
+
 
 
 

@@ -66,6 +66,7 @@ export class Click {
     private readonly add : Locator;
     private readonly addGroup: Locator;
     private readonly groupLine: Locator;
+    private readonly refresh: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
@@ -100,7 +101,7 @@ export class Click {
         this.filterArrow = page.locator("(//button[@class='w-4 h-4 flex justify-center items-center'])[1]");
         this.sort = page.locator("(//span[@data-pc-section='sort'])[1]");
         this.backArrow = page.locator("//button[@class='border rounded-md w-9 h-9 border-primary-500']");
-        this.futureArrow = page.locator("//button[@fdprocessedid='jbxje']//*[name()='svg']");
+        this.futureArrow = page.locator("(//*[name()='svg'][@class='p-icon p-row-toggler-icon'])[2]");
         this.reportSchedulerCopy = page.locator("(//button[@class='flex flex-col justify-center'])[2]");
 
 
@@ -133,6 +134,7 @@ export class Click {
         this.add = page.locator("//span[normalize-space()='Add']");
         this.addGroup = page.locator("//button[contains(@class,'p-button p-component p-splitbutton-defaultbutton')]");
         this.groupLine = page.locator("//button[normalize-space()='Group Line']");
+        this.refresh = page.locator("//span[text()='Refresh']");
     }
 
 
@@ -325,6 +327,9 @@ export class Click {
         else if (str === "groupLine") {
             await this.groupLine.click();
         }
+        else if (str === "refresh") {
+            await this.refresh.click();
+        }
     };
 
     //dropdown--------------------------------------------------------------------------------------------------------
@@ -414,4 +419,17 @@ export class Click {
         await this.page.locator("body").click({ position: { x: 0, y: 0 } });
     }
 
+    //pagination-----------------------------------------------------------------------------------------------------------
+    async pagination(value: number): Promise<void> {
+        
+        for (let i = 1; i <= value; i++) {
+            const paginationButton = this.page.locator(`//button[normalize-space()='${i}']`);
+            if (await paginationButton.isVisible()) {
+                await paginationButton.click();
+                await this.page.waitForTimeout(1000);
+            } else {
+                break; 
+            }
+        }
+    }
 }
