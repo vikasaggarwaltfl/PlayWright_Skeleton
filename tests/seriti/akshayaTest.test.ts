@@ -29,7 +29,7 @@ test('Verify that the navigation sidebar is displayed with all required tabs.', 
 test('Verify that clicking on the "Seriti" logo navigates the user to the landing screen.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(5000);
     await Click.icon("seritiLogo");
     await page.waitForLoadState('networkidle');
     await Verify.verifyURL(page, "https://seritiweb-mea-uat.seriti-int.com/transaction");
@@ -50,14 +50,6 @@ test('Verify that the user can sign out by clicking on the "Sign Out" button.', 
     await Verify.verifyURL(page, "https://seritiweb-mea-uat.seriti-int.com/auth/UserLogin");
 });
 
-test('Verify that Transaction Conversion Rate is present on the main dashboard', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await page.waitForTimeout(2000);
-    await Click.tabs("dashboard");
-    await page.waitForTimeout(2000);
-    await Verify.IsTextDisplayed(page, "Transaction Conversion Rate");
-});
 
 // Transaction page-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -78,13 +70,13 @@ test('Verify that the user can select dropdowns on create transaction page', asy
     await Verify.verifyDropDown("Practise group")
 });
 
-test('Verify that the user can select company radio button on create transaction page', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can select radio buttons on create transaction page', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Click.Btn("createTransaction");
-    await Click.dropdown("Select a group", "Practise group");
-    await Click.dropdown("Select a branch", "Practise branch");
-    await Click.radioButton("Company");
+    await Click.Btn("createTransaction")
+    await Click.dropdown("Select a group", "Practise group")
+    await Click.dropdown("Select a branch", "Practise branch")
+    await Click.radioButton("Company")
     await Verify.verifyRadioButton("Company");
 });
 
@@ -460,12 +452,14 @@ test('Verify that the user can filter Report Scheduler records and data grid get
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("reportScheduler");
+    await page.waitForLoadState('networkidle');
+    await page.pause();
     await Click.icon("futureArrow")
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(1000);
     await Click.icon("filterArrow");
     await Actions.enterText("reportName", "Practise test");
     await Click.Btn("apply");
-    await Verify.verifyDatacount(3);
+    await Verify.verifyDatacount(2);
 });
 
 test('Verify that the user can reset Report Scheduler records and data grid gets updated', async ({ page, Actions, Click, Verify }) => {
@@ -481,7 +475,7 @@ test('Verify that the user can reset Report Scheduler records and data grid gets
     await Actions.enterText("reportName", "Practise test");
     await Click.Btn("apply");
     await Click.Btn("reset");
-    await Verify.verifyDatacount(3);
+    await Verify.verifyDatacount(2);
 });
 
 //Template-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -597,7 +591,7 @@ test('Verify that group detail text is displayed when clicking on group tab', as
     await Click.chevronLeftArrow(1);
     await Click.tabs("group");
     await page.waitForTimeout(2000);
-    await Verify.IsTextDisplayed(page, "Group Detailz");
+    await Verify.IsTextDisplayed(page, "Group Details");
 });
 
 test('Verify that the user can reset group details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {

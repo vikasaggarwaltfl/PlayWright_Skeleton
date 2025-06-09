@@ -100,7 +100,7 @@ export class Click {
         this.filterArrow = page.locator("(//button[@class='w-4 h-4 flex justify-center items-center'])[1]");
         this.sort = page.locator("(//span[@data-pc-section='sort'])[1]");
         this.backArrow = page.locator("//button[@class='border rounded-md w-9 h-9 border-primary-500']");
-        this.futureArrow = page.locator("//button[@class='p-row-toggler p-link']//*[name()='svg']");
+        this.futureArrow = page.locator("//button[@fdprocessedid='jbxje']//*[name()='svg']");
         this.reportSchedulerCopy = page.locator("(//button[@class='flex flex-col justify-center'])[2]");
 
 
