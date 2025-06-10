@@ -729,6 +729,47 @@ test('Verify that the user can refresh the group page data', async ({ page, Acti
     await Verify.verifyDatacount(2);
 });
 
+//branches-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that "branch details" screen is displayed correctly', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await Verify.IsTextDisplayed(page, "Branch Details");
+});
+
+test('Verify that the user can filter branch details using the filter options', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Practise branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Verify.verifyDatacount(1);
+});
+
+test('Verify that the user can reset branch details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Practise branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.Btn("reset");
+    await page.waitForTimeout(5000);
+    await Verify.verifyDatacount(10);
+});
+
 
 
 

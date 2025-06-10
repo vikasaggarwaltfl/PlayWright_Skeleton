@@ -21,6 +21,7 @@ export class Click {
     private readonly reportScheduler: Locator;
     private readonly template: Locator;
     private readonly group: Locator;
+    private readonly branches: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     private readonly seritiLogo: Locator;
@@ -86,6 +87,7 @@ export class Click {
         this.reportScheduler = page.locator("//div[@class='text-start'][normalize-space()='Report Scheduler']");
         this.template = page.locator("//div[contains(@class,'text-start')][normalize-space()='Template']");
         this.group = page.locator("//div[contains(@class,'text-start')][normalize-space()='Group']");
+        this.branches = page.locator("//div[contains(@class,'text-start')][normalize-space()='Branches']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
@@ -184,6 +186,9 @@ export class Click {
         }
         else if (str === "group") {
             await this.group.click();
+        }
+        else if (str === "branches") {
+            await this.branches.click();
         }
         
     }

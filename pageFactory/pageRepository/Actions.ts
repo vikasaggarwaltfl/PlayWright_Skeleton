@@ -29,6 +29,8 @@ export class Actions {
     private readonly reportName: Locator;
     private readonly reportHeading: Locator;
     private readonly groupName: Locator;
+    private readonly branchName: Locator;
+   
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -44,6 +46,7 @@ export class Actions {
         this.reportName = page.locator("//input[@id='CustomReportName']");
         this.reportHeading = page.locator("//input[@id='ReportHeading']");
         this.groupName = page.locator("//input[@id='GroupName']");
+        this.branchName = page.locator("//input[@id='BranchName']");
 
     }
 
@@ -90,8 +93,11 @@ export class Actions {
 
             await this.groupName.fill(text);
         }
-    
-    }
+        else if (textBoxName === "branchName") {
+
+            await this.branchName.fill(text);
+        }
+}
 
     async signIn(userProfile: string) {
         await this.page.goto('https://seritiweb-mea-uat.seriti-int.com');
