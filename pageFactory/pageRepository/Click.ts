@@ -8,6 +8,7 @@ export class Click {
     readonly context: BrowserContext;
     readonly page: Page;
     private readonly download: Locator;
+    private readonly recentTransactions: Locator;
 
     //tabs--------------------------------------------------------------------------------------------------------
     private readonly transaction: Locator;
@@ -68,12 +69,14 @@ export class Click {
     private readonly addGroup: Locator;
     private readonly groupLine: Locator;
     private readonly refresh: Locator;
+    private readonly addBranch: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
         this.page = page
         this.context = context
         this.download = page.locator("//tbody/tr[1]/td[4]/a[1]");
+        this.recentTransactions = page.locator("//span[normalize-space()='Recent Transactions']");
 
         //tabs--------------------------------------------------------------------------------------------------------
         this.transaction = page.locator("//div[text()='Transaction']")
@@ -137,6 +140,7 @@ export class Click {
         this.addGroup = page.locator("//button[contains(@class,'p-button p-component p-splitbutton-defaultbutton')]");
         this.groupLine = page.locator("//button[normalize-space()='Group Line']");
         this.refresh = page.locator("//span[text()='Refresh']");
+        this.addBranch = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
     }
 
 
@@ -145,9 +149,9 @@ export class Click {
         if (linkName === "download") {
             await this.download.click();
         }
-        // else if (linkName === 'calendarYear') {
-        //     await this.calendarYear.click();
-        // }
+        else if (linkName === 'recentTransactions') {
+            await this.recentTransactions.click();
+        }
 
     }
 
@@ -334,6 +338,9 @@ export class Click {
         }
         else if (str === "refresh") {
             await this.refresh.click();
+        }
+        else if (str === "addBranch") {
+            await this.addBranch.click();
         }
     };
 

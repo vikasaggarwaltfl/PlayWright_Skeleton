@@ -117,6 +117,23 @@ test('Verify that the user can apply multiple filters to search for transactions
     await Verify.verifyDatacount(10);
 });
 
+test('Verify that the user can minimize the search module', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.icon("filterArrow");
+    await page.waitForTimeout(2000);
+    await Verify.verifyDatacount(0);
+});
+
+test('Verify that the user can view recent transactions by clicking on the "Recent Transactions" button', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.link("recentTransactions");
+    await page.waitForLoadState('networkidle');
+    await Verify.verifyDatacount(19);
+});
+
+
 //reports >> DealTrackerReport-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that the user can check or uncheck multiple checkbox', async ({ page, Actions, Click, Verify }) => {
@@ -262,7 +279,7 @@ test('Verify that the user can "download" DOC Summary report', async ({ page, Ac
 
 //reports >> DOC Report-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test.only('Verify that the user can "Add" new DOC report with valid data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can "Add" new DOC report with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
@@ -769,6 +786,37 @@ test('Verify that the user can reset branch details by clicking on the reset but
     await page.waitForTimeout(5000);
     await Verify.verifyDatacount(10);
 });
+
+test('Verify that the user cannot add new branch with invalid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("addBranch");
+    await Actions.enterText("branchName", "Test Branch");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Branch Code is a required field");
+});
+
+test('Verify that the user can edit the branch details with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Practise branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Actions.enterText("branchName", "Updated Branch Name");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Branch Details saved!");
+});
+
 
 
 
