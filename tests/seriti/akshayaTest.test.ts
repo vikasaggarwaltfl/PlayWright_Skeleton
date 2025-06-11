@@ -262,7 +262,7 @@ test('Verify that the user can "download" DOC Summary report', async ({ page, Ac
 
 //reports >> DOC Report-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify that the user can "Add" new DOC report with valid data', async ({ page, Actions, Click, Verify }) => {
+test.only('Verify that the user can "Add" new DOC report with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
