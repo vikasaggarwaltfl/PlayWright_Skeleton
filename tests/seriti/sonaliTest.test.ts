@@ -94,6 +94,8 @@ test('Verify that the user can sort Deal Tracker Report records', async ({ page,
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("dealTracker");
+    await Click.icon("Sort")
+    await Verify.verifySortOrder();
     await page.waitForTimeout(2000);
     await Verify.verifySortOrder();
 });
@@ -282,6 +284,7 @@ test('Verify that the user can sort Doc Report records', async ({ page, Actions,
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("docReport");
+    await Click.icon("Sort");
     await page.waitForTimeout(2000);
     await Verify.verifySortOrder();
 });
@@ -295,5 +298,6 @@ test('Verify that the user can "download" DOC report', async ({ page, Actions, C
     await Click.tabs("docReport");
     await Verify.verifyDownload('downloadlink');
 });
+
 
 
