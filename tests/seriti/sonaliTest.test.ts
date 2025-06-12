@@ -94,8 +94,210 @@ test('Verify that the user can sort Deal Tracker Report records', async ({ page,
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("dealTracker");
+    await Click.icon("Sort")
+    await Verify.verifySortOrder();
     await page.waitForTimeout(2000);
     await Verify.verifySortOrder();
 });
+
+test('Verify that the user can "download" Deal Tracker report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("dealTracker");
+    await Verify.verifyDownload('downloadlink');
+});
+
+//My Reports >> Reports >> DOC Summary Report----------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the DOC Summary Report screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docSummary");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, ["Created Date", "Process State Message", "Report File"]);
+});
+
+test('Verify that the user can "Add" new DOC Summary report with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docSummary");
+    await Click.Btn("addDocReport");
+    await Click.calendar(1, "2025", "May", 20);
+    await page.waitForTimeout(2000);
+    await Click.calendar(2, "2025", "Jul", 26);
+    await Click.Btn("inceptDateYes")
+    await page.waitForTimeout(4000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
+test('Verify that the user can "Edit" a Doc Summary Report with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docSummary");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Actions.enterText("notes", "Edited by automation");
+    await Click.Btn("save");
+    await expect(page.getByText("Edited by automation", { exact: true }).first()).toBeVisible();
+});
+
+test('Verify that the user can "Delete" a Doc Summary Report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docSummary");
+    await page.waitForTimeout(2000);
+    await Click.icon("delete");
+    await Click.Btn("yes");
+    await page.waitForTimeout(2000);
+});
+
+test('Verify that the user can "Copy" a Doc Summary Report with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docSummary");
+    await page.waitForTimeout(2000);
+    await Click.icon("copy");
+    await Click.Btn("selectAll");
+    await Click.Btn("copying");
+    await page.waitForTimeout(9000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
+test('Verify that the user can sort Doc Summary Report records', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docSummary");
+    await page.waitForTimeout(2000);
+    await Verify.verifySortOrder();
+});
+
+test('Verify that the user can "download" DOC Summary report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docSummary");
+    await Verify.verifyDownload('downloadlink');
+});
+
+//My Reports >> Reports >> DOC Report----------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the DOC Report screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docReport");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, ["Created Date", "Process State Message", "Report File"]);
+});
+
+test('Verify that the user can "Add" new DOC report with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docReport");
+    await Click.Btn("addDocReport");
+    await Click.calendar(1, "2025", "May", 20);
+    await page.waitForTimeout(2000);
+    await Click.calendar(2, "2025", "Jul", 26);
+    await Click.Btn("inceptDateYes")
+    await page.waitForTimeout(4000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
+test('Verify that the user can "Edit" a Doc Report with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docReport");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Actions.enterText("notes", "Edited by automation");
+    await Click.Btn("save");
+    await expect(page.getByText("Edited by automation", { exact: true }).first()).toBeVisible();
+});
+
+test('Verify that the user can "Delete" a Doc Report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docReport");
+    await page.waitForTimeout(2000);
+    await Click.icon("delete");
+    await Click.Btn("yes");
+    await page.waitForTimeout(2000);
+});
+
+test('Verify that the user can "Copy" a Doc Report with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docReport");
+    await page.waitForTimeout(2000);
+    await Click.icon("copy");
+    await Click.Btn("selectAll");
+    await Click.Btn("copying");
+    await page.waitForTimeout(9000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
+test('Verify that the user can sort Doc Report records', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docReport");
+    await Click.icon("Sort");
+    await page.waitForTimeout(2000);
+    await Verify.verifySortOrder();
+});
+
+test('Verify that the user can "download" DOC report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docReport");
+    await Verify.verifyDownload('downloadlink');
+});
+
 
 
