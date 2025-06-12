@@ -229,7 +229,7 @@ test('Verify that the user can "Add" new DOC report with valid data', async ({ p
     await page.waitForTimeout(2000);
     await Click.calendar(2, "2025", "Jul", 26);
     await Click.Btn("inceptDateYes")
-    await page.waitForTimeout(4000);
+    await page.waitForTimeout(6000);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
@@ -298,6 +298,107 @@ test('Verify that the user can "download" DOC report', async ({ page, Actions, C
     await Click.tabs("docReport");
     await Verify.verifyDownload('downloadlink');
 });
+
+//My Reports >> Reports >> Insurance Deal Report--------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the Insurance Lead Report screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("insuranceLeadReport");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, ["Created Date", "Process State Message", "Report File"]);
+});
+
+// test('Verify that the user can "Add" new Insurance Deal Report with valid data', async ({ page, Actions, Click, Verify }) => {
+//     await Actions.signIn("sonali");
+//     await Click.Btn("login");
+//     await Actions.enterText("searchMenu", "My Reports");
+//     await Click.chevronLeftArrow(1);
+//     await Click.chevronLeftArrow(2);
+//     await Click.tabs("insuranceLeadReport");
+//     await Click.Btn("addInsuranceDealReport");
+//     await page.waitForTimeout(2000);
+//     await Click.calendar(1, "2025", "May", 20);
+//     await page.waitForTimeout(2000);
+//     await Click.calendar(2, "2025", "Jul", 26);
+//     await page.waitForTimeout(4000);
+//     await Click.Btn("save");
+//     await page.waitForTimeout(2000);
+//     await Verify.IsTextDisplayed(page, "Saved Successfully");
+// });
+
+test('Verify that the user can "Edit" a Insurance Lead Report with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("insuranceLeadReport");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Actions.enterText("notes", "Edited by automation");
+    await Click.Btn("save");
+    await expect(page.getByText("Edited by automation", { exact: true }).first()).toBeVisible();
+});
+
+
+test('Verify that the user can "Delete" a Insurance Deal Report Report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("insuranceLeadReport");
+    await page.waitForTimeout(2000);
+    await Click.icon("delete");
+    await page.waitForTimeout(2000);
+    await Click.Btn("yes");
+    await page.waitForTimeout(2000);
+});
+
+test('Verify that the user can "Copy" a Insurance Deal Report with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("insuranceLeadReport");
+    await page.waitForTimeout(2000);
+    await Click.icon("copy");
+    await page.waitForTimeout(2000);
+    await Click.Btn("selectAll");
+    await page.waitForTimeout(2000);
+    await Click.Btn("copying");
+    await page.waitForTimeout(9000);
+    await Click.Btn("save");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
+test('Verify that the user can sort Insurance Deal Report records', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("insuranceLeadReport");
+    await page.waitForTimeout(2000);
+    await Verify.verifySortOrder();
+});
+
+test('Verify that the user can "download" Insurance Deal Report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("insuranceLeadReport");
+    await Verify.verifyDownload('downloadlink');
+});
+
 
 
 

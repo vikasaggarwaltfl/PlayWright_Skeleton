@@ -15,6 +15,12 @@ export class Click {
     private readonly dealTracker: Locator;
     private readonly docSummary: Locator;
     private readonly docReport: Locator;
+    private readonly insuranceLeadReport: Locator;
+    private readonly payoverReport: Locator;
+    private readonly productDetailsReport: Locator;
+    private readonly transactionDetailsReport: Locator;
+    private readonly userNotificationReport: Locator;
+    private readonly apiReqResDetailsReport: Locator;
     private readonly financeReport: Locator;
     private readonly bankerUserReport: Locator;
     private readonly supplyDataReport: Locator;
@@ -49,6 +55,7 @@ export class Click {
     private readonly resetCriteria: Locator;
     private readonly search: Locator;
     private readonly addDealTrackerReport: Locator;
+    private readonly addInsuranceLeadReport: Locator;
     private readonly save: Locator;
     private readonly createDateYes: Locator;
     private readonly inceptDateYes: Locator;
@@ -83,6 +90,13 @@ export class Click {
         this.dealTracker = page.locator("//div[text()='Deal Tracker Report']")
         this.docSummary = page.locator("//div[text()='DOC Summary Report']");
         this.docReport = page.locator("//div[@class='text-start'][normalize-space()='DOC Report']");
+        this.insuranceLeadReport = page.locator("//div[text()='Insurance Lead Report']");
+        this.payoverReport = page.locator("//div[@class='text-start'][normalize-space()='Payover Report']")
+        this.productDetailsReport = page.locator("//div[@class='text-start'][normalize-space()='Product Details Report']")
+        this.transactionDetailsReport = page.locator("//div[@class='text-start'][normalize-space()='Transaction Details Report']")
+        this.userNotificationReport = page.locator("//div[@class='text-start'][normalize-space()='User Notification Report']")
+        this.apiReqResDetailsReport = page.locator("//div[@class='text-start'][normalize-space()='API Request and Responce']")
+        
         this.financeReport = page.locator("//div[contains(@class,'text-start')][normalize-space()='Finance Application Analysis Report']");
         this.bankerUserReport = page.locator("//div[text()='Banker User Login Report']");
         this.supplyDataReport = page.locator("//div[text()='Supply Data Report']");
@@ -118,6 +132,7 @@ export class Click {
         this.resetCriteria = page.locator("//button[text()=' Reset Criteria ']")
         this.search = page.locator("//button[@aria-label='Search']")
         this.addDealTrackerReport = page.locator("//div[text()=' Add Deal Tracker Report']");
+        this.addInsuranceLeadReport = page.locator("//div[text()=' Add Insurance Lead Report']");
         this.save = page.locator("//span[text()='Save']");
         this.createDateYes = page.locator("//div[@placeholder='Create Date']//span[@class='p-button-label'][normalize-space()='Yes']");
         this.inceptDateYes = page.locator("//div[@placeholder='Incept Date']//span[@class='p-button-label'][normalize-space()='Yes']");
@@ -170,6 +185,26 @@ export class Click {
         else if (str === "docReport") {
             await this.docReport.click();
         }
+        else if (str === "insuranceLeadReport") {
+            await this.insuranceLeadReport.click();
+            
+        }
+        else if (str === "payoverReport") {
+            await this.payoverReport.click();
+        }
+        else if (str === "productDetailsReport") {
+            await this.productDetailsReport.click();
+        }
+        else if (str === "transactionDetailsReport") {
+            await this.transactionDetailsReport.click();
+        }
+        else if (str === "userNotificationReport") {
+            await this.userNotificationReport.click();
+        }
+        else if (str === "apiReqResDetailsReport") {
+            await this.apiReqResDetailsReport.click();
+        }
+
         else if (str === "financeReport") {
             await this.financeReport.click();
         }
@@ -215,6 +250,8 @@ export class Click {
             await this.copy.click();
         }
         else if (str === "edit") {
+            await this.page.waitForLoadState('networkidle');
+            await this.edit.waitFor({ state: 'visible', timeout: 5000 });
             await this.edit.click();
         }
         else if (str === "cancel2") {
@@ -272,6 +309,9 @@ export class Click {
         }
         else if (str === "addDealTrackerReport") {
             await this.addDealTrackerReport.click();
+        }
+        else if (str === "addInsuranceLeadReport") {
+            await this.addInsuranceLeadReport.click();
         }
         else if (str === "save") {
             await this.save.click();
@@ -431,7 +471,7 @@ export class Click {
         await this.page.locator("body").click({ position: { x: 0, y: 0 } });
     }
 
-    //pagination-----------------------------------------------------------------------------------------------------------
+    //pagination-------------------------------------------------------------------------------------------------------------------------------------------------------------
     async pagination(value: number): Promise<void> {
         
         for (let i = 1; i <= value; i++) {
