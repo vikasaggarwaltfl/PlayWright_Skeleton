@@ -134,6 +134,23 @@ test('Verify that the user can view recent transactions by clicking on the "Rece
     await Verify.verifyDatacount(9);
 });
 
+test('Verify that user can copy any transaction from data grid using copy icon', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await page.waitForLoadState('networkidle');
+    await Click.dropdown("Select a group (Blank for All)", "`Group 2");
+    await Click.dropdown("Select a branch (Blank for All)", "Branch 2");
+    await Click.Btn("search");
+    await page.waitForTimeout(1000);
+    await page.pause();
+    await Click.icon("copyTransaction");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
+
 
 //reports >> DealTrackerReport-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -652,7 +669,7 @@ test('Verify that the user can edit the group details with valid data', async ({
     await Click.tabs("group");
     await page.waitForTimeout(1000);
     await Click.icon("filterArrow");
-    await Actions.enterText("groupName", "`Group 2");
+    await Actions.enterText("groupName", "delete group");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
@@ -670,7 +687,7 @@ test('Verify that the user can copy the group details', async ({ page, Actions, 
     await Click.tabs("group");
     await page.waitForTimeout(1000);
     await Click.icon("filterArrow");
-    await Actions.enterText("groupName", "`Group 2");
+    await Actions.enterText("groupName", "delete group");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("copy");
@@ -711,7 +728,7 @@ test('Verify that the user can delete a group', async ({ page, Actions, Click, V
     await Click.tabs("group");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
-    await Actions.enterText("groupName", "`Group 2");
+    await Actions.enterText("groupName", "delete group");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("delete");
@@ -815,10 +832,62 @@ test('Verify that the user can edit the branch details with valid data', async (
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
+    await page.waitForTimeout(5000);
     await Actions.enterText("branchName", "Updated Branch Name");
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Branch Details saved!");
 });
+
+test('Verify that the user cannot edit the branch details with Invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "copy branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await page.waitForTimeout(5000);
+    await Actions.enterText("branchName", " ");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Branch Name is a required field");
+});
+
+test('Verify that the user can copy the branch details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "copy branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
+//company-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that "company details" screen is displayed correctly', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await Verify.IsTextDisplayed(page, "Company");
+});
+
+
+
+
 
 
 
