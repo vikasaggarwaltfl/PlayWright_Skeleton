@@ -56,6 +56,12 @@ export class Click {
     private readonly search: Locator;
     private readonly addDealTrackerReport: Locator;
     private readonly addInsuranceLeadReport: Locator;
+    private readonly addPayoverReport: Locator;
+    private readonly addProductDetailsReport: Locator;
+    private readonly addTransactionDetailsReport: Locator;
+    private readonly addUserNotificationReport: Locator;
+    private readonly addAPIReqResDetailsReport: Locator;
+
     private readonly save: Locator;
     private readonly createDateYes: Locator;
     private readonly inceptDateYes: Locator;
@@ -110,7 +116,7 @@ export class Click {
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
         this.testingFrameworks = page.locator("//p[text()='Testing Frameworks']")
         this.cancel = page.locator("//*[name()='path' and contains(@d,'M8.01186 7')]");
-        this.delete = page.locator("//tbody/tr[3]/td[1]/div[1]/button[2]/i[1]");
+        this.delete = page.locator("//tbody/tr[1]//button[contains(@class, 'p-button')]//i[contains(@class, 'pi-trash')]");
         this.copy = page.locator("//tbody/tr[1]/td[1]/div[1]/div[1]/button[1]/i[1]");
         this.edit = page.locator("(//i[@class='pi pi-pencil text-lg'])[1]");
         this.cancel2 = page.locator("(//*[name()='path'])[8]");
@@ -131,8 +137,16 @@ export class Click {
         this.createTransaction = page.locator("//span[@class='p-button-icon p-button-icon-left pi pi-plus']")
         this.resetCriteria = page.locator("//button[text()=' Reset Criteria ']")
         this.search = page.locator("//button[@aria-label='Search']")
+        this.addProductDetailsReport = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.addDealTrackerReport = page.locator("//div[text()=' Add Deal Tracker Report']");
+        this.addDocSummaryReport = page.locator("//div[@class='flex flex-row gap-2 items-center']");
+        this.addDocReport = page.locator("//div[text()=' Add DOC Report']");
         this.addInsuranceLeadReport = page.locator("//div[text()=' Add Insurance Lead Report']");
+        this.addPayoverReport = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
+        this.addProductDetailsReport = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
+        this.addTransactionDetailsReport = page.locator("//div[text()=' Add Transaction Details Report']");
+        this.addUserNotificationReport = page.locator("//div[@class='text-start'][normalize-space()='User Notification Report']")
+        this.addAPIReqResDetailsReport = page.locator("//div[@class='text-start'][normalize-space()='API Request and Responce']")
         this.save = page.locator("//span[text()='Save']");
         this.createDateYes = page.locator("//div[@placeholder='Create Date']//span[@class='p-button-label'][normalize-space()='Yes']");
         this.inceptDateYes = page.locator("//div[@placeholder='Incept Date']//span[@class='p-button-label'][normalize-space()='Yes']");
@@ -142,9 +156,7 @@ export class Click {
         this.copying = page.locator("//button[text()='Copy']");
         this.selectAll = page.locator("//span[text()='Select All']");
         this.deSelectAll = page.locator("//span[text()='De-select All']");
-        this.addDocSummaryReport = page.locator("//div[@class='flex flex-row gap-2 items-center']");
-        this.addDocReport = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
-        this.generateReport = page.locator("//span[text()='Generate Report']");
+      this.generateReport = page.locator("//span[text()='Generate Report']");
         this.includeActiveUsers = page.locator("div[placeholder='Include Active Users'] div[aria-label='Yes'] span[class='p-button-label']");
         this.addReportScheduler = page.locator("//div[@class='p-splitbutton p-component']");
         this.apply = page.locator("//span[normalize-space()='Apply']");
@@ -244,6 +256,7 @@ export class Click {
             await this.cancel.click();
         }
         else if (str === "delete") {
+            await this.page.waitForTimeout(2000);
             await this.delete.click();
         }
         else if (str === "copy") {
@@ -313,6 +326,27 @@ export class Click {
         else if (str === "addInsuranceLeadReport") {
             await this.addInsuranceLeadReport.click();
         }
+        else if (str === "addPayoverReport") {
+            await this.addPayoverReport.click();
+        }
+        else if (str === "addProductDetailsReport") {
+            await this.addProductDetailsReport.click();
+        }
+        else if (str === "addDocSummaryReport") {
+            await this.addDocSummaryReport.click();
+        }
+        else if (str === "addDocReport") {
+            await this.addDocReport.click();
+        }
+        else if (str === "addTransactionDetailsReport") {
+            await this.addTransactionDetailsReport.click();
+        }
+        else if (str === "addUserNotificationReport") {
+            await this.addUserNotificationReport.click();
+        }
+        else if (str === "addAPIReqResDetailsReport") {
+            await this.addAPIReqResDetailsReport.click();
+        }
         else if (str === "save") {
             await this.save.click();
         }
@@ -340,13 +374,7 @@ export class Click {
         else if (str === "deSelectAll") {
             await this.deSelectAll.click();
         }
-        else if (str === "addDocSummaryReport") {
-            await this.addDocSummaryReport.click();
-        }
-        else if (str === "addDocReport") {
-            await this.addDocReport.click();
-        }
-         else if (str === "generateReport") {
+        else if (str === "generateReport") {
             await this.generateReport.click();
         }
         else if (str === "includeActiveUsers") {
