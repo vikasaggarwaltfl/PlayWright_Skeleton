@@ -85,6 +85,7 @@ export class Click {
     private readonly groupLine: Locator;
     private readonly refresh: Locator;
     private readonly addBranch: Locator;
+    private readonly addCompany: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
@@ -160,7 +161,7 @@ export class Click {
         this.copying = page.locator("//button[text()='Copy']");
         this.selectAll = page.locator("//span[text()='Select All']");
         this.deSelectAll = page.locator("//span[text()='De-select All']");
-      this.generateReport = page.locator("//span[text()='Generate Report']");
+        this.generateReport = page.locator("//span[text()='Generate Report']");
         this.includeActiveUsers = page.locator("div[placeholder='Include Active Users'] div[aria-label='Yes'] span[class='p-button-label']");
         this.addReportScheduler = page.locator("//div[@class='p-splitbutton p-component']");
         this.apply = page.locator("//span[normalize-space()='Apply']");
@@ -172,6 +173,7 @@ export class Click {
         this.groupLine = page.locator("//button[normalize-space()='Group Line']");
         this.refresh = page.locator("//span[text()='Refresh']");
         this.addBranch = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
+        this.addCompany = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
     }
 
 
@@ -419,6 +421,9 @@ export class Click {
         }
         else if (str === "addBranch") {
             await this.addBranch.click();
+        }
+        else if (str === "addCompany") {
+            await this.addCompany.click();
         }
     };
 

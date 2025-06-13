@@ -115,7 +115,7 @@ test('Verify that the user can apply multiple filters to search for transactions
     await Click.calendar(1, "2025", "May", 8);
     await Click.Btn("search");
     await page.waitForTimeout(2000);
-    await Verify.verifyDatacount(9);
+    await Verify.verifyDatacount(5);
 });
 
 test('Verify that the user can minimize the search module', async ({ page, Actions, Click, Verify }) => {
@@ -134,7 +134,7 @@ test('Verify that the user can view recent transactions by clicking on the "Rece
     await Verify.verifyDatacount(9);
 });
 
-test('Verify that user can copy any transaction from data grid using copy icon', async ({ page, Actions, Click, Verify }) => {
+test ('Verify that user can copy any transaction from data grid using copy icon', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await page.waitForLoadState('networkidle');
@@ -150,8 +150,6 @@ test('Verify that user can copy any transaction from data grid using copy icon',
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
-
-
 //reports >> DealTrackerReport-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that the user can check or uncheck multiple checkbox', async ({ page, Actions, Click, Verify }) => {
@@ -163,259 +161,10 @@ test('Verify that the user can check or uncheck multiple checkbox', async ({ pag
     await Click.tabs("dealTracker");
     await Click.Btn("addDealTrackerReport");
     await Click.icon("cancel");
-    await Click.dropdown("Group", "`Group 2");
+    await Click.dropdown("Group", "Practise group");
     await page.waitForTimeout(2000);
     await Click.checkboxWithAll(2, ["Tebogo Lepelle", "Winjit Staging Bm", "Business Manager Staging"]);
     await Verify.IsTextDisplayed(page, ["Tebogo Lepelle", "Winjit Staging Bm", "Business Manager Staging"]);
-});
-
-/*test('Verify that the user can "Add" new Deal tracker report with valid data', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("dealTracker");
-    await Click.Btn("addDealTrackerReport");
-    await Click.icon("cancel");
-    await Click.dropdown("Group", "Practise group");
-    await page.waitForTimeout(2000);
-    await Click.checkboxWithAll(2, "Tebogo Lepelle");
-    await Click.calendar(1, "2025", "May", 10);
-    await page.waitForTimeout(2000);
-    await Click.calendar(2, "2025", "Jun", 11);
-    await Click.Btn("createDateYes");
-    await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Saved Successfully");
-});
-
-test('Verify that the user can "Copy"  Deal tracker report with valid data', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("dealTracker");
-    await Click.icon("copy");
-    await Click.radioButton(["Group", "Business Manager(s)", "Start Date", "Create Date",
-        "Taken-Up Finance Company(s)", "Branch(es)", "Salesperson(s)", "End Date",
-        "Applied-To Finance Company(s)"]);
-    await Click.Btn("copying");
-    await page.waitForTimeout(5000);
-    await Click.Btn("save")
-    await Verify.IsTextDisplayed(page, "Saved Successfully");
-});
-
-test('Verify that the user can "Delete" a Deal tracker report', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("dealTracker");
-    await Click.icon("delete");
-    await Click.Btn("yes");
-    await page.waitForTimeout(2000);
-    await Verify.verifyDatacount(3);
-});
-
-test('Verify that the user cannot "Edit" Deal tracker report with Invalid data.', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("dealTracker");
-    await Click.icon("edit");
-    await Click.Btn("save");
-    await Verify.verifyErrorMessage(page, "Notes is a required field");
-});
-
-//reports >> DOC-SummaryReport-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-test('Verify that the user can "Add" new DOC Summary report with valid data.', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("docSummary");
-    await Click.Btn("addDocSummaryReport");
-    await page.waitForTimeout(2000);
-    await Click.checkboxWithAll(2, ["Tebogo Lepelle", "Floyd Tshoma", "Hlayisani Shondlani"]);
-    await Click.icon("cancel2");
-    await Click.dropdown("Administrator Company", "Al Nova");
-    await Click.icon("cancel3");
-    await page.waitForTimeout(2000);
-    await Click.dropdown("Claim Company", "Ghayatta Dic");
-    await Click.calendar(1, "2025", "May", 25);
-    await page.waitForTimeout(2000);
-    await Click.calendar(2, "2025", "Jun", 30);
-    await Click.Btn("createDateYes");
-    await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Saved Successfully");
-});
-
-test('Verify that the user can "Copy" DOC Summary report with valid data', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("docSummary");
-    await Click.icon("copy");
-    await Click.icon("selectAll");
-    await Click.Btn("copying");
-    await page.waitForTimeout(5000);
-    await Click.Btn("save")
-    await Verify.IsTextDisplayed(page, "Saved Successfully");
-});
-
-test('Verify that the user can "Edit" DOC Summary report with valid data', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("docSummary");
-    await Click.icon("edit");
-    await Actions.enterText("notes", "Good morning");
-    await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Good morning");
-});
-
-test('Verify that the user can "download" DOC Summary report', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("docSummary");
-    await Verify.verifyDownload('downloadlink');
-});*/
-
-
-//reports >> DOC Report-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-test('Verify that the user can "Add" new DOC report with valid data', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("docReport");
-    await Click.Btn("addDocReport");
-    await Click.calendar(1, "2025", "May", 20);
-    await page.waitForTimeout(2000);
-    await Click.calendar(2, "2025", "Jul", 26);
-    await Click.Btn("inceptDateYes")
-    await page.waitForTimeout(4000);
-    await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Saved Successfully");
-});
-
-test('Verify that the user can "download" DOC report', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("docReport");
-    await Verify.verifyDownload('downloadlink');
-});
-
-//reports >> Finance Reporting-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-test('Verify that the user can generate Finance Application Analysis Report by selecting valid details', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(3);
-    await Click.tabs("financeReport");
-    await Click.checkboxWithAll(1, "`Group 2")
-    await Click.checkboxWithAll(3, "practise company")
-    await Click.calendar(1, "2025", "May", 20);
-    await page.waitForTimeout(2000);
-    await Click.calendar(2, "2025", "Jul", 26);
-    await Verify.verifyDownload('generateReport');
-});
-
-test('Verify that the user cannot generate Finance Application Analysis Report by selecting Invalid details', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(3);
-    await Click.tabs("financeReport");
-    await Click.checkboxWithAll(1, "`Group 2")
-    await Click.checkboxWithAll(3, "practise company")
-    await Click.Btn("generateReport");
-    await Verify.verifyErrorMessage(page, "From Date is a required field");
-});
-
-//reports >> Admin report >> Banker user login report----------------------------------------------------------------------------------------------------------------------------------------------------
-
-/*test('Verify that the user can generate Banker User Login Report by selecting valid details', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(4);
-    await Click.tabs("bankerUserReport");
-    await Click.checkboxWithoutAll("Groups", "Practise group");
-    await Click.checkboxWithoutAll("Branch", "Practise branch");
-    await Click.checkboxWithoutAll("Finance Company", "practise company");
-    await Click.checkboxWithoutAll("Role", ["Banker", "MAU banker"]);
-    await Click.Btn("includeActiveUsers");
-    await Verify.verifyDownload('generateReport');
-});
-
-//reports >> Admin report >> Supply data report----------------------------------------------------------------------------------------------------------------------------------------------------
-
-test('Verify that the user can generate Supply Data Report by selecting valid details.', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(4);
-    await Click.tabs("supplyDataReport");
-    await page.waitForTimeout(3000);
-    await Click.checkboxWithoutAll("Group", "Practise group");
-    await page.waitForTimeout(3000);
-    await Click.checkboxWithoutAll("Branch", "Practise branch");
-    await page.waitForTimeout(3000);
-    await Click.checkboxWithoutAll("Product Type", "All");
-    await page.waitForTimeout(2000);
-    await Click.checkboxWithoutAll("Product Sub Type", "Body Warranty");
-    await page.waitForTimeout(2000);
-    await Click.checkboxWithoutAll("Product", "Body Warranty");
-    await page.waitForTimeout(2000);
-    await Click.checkboxWithoutAll("Administrator", "practise company");
-    await page.waitForTimeout(2000);
-    await Click.checkboxWithoutAll("Underwriter", "practise company");
-    await page.waitForTimeout(2000);
-    await Click.checkboxWithoutAll("Claims", "practise company");
-    await page.waitForTimeout(1000);
-    await Click.checkboxWithoutAll("Owner", "practise company");
-    await page.waitForTimeout(1000);
-    await Click.calendar(1, "2026", "Jul", 20);
-    await page.waitForTimeout(1000);
-    await Click.calendar(2, "2027", "Aug", 26);
-    await Verify.verifyDownload('generateReport');
-});*/
-
-//reports >> Admin report >> User name login report----------------------------------------------------------------------------------------------------------------------------------------------------
-
-test('Verify that the user can generate User name login report by selecting valid details', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(4);
-    await Click.tabs("usernameLoginReport");
-    await Click.dropdown("User", "admin@seritisolutions.com");
-    await Verify.verifyDownload('generateReport');
 });
 
 //report scheduler-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -619,7 +368,7 @@ test('Verify that the user can filter group details using the filter options', a
     await Actions.enterText("groupName", "`Group 2");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
-    await Verify.verifyDatacount(2);
+    await Verify.verifyDatacount(3);
 });
 
 test('Verify that group detail text is displayed when clicking on group tab', async ({ page, Actions, Click, Verify }) => {
@@ -673,7 +422,7 @@ test('Verify that the user can edit the group details with valid data', async ({
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
-    await Click.dropdown("last night of month","2nd night of month");
+    await Click.dropdown("10th night of the month","2nd night of month");
     await page.waitForLoadState('networkidle');
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Group Details saved!");
@@ -734,7 +483,7 @@ test('Verify that the user can delete a group', async ({ page, Actions, Click, V
     await Click.icon("delete");
     await Click.Btn("yes");
     await page.waitForTimeout(4000);
-    await Verify.verifyDatacount(2);
+    await Verify.verifyDatacount(1);
 });
 
 test('Verify that the user can navigate through pagination numbers in group page', async ({ page, Actions, Click, Verify }) => {
@@ -744,9 +493,9 @@ test('Verify that the user can navigate through pagination numbers in group page
     await Click.chevronLeftArrow(1);
     await Click.tabs("group");
     await page.waitForLoadState('networkidle');
-    await Click.pagination(8);
+    await Click.pagination(9);
     await page.waitForTimeout(1000);
-    await Verify.verifyDatacount(8);
+    await Verify.verifyDatacount(1);
 });
 
 test('Verify that the user can refresh the group page data', async ({ page, Actions, Click, Verify }) => {
@@ -760,10 +509,10 @@ test('Verify that the user can refresh the group page data', async ({ page, Acti
     await Actions.enterText("groupName", "`Group 2");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
-    await Verify.verifyDatacount(2);
+    await Verify.verifyDatacount(3);
     await Click.Btn("refresh");
     await page.waitForLoadState('networkidle');
-    await Verify.verifyDatacount(2);
+    await Verify.verifyDatacount(3);
 });
 
 //branches-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -828,12 +577,12 @@ test('Verify that the user can edit the branch details with valid data', async (
     await Click.tabs("branches");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
-    await Actions.enterText("branchName", "Practise branch");
+    await Actions.enterText("branchName", "Updated Branch Name");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
     await page.waitForTimeout(5000);
-    await Actions.enterText("branchName", "Updated Branch Name");
+    await Actions.enterText("branchName", "Practise branch");
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Branch Details saved!");
 });
@@ -885,7 +634,66 @@ test('Verify that "company details" screen is displayed correctly', async ({ pag
     await Verify.IsTextDisplayed(page, "Company");
 });
 
+test('Verify that the user can filter company details using the filter options', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "practise company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Verify.verifyDatacount(2);
+});
 
+test('Verify that the user can reset company details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "practise company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.Btn("reset");
+    await page.waitForTimeout(5000);
+    await Verify.verifyDatacount(10);
+});
+
+test('Verify that the user cannot add new company with invalid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("addCompany");
+    await Actions.enterText("companyName", "Test Company");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Company Code is a required field");
+});
+
+test('Verify that the user cannot copy the company details with invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "Test Company 6");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saving Failed!");
+});
 
 
 

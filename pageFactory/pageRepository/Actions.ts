@@ -30,6 +30,7 @@ export class Actions {
     private readonly reportHeading: Locator;
     private readonly groupName: Locator;
     private readonly branchName: Locator;
+    private readonly companyName: Locator;
    
 
 
@@ -47,6 +48,7 @@ export class Actions {
         this.reportHeading = page.locator("//input[@id='ReportHeading']");
         this.groupName = page.locator("//input[@id='GroupName']");
         this.branchName = page.locator("//input[@id='BranchName']");
+        this.companyName = page.locator("//input[@id='CompanyName']");
 
     }
 
@@ -97,6 +99,11 @@ export class Actions {
 
             await this.branchName.fill(text);
         }
+        else if (textBoxName === "companyName") {
+
+            await this.companyName.fill(text);
+        }
+        
 }
 
     async signIn(userProfile: string) {
