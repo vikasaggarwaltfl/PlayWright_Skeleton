@@ -56,26 +56,26 @@ test('Verify that the user can sign out by clicking on the "Sign Out" button.', 
 test('Verify that the user can search for transactions using the transaction number in Quick access modal', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Actions.enterText("transactionSearchMenu", "281651");
+    await Actions.enterText("transactionSearchMenu", "281716");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
-    await Verify.IsTextDisplayed(page, "Transaction 281651");
+    await Verify.IsTextDisplayed(page, "Transaction 281716");
 });
 
 test('Verify that the user can select dropdowns on create transaction page', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Click.Btn("createTransaction")
-    await Click.dropdown("Select a group", "Practise group")
-    await Verify.verifyDropDown("Practise group")
+    await Click.dropdown("Select a group", "`Group 2")
+    await Verify.verifyDropDown("`Group 2")
 });
 
 test('Verify that the user can select radio buttons on create transaction page', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Click.Btn("createTransaction")
-    await Click.dropdown("Select a group", "Practise group")
-    await Click.dropdown("Select a branch", "Practise branch")
+    await Click.dropdown("Select a group", "`Group 2")
+    await Click.dropdown("Select a branch", "Branch 2")
     await Click.radioButton("Company")
     await Verify.verifyRadioButton("Company");
 });
@@ -85,7 +85,8 @@ test('Verify that the "Branch" dropdown is disabled until a "Group" is selected'
     await Click.Btn("login");
     await page.waitForTimeout(2000);
     await Verify.verifyDisabledButton("Select a branch (Blank for All)");
-    await Click.dropdown("Select a group (Blank for All)", "Practise group")
+    await Click.dropdown("Select a group (Blank for All)", "`Group 2")
+    await page.waitForTimeout(2000);
     await Verify.verifyEnabledButton("Select a branch (Blank for All)")
 });
 
@@ -99,8 +100,8 @@ test('Verify that the user can filter using the date pickers', async ({ page, Ac
 test('Verify that the user can reset applied search on transactions', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Click.dropdown("Select a group (Blank for All)", "Practise group");
-    await Click.dropdown("Select a branch (Blank for All)", "Practise branch");
+    await Click.dropdown("Select a group (Blank for All)", "`Group 2");
+    await Click.dropdown("Select a branch (Blank for All)", "Branch 2");
     await Click.calendar(1, "2025", "May", 8);
     await Click.Btn("resetCriteria");
     await Verify.verifyDisabledButton("Select a branch (Blank for All)");
@@ -109,12 +110,12 @@ test('Verify that the user can reset applied search on transactions', async ({ p
 test('Verify that the user can apply multiple filters to search for transactions', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Click.dropdown("Select a group (Blank for All)", "Practise group");
-    await Click.dropdown("Select a branch (Blank for All)", "Practise branch");
+    await Click.dropdown("Select a group (Blank for All)", "`Group 2");
+    await Click.dropdown("Select a branch (Blank for All)", "Branch 2");
     await Click.calendar(1, "2025", "May", 8);
     await Click.Btn("search");
     await page.waitForTimeout(2000);
-    await Verify.verifyDatacount(10);
+    await Verify.verifyDatacount(9);
 });
 
 test('Verify that the user can minimize the search module', async ({ page, Actions, Click, Verify }) => {
@@ -130,8 +131,25 @@ test('Verify that the user can view recent transactions by clicking on the "Rece
     await Click.Btn("login");
     await Click.link("recentTransactions");
     await page.waitForLoadState('networkidle');
-    await Verify.verifyDatacount(19);
+    await Verify.verifyDatacount(9);
 });
+
+test('Verify that user can copy any transaction from data grid using copy icon', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await page.waitForLoadState('networkidle');
+    await Click.dropdown("Select a group (Blank for All)", "`Group 2");
+    await Click.dropdown("Select a branch (Blank for All)", "Branch 2");
+    await Click.Btn("search");
+    await page.waitForTimeout(1000);
+    await page.pause();
+    await Click.icon("copyTransaction");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
 
 
 //reports >> DealTrackerReport-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -145,7 +163,7 @@ test('Verify that the user can check or uncheck multiple checkbox', async ({ pag
     await Click.tabs("dealTracker");
     await Click.Btn("addDealTrackerReport");
     await Click.icon("cancel");
-    await Click.dropdown("Group", "Practise group");
+    await Click.dropdown("Group", "`Group 2");
     await page.waitForTimeout(2000);
     await Click.checkboxWithAll(2, ["Tebogo Lepelle", "Winjit Staging Bm", "Business Manager Staging"]);
     await Verify.IsTextDisplayed(page, ["Tebogo Lepelle", "Winjit Staging Bm", "Business Manager Staging"]);
@@ -315,7 +333,7 @@ test('Verify that the user can generate Finance Application Analysis Report by s
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(3);
     await Click.tabs("financeReport");
-    await Click.checkboxWithAll(1, "Practise group")
+    await Click.checkboxWithAll(1, "`Group 2")
     await Click.checkboxWithAll(3, "practise company")
     await Click.calendar(1, "2025", "May", 20);
     await page.waitForTimeout(2000);
@@ -330,7 +348,7 @@ test('Verify that the user cannot generate Finance Application Analysis Report b
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(3);
     await Click.tabs("financeReport");
-    await Click.checkboxWithAll(1, "Practise group")
+    await Click.checkboxWithAll(1, "`Group 2")
     await Click.checkboxWithAll(3, "practise company")
     await Click.Btn("generateReport");
     await Verify.verifyErrorMessage(page, "From Date is a required field");
@@ -413,7 +431,7 @@ test('Verify that the user cannot "Add" new Report Scheduler with invalid data',
     await page.waitForTimeout(2000);
     await Click.dropdown("Report Type", "Transaction Document Report");
     await Click.Btn("save");
-    await Verify.verifyErrorMessage(page, "Group is a required field");
+    await Verify.verifyErrorMessage(page, "Document Category is a required field");
 });
 
 test('Verify that the user can "Copy" Report Scheduler report with valid data', async ({ page, Actions, Click, Verify }) => {
@@ -582,6 +600,7 @@ test('Verify that clicking on the back arrow, user is navigated to the template 
     await Click.Btn("login");
     await Click.tabs("template");
     await Click.icon("edit");
+    await page.waitForTimeout(1000);
     await Click.icon("backArrow");
     await page.waitForLoadState('networkidle');
     await Verify.IsTextDisplayed(page, "Template Details");
@@ -595,8 +614,9 @@ test('Verify that the user can filter group details using the filter options', a
     await Actions.enterText("searchMenu", "Admin");
     await Click.chevronLeftArrow(1);
     await Click.tabs("group");
+    await page.waitForTimeout(1000);
     await Click.icon("filterArrow");
-    await Actions.enterText("groupName", "Practise group");
+    await Actions.enterText("groupName", "`Group 2");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Verify.verifyDatacount(2);
@@ -620,7 +640,7 @@ test('Verify that the user can reset group details by clicking on the reset butt
     await Click.tabs("group");
     await page.waitForTimeout(1000);
     await Click.icon("filterArrow");  
-    await Actions.enterText("groupName", "Practise group");
+    await Actions.enterText("groupName", "`Group 2");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.Btn("reset");
@@ -635,7 +655,7 @@ test('Verify that the user cannot add new group details with invalid data', asyn
     await Click.chevronLeftArrow(1);
     await Click.tabs("group");
     await Click.Btn("addGroup");
-    await Actions.enterText("groupName", "Practise group");
+    await Actions.enterText("groupName", "`Group 2");
     await Click.Btn("save");
     await Verify.verifyErrorMessage(page, "Group Code is a required field");
     
@@ -649,7 +669,7 @@ test('Verify that the user can edit the group details with valid data', async ({
     await Click.tabs("group");
     await page.waitForTimeout(1000);
     await Click.icon("filterArrow");
-    await Actions.enterText("groupName", "`Group 2");
+    await Actions.enterText("groupName", "delete group");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
@@ -667,7 +687,7 @@ test('Verify that the user can copy the group details', async ({ page, Actions, 
     await Click.tabs("group");
     await page.waitForTimeout(1000);
     await Click.icon("filterArrow");
-    await Actions.enterText("groupName", "`Group 2");
+    await Actions.enterText("groupName", "delete group");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("copy");
@@ -708,7 +728,7 @@ test('Verify that the user can delete a group', async ({ page, Actions, Click, V
     await Click.tabs("group");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
-    await Actions.enterText("groupName", "`Group 2");
+    await Actions.enterText("groupName", "delete group");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("delete");
@@ -726,7 +746,7 @@ test('Verify that the user can navigate through pagination numbers in group page
     await page.waitForLoadState('networkidle');
     await Click.pagination(8);
     await page.waitForTimeout(1000);
-    await Verify.verifyDatacount(7);
+    await Verify.verifyDatacount(8);
 });
 
 test('Verify that the user can refresh the group page data', async ({ page, Actions, Click, Verify }) => {
@@ -737,7 +757,7 @@ test('Verify that the user can refresh the group page data', async ({ page, Acti
     await Click.tabs("group");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
-    await Actions.enterText("groupName", "Practise group");
+    await Actions.enterText("groupName", "`Group 2");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Verify.verifyDatacount(2);
@@ -812,10 +832,62 @@ test('Verify that the user can edit the branch details with valid data', async (
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
+    await page.waitForTimeout(5000);
     await Actions.enterText("branchName", "Updated Branch Name");
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Branch Details saved!");
 });
+
+test('Verify that the user cannot edit the branch details with Invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "copy branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await page.waitForTimeout(5000);
+    await Actions.enterText("branchName", " ");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Branch Name is a required field");
+});
+
+test('Verify that the user can copy the branch details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "copy branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
+//company-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that "company details" screen is displayed correctly', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await Verify.IsTextDisplayed(page, "Company");
+});
+
+
+
+
 
 
 

@@ -29,6 +29,7 @@ export class Click {
     private readonly template: Locator;
     private readonly group: Locator;
     private readonly branches: Locator;
+    private readonly companies: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     private readonly seritiLogo: Locator;
@@ -46,6 +47,7 @@ export class Click {
     private readonly backArrow: Locator;
     private readonly futureArrow: Locator;
     private readonly reportSchedulerCopy: Locator;
+    private readonly copyTransaction: Locator;
 
     //buttons--------------------------------------------------------------------------------------------------------
     private readonly login: Locator;
@@ -111,6 +113,7 @@ export class Click {
         this.template = page.locator("//div[contains(@class,'text-start')][normalize-space()='Template']");
         this.group = page.locator("//div[contains(@class,'text-start')][normalize-space()='Group']");
         this.branches = page.locator("//div[contains(@class,'text-start')][normalize-space()='Branches']");
+        this.companies = page.locator("//div[contains(text(),'Companies')]");
         
         //icon--------------------------------------------------------------------------------------------------------        
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
@@ -128,6 +131,7 @@ export class Click {
         this.backArrow = page.locator("//button[@class='border rounded-md w-9 h-9 border-primary-500']");
         this.futureArrow = page.locator("(//*[name()='svg'][@class='p-icon p-row-toggler-icon'])[2]");
         this.reportSchedulerCopy = page.locator("(//button[@class='flex flex-col justify-center'])[2]");
+        this.copyTransaction = page.locator("//button[@fdprocessedid='mbocv']");
 
 
         //buttons--------------------------------------------------------------------------------------------------------        
@@ -241,6 +245,9 @@ export class Click {
         else if (str === "branches") {
             await this.branches.click();
         }
+        else if (str === "companies") {
+            await this.companies.click();
+        }
         
     }
 
@@ -294,6 +301,9 @@ export class Click {
         }
         else if (str === "reportSchedulerCopy") {
             await this.reportSchedulerCopy.click();
+        }
+        else if (str === "copyTransaction") {
+            await this.copyTransaction.click();
         }
 
     }
