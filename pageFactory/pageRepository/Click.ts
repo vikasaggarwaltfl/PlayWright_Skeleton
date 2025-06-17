@@ -92,7 +92,7 @@ export class Click {
     private readonly generateReportButton: Locator;
     private readonly companyDetails: Locator;
     private readonly documentProtectedyes: Locator;
-
+    private readonly addProduct: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -190,6 +190,7 @@ export class Click {
         this.generateReport = page.locator("//button[normalize-space()='Generate Report']");
         this.companyDetails = page.locator("//button[normalize-space()='Company Details']");
         this.documentProtectedyes = page.locator("//div[@placeholder='Is Document Protected']//span[@class='p-button-label'][normalize-space()='Yes']");
+        this.addProduct = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
     }
 
 
@@ -454,6 +455,9 @@ export class Click {
         }
         else if (str === "documentProtectedyes") {
             await this.documentProtectedyes.click();
+        }
+        else if (str === "addProduct") {
+            await this.addProduct.click();
         }
 
     };

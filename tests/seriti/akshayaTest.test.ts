@@ -136,8 +136,8 @@ test('Verify that the user can view recent transactions by clicking on the "Rece
 
 test('Verify that user can enter to any transaction by clicking on enter transaction icon', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
-    await Click.Btn("login"); 
-    await Click.dropdown("Select a group (Blank for All)", "`Group 2"); 
+    await Click.Btn("login");
+    await Click.dropdown("Select a group (Blank for All)", "`Group 2");
     await Click.dropdown("Select a branch (Blank for All)", "Branch 2");
     await Click.Btn("search");
     await Click.icon("enterTransaction");
@@ -148,11 +148,11 @@ test('Verify that user can enter to any transaction by clicking on enter transac
 
 test('Verify that pagination works correctly for navigating through paged content', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
-    await Click.Btn("login"); 
+    await Click.Btn("login");
     await page.waitForTimeout(5000);
     await Click.pagination(1);
     await Verify.verifyDatacount(10);
-    
+
 });
 
 
@@ -231,7 +231,7 @@ test('Verify that the user can "edit" Report Scheduler report with valid data', 
     await Click.icon("futureArrow")
     await Click.icon("edit");
     await page.waitForTimeout(2000);
-    await Click.dropdown("Daily (Every night)","Weekly (Every Friday evening)");
+    await Click.dropdown("Daily (Every night)", "Weekly (Every Friday evening)");
     await page.waitForTimeout(2000);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Report Scheduler saved!");
@@ -364,7 +364,7 @@ test('Verify that clicking on the back arrow, user is navigated to the template 
 
 //Admin >> Group-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify that the user can filter group details using the filter options', async ({ page, Actions, Click, Verify }) => {          
+test('Verify that the user can filter group details using the filter options', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -395,7 +395,7 @@ test('Verify that the user can reset group details by clicking on the reset butt
     await Click.chevronLeftArrow(1);
     await Click.tabs("group");
     await page.waitForTimeout(1000);
-    await Click.icon("filterArrow");  
+    await Click.icon("filterArrow");
     await Actions.enterText("groupName", "`Group 2");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
@@ -414,7 +414,7 @@ test('Verify that the user cannot add new group details with invalid data', asyn
     await Actions.enterText("groupName", "`Group 2");
     await Click.Btn("save");
     await Verify.verifyErrorMessage(page, "Group Code is a required field");
-    
+
 });
 
 test('Verify that the user can edit the group details with valid data', async ({ page, Actions, Click, Verify }) => {
@@ -429,7 +429,7 @@ test('Verify that the user can edit the group details with valid data', async ({
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
-    await Click.dropdown("10th night of the month","2nd night of month");
+    await Click.dropdown("10th night of the month", "2nd night of month");
     await page.waitForLoadState('networkidle');
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Group Details saved!");
@@ -467,7 +467,7 @@ test('Verify that the user cannot add a group in the groupline with invalid data
     await Click.icon("edit");
     await Click.Btn("groupLine");
     await Click.Btn("add");
-    await Click.dropdown("Account Manager", "admin@seritisolutions.com");  
+    await Click.dropdown("Account Manager", "admin@seritisolutions.com");
     await page.waitForTimeout(2000);
     await Click.dropdown("Marketer", "a1");
     await page.waitForTimeout(1000);
@@ -733,9 +733,9 @@ test('Verify that password generator working as expected', async ({ page, Action
     await Click.icon("edit");
     await Click.Btn("companyDetails");
     await Click.Btn("add");
-    await page.waitForTimeout(2000); 
-    const [popup] = await Promise.all([ page.waitForEvent('popup'),await Click.link("clickhere")]);
-   await Verify.verifyURL(popup, 'https://randomwheel.org/password-generator');
+    await page.waitForTimeout(2000);
+    const [popup] = await Promise.all([page.waitForEvent('popup'), await Click.link("clickhere")]);
+    await Verify.verifyURL(popup, 'https://randomwheel.org/password-generator');
 
 });
 
@@ -753,9 +753,9 @@ test('Verify Document protection is working or not if it selected as "Yes"', asy
     await Click.icon("edit");
     await Click.Btn("companyDetails");
     await Click.Btn("add");
-    await page.waitForTimeout(2000); 
+    await page.waitForTimeout(2000);
     await Click.Btn("documentProtectedyes");
-    await page.waitForTimeout(2000); 
+    await page.waitForTimeout(2000);
 
 });
 
@@ -764,7 +764,7 @@ test('Verify that user can expand "Products" section and the sub option should d
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
-    await Click.chevronLeftArrow(1); 
+    await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(5);
     await Verify.IsTextDisplayed(page, "Product Admin");
 
@@ -791,7 +791,62 @@ test('Verify that the user can filter product details using the filter options',
     await Verify.verifyDatacount(4);
 });
 
+test('Verify that the user can reset product details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("productName", "practise product");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.Btn("reset");
+    await page.waitForTimeout(5000);
+    await Verify.verifyDatacount(10);
+});
 
+test('Verify that the user can add new product with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("addProduct");
+    await Click.dropdown("Product Type", "Comprehensive Insurance");
+    await page.pause();
+    await Click.dropdown("Product Sub Type", "Comprehensive Insurance");
+    await page.pause();
+    await Actions.enterText("productName", "Test Product");
+    await page.pause();;
+    await Click.dropdown("Administrator", "practise company");
+    await page.pause();
+    await Click.dropdown("Claims", "practise company");
+    await page.pause();
+    await Click.dropdown("Owner", "practise company");
+    await page.pause();
+    await Click.dropdown("Underwriter", "practise company");
+    await page.pause();
+    await Click.calendar(1, "2025", "Jul", 20);
+    await Click.calendar(2, "2025", "Aug", 20);
+    await Click.dropdown("Payment Type", "Single");
+    await page.pause();
+    await Click.dropdown("Display Type", "Radio Button");
+    await Click.Btn("save");
+
+});
+
+test('Verify that the user cannot add new product with invalid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("addProduct");
+    await Actions.enterText("productName", "Test Product");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Product Sub Type is a required field");
+});
 
 
 
