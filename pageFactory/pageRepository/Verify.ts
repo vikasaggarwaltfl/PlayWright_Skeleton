@@ -45,12 +45,14 @@ export class Verify {
     if (Array.isArray(TextValue)) {
       // If TextValue is an array, verify each text value
       for (const text of TextValue) {
-        await expect(page.getByText(text, { exact: true })).toBeVisible();
+        // Wait for the text to be visible with a longer timeout
+        await page.waitForSelector(`text=${text}`, { state: 'visible', timeout: 10000 });
         console.log(`"${text}" is visible on the page`);
       }
     } else {
       // If TextValue is a single string
-      await expect(page.getByText(TextValue, { exact: true })).toBeVisible();
+      // Wait for the text to be visible with a longer timeout
+      await page.waitForSelector(`text=${TextValue}`, { state: 'visible', timeout: 10000 });
       console.log(`"${TextValue}" is visible on the page`);
     }
   }

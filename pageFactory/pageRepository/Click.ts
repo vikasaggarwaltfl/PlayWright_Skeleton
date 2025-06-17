@@ -265,7 +265,6 @@ export class Click {
             await this.cancel.click();
         }
         else if (str === "delete") {
-            await this.page.waitForTimeout(2000);
             await this.delete.click();
         }
         else if (str === "copy") {

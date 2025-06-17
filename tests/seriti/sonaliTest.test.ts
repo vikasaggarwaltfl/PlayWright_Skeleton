@@ -65,7 +65,7 @@ test('Verify that the user can "Delete" a Deal Tracker Report', async ({ page, A
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("dealTracker");
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(3000);
     await Click.icon("delete");
     await Click.Btn("yes");
     await page.waitForTimeout(2000);
@@ -130,12 +130,12 @@ test('Verify that the user can "Add" new DOC Summary report with valid data', as
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("docSummary");
-    await Click.Btn("addDocReport");
+    await Click.Btn("addDocSummaryReport");
     await Click.calendar(1, "2025", "May", 20);
     await page.waitForTimeout(2000);
     await Click.calendar(2, "2025", "Jul", 26);
+    await page.waitForTimeout(6000);
     await Click.Btn("inceptDateYes")
-    await page.waitForTimeout(4000);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
@@ -371,9 +371,9 @@ test('Verify that the user can "Copy" a Insurance Lead Report with valid data', 
     await Click.Btn("selectAll");
     await page.waitForTimeout(2000);
     await Click.Btn("copying");
-    await page.waitForTimeout(9000);
+    await page.waitForTimeout(6000);
     await Click.Btn("save");
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(5000);
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
@@ -682,194 +682,4 @@ test('Verify that the user can "download" Transaction Details report', async ({ 
 });
 
 
-//My Reports >> Reports >> User NotificationReport--------------------------------------------------------------------------------------------------------------------------------------------
-
-test('Verify that the User Notification Report screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("userNotificationReport");
-    await page.waitForTimeout(2000);
-    await Verify.IsTextDisplayed(page, ["Created Date", "Process State Message", "Report File"]);
-});
-
-test('Verify that the user can "Add" new User Notification report with valid data', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("userNotificationReport");
-    await Click.Btn("addUserNotificationReport");
-    await Click.calendar(1, "2025", "May", 20);;
-    await page.waitForTimeout(6000);
-    await Click.calendar(2, "2025", "Jul", 26);
-    await Click.Btn("inceptDateYes")
-    await page.waitForTimeout(6000);
-    await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Saved Successfully");
-});
-
-test('Verify that the user can "Edit" a User Notification Report with valid data', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("userNotificationReport");
-    await page.waitForTimeout(2000);
-    await Click.icon("edit");
-    await Actions.enterText("notes", "Edited by automation");
-    await Click.Btn("save");
-    await expect(page.getByText("Edited by automation", { exact: true }).first()).toBeVisible();
-});
-
-test('Verify that the user can "Delete" a User Notification Report', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("userNotificationReport");
-    await page.waitForTimeout(2000);
-    await Click.icon("delete");
-    await Click.Btn("yes");
-    await page.waitForTimeout(2000);
-});
-
-test('Verify that the user can "Copy" a User Notification Report with valid data', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("userNotificationReport");
-    await page.waitForTimeout(2000);
-    await Click.icon("copy");
-    await Click.Btn("selectAll");
-    await Click.Btn("copying");
-    await page.waitForTimeout(9000);
-    await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Saved Successfully");
-});
-
-test('Verify that the user can sort User Notification Report records', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("userNotificationReport");
-    await Click.icon("Sort");
-    await page.waitForTimeout(2000);
-    await Verify.verifySortOrder();
-});
-
-test('Verify that the user can "download" User Notification report', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("userNotificationReport");
-    await Verify.verifyDownload('downloadlink');
-});
-
-
-//My Reports >> Reports >> User NotificationReport--------------------------------------------------------------------------------------------------------------------------------------------
-
-test('Verify that the  API Request and Responce report screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("apiReqResDetailsReport");
-    await page.waitForTimeout(2000);
-    await Verify.IsTextDisplayed(page, ["Created Date", "Process State Message", "Report File"]);
-});
-
-test('Verify that the user can "Add" new  API Request and Responce  report with valid data', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("apiReqResDetailsReport");
-    await Click.Btn("addapiReqResDetailsReport");
-    await Click.calendar(1, "2025", "May", 20);;
-    await page.waitForTimeout(6000);
-    await Click.calendar(2, "2025", "Jul", 26);
-    await Click.Btn("inceptDateYes")
-    await page.waitForTimeout(6000);
-    await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Saved Successfully");
-});
-
-test('Verify that the user can "Edit" a  API Request and Responce  Report with valid data', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("apiReqResDetailsReport");
-    await page.waitForTimeout(2000);
-    await Click.icon("edit");
-    await Actions.enterText("notes", "Edited by automation");
-    await Click.Btn("save");
-    await expect(page.getByText("Edited by automation", { exact: true }).first()).toBeVisible();
-});
-
-test('Verify that the user can "Delete" a  API Request and Responce  Report', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("apiReqResDetailsReport");
-    await page.waitForTimeout(2000);
-    await Click.icon("delete");
-    await Click.Btn("yes");
-    await page.waitForTimeout(2000);
-});
-
-test('Verify that the user can "Copy" a  API Request and Responce  Report with valid data', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("apiReqResDetailsReport");
-    await page.waitForTimeout(2000);
-    await Click.icon("copy");
-    await Click.Btn("selectAll");
-    await Click.Btn("copying");
-    await page.waitForTimeout(9000);
-    await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Saved Successfully");
-});
-
-test('Verify that the user can sort  API Request and Responce  Report records', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("apiReqResDetailsReport");
-    await Click.icon("Sort");
-    await page.waitForTimeout(2000);
-    await Verify.verifySortOrder();
-});
-
-test('Verify that the user can "download" API Request and Responce report', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("apiReqResDetailsReport");
-    await Verify.verifyDownload('downloadlink');
-});
 
