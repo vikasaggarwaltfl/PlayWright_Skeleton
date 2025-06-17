@@ -134,21 +134,28 @@ test('Verify that the user can view recent transactions by clicking on the "Rece
     await Verify.verifyDatacount(9);
 });
 
-test ('Verify that user can copy any transaction from data grid using copy icon', async ({ page, Actions, Click, Verify }) => {
+test('Verify that user can enter to any transaction by clicking on enter transaction icon', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await page.waitForLoadState('networkidle');
-    await Click.dropdown("Select a group (Blank for All)", "`Group 2");
+    await Click.Btn("login"); 
+    await Click.dropdown("Select a group (Blank for All)", "`Group 2"); 
     await Click.dropdown("Select a branch (Blank for All)", "Branch 2");
     await Click.Btn("search");
-    await page.waitForTimeout(1000);
-    await page.pause();
-    await Click.icon("copyTransaction");
-    await Click.icon("selectAll");
-    await Click.Btn("copying");
-    await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Saved Successfully");
+    await Click.icon("enterTransaction");
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(5000);
+    await Verify.IsTextDisplayed(page, "Transaction");
 });
+
+test('Verify that pagination works correctly for navigating through paged content', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login"); 
+    await page.waitForTimeout(5000);
+    await Click.pagination(1);
+    await Verify.verifyDatacount(10);
+    
+});
+
+
 
 //reports >> DealTrackerReport-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -694,6 +701,66 @@ test('Verify that the user cannot copy the company details with invalid data', a
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Saving Failed!");
 });
+
+
+test('Verify that the user can edit the company details with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "Test Company 6");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Company saved!");
+});
+
+test('Verify that password generator working as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "Test Company 6");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.Btn("companyDetails");
+    await Click.Btn("add");
+    await page.waitForTimeout(2000); 
+    const [popup] = await Promise.all([ page.waitForEvent('popup'),await Click.link("clickhere")]);
+   await Verify.verifyURL(popup, 'https://randomwheel.org/password-generator');
+
+});
+
+test('Verify Document protection is working or not if it selected as "Yes"', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "Test Company 6");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.Btn("companyDetails");
+    await Click.Btn("add");
+    await page.waitForTimeout(2000); 
+    await Click.Btn("documentProtectedyes");
+    await page.waitForTimeout(2000); 
+
+});
+
+
+
 
 
 

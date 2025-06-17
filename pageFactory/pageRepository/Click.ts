@@ -9,6 +9,7 @@ export class Click {
     readonly page: Page;
     private readonly download: Locator;
     private readonly recentTransactions: Locator;
+    private readonly clickhere: Locator;
 
     //tabs--------------------------------------------------------------------------------------------------------
     private readonly transaction: Locator;
@@ -47,7 +48,7 @@ export class Click {
     private readonly backArrow: Locator;
     private readonly futureArrow: Locator;
     private readonly reportSchedulerCopy: Locator;
-    private readonly copyTransaction: Locator;
+    private readonly enterTransaction: Locator;
 
     //buttons--------------------------------------------------------------------------------------------------------
     private readonly login: Locator;
@@ -87,6 +88,10 @@ export class Click {
     private readonly addBranch: Locator;
     private readonly addCompany: Locator;
     private readonly generateReportButton: Locator;
+    private readonly companyDetails: Locator;
+    private readonly documentProtectedyes: Locator;
+
+
 
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
@@ -94,6 +99,7 @@ export class Click {
         this.context = context
         this.download = page.locator("//tbody/tr[1]/td[4]/a[1]");
         this.recentTransactions = page.locator("//span[normalize-space()='Recent Transactions']");
+        this.clickhere = page.locator("//a[normalize-space()='Click here...']");
 
         //tabs--------------------------------------------------------------------------------------------------------
         this.transaction = page.locator("//div[text()='Transaction']")
@@ -133,7 +139,8 @@ export class Click {
         this.backArrow = page.locator("//button[@class='border rounded-md w-9 h-9 border-primary-500']");
         this.futureArrow = page.locator("(//*[name()='svg'][@class='p-icon p-row-toggler-icon'])[2]");
         this.reportSchedulerCopy = page.locator("(//button[@class='flex flex-col justify-center'])[2]");
-        this.copyTransaction = page.locator("//button[@fdprocessedid='mbocv']");
+        this.enterTransaction = page.locator("//tbody/tr[1]/td[1]/div[1]/div[1]/div[1]/button[1]");
+        
 
 
         //buttons--------------------------------------------------------------------------------------------------------        
@@ -176,6 +183,8 @@ export class Click {
         this.addBranch = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.addCompany = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.generateReport = page.locator("//button[normalize-space()='Generate Report']");
+        this.companyDetails = page.locator("//button[normalize-space()='Company Details']");
+        this.documentProtectedyes = page.locator("//div[@placeholder='Is Document Protected']//span[@class='p-button-label'][normalize-space()='Yes']");
     }
 
 
@@ -187,6 +196,10 @@ export class Click {
         else if (linkName === 'recentTransactions') {
             await this.recentTransactions.click();
         }
+         else if (linkName === 'clickhere') {
+            await this.clickhere.click();
+        }
+
 
     }
 
@@ -305,11 +318,10 @@ export class Click {
         else if (str === "reportSchedulerCopy") {
             await this.reportSchedulerCopy.click();
         }
-        else if (str === "copyTransaction") {
-            await this.copyTransaction.click();
+       else if (str === "enterTransaction") {
+            await this.enterTransaction.click();
         }
-
-    }
+}
 
     //buttons--------------------------------------------------------------------------------------------------------
     async Btn(str: string): Promise<void> {
@@ -426,6 +438,13 @@ export class Click {
         else if (str === "addCompany") {
             await this.addCompany.click();
         }
+        else if (str === "companyDetails") {
+            await this.companyDetails.click();
+        }
+        else if (str === "documentProtectedyes") {
+            await this.documentProtectedyes.click();
+        }
+
     };
 
     //dropdown--------------------------------------------------------------------------------------------------------
