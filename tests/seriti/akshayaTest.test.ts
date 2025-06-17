@@ -759,7 +759,37 @@ test('Verify Document protection is working or not if it selected as "Yes"', asy
 
 });
 
+//products-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+test('Verify that user can expand "Products" section and the sub option should display as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1); 
+    await Click.chevronLeftArrow(5);
+    await Verify.IsTextDisplayed(page, "Product Admin");
 
+});
+
+test('Verify that "product details" screen is displayed correctly', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await Verify.IsTextDisplayed(page, "Products");
+});
+
+test('Verify that the user can filter product details using the filter options', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("productName", "practise product");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Verify.verifyDatacount(4);
+});
 
 
 

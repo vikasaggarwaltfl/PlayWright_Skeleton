@@ -31,6 +31,7 @@ export class Actions {
     private readonly groupName: Locator;
     private readonly branchName: Locator;
     private readonly companyName: Locator;
+    private readonly productName: Locator;
    
 
 
@@ -49,6 +50,7 @@ export class Actions {
         this.groupName = page.locator("//input[@id='GroupName']");
         this.branchName = page.locator("//input[@id='BranchName']");
         this.companyName = page.locator("//input[@id='CompanyName']");
+        this.productName = page.locator("//input[@id='ProductName']");
 
     }
 
@@ -103,6 +105,11 @@ export class Actions {
 
             await this.companyName.fill(text);
         }
+        else if (textBoxName === "productName") {
+
+            await this.productName.fill(text);
+        }
+        
         
 }
 

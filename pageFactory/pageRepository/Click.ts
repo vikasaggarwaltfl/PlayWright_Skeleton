@@ -31,6 +31,8 @@ export class Click {
     private readonly group: Locator;
     private readonly branches: Locator;
     private readonly companies: Locator;
+    private readonly productAdmin: Locator;
+    private readonly product: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     private readonly seritiLogo: Locator;
@@ -113,6 +115,7 @@ export class Click {
         this.userNotificationReport = page.locator("//div[@class='text-start'][normalize-space()='User Notification Report']")
         this.apiReqResDetailsReport = page.locator("//div[@class='text-start'][normalize-space()='API Request and Responce']")
         
+        
         this.financeReport = page.locator("//div[contains(@class,'text-start')][normalize-space()='Finance Application Analysis Report']");
         this.bankerUserReport = page.locator("//div[text()='Banker User Login Report']");
         this.supplyDataReport = page.locator("//div[text()='Supply Data Report']");
@@ -122,6 +125,8 @@ export class Click {
         this.group = page.locator("//div[contains(@class,'text-start')][normalize-space()='Group']");
         this.branches = page.locator("//div[contains(@class,'text-start')][normalize-space()='Branches']");
         this.companies = page.locator("//div[contains(text(),'Companies')]");
+        this.productAdmin = page.locator("//div[contains(text(),'Product Admin')]");
+        this.product = page.locator("//div[contains(text(),'Product')]");
         
         //icon--------------------------------------------------------------------------------------------------------        
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
@@ -264,6 +269,12 @@ export class Click {
         }
         else if (str === "companies") {
             await this.companies.click();
+        }
+        else if (str === "productAdmin") {
+            await this.productAdmin.click();
+        }
+        else if (str === "product") {
+            await this.product.click();
         }
         
     }
