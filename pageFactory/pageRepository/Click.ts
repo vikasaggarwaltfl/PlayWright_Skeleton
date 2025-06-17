@@ -86,6 +86,7 @@ export class Click {
     private readonly refresh: Locator;
     private readonly addBranch: Locator;
     private readonly addCompany: Locator;
+    private readonly generateReportButton: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
@@ -120,7 +121,7 @@ export class Click {
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
         this.testingFrameworks = page.locator("//p[text()='Testing Frameworks']")
         this.cancel = page.locator("//*[name()='path' and contains(@d,'M8.01186 7')]");
-        this.delete = page.locator("//tbody/tr[1]//button[contains(@class, 'p-button')]//i[contains(@class, 'pi-trash')]");
+        this.delete = page.locator("//i[contains(@class, 'pi-trash')]");
         this.copy = page.locator("//tbody/tr[1]/td[1]/div[1]/div[1]/button[1]/i[1]");
         this.edit = page.locator("(//i[@class='pi pi-pencil text-lg'])[1]");
         this.cancel2 = page.locator("(//*[name()='path'])[8]");
@@ -174,6 +175,7 @@ export class Click {
         this.refresh = page.locator("//span[text()='Refresh']");
         this.addBranch = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.addCompany = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
+        this.generateReport = page.locator("//button[normalize-space()='Generate Report']");
     }
 
 
@@ -265,7 +267,7 @@ export class Click {
             await this.cancel.click();
         }
         else if (str === "delete") {
-            await this.delete.click();
+            await this.delete.nth(1).click();
         }
         else if (str === "copy") {
             await this.copy.click();

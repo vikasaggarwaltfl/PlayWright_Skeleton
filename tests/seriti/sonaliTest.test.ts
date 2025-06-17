@@ -607,11 +607,12 @@ test('Verify that the user can "Add" new Transaction Details report with valid d
     await Click.chevronLeftArrow(2);
     await Click.tabs("transactionDetailsReport");
     await Click.Btn("addTransactionDetailsReport");
-    await Click.calendar(1, "2025", "May", 20);;
-    await page.waitForTimeout(6000);
+    await Click.calendar(1, "2025", "May", 20);
+    await page.waitForTimeout(1000);
     await Click.calendar(2, "2025", "Jul", 26);
-    await Click.Btn("inceptDateYes")
-    await page.waitForTimeout(6000);
+    await Click.Btn("inceptDateYes");
+    await Click.checkboxWithoutAll("Columns", "All");
+    await page.waitForTimeout(1000);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
@@ -637,7 +638,7 @@ test('Verify that the user can "Delete" a Transaction Details Report', async ({ 
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("transactionDetailsReport");
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(5000);
     await Click.icon("delete");
     await Click.Btn("yes");
     await page.waitForTimeout(2000);
@@ -681,5 +682,24 @@ test('Verify that the user can "download" Transaction Details report', async ({ 
     await Verify.verifyDownload('downloadlink');
 });
 
+//My Reports >> Finance Reporting  >> Finance Application Analysis Report-------------------------------------------------------------------------------------------------------------
 
+test('Verify that the user can generate Finance Application Analysis Report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(3);
+    await Click.tabs("financeReport"); // Assuming "financeReport" is the correct tab value
+
+    await Click.calendar(1, "2025", "May", 20);
+    await page.waitForTimeout(2000);
+    await Click.calendar(2, "2025", "Jul", 26);
+    //await Click.Btn("emailReportYes")
+    await page.waitForTimeout(6000);
+    await Click.Btn("generateReport");
+    await page.waitForTimeout(6000);
+     await Verify.verifyDownload('downloadlink');
+    
+});
 
