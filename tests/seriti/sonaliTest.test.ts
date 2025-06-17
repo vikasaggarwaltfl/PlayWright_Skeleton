@@ -696,10 +696,21 @@ test('Verify that the user can generate Finance Application Analysis Report', as
     await page.waitForTimeout(2000);
     await Click.calendar(2, "2025", "Jul", 26);
     //await Click.Btn("emailReportYes")
-    await page.waitForTimeout(6000);
-    await Click.Btn("generateReport");
-    await page.waitForTimeout(6000);
+    await page.waitForTimeout(5000);
+    //await Click.Btn("generateReport");
+    await page.waitForTimeout(9000);
      await Verify.verifyDownload('downloadlink');
     
 });
 
+//My Reports >> Admin Report  >> Banker User Login Report------------------------------------------------------------------------------------------------------------------------------
+test('Verify that the user can generate Banker User Login Report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("BankerUserLoginReport");
+
+
+    });
