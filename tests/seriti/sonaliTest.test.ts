@@ -704,13 +704,92 @@ test('Verify that the user can generate Finance Application Analysis Report', as
 });
 
 //My Reports >> Admin Report  >> Banker User Login Report------------------------------------------------------------------------------------------------------------------------------
+
 test('Verify that the user can generate Banker User Login Report', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(4);
-    await Click.tabs("BankerUserLoginReport");
+    await Click.tabs("bankerUserLoginReport"); 
+    await page.waitForTimeout(5000);
+    await Click.selectDropdownOptionByLabel("Groups", "All");
+    await Click.selectDropdownOptionByLabel("Branch", "All");
+    await Click.selectDropdownOptionByLabel("Finance Company", "All");
+    await Click.selectDropdownOptionByLabel("Role", "All");
+    await Click.generateReport.click(); 
+    await Verify.IsTextDisplayed(page, "Report generated successfully"); 
+    await page.waitForTimeout(5000); 
+});
 
+//My Reports >> Admin Report >> Supply Data Report -------------------------------------------------------------------------------------------------------------
 
+test('Verify that the Supply Data Report screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("supplyDataReport");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, [
+        "Group", "Branch", "Product Type", "Product Sub Type", "Product", "Administrator", "Underwriter", "Owner", "Claims", "Start Date", "End Date", "Generate Report"
+    ]);
+});
+
+test('Verify that the user can select all required fields and generate Supply Data Report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("supplyDataReport");
+    await page.waitForTimeout(2000);
+    await Click.fillSupplyDataReportFields({
+      group: "Test_Group",
+      branch: "Test_Branch",
+      productType: "Test_ProductType",
+      productSubType: "Test_SubType",
+      product: "Test_Product",
+      administrator: "Test_Admin",
+      underwriter: "Test_Underwriter",
+      owner: "Test_Owner",
+      claims: "Test_Claims",
+      startDate: { year: "2025", month: "May", day: 20 },
+      endDate: { year: "2025", month: "Jul", day: 26 }
     });
+    await Click.generateReport.click();
+    await Verify.IsTextDisplayed(page, "Report generated successfully"); // Adjust if different success message
+});
+
+test('Verify that the user cannot generate Supply Data Report without required fields', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("supplyDataReport");
+    await page.waitForTimeout(2000);
+    await Click.generateReport.click();
+    await Verify.IsTextDisplayed(page, "This field is required"); // Adjust if different error message
+});
+
+test('Verify that the date pickers work for Start Date and End Date in Supply Data Report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("supplyDataReport");
+    await page.waitForTimeout(2000);
+    await Click.calendar(1, "2025", "May", 20);
+    await Click.calendar(2, "2025", "Jul", 26);
+    await Verify.IsTextDisplayed(page, ["2025-05-20", "2025-07-26"]); // Adjust if date format is different
+});
+
+//My Reports >> Admin Report >> Transaction Documents Report -------------------------------------------------------------------------------------------------------------------------
+//My Reports >> Admin Report >> User Deatils Report ---------------------------------------------------------------------------------------------------------------------------------
+//My Reports >> Admin Report >> User Login Report -----------------------------------------------------------------------------------------------------------------------------------
+//My Reports >> Admin Report >> User Name Login Report ------------------------------------------------------------------------------------------------------------------------------
+
+

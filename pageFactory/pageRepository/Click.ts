@@ -23,7 +23,7 @@ export class Click {
     private readonly userNotificationReport: Locator;
     private readonly apiReqResDetailsReport: Locator;
     private readonly financeReport: Locator;
-    private readonly bankerUserReport: Locator;
+    private readonly bankerUserLoginReport: Locator;
     private readonly supplyDataReport: Locator;
     private readonly usernameLoginReport: Locator;
     private readonly reportScheduler: Locator;
@@ -76,7 +76,7 @@ export class Click {
     private readonly copying: Locator;
     private readonly addDocSummaryReport: Locator;
     private readonly addDocReport: Locator;
-    private readonly generateReport: Locator;
+    public readonly generateReport: Locator;
     private readonly includeActiveUsers: Locator;
     private readonly addReportScheduler: Locator;
     private readonly apply: Locator;
@@ -89,10 +89,10 @@ export class Click {
     private readonly refresh: Locator;
     private readonly addBranch: Locator;
     private readonly addCompany: Locator;
-    private readonly generateReportButton: Locator;
     private readonly companyDetails: Locator;
     private readonly documentProtectedyes: Locator;
     private readonly addProduct: Locator;
+    private readonly supplyDataReportReset: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -117,7 +117,7 @@ export class Click {
         
         
         this.financeReport = page.locator("//div[contains(@class,'text-start')][normalize-space()='Finance Application Analysis Report']");
-        this.bankerUserReport = page.locator("//div[text()='Banker User Login Report']");
+        this.bankerUserLoginReport = page.locator("//div[text()='Banker User Login Report']");
         this.supplyDataReport = page.locator("//div[text()='Supply Data Report']");
         this.usernameLoginReport = page.locator("//div[text()='User Name Login Report']");
         this.reportScheduler = page.locator("//div[@class='text-start'][normalize-space()='Report Scheduler']");
@@ -161,7 +161,6 @@ export class Click {
         this.addDocReport = page.locator("//div[text()=' Add DOC Report']");
         this.addInsuranceLeadReport = page.locator("//div[text()=' Add Insurance Lead Report']");
         this.addPayoverReport = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
-        this.addProductDetailsReport = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.addTransactionDetailsReport = page.locator("//div[text()=' Add Transaction Details Report']");
         this.addUserNotificationReport = page.locator("//div[@class='text-start'][normalize-space()='User Notification Report']")
         this.addAPIReqResDetailsReport = page.locator("//div[@class='text-start'][normalize-space()='API Request and Responce']")
@@ -174,7 +173,7 @@ export class Click {
         this.copying = page.locator("//button[text()='Copy']");
         this.selectAll = page.locator("//span[text()='Select All']");
         this.deSelectAll = page.locator("//span[text()='De-select All']");
-        this.generateReport = page.locator("//span[text()='Generate Report']");
+        this.generateReport = page.locator("//button[normalize-space()='Generate Report']");
         this.includeActiveUsers = page.locator("div[placeholder='Include Active Users'] div[aria-label='Yes'] span[class='p-button-label']");
         this.addReportScheduler = page.locator("//div[@class='p-splitbutton p-component']");
         this.apply = page.locator("//span[normalize-space()='Apply']");
@@ -187,10 +186,10 @@ export class Click {
         this.refresh = page.locator("//span[text()='Refresh']");
         this.addBranch = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.addCompany = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
-        this.generateReport = page.locator("//button[normalize-space()='Generate Report']");
         this.companyDetails = page.locator("//button[normalize-space()='Company Details']");
         this.documentProtectedyes = page.locator("//div[@placeholder='Is Document Protected']//span[@class='p-button-label'][normalize-space()='Yes']");
         this.addProduct = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
+        this.supplyDataReportReset = page.locator("//button[normalize-space()='Reset']");
     }
 
 
@@ -247,8 +246,8 @@ export class Click {
         else if (str === "financeReport") {
             await this.financeReport.click();
         }
-        else if (str === "bankerUserReport") {
-            await this.bankerUserReport.click();
+        else if (str === "bankerUserLoginReport") {
+            await this.bankerUserLoginReport.click();
         }
         else if (str === "supplyDataReport") {
             await this.supplyDataReport.click();
@@ -561,5 +560,21 @@ export class Click {
                 break; 
             }
         }
+    }
+
+    // Generic Dropdown Selector by Label and Option Text
+    async selectDropdownOptionByLabel(dropdownLabel: string, optionText: string): Promise<void> {
+        console.log(`Trying to select from dropdown with label: "${dropdownLabel}" and option: "${optionText}"`);
+
+        const dropdownLocator = this.page.locator(`xpath=//label[normalize-space()='${dropdownLabel}']/following::div[contains(@class, 'p-dropdown')][1]`);
+        await dropdownLocator.waitFor({ state: 'attached', timeout: 5000 });
+        await dropdownLocator.waitFor({ state: 'visible', timeout: 5000 });
+        await dropdownLocator.click();
+
+        const optionLocator = this.page.locator(`//li[@role='option']//span[normalize-space()='${optionText}']`);
+        await optionLocator.waitFor({ state: 'visible', timeout: 5000 });
+        await optionLocator.click();
+
+        await this.page.waitForTimeout(500); // slight wait after selection
     }
 }
