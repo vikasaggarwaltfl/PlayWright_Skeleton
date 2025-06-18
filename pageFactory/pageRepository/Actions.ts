@@ -125,7 +125,28 @@ export class Actions {
         }
     }
 
-
+async SelectDropdownOptions(index: number, selectors: string[] | string): Promise<void> {
+        // Click the dropdown first
+        await this.page.locator(`(//div[@class='p-multiselect-label'])[${index}]`).click();
+        // If we want to deselect all checkboxes
+        if (selectors === 'All') {
+            await this.page.locator("(//input[@aria-label='All items selected'])[1]").click();
+        }
+        // If we have an array of selectors
+        else if (Array.isArray(selectors)) {
+            await this.page.locator("(//input[@aria-label='All items selected'])[1]").click();
+            for (const selector of selectors) {
+                await this.page.locator(`//span[text()='${selector}']`).click();
+            }
+        }
+        // If we have a single selector
+        else {
+            await this.page.locator("(//input[@aria-label='All items selected'])[1]").click();
+            await this.page.locator(`//span[text()='${selectors}']`).click();
+        }
+        // Close the dropdown by clicking outside
+        await this.page.locator("body").click({ position: { x: 0, y: 0 } });
+    }
 
 
 }

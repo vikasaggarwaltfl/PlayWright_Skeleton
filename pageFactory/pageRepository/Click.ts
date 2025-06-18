@@ -93,6 +93,7 @@ export class Click {
     private readonly documentProtectedyes: Locator;
     private readonly addProduct: Locator;
     private readonly supplyDataReportReset: Locator;
+    private readonly includeActiveUsersYes: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -190,6 +191,7 @@ export class Click {
         this.documentProtectedyes = page.locator("//div[@placeholder='Is Document Protected']//span[@class='p-button-label'][normalize-space()='Yes']");
         this.addProduct = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.supplyDataReportReset = page.locator("//button[normalize-space()='Reset']");
+        this.includeActiveUsersYes = page.locator("//div[@placeholder='Include Active Users']//span[@class='p-button-label'][normalize-space()='Yes']");
     }
 
 
@@ -458,7 +460,7 @@ export class Click {
         else if (str === "addProduct") {
             await this.addProduct.click();
         }
-
+      
     };
 
     //dropdown--------------------------------------------------------------------------------------------------------
@@ -562,19 +564,6 @@ export class Click {
         }
     }
 
-    // Generic Dropdown Selector by Label and Option Text
-    async selectDropdownOptionByLabel(dropdownLabel: string, optionText: string): Promise<void> {
-        console.log(`Trying to select from dropdown with label: "${dropdownLabel}" and option: "${optionText}"`);
-
-        const dropdownLocator = this.page.locator(`xpath=//label[normalize-space()='${dropdownLabel}']/following::div[contains(@class, 'p-dropdown')][1]`);
-        await dropdownLocator.waitFor({ state: 'attached', timeout: 5000 });
-        await dropdownLocator.waitFor({ state: 'visible', timeout: 5000 });
-        await dropdownLocator.click();
-
-        const optionLocator = this.page.locator(`//li[@role='option']//span[normalize-space()='${optionText}']`);
-        await optionLocator.waitFor({ state: 'visible', timeout: 5000 });
-        await optionLocator.click();
-
-        await this.page.waitForTimeout(500); // slight wait after selection
-    }
 }
+
+
