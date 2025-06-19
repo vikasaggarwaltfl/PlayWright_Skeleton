@@ -32,6 +32,8 @@ export class Actions {
     private readonly branchName: Locator;
     private readonly companyName: Locator;
     private readonly productName: Locator;
+    private readonly accessoryName: Locator;
+    private readonly accessoryCode: Locator;
    
 
 
@@ -51,7 +53,8 @@ export class Actions {
         this.branchName = page.locator("//input[@id='BranchName']");
         this.companyName = page.locator("//input[@id='CompanyName']");
         this.productName = page.locator("//input[@id='ProductName']");
-
+        this.accessoryName = page.locator("//input[@id='AccessoryName']");
+        this.accessoryCode = page.locator("(//input[@id='Code'])[1]");
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -109,9 +112,15 @@ export class Actions {
 
             await this.productName.fill(text);
         }
-        
-        
-}
+        else if (textBoxName === "accessoryName") {
+
+            await this.accessoryName.fill(text);
+        }
+        else if (textBoxName === "accessoryCode") {
+
+            await this.accessoryCode.fill(text);
+        }
+    }
 
     async signIn(userProfile: string) {
         await this.page.goto('https://seritiweb-mea-uat.seriti-int.com');

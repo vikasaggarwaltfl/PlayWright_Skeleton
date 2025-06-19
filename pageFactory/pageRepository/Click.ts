@@ -33,6 +33,7 @@ export class Click {
     private readonly companies: Locator;
     private readonly productAdmin: Locator;
     private readonly product: Locator;
+    private readonly accessoryAdmin: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     private readonly seritiLogo: Locator;
@@ -94,6 +95,7 @@ export class Click {
     private readonly addProduct: Locator;
     private readonly supplyDataReportReset: Locator;
     private readonly includeActiveUsersYes: Locator;
+    private readonly addAccessory: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -128,6 +130,7 @@ export class Click {
         this.companies = page.locator("//div[contains(text(),'Companies')]");
         this.productAdmin = page.locator("//div[contains(text(),'Product Admin')]");
         this.product = page.locator("//div[contains(text(),'Product')]");
+        this.accessoryAdmin = page.locator("//div[contains(text(),'Accessory Admin')]");
         
         //icon--------------------------------------------------------------------------------------------------------        
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
@@ -146,8 +149,6 @@ export class Click {
         this.futureArrow = page.locator("(//*[name()='svg'][@class='p-icon p-row-toggler-icon'])[2]");
         this.reportSchedulerCopy = page.locator("(//button[@class='flex flex-col justify-center'])[2]");
         this.enterTransaction = page.locator("//tbody/tr[1]/td[1]/div[1]/div[1]/div[1]/button[1]");
-        
-
 
         //buttons--------------------------------------------------------------------------------------------------------        
         this.login = page.locator("//span[text()='Login']")
@@ -192,8 +193,8 @@ export class Click {
         this.addProduct = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.supplyDataReportReset = page.locator("//button[normalize-space()='Reset']");
         this.includeActiveUsersYes = page.locator("//div[@placeholder='Include Active Users']//span[@class='p-button-label'][normalize-space()='Yes']");
+        this.addAccessory = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
     }
-
 
     //link--------------------------------------------------------------------------------------------------------
     async link(linkName: String) {
@@ -206,9 +207,7 @@ export class Click {
          else if (linkName === 'clickhere') {
             await this.clickhere.click();
         }
-
-
-    }
+    };
 
     //tabs--------------------------------------------------------------------------------------------------------
     async tabs(str: string): Promise<void> {
@@ -278,8 +277,11 @@ export class Click {
         else if (str === "product") {
             await this.product.click();
         }
+        else if (str === "accessoryAdmin") {
+            await this.accessoryAdmin.click();
+        }
         
-    }
+    };
 
     //icon--------------------------------------------------------------------------------------------------------
     async icon(str: string): Promise<void> {
@@ -334,7 +336,7 @@ export class Click {
        else if (str === "enterTransaction") {
             await this.enterTransaction.click();
         }
-}
+};
 
     //buttons--------------------------------------------------------------------------------------------------------
     async Btn(str: string): Promise<void> {
@@ -460,6 +462,9 @@ export class Click {
         else if (str === "addProduct") {
             await this.addProduct.click();
         }
+        else if (str === "addAccessory") {
+            await this.addAccessory.click();
+        }
       
     };
 
@@ -469,7 +474,7 @@ export class Click {
        await this.page.locator(`//span[@aria-label='${value}']`).click();
         // Then select the option
         await this.page.locator(`//span[normalize-space()='${selector}']`).click();
-    }
+    };
 
     //radio button-------------------------------------------------------------------------------------------------------
     async radioButton(label: string[] | string): Promise<void> {
@@ -482,7 +487,7 @@ export class Click {
         else {
             await this.page.getByLabel(`${label}`).check();
         }
-}
+};
 
     //calendar-------------------------------------------------------------------------------------------------------
     async calendar(index: number, year: string, month: string, date?: number): Promise<void> {
@@ -497,12 +502,12 @@ export class Click {
         if (date !== undefined) {
             await this.page.locator(`(//span[@data-p-disabled='false'])[text()='${date}']`).click();
         }
-    }
+    };
 
     //chevronLeft-------------------------------------------------------------------------------------------------------
     async chevronLeftArrow(index: number): Promise<void> {
         await this.page.locator(`(//button[@class='flex flex-row items-center justify-center'])[${index}]`).click();
-}
+};
 
     //checkbox-----------------------------------------------------------------------------------------------------------
     async checkboxWithAll(index: number, selectors: string[] | string): Promise<void> {
@@ -526,7 +531,7 @@ export class Click {
         }
         // Close the dropdown by clicking outside
         await this.page.locator("body").click({ position: { x: 0, y: 0 } });
-    }
+    };
 
 
     async checkboxWithoutAll(Textvalue: string, selectors: string[] | string): Promise<void> {
@@ -548,7 +553,7 @@ export class Click {
         }
         // Close the dropdown by clicking outside
         await this.page.locator("body").click({ position: { x: 0, y: 0 } });
-    }
+    };
 
     //pagination-------------------------------------------------------------------------------------------------------------------------------------------------------------
     async pagination(value: number): Promise<void> {
@@ -562,7 +567,7 @@ export class Click {
                 break; 
             }
         }
-    }
+    };
 
 }
 
