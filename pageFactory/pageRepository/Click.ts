@@ -25,7 +25,10 @@ export class Click {
     private readonly financeReport: Locator;
     private readonly bankerUserLoginReport: Locator;
     private readonly supplyDataReport: Locator;
-    private readonly usernameLoginReport: Locator;
+    private readonly transactionDocumentsReport: Locator;
+    private readonly userDetailsReport: Locator;
+    private readonly userLoginReport: Locator;
+    private readonly userNameLoginReport: Locator;
     private readonly reportScheduler: Locator;
     private readonly template: Locator;
     private readonly group: Locator;
@@ -94,6 +97,7 @@ export class Click {
     private readonly documentProtectedyes: Locator;
     private readonly addProduct: Locator;
     private readonly supplyDataReportReset: Locator;
+    private readonly transactionDocumentReport: Locator;
     private readonly includeActiveUsersYes: Locator;
     private readonly addAccessory: Locator;
 
@@ -117,12 +121,13 @@ export class Click {
         this.transactionDetailsReport = page.locator("//div[@class='text-start'][normalize-space()='Transaction Details Report']")
         this.userNotificationReport = page.locator("//div[@class='text-start'][normalize-space()='User Notification Report']")
         this.apiReqResDetailsReport = page.locator("//div[@class='text-start'][normalize-space()='API Request and Responce']")
-        
-        
         this.financeReport = page.locator("//div[contains(@class,'text-start')][normalize-space()='Finance Application Analysis Report']");
         this.bankerUserLoginReport = page.locator("//div[text()='Banker User Login Report']");
         this.supplyDataReport = page.locator("//div[text()='Supply Data Report']");
-        this.usernameLoginReport = page.locator("//div[text()='User Name Login Report']");
+        this.transactionDocumentsReport = page.locator("//div[text()='Transaction Documents Report']");
+        this.userDetailsReport = page.locator("//div[text()='User Details Report']");
+        this.userLoginReport = page.locator("//div[text()='User Login Report']");
+        this.userNameLoginReport = page.locator("//div[text()='User Name Login Report']");
         this.reportScheduler = page.locator("//div[@class='text-start'][normalize-space()='Report Scheduler']");
         this.template = page.locator("//div[contains(@class,'text-start')][normalize-space()='Template']");
         this.group = page.locator("//div[contains(@class,'text-start')][normalize-space()='Group']");
@@ -253,8 +258,18 @@ export class Click {
         else if (str === "supplyDataReport") {
             await this.supplyDataReport.click();
         }
-        else if (str === "usernameLoginReport") {
-            await this.usernameLoginReport.click();
+        else if (str === "transactionDocumentsReport") {
+            await this.transactionDocumentsReport.click();
+        }
+        else if (str === "userDetailsReport") {
+            await this.userDetailsReport.click();
+        }
+        else if (str === "userLoginReport") {
+            await this.userLoginReport.click();
+        }
+
+        else if (str === "userNameLoginReport") {
+            await this.userNameLoginReport.click();
         }
         else if (str === "reportScheduler") {
             await this.reportScheduler.click();
@@ -476,7 +491,21 @@ export class Click {
         await this.page.locator(`//span[normalize-space()='${selector}']`).click();
     };
 
+ //Dropdownwithscroll-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    async dropdownwithscroll(value: string, selector: string): Promise<void> {
+    // Click to open the dropdown
+    await this.page.locator(`//span[@aria-label='${value}']`).click();
+
+    const optionLocator = this.page.locator(`//span[normalize-space()='${selector}']`);
+
+    // Scroll the option into view if necessary
+    await optionLocator.scrollIntoViewIfNeeded();
+
+    // Click the desired option
+    await optionLocator.click();
+}
     //radio button-------------------------------------------------------------------------------------------------------
+
     async radioButton(label: string[] | string): Promise<void> {
         if (Array.isArray(label)) {
             for (const labels of label) {

@@ -345,16 +345,17 @@ test('Verify that the user can "Edit" a Insurance Lead Report with valid data', 
 });
 
 
-test('Verify that the user can "Delete" a Insurance Lead Report Report', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can "Delete" a Insurance Lead  Report', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(2);
     await Click.tabs("insuranceLeadReport");
-    await Click.icon("delete");
     await page.waitForTimeout(2000);
+    await Click.icon("delete");
     await Click.Btn("yes");
+    await page.waitForTimeout(2000);
     
 });
 
@@ -760,7 +761,7 @@ test('Verify that the user can select all required fields and generate Supply Da
     await page.waitForTimeout(2000);
     await Click.calendar(2, "2025", "Jul", 26);
     await page.waitForTimeout(2000);
-    await Click.generateReport.click();  
+    await Click.generateReport.click();
     await Verify.verifyDownload('generateReport');
 });
 
@@ -778,9 +779,184 @@ test('Verify that the user cannot generate Supply Data Report without required f
 
 //My Reports >> Admin Report >> Transaction Documents Report -------------------------------------------------------------------------------------------------------------------------
 
+test('Verify that the Transaction Document Report screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("transactionDocumentsReport");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, [
+        "Group", "Branch", "Product Type", "Product Sub Type", "Product", "Administrator", "Underwriter", "Owner", "Claims", "Generate Report"
+    ]);
+});
+
+test('Verify that the user can select all required fields and generate Transaction Document Report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("transactionDocumentsReport");
+    await Click.checkboxWithoutAll("Group", "All");
+    await Click.checkboxWithoutAll("Branch", "All");
+    await Click.checkboxWithoutAll("Product Type", "All");
+    await Click.checkboxWithoutAll("Product Sub Type", "All");
+    await Click.checkboxWithoutAll("Product", "All");
+    await Click.checkboxWithoutAll("Document Category", "All");
+    await Click.checkboxWithoutAll("Administrator", "All");
+    await Click.checkboxWithoutAll("Underwriter", "All");
+    await Click.checkboxWithoutAll("Claims", "All");
+    await Click.checkboxWithoutAll("Owner", "All");
+    await Click.calendar(1, "2025", "May", 20);
+    await page.waitForTimeout(2000);
+    await Click.calendar(2, "2025", "Jul", 26);
+    await Click.generateReport.click();  
+     await page.waitForTimeout(3000);
+    await Verify.verifyDownload('generateReport');
+});
+
+test('Verify that the user cannot generate Transaction Document Report without required fields', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("transactionDocumentsReport");
+    await page.waitForTimeout(2000);
+    await Click.generateReport.click();
+    await Verify.IsTextDisplayed(page, "Could not generate report"); // Adjust if different error message
+});
+
 
 //My Reports >> Admin Report >> User Deatils Report ---------------------------------------------------------------------------------------------------------------------------------
-//My Reports >> Admin Report >> User Login Report -----------------------------------------------------------------------------------------------------------------------------------
-//My Reports >> Admin Report >> User Name Login Report ------------------------------------------------------------------------------------------------------------------------------
 
+test('Verify that the User Details Report screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("userDetailsReport");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, [
+        "Group", "Branch", "Role", "Generate Report"
+    ]);
+});
+
+test('Verify that the user can select all required fields and generate User Details Report Report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("userDetailsReport");
+    await Click.checkboxWithoutAll("Group", "All");
+    await Click.checkboxWithoutAll("Branch", "All");
+    await Click.checkboxWithoutAll("Role", "All");
+    await Click.checkboxWithoutAll("Fields", "All");
+    await Click.calendar(1, "2025", "May", 20);
+    await page.waitForTimeout(2000);
+    await Click.calendar(2, "2025", "Jul", 26);
+    await Click.generateReport.click();  
+    await page.waitForTimeout(3000);
+    await Verify.verifyDownload('generateReport');
+});
+
+test('Verify that the user cannot generate User Details Report Report without required fields', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("userDetailsReport");
+    await page.waitForTimeout(2000);
+    await Click.generateReport.click();
+    await Verify.IsTextDisplayed(page, "Could not generate report"); // Adjust if different error message
+});
+
+
+//My Reports >> Admin Report >> User Login Report -----------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the User Login Report screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("userLoginReport");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, [
+        "Group", "Branch","Role", "Generate Report"
+    ]);
+});
+
+test('Verify that the user can select all required fields and generate User Login Report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("userLoginReport");
+    await Click.checkboxWithoutAll("Group", "All");
+    await Click.checkboxWithoutAll("Branch", "All");
+    await Click.checkboxWithoutAll("Role", "All");
+    await Click.checkboxWithoutAll("Fields", "All");
+    await Click.Btn("includeActiveUsersYes");
+    await Click.generateReport.click();  
+    await page.waitForTimeout(3000);
+    await Verify.verifyDownload('generateReport');
+});
+
+test('Verify that the user cannot generate User Login Report without required fields', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("userLoginReport");
+    await page.waitForTimeout(2000);
+    await Click.generateReport.click();
+    await Verify.IsTextDisplayed(page, "Could not generate report"); // Adjust if different error message
+});
+
+//My Reports >> Admin Report >> User Name Login Report ------------------------------------------------------------------------------------------------------------------------------
+test('Verify that the User Name Login Report screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("userNameLoginReport");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, [
+        "User", "Generate Report"
+    ]);
+});
+
+test('Verify that the user can select all required fields and generate User Name Login Report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("userNameLoginReport");
+    await Click.dropdown("User", "a1");
+    await Click.generateReport.click();  
+    await page.waitForTimeout(3000);
+    await Verify.verifyDownload('generateReport');
+});
+
+test('Verify that the user cannot generate User Name Login Report without required fields', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("userNameLoginReport");
+    await page.waitForTimeout(2000);
+    await Click.generateReport.click();
+    await Verify.IsTextDisplayed(page, "Could not generate report"); // Adjust if different error message
+});
 
