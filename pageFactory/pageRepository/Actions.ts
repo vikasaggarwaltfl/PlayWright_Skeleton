@@ -34,6 +34,8 @@ export class Actions {
     private readonly productName: Locator;
     private readonly accessoryName: Locator;
     private readonly accessoryCode: Locator;
+    private readonly vehicleCode: Locator;
+    private readonly vehicleModel: Locator;
    
 
 
@@ -55,6 +57,8 @@ export class Actions {
         this.productName = page.locator("//input[@id='ProductName']");
         this.accessoryName = page.locator("//input[@id='AccessoryName']");
         this.accessoryCode = page.locator("(//input[@id='Code'])[1]");
+        this.vehicleCode = page.locator("//input[@id='VehicleCode']");
+        this.vehicleModel = page.locator("//input[@id='Model']");
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -119,6 +123,15 @@ export class Actions {
         else if (textBoxName === "accessoryCode") {
 
             await this.accessoryCode.fill(text);
+        }
+        else if (textBoxName === "vehicleCode") {
+
+            await this.vehicleCode.fill(text);
+        }
+
+       else if (textBoxName === "vehicleModel") {
+
+            await this.vehicleModel.fill(text);
         }
     }
 

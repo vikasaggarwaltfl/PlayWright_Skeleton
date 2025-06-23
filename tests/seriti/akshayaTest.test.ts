@@ -430,7 +430,7 @@ test('Verify that the user can edit the group details with valid data', async ({
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
-    await Click.dropdown("2nd night of month","10th night of the month");
+    await Click.dropdown("10th night of the month","2nd night of month");
     await page.waitForLoadState('networkidle');
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Group Details saved!");
@@ -585,7 +585,7 @@ test('Verify that the user can edit the branch details with valid data', async (
     await Click.tabs("branches");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
-    await Actions.enterText("Updated Branch Name","branchName");
+    await Actions.enterText("branchName","Updated Branch Name");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
@@ -826,12 +826,12 @@ test('Verify that the user can edit the product details with valid data', async 
     await Click.tabs("productAdmin");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
-    await Actions.enterText("productName","practise product");
+    await Actions.enterText("productName","updated practise product");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
     await page.waitForTimeout(5000);
-    await Actions.enterText("productName","updated practise product");
+    await Actions.enterText("productName","practise product");
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Products saved!");
 });
@@ -1005,9 +1005,68 @@ test('Verify that the user cannot edit the accessory details with Invalid data',
     await Verify.verifyErrorMessage(page, "Accessory Name is a required field");
 });
 
+//Vehicles-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+test('Verify that user can expand "Vehicles" section and the sub option should display as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Verify.IsTextDisplayed(page, "Vehicle Admin");
+});
 
+test('Verify that "vehicle details" screen is displayed correctly', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await Verify.IsTextDisplayed(page, "Vehicle");
+});
 
+test('Verify that the user can filter vehicle details using the filter options', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("vehicleCode", "AC001");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Verify.verifyDatacount(1);
+});
+
+test('Verify that the user can reset vehicle details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("vehicleCode", "AC001");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.Btn("reset");
+    await page.waitForTimeout(5000);
+    await Verify.verifyDatacount(10);
+});
+
+test('Verify that the user cannot add an vehicle with that already exsists', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("addVehicle");
+    await Click.dropdown("Manufacturer", "Acura");
+    await Actions.enterText("vehicleModel", "new")
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saving Failed!");
+});
 
 
 

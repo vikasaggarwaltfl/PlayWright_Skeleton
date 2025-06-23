@@ -37,6 +37,7 @@ export class Click {
     private readonly productAdmin: Locator;
     private readonly product: Locator;
     private readonly accessoryAdmin: Locator;
+    private readonly vehicleAdmin: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     private readonly seritiLogo: Locator;
@@ -100,6 +101,7 @@ export class Click {
     private readonly transactionDocumentReport: Locator;
     private readonly includeActiveUsersYes: Locator;
     private readonly addAccessory: Locator;
+    private readonly addVehicle: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -136,6 +138,7 @@ export class Click {
         this.productAdmin = page.locator("//div[contains(text(),'Product Admin')]");
         this.product = page.locator("//div[contains(text(),'Product')]");
         this.accessoryAdmin = page.locator("//div[contains(text(),'Accessory Admin')]");
+        this.vehicleAdmin = page.locator("//div[contains(text(),'Vehicle Admin')]");
         
         //icon--------------------------------------------------------------------------------------------------------        
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
@@ -199,6 +202,7 @@ export class Click {
         this.supplyDataReportReset = page.locator("//button[normalize-space()='Reset']");
         this.includeActiveUsersYes = page.locator("//div[@placeholder='Include Active Users']//span[@class='p-button-label'][normalize-space()='Yes']");
         this.addAccessory = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
+        this.addVehicle = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
     }
 
     //link--------------------------------------------------------------------------------------------------------
@@ -248,7 +252,6 @@ export class Click {
         else if (str === "apiReqResDetailsReport") {
             await this.apiReqResDetailsReport.click();
         }
-
         else if (str === "financeReport") {
             await this.financeReport.click();
         }
@@ -294,6 +297,9 @@ export class Click {
         }
         else if (str === "accessoryAdmin") {
             await this.accessoryAdmin.click();
+        }
+        else if (str === "vehicleAdmin") {
+            await this.vehicleAdmin.click();
         }
         
     };
@@ -482,6 +488,9 @@ export class Click {
         }
         else if (str === "addAccessory") {
             await this.addAccessory.click();
+        }
+        else if (str === "addVehicle") {
+            await this.addVehicle.click();
         }
       
     };
