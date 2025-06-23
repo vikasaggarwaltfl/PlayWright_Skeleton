@@ -438,6 +438,9 @@ export class Click {
         else if (str === "addReportScheduler") {
             await this.addReportScheduler.click();
         }
+        else if (str === "includeActiveUsersYes") {
+            await this.includeActiveUsersYes.click();
+        }
         else if (str === "apply") {
             await this.apply.click();
         } 

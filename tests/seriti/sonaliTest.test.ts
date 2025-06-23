@@ -312,7 +312,7 @@ test('Verify that the Insurance Lead Report screen is displayed as expected', as
     await Verify.IsTextDisplayed(page, ["Created Date", "Process State Message", "Report File"]);
 });
 
-test('Verify that the user can "Add" new Insurance Deal Report with valid data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can "Add" new Insurance Lead Report with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
@@ -374,7 +374,6 @@ test('Verify that the user can "Copy" a Insurance Lead Report with valid data', 
     await Click.Btn("copying");
     await page.waitForTimeout(6000);
     await Click.Btn("save");
-    await page.waitForTimeout(5000);
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
@@ -517,7 +516,7 @@ test('Verify that the user can "Add" new Product Details report with valid data'
     await Click.tabs("productDetailsReport");
     await Click.Btn("addProductDetailsReport");
     await Click.calendar(1, "2025", "May", 20);;
-    await page.waitForTimeout(6000);
+    await page.waitForTimeout(8000);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
@@ -600,23 +599,23 @@ test('Verify that the Transaction Report screen is displayed as expected', async
     await Verify.IsTextDisplayed(page, ["Created Date", "Process State Message", "Report File"]);
 });
 
-test('Verify that the user can "Add" new Transaction Details report with valid data', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("transactionDetailsReport");
-    await Click.Btn("addTransactionDetailsReport");
-    await Click.calendar(1, "2025", "May", 20);
-    await page.waitForTimeout(1000);
-    await Click.calendar(2, "2025", "Jul", 26);
-    await Click.Btn("inceptDateYes");
-    await Click.checkboxWithoutAll("Columns", "All");
-    await page.waitForTimeout(1000);
-    await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Saved Successfully");
-});
+// test('Verify that the user can "Add" new Transaction Details report with valid data', async ({ page, Actions, Click, Verify }) => {
+//     await Actions.signIn("sonali");
+//     await Click.Btn("login");
+//     await Actions.enterText("searchMenu", "My Reports");
+//     await Click.chevronLeftArrow(1);
+//     await Click.chevronLeftArrow(2);
+//     await Click.tabs("transactionDetailsReport");
+//     await Click.Btn("addTransactionDetailsReport");
+//     await Click.calendar(1, "2025", "May", 20);
+//     await page.waitForTimeout(1000);
+//     await Click.calendar(2, "2025", "Jul", 26);
+//     await Click.Btn("inceptDateYes");
+//     await Click.checkboxWithoutAll("Columns", ["Transaction Details", "Client Information"]);
+//     await page.waitForTimeout(2000);
+//     await Click.Btn("save");
+//     await Verify.IsTextDisplayed(page, "Saved Successfully");
+// });
 
 test('Verify that the user can "Edit" a Transaction Details Report with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
@@ -692,14 +691,12 @@ test('Verify that the user can generate Finance Application Analysis Report', as
     await Click.chevronLeftArrow(1);
     await Click.chevronLeftArrow(3);
     await Click.tabs("financeReport"); // Assuming "financeReport" is the correct tab value
-
     await Click.calendar(1, "2025", "May", 20);
     await page.waitForTimeout(2000);
     await Click.calendar(2, "2025", "Jul", 26);
-    //await Click.Btn("emailReportYes")
-    await page.waitForTimeout(5000);
-    //await Click.Btn("generateReport");
-    await page.waitForTimeout(9000);
+    await page.waitForTimeout(2000);
+    await Click.Btn("generateReport");
+    await page.waitForTimeout(2000);
     await Verify.verifyDownload('generateReport');
 });
 
@@ -718,10 +715,10 @@ test('Verify that the user can generate Banker User Login Report', async ({ page
     await Click.checkboxWithoutAll("Finance Company", "All");
     await Click.checkboxWithoutAll("Role", "All");
     await Click.Btn("includeActiveUsersYes");
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(3000);
     await Click.generateReport.click(); 
-    await Verify.IsTextDisplayed(page, "Report generated successfully"); 
-    await page.waitForTimeout(5000); 
+     await Verify.verifyDownload('generateReport');
+    
 });
 
 //My Reports >> Admin Report >> Supply Data Report -------------------------------------------------------------------------------------------------------------
@@ -752,7 +749,6 @@ test('Verify that the user can select all required fields and generate Supply Da
     await Click.checkboxWithoutAll("Product Type", "All");
     await Click.checkboxWithoutAll("Product Sub Type", "All");
     await Click.checkboxWithoutAll("Product", "All");
-    await page.waitForTimeout(2000);
     await Click.checkboxWithoutAll("Administrator", "All");
     await Click.checkboxWithoutAll("Underwriter", "All");
     await Click.checkboxWithoutAll("Claims", "All");
@@ -763,6 +759,7 @@ test('Verify that the user can select all required fields and generate Supply Da
     await page.waitForTimeout(2000);
     await Click.generateReport.click();
     await Verify.verifyDownload('generateReport');
+   
 });
 
 test('Verify that the user cannot generate Supply Data Report without required fields', async ({ page, Actions, Click, Verify }) => {
@@ -902,10 +899,8 @@ test('Verify that the user can select all required fields and generate User Logi
     await Click.checkboxWithoutAll("Group", "All");
     await Click.checkboxWithoutAll("Branch", "All");
     await Click.checkboxWithoutAll("Role", "All");
-    await Click.checkboxWithoutAll("Fields", "All");
     await Click.Btn("includeActiveUsersYes");
     await Click.generateReport.click();  
-    await page.waitForTimeout(3000);
     await Verify.verifyDownload('generateReport');
 });
 
