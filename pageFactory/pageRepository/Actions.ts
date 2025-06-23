@@ -36,6 +36,7 @@ export class Actions {
     private readonly accessoryCode: Locator;
     private readonly vehicleCode: Locator;
     private readonly vehicleModel: Locator;
+    
    
 
 
@@ -59,6 +60,7 @@ export class Actions {
         this.accessoryCode = page.locator("(//input[@id='Code'])[1]");
         this.vehicleCode = page.locator("//input[@id='VehicleCode']");
         this.vehicleModel = page.locator("//input[@id='Model']");
+      
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -133,6 +135,7 @@ export class Actions {
 
             await this.vehicleModel.fill(text);
         }
+        
     }
 
     async signIn(userProfile: string) {
@@ -143,7 +146,7 @@ export class Actions {
         }
         else if (userProfile === "Automation") {
             await this.enterText("email", "test-automation@testingframeworks.co.uk");
-            await this.enterText("password", "TFLlogin@124");
+            await this.enterText("password", "Sunshine@123");
         }
     }
 

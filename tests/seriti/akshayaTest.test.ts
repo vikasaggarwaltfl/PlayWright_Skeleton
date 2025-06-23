@@ -1068,6 +1068,94 @@ test('Verify that the user cannot add an vehicle with that already exsists', asy
     await Verify.IsTextDisplayed(page, "Saving Failed!");
 });
 
+test('Verify that the user can edit the vehicle details with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("vehicleCode", "AC001");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await page.waitForTimeout(2000);
+    await Actions.enterText("vehicleModel", "Testing Model");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Vehicle saved!");
+});
+
+test('Verify that the user cannot edit the vehicle details with invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("vehicleCode", "AC001");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await page.waitForTimeout(2000);
+    await Actions.enterText("vehicleModel", " ");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Model is a required field");
+});
+
+test('Verify that the user cannot copy the vehicle details that already exsists', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("vehicleCode", "AC001");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await Actions.enterText("vehicleDoors","2");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saving Failed!");
+});
+
+test('Verify that the user can sort the vehicle details in the data grid', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
+});
+
+test('Verify that pagination works correctly for vehicles page', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(2000);
+    await Click.pagination(4);
+    await page.waitForTimeout(1000);
+    await Verify.verifyDatacount(10);
+    
+});
+
+
+
+
+
+
+
+
+
 
 
 

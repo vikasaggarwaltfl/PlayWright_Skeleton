@@ -305,6 +305,7 @@ export class Click {
     };
 
     //icon--------------------------------------------------------------------------------------------------------
+   
     async icon(str: string): Promise<void> {
         if (str === "seritiLogo") {
             await this.seritiLogo.click();
@@ -360,6 +361,7 @@ export class Click {
 };
 
     //buttons--------------------------------------------------------------------------------------------------------
+    
     async Btn(str: string): Promise<void> {
 
         if (str === "login") {
