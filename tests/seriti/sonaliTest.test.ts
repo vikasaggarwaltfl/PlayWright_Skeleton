@@ -14,6 +14,37 @@ test('Verify that the user can log in successfully with valid credentials.', asy
     await Verify.verifyURL(page, "https://seritiweb-mea-uat.seriti-int.com/transaction");
 });
 
+
+// Dashboard >> Main Dashboard------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the Main Dashboard screen is displayed as expected', async ({ page, Actions, Click }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Main Dashboard");
+    await Click.tabs("mainDashboard");
+    await page.waitForTimeout(2000);
+    await expect(page.getByText("Main Dashboard", { exact: true })).toBeVisible();
+});
+
+test('Verify that all expected accordions are present on the Main Dashboard.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Main Dashboard");
+    await Click.tabs("mainDashboard"); // If you have a tab for this
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, [
+        "Transaction Conversion Rate",
+        "Cash and Finance Shares",
+        "Vehicles Financed per Finance House",
+        "Vehicles Sold per Dealer",
+        "Vehicles Sold per Sales Person",
+        "Vehicles Sold per Business Manager",
+        "% Penetration per Product Type Category",
+        "APU per Business Manager",
+        "APU per Sales Person"
+    ]);
+});
+
 //My Reports >> Reports >> Deal Tracker Report-------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that the Deal Tracker Report screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {

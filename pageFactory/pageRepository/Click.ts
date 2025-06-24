@@ -41,6 +41,7 @@ export class Click {
     private readonly accessoryAdmin: Locator;
     private readonly vehicleAdmin: Locator;
     private readonly importVehicleFile: Locator;
+    private readonly mainDashboard: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -148,6 +149,7 @@ export class Click {
         this.accessoryAdmin = page.locator("//div[contains(text(),'Accessory Admin')]");
         this.vehicleAdmin = page.locator("//div[contains(text(),'Vehicle Admin')]");
         this.importVehicleFile = page.locator("//div[contains(text(),'Import Vehicle File')]");
+        this.mainDashboard = page.locator("//div[text()='Main Dashboard']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -317,7 +319,9 @@ export class Click {
         else if (str === "importVehicleFile") {
             await this.importVehicleFile.click();
         }
-        
+        else if (str === "mainDashboard") {
+            await this.mainDashboard.click();
+        }
     };
 
     //icon--------------------------------------------------------------------------------------------------------
