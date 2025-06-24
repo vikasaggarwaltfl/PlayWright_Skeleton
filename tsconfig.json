@@ -6,6 +6,12 @@
       "@pages/*":["pageFactory/pageRepository/*"],
       "@objects/*":["pageFactory/objectRepository/*"],
       "@lib/*":["lib/*"],
-    }                             
+    },
+    "lib": [
+      "es2015",
+    ],
+    "types": [
+      "node",
+    ],
   }
 }

@@ -3,6 +3,7 @@ import { expect } from '@playwright/test'
 import { Actions } from '@pages/Actions'
 import { Click } from '@pages/Click'
 import { Verify } from '@pages/Verify'
+import * as path from 'path'
 
 //login -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -169,7 +170,7 @@ test('Verify that the user can check or uncheck multiple checkbox', async ({ pag
     await Click.tabs("dealTracker");
     await Click.Btn("addDealTrackerReport");
     await Click.icon("cancel");
-    await Click.dropdown("Group", "Practise group");
+    await Click.dropdown("Group", "`Group 2");
     await page.waitForTimeout(2000);
     await Click.checkboxWithAll(2, ["Tebogo Lepelle", "Winjit Staging Bm", "Business Manager Staging"]);
     await Verify.IsTextDisplayed(page, ["Tebogo Lepelle", "Winjit Staging Bm", "Business Manager Staging"]);
@@ -232,7 +233,7 @@ test('Verify that the user can "edit" Report Scheduler report with valid data', 
     await Click.icon("futureArrow")
     await Click.icon("edit");
     await page.waitForTimeout(2000);
-    await Click.dropdown("Weekly (Every Friday evening)","Daily (Every night)");
+    await Click.dropdown("Daily (Every night)","Weekly (Every Friday evening)");
     await page.waitForTimeout(2000);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Report Scheduler saved!");
@@ -430,7 +431,7 @@ test('Verify that the user can edit the group details with valid data', async ({
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
-    await Click.dropdown("10th night of the month","2nd night of month");
+    await Actions.enterText("defaultPrime","2")
     await page.waitForLoadState('networkidle');
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Group Details saved!");
@@ -761,6 +762,7 @@ test('Verify Document protection is working or not if it selected as "Yes"', asy
 });
 
 //products-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 test('Verify that user can expand "Products" section and the sub option should display as expected', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
@@ -1005,6 +1007,30 @@ test('Verify that the user cannot edit the accessory details with Invalid data',
     await Verify.verifyErrorMessage(page, "Accessory Name is a required field");
 });
 
+test('Verify that the user can sort the accessory details in the data grid', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Accessories");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("accessoryAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
+});
+
+test('Verify that pagination works correctly for accessories page', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Accessories");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("accessoryAdmin");
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(2000);
+    await Click.pagination(2);
+    await page.waitForTimeout(1000);
+    await Verify.verifyDatacount(10);
+});
+
 //Vehicles-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that user can expand "Vehicles" section and the sub option should display as expected', async ({ page, Actions, Click, Verify }) => {
@@ -1145,8 +1171,42 @@ test('Verify that pagination works correctly for vehicles page', async ({ page, 
     await Click.pagination(4);
     await page.waitForTimeout(1000);
     await Verify.verifyDatacount(10);
-    
 });
+
+//Vehicles >> Import vehicle file---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can import a vehicle file when clicking on the import vehicle file button', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.tabs("importVehicleFile");
+    await Click.dropdown("Select a group","`Group 2")
+    await Click.dropdown("Select a branch","Branch 2") 
+    const fileInput = await page.$("//input[@type='file']"); 
+    await fileInput.setInputFiles(path.resolve('PlayWright_Skeleton/documents/Sample report.pdf'));
+    await Click.Btn("importVehicleBtn");
+    await Verify.IsTextDisplayed(page, "Success");
+});
+
+test('Verify that the user cannot import a vehicle file without uploading a file', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.tabs("importVehicleFile");
+    await Click.dropdown("Select a group","`Group 2")
+    await Click.dropdown("Select a branch","Branch 2") 
+    await Click.Btn("importVehicleBtn");
+    await Verify.IsTextDisplayed(page, "Request Failed!");
+});
+
+
+
 
 
 

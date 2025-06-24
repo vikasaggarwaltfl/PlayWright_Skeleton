@@ -5,6 +5,7 @@ dotenv.config()
 
 export class Click {
     //link--------------------------------------------------------------------------------------------------------
+    
     readonly context: BrowserContext;
     readonly page: Page;
     private readonly download: Locator;
@@ -12,6 +13,7 @@ export class Click {
     private readonly clickhere: Locator;
 
     //tabs--------------------------------------------------------------------------------------------------------
+    
     private readonly transaction: Locator;
     private readonly dealTracker: Locator;
     private readonly docSummary: Locator;
@@ -38,8 +40,10 @@ export class Click {
     private readonly product: Locator;
     private readonly accessoryAdmin: Locator;
     private readonly vehicleAdmin: Locator;
+    private readonly importVehicleFile: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
+    
     private readonly seritiLogo: Locator;
     private readonly testingFrameworks: Locator;
     private readonly cancel: Locator;
@@ -58,6 +62,7 @@ export class Click {
     private readonly enterTransaction: Locator;
 
     //buttons--------------------------------------------------------------------------------------------------------
+    
     private readonly login: Locator;
     private readonly signOut: Locator;
     private readonly view: Locator;
@@ -102,10 +107,12 @@ export class Click {
     private readonly includeActiveUsersYes: Locator;
     private readonly addAccessory: Locator;
     private readonly addVehicle: Locator;
-
+    private readonly importVehicleBtn: Locator;
+    private readonly chooseFile: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
+        
         this.page = page
         this.context = context
         this.download = page.locator("//tbody/tr[1]/td[4]/a[1]");
@@ -113,6 +120,7 @@ export class Click {
         this.clickhere = page.locator("//a[normalize-space()='Click here...']");
 
         //tabs--------------------------------------------------------------------------------------------------------
+        
         this.transaction = page.locator("//div[text()='Transaction']")
         this.dealTracker = page.locator("//div[text()='Deal Tracker Report']")
         this.docSummary = page.locator("//div[text()='DOC Summary Report']");
@@ -139,8 +147,10 @@ export class Click {
         this.product = page.locator("//div[contains(text(),'Product')]");
         this.accessoryAdmin = page.locator("//div[contains(text(),'Accessory Admin')]");
         this.vehicleAdmin = page.locator("//div[contains(text(),'Vehicle Admin')]");
+        this.importVehicleFile = page.locator("//div[contains(text(),'Import Vehicle File')]");
         
         //icon--------------------------------------------------------------------------------------------------------        
+        
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
         this.testingFrameworks = page.locator("//p[text()='Testing Frameworks']")
         this.cancel = page.locator("//*[name()='path' and contains(@d,'M8.01186 7')]");
@@ -159,6 +169,7 @@ export class Click {
         this.enterTransaction = page.locator("//tbody/tr[1]/td[1]/div[1]/div[1]/div[1]/button[1]");
 
         //buttons--------------------------------------------------------------------------------------------------------        
+        
         this.login = page.locator("//span[text()='Login']")
         this.signOut = page.locator("//span[text()='Sign Out']")
         this.view = page.locator("//span[text()='VIEW']")
@@ -203,6 +214,8 @@ export class Click {
         this.includeActiveUsersYes = page.locator("//div[@placeholder='Include Active Users']//span[@class='p-button-label'][normalize-space()='Yes']");
         this.addAccessory = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.addVehicle = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
+        this.importVehicleBtn = page.locator("//button[@title='Please be patient as it could take a few minutes']");
+        this.chooseFile = page.locator("//input[@type='file']");
     }
 
     //link--------------------------------------------------------------------------------------------------------
@@ -300,6 +313,9 @@ export class Click {
         }
         else if (str === "vehicleAdmin") {
             await this.vehicleAdmin.click();
+        }
+        else if (str === "importVehicleFile") {
+            await this.importVehicleFile.click();
         }
         
     };
@@ -493,6 +509,12 @@ export class Click {
         }
         else if (str === "addVehicle") {
             await this.addVehicle.click();
+        }
+        else if (str === "importVehicleBtn") {
+            await this.importVehicleBtn.click();
+        }
+         else if (str === "chooseFile") {
+            await this.chooseFile.click();
         }
       
     };
