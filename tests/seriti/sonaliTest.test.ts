@@ -30,7 +30,7 @@ test('Verify that all expected accordions are present on the Main Dashboard.', a
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Main Dashboard");
-    await Click.tabs("mainDashboard"); // If you have a tab for this
+    await Click.tabs("mainDashboard"); 
     await page.waitForTimeout(2000);
     await Verify.IsTextDisplayed(page, [
         "Transaction Conversion Rate",
@@ -44,6 +44,85 @@ test('Verify that all expected accordions are present on the Main Dashboard.', a
         "APU per Sales Person"
     ]);
 });
+
+test('Verify that the "Expand All" and "Collapse All" buttons function as expected.', async ({ page, Actions, Click }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Main Dashboard");
+    await Click.tabs("mainDashboard");
+    await page.waitForTimeout(2000);
+    await page.getByRole('button', { name: /Expand All/i }).click();
+    await expect(page.getByText("Collapse All")).toBeVisible();
+    await page.waitForTimeout(2000);
+    await page.getByRole('button', { name: /Collapse All/i }).click();
+    await expect(page.getByText("Expand All")).toBeVisible();
+});
+
+test('Verify interaction of dashboard filter parameters on Main Dashboard', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Main Dashboard");
+    await Click.tabs("mainDashboard");
+    await page.waitForTimeout(2000);
+    // await Click.calendar(1, "2025", "Jun", 10);
+    // await page.waitForTimeout(2000);
+    // await Click.calendar(2, "2025", "Jun", 20);
+    await Click.Btn('load');
+     await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, ["Chart View", "Collapse All"]);
+});
+
+
+test('Verify that charts are loads correctly on Main Dashboard', async ({ page, Actions, Click, Verify }) => {
+    const sectionTitles = [
+        "Transaction Conversion Rate",
+        "Cash and Finance Shares",
+        "Vehicles Financed per Finance House",
+        "Vehicles Sold per Dealer",
+        "Vehicles Sold per Sales Person",
+        "Vehicles Sold per Business Manager",
+        "% Penetration per Product Type Category",
+        "APU per Business Manager",
+        "APU per Sales Person"
+    ];
+
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Main Dashboard");
+    await Click.tabs("mainDashboard");
+    await Click.Btn('load');
+    await page.waitForTimeout(2000);
+
+    for (const title of sectionTitles) {
+        const section = page.getByText(title, { exact: false });
+        // Expand the section if it's collapsed (if applicable)
+        if (await section.getAttribute('aria-expanded') === 'false') {
+            await section.click();
+            await page.waitForTimeout(500);
+        }
+        await expect(section).toBeVisible();
+        await section.scrollIntoViewIfNeeded();
+        await Verify.chartImageLoaded();
+        await Verify.IsTextDisplayed(page, title);
+    }
+});
+
+test('Verify that the loaded chart can be saved in different formats on Main Dashboard', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Main Dashboard");
+    await Click.tabs("mainDashboard");
+    await Click.Btn('load');
+    await page.waitForTimeout(2000);
+    await Click.Btn('Save as')
+     await Click.Btn('PNG')
+    await Verify.verifyDownload('downloadlink');
+
+   });
+
+  
+
+
 
 //My Reports >> Reports >> Deal Tracker Report-------------------------------------------------------------------------------------------------------------------------------------
 
@@ -984,5 +1063,39 @@ test('Verify that the user cannot generate User Name Login Report without requir
     await page.waitForTimeout(2000);
     await Click.generateReport.click();
     await Verify.IsTextDisplayed(page, "Could not generate report"); // Adjust if different error message
+});
+
+test('Verify that each accordian section chart is displayed correctly on Main Dashboard', async ({ page, Actions, Click, Verify }) => {
+    const sectionTitles = [
+        "Transaction Conversion Rate",
+        "Cash and Finance Shares",
+        "Vehicles Financed per Finance House",
+        "Vehicles Sold per Dealer",
+        "Vehicles Sold per Sales Person",
+        "Vehicles Sold per Business Manager",
+        "% Penetration per Product Type Category",
+        "APU per Business Manager",
+        "APU per Sales Person"
+    ];
+
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Main Dashboard");
+    await Click.tabs("mainDashboard");
+    await Click.Btn('load');
+    await page.waitForTimeout(2000);
+
+    for (const title of sectionTitles) {
+        const section = page.getByText(title, { exact: false });
+        // Expand the section if it's collapsed (if applicable)
+        if (await section.getAttribute('aria-expanded') === 'false') {
+            await section.click();
+            await page.waitForTimeout(500);
+        }
+        await expect(section).toBeVisible();
+        await section.scrollIntoViewIfNeeded();
+        await Verify.chartImageLoaded();
+        await Verify.IsTextDisplayed(page, title);
+    }
 });
 

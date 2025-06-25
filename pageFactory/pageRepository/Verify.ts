@@ -126,5 +126,24 @@ export class Verify {
     }
   }
 
+  // Verify chart view of dashboard--------------------
 
+  // Verify chart image loaded (robust for multiple canvases)
+  async chartImageLoaded() {
+    const canvases = this.page.locator('canvas[data-pc-section="canvas"]');
+    const count = await canvases.count();
+    let foundVisible = false;
+    for (let i = 0; i < count; i++) {
+      const canvas = canvases.nth(i);
+      if (await canvas.isVisible()) {
+        const box = await canvas.boundingBox();
+        if (box && box.width > 0 && box.height > 0) {
+          foundVisible = true;
+          await expect(canvas).toBeVisible();
+          break;
+        }
+      }
+    }
+    expect(foundVisible).toBe(true);
+  }
 }

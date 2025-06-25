@@ -110,6 +110,11 @@ export class Click {
     private readonly addVehicle: Locator;
     private readonly importVehicleBtn: Locator;
     private readonly chooseFile: Locator;
+    private readonly load: Locator;
+    private readonly saveAsButton: Locator;
+    private readonly saveAsPNG: Locator;
+    private readonly saveAsJPEG: Locator;
+    private readonly saveAsPDF: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
@@ -218,6 +223,11 @@ export class Click {
         this.addVehicle = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.importVehicleBtn = page.locator("//button[@title='Please be patient as it could take a few minutes']");
         this.chooseFile = page.locator("//input[@type='file']");
+        this.load = page.locator("//button[.//span[contains(text(),'Load')]]");
+        this.saveAsButton = page.locator("//div[@id='pv_id_2_0_content']//div[2]//*[name()='svg']");
+        this.saveAsPNG = page.getByRole('menuitem', { name: 'PNG' });
+        this.saveAsJPEG = page.getByRole('menuitem', { name: 'JPEG' });
+        this.saveAsPDF = page.getByRole('menuitem', { name: 'PDF' });
     }
 
     //link--------------------------------------------------------------------------------------------------------
@@ -520,7 +530,9 @@ export class Click {
          else if (str === "chooseFile") {
             await this.chooseFile.click();
         }
-      
+        else if (str === "load") {
+            await this.load.click();
+        }
     };
 
     //dropdown--------------------------------------------------------------------------------------------------------
@@ -637,6 +649,20 @@ export class Click {
             }
         }
     };
+
+    /**
+     * Selects an option from the Save As dropdown (e.g., 'PNG', 'JPEG', 'PDF').
+     */
+    async selectSaveAsOption(option: string): Promise<void> {
+        // Click the Save As button to open the dropdown
+        const saveAsButton = this.page.getByRole('button', { name: /Save As/i });
+        await saveAsButton.click();
+        await this.page.waitForTimeout(2000);
+        // Click the menu item with the given option
+        const menuItem = this.page.getByRole('menuitem', { name: option });
+        await menuItem.click();
+        await this.page.waitForTimeout(1000);
+    }
 
 }
 
