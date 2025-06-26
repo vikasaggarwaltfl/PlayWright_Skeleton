@@ -37,6 +37,7 @@ export class Actions {
     private readonly vehicleCode: Locator;
     private readonly vehicleModel: Locator;
     private readonly defaultPrime: Locator;
+    private readonly userName: Locator;
    
 
 
@@ -61,6 +62,7 @@ export class Actions {
         this.vehicleCode = page.locator("//input[@id='VehicleCode']");
         this.vehicleModel = page.locator("//input[@id='Model']");
         this.defaultPrime = page.locator("//input[@id='DefaultPrimeAdjustment']");
+        this.userName = page.locator("//input[@id='UserName']");
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -138,6 +140,10 @@ export class Actions {
         else if (textBoxName === "defaultPrime") {
 
             await this.defaultPrime.fill(text);
+        }
+         else if (textBoxName === "userName") {
+
+            await this.userName.fill(text);
         }
         
     }

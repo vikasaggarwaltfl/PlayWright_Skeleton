@@ -42,6 +42,7 @@ export class Click {
     private readonly vehicleAdmin: Locator;
     private readonly importVehicleFile: Locator;
     private readonly mainDashboard: Locator;
+    private readonly users: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -115,6 +116,7 @@ export class Click {
     private readonly saveAsPNG: Locator;
     private readonly saveAsJPEG: Locator;
     private readonly saveAsPDF: Locator;
+    private readonly addUser: Locator;
 
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
@@ -155,6 +157,7 @@ export class Click {
         this.vehicleAdmin = page.locator("//div[contains(text(),'Vehicle Admin')]");
         this.importVehicleFile = page.locator("//div[contains(text(),'Import Vehicle File')]");
         this.mainDashboard = page.locator("//div[text()='Main Dashboard']");
+        this.users = page.locator("//div[contains(text(),'Users')]");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -228,9 +231,11 @@ export class Click {
         this.saveAsPNG = page.getByRole('menuitem', { name: 'PNG' });
         this.saveAsJPEG = page.getByRole('menuitem', { name: 'JPEG' });
         this.saveAsPDF = page.getByRole('menuitem', { name: 'PDF' });
+        this.addUser = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
     }
 
     //link--------------------------------------------------------------------------------------------------------
+    
     async link(linkName: String) {
         if (linkName === "download") {
             await this.download.click();
@@ -244,6 +249,7 @@ export class Click {
     };
 
     //tabs--------------------------------------------------------------------------------------------------------
+    
     async tabs(str: string): Promise<void> {
 
         if (str === "transaction") {
@@ -331,6 +337,9 @@ export class Click {
         }
         else if (str === "mainDashboard") {
             await this.mainDashboard.click();
+        }
+        else if (str === "users") {
+            await this.users.click();
         }
     };
 
@@ -532,6 +541,9 @@ export class Click {
         }
         else if (str === "load") {
             await this.load.click();
+        }
+         else if (str === "addUser") {
+            await this.addUser.click();
         }
     };
 
