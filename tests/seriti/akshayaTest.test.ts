@@ -203,7 +203,6 @@ test('Verify that the user can "Copy" Report Scheduler report with valid data', 
     await Click.icon("reportSchedulerCopy");
     await Click.icon("selectAll");
     await Click.Btn("copying");
-    await page.waitForTimeout(5000);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
@@ -1272,6 +1271,44 @@ test('Verify that the user can edit the user details with valid data', async ({ 
     await Verify.IsTextDisplayed(page, "User Details saved!");
 });
 
+test('Verify that the user cannot edit the user details with Invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Users");
+    await Click.tabs("users");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("userName", "test-automation@testingframeworks.co.uk");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await page.waitForTimeout(2000);
+    await Actions.enterText("firstName", " ");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "First Name is a required field");
+});  
+
+test('Verify that the user can sort the user details in the data grid', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Users");
+    await Click.tabs("users");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
+});
+
+test('Verify that pagination works correctly for users page', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Users");
+    await Click.tabs("users");
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(2000);
+    await Click.pagination(2);
+    await page.waitForTimeout(1000);
+    await Verify.verifyDatacount(10);
+});
 
 
 
