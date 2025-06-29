@@ -43,6 +43,12 @@ export class Click {
     private readonly importVehicleFile: Locator;
     private readonly mainDashboard: Locator;
     private readonly users: Locator;
+    private readonly transactionInProgressDashboard: Locator;
+    private readonly transactionStatusAgeingAnalysisDashboard: Locator;
+    private readonly financeHouseMarketShareDashboard: Locator;
+    private readonly dealerMarketShareDashboard: Locator;
+    private readonly transactionWeeklyAnalysisDashboard: Locator;
+    private readonly financeApplicationAnalysisDashboard: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -158,6 +164,12 @@ export class Click {
         this.importVehicleFile = page.locator("//div[contains(text(),'Import Vehicle File')]");
         this.mainDashboard = page.locator("//div[text()='Main Dashboard']");
         this.users = page.locator("//div[contains(text(),'Users')]");
+        this.transactionInProgressDashboard = page.locator("//div[text()='Transaction In Progress']");
+        this.transactionStatusAgeingAnalysisDashboard = page.locator("//div[text()='Transaction Status Ageing Analysis']");
+        this.financeHouseMarketShareDashboard = page.locator("//div[text()='Finance House Market Share']");
+        this.dealerMarketShareDashboard = page.locator("//div[text()='Dealer Market Share']");
+        this.transactionWeeklyAnalysisDashboard = page.locator("//div[text()='Transaction Weekly Analysis']");
+        this.financeApplicationAnalysisDashboard = page.locator("//div[text()='Finance Application Analysis']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -340,6 +352,24 @@ export class Click {
         }
         else if (str === "users") {
             await this.users.click();
+        }
+        else if (str === "transactionInProgressDashboard") {
+            await this.transactionInProgressDashboard.click();
+        }
+        else if (str === "transactionStatusAgeingAnalysisDashboard") {
+            await this.transactionStatusAgeingAnalysisDashboard.click();
+        }
+        else if (str === "financeHouseMarketShareDashboard") {
+            await this.financeHouseMarketShareDashboard.click();
+        }
+        else if (str === "dealerMarketShareDashboard") {
+            await this.dealerMarketShareDashboard.click();
+        }
+        else if (str === "transactionWeeklyAnalysisDashboard") {
+            await this.transactionWeeklyAnalysisDashboard.click();
+        }
+        else if (str === "financeApplicationAnalysisDashboard") {
+            await this.financeApplicationAnalysisDashboard.click();
         }
     };
 
@@ -666,15 +696,17 @@ export class Click {
      * Selects an option from the Save As dropdown (e.g., 'PNG', 'JPEG', 'PDF').
      */
     async selectSaveAsOption(option: string): Promise<void> {
-        // Click the Save As button to open the dropdown
-        const saveAsButton = this.page.getByRole('button', { name: /Save As/i });
-        await saveAsButton.click();
+        const saveAsArrowButton = this.page.locator('button:has(svg[data-pc-section="menubuttonicon"])');
+        await saveAsArrowButton.click();
         await this.page.waitForTimeout(2000);
-        // Click the menu item with the given option
+    
         const menuItem = this.page.getByRole('menuitem', { name: option });
+        await menuItem.waitFor({ state: 'visible', timeout: 5000 });
         await menuItem.click();
         await this.page.waitForTimeout(1000);
-    }
+
+        console.log(`Dashboard Saved in Format > ${option}`);
+    } 
 
 }
 
