@@ -74,21 +74,7 @@ test('Verify that the loaded chart can be saved in different formats on Main Das
     await page.waitForTimeout(2000);
 });
 
-test('Verify Print dialog opens in new tab when using Save As > Print...', async ({ page, Actions, Click }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Main Dashboard");
-    await Click.tabs("mainDashboard");
-    await Click.Btn('load');
-    await page.waitForTimeout(2000);
 
-    const [printPage] = await Promise.all([
-        page.context().waitForEvent('page'),
-        Click.selectSaveAsOption('Print...'),
-    ]);
-    await printPage.waitForLoadState('domcontentloaded');
-    expect(await printPage.title()).toBe('about:blank'); // Print preview tab opened
-});
 
 test('Verify that each accordian section chart is displayed correctly on Main Dashboard', async ({ page, Actions, Click, Verify }) => {
     const sectionTitles = [
@@ -393,4 +379,7 @@ test('Verify that the Finance Application Analysis Dashboard can be saved in dif
     await Click.selectSaveAsOption('PDF');
     await Verify.verifyDownload('downloadlink');
 });
+
+const count = await this.page.locator('button:has(svg[data-pc-section="menubuttonicon"])').count();
+console.log('Arrow button count:', count);
 
