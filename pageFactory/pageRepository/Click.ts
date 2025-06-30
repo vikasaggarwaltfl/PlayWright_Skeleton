@@ -49,6 +49,7 @@ export class Click {
     private readonly dealerMarketShareDashboard: Locator;
     private readonly transactionWeeklyAnalysisDashboard: Locator;
     private readonly financeApplicationAnalysisDashboard: Locator;
+    
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -68,6 +69,11 @@ export class Click {
     private readonly futureArrow: Locator;
     private readonly reportSchedulerCopy: Locator;
     private readonly enterTransaction: Locator;
+    private readonly country: Locator;
+    private readonly Swaziland: Locator;
+    private readonly collapse: Locator;
+    private readonly find : Locator;
+  
 
     //buttons--------------------------------------------------------------------------------------------------------
     
@@ -123,6 +129,7 @@ export class Click {
     private readonly saveAsJPEG: Locator;
     private readonly saveAsPDF: Locator;
     private readonly addUser: Locator;
+
 
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
@@ -189,7 +196,12 @@ export class Click {
         this.futureArrow = page.locator("(//*[name()='svg'][@class='p-icon p-row-toggler-icon'])[2]");
         this.reportSchedulerCopy = page.locator("(//button[@class='flex flex-col justify-center'])[2]");
         this.enterTransaction = page.locator("//tbody/tr[1]/td[1]/div[1]/div[1]/div[1]/button[1]");
-
+        this.country = page.locator("(//i[@class='fi fi-ae text-3xl'])[1]");
+        this.Swaziland = page.locator("(//i[@class='fi fi-sz text-4xl'])[1]");
+        this.collapse = page.locator("(//i[@class='text-xl pi pi-bars text-primary-100'])[1]");
+        this.find = page.locator("(//span[@class='p-input-icon pi pi-search text-primary-100'])[1]");
+        
+        
         //buttons--------------------------------------------------------------------------------------------------------        
         
         this.login = page.locator("//span[text()='Login']")
@@ -244,6 +256,7 @@ export class Click {
         this.saveAsJPEG = page.getByRole('menuitem', { name: 'JPEG' });
         this.saveAsPDF = page.getByRole('menuitem', { name: 'PDF' });
         this.addUser = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
+       
     }
 
     //link--------------------------------------------------------------------------------------------------------
@@ -426,8 +439,20 @@ export class Click {
         else if (str === "reportSchedulerCopy") {
             await this.reportSchedulerCopy.click();
         }
-       else if (str === "enterTransaction") {
+        else if (str === "enterTransaction") {
             await this.enterTransaction.click();
+        }
+        else if (str === "country") {
+            await this.country.click();
+        }
+        else if (str === "Swaziland") {
+            await this.Swaziland.click();
+        }
+        else if (str === "collapse") {
+            await this.collapse.click();
+        }
+        else if (str === "find") {
+            await this.find.click();
         }
 };
 
@@ -574,9 +599,10 @@ export class Click {
         else if (str === "load") {
             await this.load.click();
         }
-         else if (str === "addUser") {
+        else if (str === "addUser") {
             await this.addUser.click();
         }
+        
     };
 
     //dropdown--------------------------------------------------------------------------------------------------------

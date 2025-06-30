@@ -51,6 +51,42 @@ test('Verify that the user can sign out by clicking on the "Sign Out" button.', 
     await Verify.verifyURL(page, "https://seritiweb-mea-uat.seriti-int.com/auth/UserLogin");
 });
 
+test('Verify that correct users name and profile icon is displayed based on the logged-in account.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Verify.IsTextDisplayed(page, "Testing Frameworks");
+});
+
+test('Verify that the user can see the profile options by clicking on the users name', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.icon("testingFrameworks");
+    await Verify.IsTextDisplayed(page, ["Profile", "Change Password", "Sign Out"]);
+});
+
+test('Verify that the country name is displayed when the user hovers over the country profile', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await page.hover("(//i[@class='fi fi-ae text-3xl'])[1]");
+    await Verify.IsTextDisplayed(page, "United Arab Emirates");
+});
+
+test('Verify that the user can change the country by selecting from the country options', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");  
+    await Click.icon("country"); 
+    await Click.icon("Swaziland");
+    await page.hover("(//i[@class='fi fi-sz text-4xl'])[1]");
+    await Verify.IsTextDisplayed(page, "Swaziland");
+});
+
+test('Verify that the user can minimize and maximize the sidebar by clicking on icon', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");   
+    await Click.icon("collapse");
+    await Click.icon("find");
+    await Verify.IsTextDisplayed(page, "Home");
+});
 
 // Transaction page-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -156,6 +192,7 @@ test('Verify that pagination works correctly for navigating through paged conten
     //await Verify.verifyDatacount(10);
 
 });
+
 
 
 
@@ -1309,6 +1346,7 @@ test('Verify that pagination works correctly for users page', async ({ page, Act
     await page.waitForTimeout(1000);
     await Verify.verifyDatacount(10);
 });
+
 
 
 
