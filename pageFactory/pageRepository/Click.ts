@@ -164,7 +164,7 @@ export class Click {
         this.importVehicleFile = page.locator("//div[contains(text(),'Import Vehicle File')]");
         this.mainDashboard = page.locator("//div[text()='Main Dashboard']");
         this.users = page.locator("//div[contains(text(),'Users')]");
-        this.transactionInProgressDashboard = page.locator("//div[text()='Transaction In Progress']");
+        this.transactionInProgressDashboard = page.locator("//a[.//div[contains(text(),'Transaction In Progress')]]");
         this.transactionStatusAgeingAnalysisDashboard = page.locator("//div[text()='Transaction Status Ageing Analysis']");
         this.financeHouseMarketShareDashboard = page.locator("//div[text()='Finance House Market Share']");
         this.dealerMarketShareDashboard = page.locator("//div[text()='Dealer Market Share']");
@@ -354,6 +354,8 @@ export class Click {
             await this.users.click();
         }
         else if (str === "transactionInProgressDashboard") {
+            await this.transactionInProgressDashboard.waitFor({ state: 'visible', timeout: 5000 });
+            await this.transactionInProgressDashboard.scrollIntoViewIfNeeded();
             await this.transactionInProgressDashboard.click();
         }
         else if (str === "transactionStatusAgeingAnalysisDashboard") {
