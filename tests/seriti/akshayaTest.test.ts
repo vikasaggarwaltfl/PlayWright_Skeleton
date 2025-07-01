@@ -88,7 +88,36 @@ test('Verify that the user can minimize and maximize the sidebar by clicking on 
     await Verify.IsTextDisplayed(page, "Home");
 });
 
+test('Verify that sidebar options are highlighted when hovered over', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.mouseHoverTabs(["Home","Dashboard","Transaction","My Reports","Template","Admin"]);
+});
+
+test('Verify that the tab names are displayed for all logos in the minimized state', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.icon("collapse");
+    await page.hover("//i[@class='pi pi-home']");
+    await Verify.IsTextDisplayed(page, "Home");
+});
+
 // Transaction page-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the Transaction screen is displayed correctly with all expected content.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Verify.verifyURL(page, "https://seritiweb-mea-uat.seriti-int.com/transaction");
+    await Verify.IsTextDisplayed(page, ["Transact","Create Transaction","Search","Recent Transactions",]);
+});
+
+test('Verify that the user can click on the "Create Transaction" button to create a new transaction', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.Btn("createTransaction");
+    await page.waitForLoadState('networkidle');
+    await Verify.IsTextDisplayed(page, ["Select a group", "Select a branch"]);
+});
 
 test('Verify that the user can search for transactions using the transaction number in Quick access modal', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
@@ -99,24 +128,6 @@ test('Verify that the user can search for transactions using the transaction num
     await Verify.IsTextDisplayed(page, "Transaction 281716");
 });
 
-test('Verify that the user can select dropdowns on create transaction page', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Click.Btn("createTransaction")
-    await Click.dropdown("Select a group", "`Group 2")
-    await Verify.verifyDropDown("`Group 2")
-});
-
-test('Verify that the user can select radio buttons on create transaction page', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Click.Btn("createTransaction")
-    await Click.dropdown("Select a group", "`Group 2")
-    await Click.dropdown("Select a branch", "Branch 2")
-    await Click.radioButton("Company")
-    await Verify.verifyRadioButton("Company");
-});
-
 test('Verify that the "Branch" dropdown is disabled until a "Group" is selected', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
@@ -125,13 +136,6 @@ test('Verify that the "Branch" dropdown is disabled until a "Group" is selected'
     await Click.dropdown("Select a group (Blank for All)", "`Group 2")
     await page.waitForTimeout(2000);
     await Verify.verifyEnabledButton("Select a branch (Blank for All)")
-});
-
-test('Verify that the user can filter using the date pickers', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Click.calendar(3, "2026", "Jan", 1);
-    Verify.IsTextDisplayed(page, "2026");
 });
 
 test('Verify that the user can reset applied search on transactions', async ({ page, Actions, Click, Verify }) => {
@@ -152,7 +156,7 @@ test('Verify that the user can apply multiple filters to search for transactions
     await Click.calendar(1, "2025", "May", 8);
     await Click.Btn("search");
     await page.waitForTimeout(2000);
-    //await Verify.verifyDatacount(5);
+    await Verify.verifyDatacount(9);
 });
 
 test('Verify that the user can minimize the search module', async ({ page, Actions, Click, Verify }) => {
@@ -189,12 +193,40 @@ test('Verify that pagination works correctly for navigating through paged conten
     await Click.Btn("login");
     await page.waitForTimeout(5000);
     await Click.pagination(1);
-    //await Verify.verifyDatacount(10);
-
+    await Verify.verifyDatacount(10);
 });
 
+//create transaction-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+test('Verify that the Create Transaction module is displayed when the user clicks on the "Create Transaction" button.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.Btn("createTransaction");
+    await page.waitForLoadState('networkidle');
+   await Verify.IsTextDisplayed(page, ["Select a group","Select a branch"]);
+});
 
+test('Verify that the "Customer Type" field allows switching between Individual and Company', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.Btn("createTransaction")
+    await Click.dropdown("Select a group", "`Group 2")
+    await Click.dropdown("Select a branch", "Branch 2")
+    await Click.radioButton("Company")
+    await Click.radioButton("Individual");
+    await Verify.verifyRadioButton("Individual");
+});
+
+test('Verify that the user can select a group from the "Group" and "Branch" dropdown when creating a transaction.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.Btn("createTransaction");
+    await page.waitForLoadState('networkidle');
+    await Click.dropdown("Select a group", "`Group 2");
+    await Verify.verifyDropDown("`Group 2");
+    await Click.dropdown("Select a branch", "Branch 2");
+    await Verify.verifyDropDown("Branch 2");
+});
 
 //reports >> DealTrackerReport-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -387,7 +419,6 @@ test('Verify that the user can "Edit" Template with valid data', async ({ page, 
     await page.waitForTimeout(2000);
     await Verify.verifyDatacount(10);
 });
-
 
 test('Verify that clicking on the back arrow, user is navigated to the template screen', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
@@ -739,7 +770,6 @@ test('Verify that the user cannot copy the company details with invalid data', a
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Saving Failed!");
 });
-
 
 test('Verify that the user can edit the company details with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");

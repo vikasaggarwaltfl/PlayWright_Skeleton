@@ -736,6 +736,12 @@ export class Click {
         console.log(`Dashboard Saved in Format > ${option}`);
     } 
 
+
+    async mouseHoverTabs(selectors: string[]): Promise<void> {
+        for (const selector of selectors) {
+            await this.page.locator(`//div[text()='${selector}']`).hover();
+            await this.page.waitForTimeout(1000); 
+        }
+    }
+
 }
-
-
