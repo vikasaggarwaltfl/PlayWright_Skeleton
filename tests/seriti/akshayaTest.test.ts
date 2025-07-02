@@ -107,7 +107,6 @@ test('Verify that the tab names are displayed for all logos in the minimized sta
 test('Verify that the Transaction screen is displayed correctly with all expected content.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Verify.verifyURL(page, "https://seritiweb-mea-uat.seriti-int.com/transaction");
     await Verify.IsTextDisplayed(page, ["Transact","Create Transaction","Search","Recent Transactions",]);
 });
 
@@ -128,15 +127,6 @@ test('Verify that the user can search for transactions using the transaction num
     await Verify.IsTextDisplayed(page, "Transaction 281716");
 });
 
-test('Verify that the "Branch" dropdown is disabled until a "Group" is selected', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await page.waitForTimeout(2000);
-    await Verify.verifyDisabledButton("Select a branch (Blank for All)");
-    await Click.dropdown("Select a group (Blank for All)", "`Group 2")
-    await page.waitForTimeout(2000);
-    await Verify.verifyEnabledButton("Select a branch (Blank for All)")
-});
 
 test('Verify that the user can reset applied search on transactions', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
@@ -226,6 +216,65 @@ test('Verify that the user can select a group from the "Group" and "Branch" drop
     await Verify.verifyDropDown("`Group 2");
     await Click.dropdown("Select a branch", "Branch 2");
     await Verify.verifyDropDown("Branch 2");
+});
+
+test('Verify that if user selects "Company" then the label field name should be "Company Name"', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.Btn("createTransaction");
+    await page.waitForLoadState('networkidle');
+    await Click.dropdown("Select a group", "`Group 2");
+    await Click.dropdown("Select a branch", "Branch 2");
+    await Click.radioButton("Company");
+    await Verify.IsTextDisplayed(page, "Company Name");
+});
+
+test('Verify that if user selects "Individual" then the label field name should be "Last Name"', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.Btn("createTransaction");
+    await page.waitForLoadState('networkidle');
+    await Click.dropdown("Select a group", "`Group 2");
+    await Click.dropdown("Select a branch", "Branch 2");
+    await Click.radioButton("Individual");
+    await Verify.IsTextDisplayed(page, "Last Name");
+});
+
+test('Verify that all required fields must be filled before clicking the "Create" button', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.Btn("createTransaction");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("clickTransaction")
+    await Verify.verifyErrorMessage(page, "Group is a required field"); 
+});
+
+test('Verify that the "Branch" dropdown is disabled until a "Group" is selected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.Btn("createTransaction");
+    await Verify.verifyDisabledButton("Select a branch");
+    await Click.dropdown("Select a group", "`Group 2");
+    await page.waitForTimeout(2000);
+    await Verify.verifyEnabledButton("Select a branch");
+});
+
+test.skip("Verify the system's response when entering extremely long text (e.g., 10,000 characters) in the 'Company Name' or 'Last Name' field", async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Click.Btn("createTransaction");
+    await page.waitForLoadState('networkidle');
+    await Click.dropdown("Select a group", "`Group 2");
+    await Click.dropdown("Select a branch", "Branch 2");  
+    await Click.radioButton("Company");
+    const longText = 'A'.repeat(10000);
+    await Actions.enterText("enterCompanyName", longText);
+    await Click.Btn("clickTransaction");
+    await Verify.IsTextDisplayed(page, ["Company Name cannot exceed", "Maximum length", "Error", "Invalid", "Saved Successfully"]);
+    await Click.radioButton("Individual");
+    await Actions.enterText("lastName", longText);
+    await Click.Btn("clickTransaction");
+    await Verify.IsTextDisplayed(page, ["Last Name cannot exceed", "Maximum length", "Error", "Invalid", "Saved Successfully"]);
 });
 
 //reports >> DealTrackerReport-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

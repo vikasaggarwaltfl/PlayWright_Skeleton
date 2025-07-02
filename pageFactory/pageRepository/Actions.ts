@@ -39,6 +39,7 @@ export class Actions {
     private readonly defaultPrime: Locator;
     private readonly userName: Locator;
     private readonly firstName: Locator; 
+    private readonly enterCompanyName: Locator;
    
 
 
@@ -65,6 +66,7 @@ export class Actions {
         this.defaultPrime = page.locator("//input[@id='DefaultPrimeAdjustment']");
         this.userName = page.locator("//input[@id='UserName']");
         this.firstName = page.locator("//input[@id='FirstName']"); 
+        this.enterCompanyName = page.locator("//input[@datakey='createTransactioncompanyName']");
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -147,9 +149,13 @@ export class Actions {
 
             await this.userName.fill(text);
         }
-         else if (textBoxName === "firstName") {
+        else if (textBoxName === "firstName") {
 
             await this.firstName.fill(text);
+        }
+        else if (textBoxName === "enterCompanyName") {
+
+            await this.enterCompanyName.fill(text);
         }
         
     }

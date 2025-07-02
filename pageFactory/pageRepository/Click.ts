@@ -129,6 +129,7 @@ export class Click {
     private readonly saveAsJPEG: Locator;
     private readonly saveAsPDF: Locator;
     private readonly addUser: Locator;
+    private readonly clickTransaction: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -256,6 +257,7 @@ export class Click {
         this.saveAsJPEG = page.getByRole('menuitem', { name: 'JPEG' });
         this.saveAsPDF = page.getByRole('menuitem', { name: 'PDF' });
         this.addUser = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
+        this.clickTransaction = page.locator("//button[@class='p-button p-component flex flex-row justify-center']");
        
     }
 
@@ -601,6 +603,9 @@ export class Click {
         }
         else if (str === "addUser") {
             await this.addUser.click();
+        }
+        else if (str === "clickTransaction") {
+            await this.clickTransaction.click();
         }
         
     };
