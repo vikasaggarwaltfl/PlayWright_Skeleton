@@ -6,6 +6,14 @@ import * as fs from 'fs';
 const DOWNLOAD_LINK = 'downloadlink';
 const GENERATE_REPORT = 'generateReport';
 
+const iconLocators: { [key: string]: string } = {
+  homeIcon: 'i.pi-home',
+  dashboardIcon: 'i.pi-gauge',
+  transactionIcon:'i.pi-credit-card',
+  myReportsIcon: 'i.pi-chart-pie'
+  
+};
+
 export class Verify {
   readonly page: Page
   readonly context: BrowserContext
@@ -24,6 +32,7 @@ export class Verify {
       "//div[@class='modal-content background-customizable modal-content-mobile visible-xs visible-sm']//div[@class='modal-body']//div//div//div//div//p[@id='loginErrorMessage']",
     )
   }
+
   //verify url----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   async verifyURL(page: Page, url: string): Promise<void> {
     await page.waitForURL(url, { timeout: 10000 })
@@ -145,5 +154,13 @@ export class Verify {
       }
     }
     expect(foundVisible).toBe(true);
+  }
+  
+  //Verify Icon is visible-------------------------------------------------------------------------------------------------------------
+
+  async isIconVisible(page: Page, iconName: keyof typeof iconLocators) {
+    const selector = iconLocators[iconName];
+    if (!selector) throw new Error(`No selector found for icon: ${iconName}`);
+    await expect(page.locator(selector)).toBeVisible();
   }
 }

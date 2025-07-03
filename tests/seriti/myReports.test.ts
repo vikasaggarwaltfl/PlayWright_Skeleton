@@ -6,12 +6,14 @@ import { verify } from 'crypto'
 import { access } from 'fs'
 
 
-//login -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// My Reports--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify that the user can log in successfully with valid credentials.', async ({ page, Actions, Click, Verify }) => {
+test('Verify that My Reports sidebar option displayed correctly with icon', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Verify.verifyURL(page, "https://seritiweb-mea-uat.seriti-int.com/transaction");
+    await Click.Btn("login");   
+    await Verify.IsTextDisplayed(page, "My Reports");
+    await Verify.isIconVisible(page, 'myReportsIcon');
+    await console.log ("The My Reports sidebar option is displayed as expected with the icon.")
 });
 
 //My Reports >> Reports >> Deal Tracker Report-------------------------------------------------------------------------------------------------------------------------------------

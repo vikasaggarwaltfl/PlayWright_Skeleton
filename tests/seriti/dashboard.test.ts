@@ -5,6 +5,19 @@ import { Click } from '@pages/Click'
 import { verify } from 'crypto'
 import { access } from 'fs'
 
+
+
+// Dashboard----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that Dashboard sidebar option displayed correctly with icon', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");   
+    await Verify.IsTextDisplayed(page, "Dashboard");
+    await Verify.isIconVisible(page, 'dashboardIcon');
+    await console.log ("The Dashboard sidebar option displyed as expected with icon");
+});
+
+
 // Dashboard >> Main Dashboard------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that the Main Dashboard screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {
