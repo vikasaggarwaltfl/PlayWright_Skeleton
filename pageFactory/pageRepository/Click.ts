@@ -749,4 +749,7 @@ export class Click {
         }
     }
 
+    async transactionTabs(selector: string): Promise<void> {
+      await this.page.locator(`//button[normalize-space()='${selector}']`).click();
+}
 }

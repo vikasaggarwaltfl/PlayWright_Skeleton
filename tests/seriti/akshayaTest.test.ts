@@ -277,6 +277,42 @@ test.skip("Verify the system's response when entering extremely long text (e.g.,
     await Verify.IsTextDisplayed(page, ["Last Name cannot exceed", "Maximum length", "Error", "Invalid", "Saved Successfully"]);
 });
 
+//create company deal transaction-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that navbar options are displayed as expected at the top of the screeen.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281744");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Verify.IsTextDisplayed(page, ["Show Required","Hide Overview","Client Details","Vehicle Details","Account Details"]);
+});
+
+test('Verify that the Show Required tab displays only mandatory fields on the form.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281744");
+    await Click.Btn("view");
+    await page.pause();
+    await page.waitForLoadState('networkidle');
+    await Click.transactionTabs("Show Required"); 
+    await Verify.IsTextDisplayed(page, ["Transaction Status","Finance Status","Transaction Status Notes"]);
+    await Click.transactionTabs("Vehicle Details");
+    await Verify.IsTextDisplayed(page, "Vehicle Condition");
+});
+
+test('Verify that the "Show All" tab displays all fields on the form.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281744");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');  
+    await Verify.IsTextDisplayed(page, ["Preferred Contact Time", "Finance Status", "Fleet Number"]); 
+});
+
+
+
+
 //reports >> DealTrackerReport-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that the user can check or uncheck multiple checkbox', async ({ page, Actions, Click, Verify }) => {
