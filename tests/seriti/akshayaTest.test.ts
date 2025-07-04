@@ -293,7 +293,6 @@ test('Verify that the Show Required tab displays only mandatory fields on the fo
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281744");
     await Click.Btn("view");
-    await page.pause();
     await page.waitForLoadState('networkidle');
     await Click.transactionTabs("Show Required"); 
     await Verify.IsTextDisplayed(page, ["Transaction Status","Finance Status","Transaction Status Notes"]);
@@ -310,8 +309,56 @@ test('Verify that the "Show All" tab displays all fields on the form.', async ({
     await Verify.IsTextDisplayed(page, ["Preferred Contact Time", "Finance Status", "Fleet Number"]); 
 });
 
+test('Verify that the "Hide Overview" tab hides the overview section of transaction.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281744");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.transactionTabs("Hide Overview"); 
+    await expect(page.locator('//span[normalize-space()="TESTING COMPANY"]')).toBeHidden();
+});
 
+test('Verify that the "Show Overview" tab displays the overview section of transaction.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281744");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.transactionTabs("Hide Overview"); 
+    await Click.transactionTabs("Show Overview");
+    await expect(page.locator('//span[normalize-space()="TESTING COMPANY"]')).toBeVisible();
+});
 
+test('Verify that all form sections are displayed sequentially on the screen', async ({ page, Actions, Click, Verify }) => {  
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281744");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.transactionTabs("Show Required",true); 
+});
+
+test('Verify that the user can expand and collapse the details by clicking on the collapse button.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281744");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("expandAll"); 
+    await Click.icon("collapseAll");
+    await expect(page.locator('//span[normalize-space()="Change Vehicle"]')).toBeHidden();
+});
+
+test('Verify that "Client details" section is displayed as expected.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281744");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.transactionTabs("Client Details");
+    await Verify.IsTextDisplayed(page, ["Customer Type","Company Name","Type of Business","Nature Of Business"]);
+});
 
 //reports >> DealTrackerReport-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -73,6 +73,8 @@ export class Click {
     private readonly Swaziland: Locator;
     private readonly collapse: Locator;
     private readonly find : Locator;
+    private readonly collapseAll: Locator;
+    private readonly expandAll: Locator;
   
 
     //buttons--------------------------------------------------------------------------------------------------------
@@ -201,9 +203,10 @@ export class Click {
         this.Swaziland = page.locator("(//i[@class='fi fi-sz text-4xl'])[1]");
         this.collapse = page.locator("(//i[@class='text-xl pi pi-bars text-primary-100'])[1]");
         this.find = page.locator("(//span[@class='p-input-icon pi pi-search text-primary-100'])[1]");
+        this.collapseAll = page.locator("//div[text()='Collapse All']");
+        this.expandAll = page.locator("//div[text()='Expand All']");
         
-        
-        //buttons--------------------------------------------------------------------------------------------------------        
+        //buttons---------------------------------------------------------------------------------------------------------------------------------------------------        
         
         this.login = page.locator("//span[text()='Login']")
         this.signOut = page.locator("//span[text()='Sign Out']")
@@ -455,6 +458,12 @@ export class Click {
         }
         else if (str === "find") {
             await this.find.click();
+        }
+        else if (str === "collapseAll") {
+            await this.collapseAll.click();
+        }
+         else if (str === "expandAll") {
+            await this.expandAll.click();
         }
 };
 
@@ -749,7 +758,15 @@ export class Click {
         }
     }
 
-    async transactionTabs(selector: string): Promise<void> {
-      await this.page.locator(`//button[normalize-space()='${selector}']`).click();
-}
+    async transactionTabs(selector: string, printAll: boolean = false): Promise<void> {
+        if (printAll) {
+            const buttons = await this.page.locator(`//button[normalize-space()]`).all();
+            for (const button of buttons) {
+                const text = await button.textContent();
+                // eslint-disable-next-line no-console
+                console.log('Transaction Tab Button:', text?.trim());
+            }
+        }
+        await this.page.locator(`//button[normalize-space()='${selector}']`).click();
+    }
 }
