@@ -61,11 +61,15 @@ test('Verify that the "Expand All" and "Collapse All" buttons function as expect
     await expect(page.getByText("Expand All")).toBeVisible();
 });
 
-test('Verify dashboard chart is visible after applying filter parameters on Main Dashboard', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the dashboard chart loads after clicking the "Load" button on the Main Dashboard', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Main Dashboard");
     await Click.tabs("mainDashboard");
+    await page.waitForTimeout(2000);
+    await Click.calendar(1, "2025", "Jun", 10);
+    await page.waitForTimeout(2000);
+    await Click.calendar(2, "2025", "Jun", 20);
     await page.waitForTimeout(2000);
     await Click.Btn('load');
     await page.waitForTimeout(2000);
@@ -84,7 +88,7 @@ test('Verify that the loaded chart can be saved in different formats on Main Das
     await Click.selectSaveAsOption('JPEG');
     await page.waitForTimeout(2000);
     await Click.selectSaveAsOption('PDF');
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(3000);
 });
 
 
@@ -140,7 +144,6 @@ test('Verify that all expected sections are present on the Transaction In Progre
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Transaction In Progress");
     await Click.tabs("transactionInProgressDashboard");
-    await page.waitForTimeout(2000);
     await Click.Btn('load');
     await page.waitForTimeout(2000);
     await Verify.IsTextDisplayed(page, ["Chart View", "Collapse All"]);
