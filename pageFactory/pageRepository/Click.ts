@@ -75,6 +75,7 @@ export class Click {
     private readonly find : Locator;
     private readonly collapseAll: Locator;
     private readonly expandAll: Locator;
+    private readonly groupLineFutureArrow: Locator;
   
 
     //buttons--------------------------------------------------------------------------------------------------------
@@ -205,7 +206,8 @@ export class Click {
         this.find = page.locator("(//span[@class='p-input-icon pi pi-search text-primary-100'])[1]");
         this.collapseAll = page.locator("//div[text()='Collapse All']");
         this.expandAll = page.locator("//div[text()='Expand All']");
-        
+        this.groupLineFutureArrow = page.locator("//button[@class='p-row-toggler p-link']//*[name()='svg']");
+
         //buttons---------------------------------------------------------------------------------------------------------------------------------------------------        
         
         this.login = page.locator("//span[text()='Login']")
@@ -462,8 +464,11 @@ export class Click {
         else if (str === "collapseAll") {
             await this.collapseAll.click();
         }
-         else if (str === "expandAll") {
+        else if (str === "expandAll") {
             await this.expandAll.click();
+        }
+         else if (str === "groupLineFutureArrow") {
+            await this.groupLineFutureArrow.click();
         }
 };
 

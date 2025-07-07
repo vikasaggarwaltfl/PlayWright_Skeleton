@@ -73,8 +73,8 @@ test('Verify that the country name is displayed when the user hovers over the co
 
 test('Verify that the user can change the country by selecting from the country options', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
-    await Click.Btn("login");  
-    await Click.icon("country"); 
+    await Click.Btn("login");
+    await Click.icon("country");
     await Click.icon("Swaziland");
     await page.hover("(//i[@class='fi fi-sz text-4xl'])[1]");
     await Verify.IsTextDisplayed(page, "Swaziland");
@@ -82,7 +82,7 @@ test('Verify that the user can change the country by selecting from the country 
 
 test('Verify that the user can minimize and maximize the sidebar by clicking on icon', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
-    await Click.Btn("login");   
+    await Click.Btn("login");
     await Click.icon("collapse");
     await Click.icon("find");
     await Verify.IsTextDisplayed(page, "Home");
@@ -91,7 +91,7 @@ test('Verify that the user can minimize and maximize the sidebar by clicking on 
 test('Verify that sidebar options are highlighted when hovered over', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Click.mouseHoverTabs(["Home","Dashboard","Transaction","My Reports","Template","Admin"]);
+    await Click.mouseHoverTabs(["Home", "Dashboard", "Transaction", "My Reports", "Template", "Admin"]);
 });
 
 test('Verify that the tab names are displayed for all logos in the minimized state', async ({ page, Actions, Click, Verify }) => {
@@ -107,7 +107,7 @@ test('Verify that the tab names are displayed for all logos in the minimized sta
 test('Verify that the Transaction screen is displayed correctly with all expected content.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Verify.IsTextDisplayed(page, ["Transact","Create Transaction","Search","Recent Transactions",]);
+    await Verify.IsTextDisplayed(page, ["Transact", "Create Transaction", "Search", "Recent Transactions",]);
 });
 
 test('Verify that the user can click on the "Create Transaction" button to create a new transaction', async ({ page, Actions, Click, Verify }) => {
@@ -193,7 +193,7 @@ test('Verify that the Create Transaction module is displayed when the user click
     await Click.Btn("login");
     await Click.Btn("createTransaction");
     await page.waitForLoadState('networkidle');
-   await Verify.IsTextDisplayed(page, ["Select a group","Select a branch"]);
+    await Verify.IsTextDisplayed(page, ["Select a group", "Select a branch"]);
 });
 
 test('Verify that the "Customer Type" field allows switching between Individual and Company', async ({ page, Actions, Click, Verify }) => {
@@ -246,7 +246,7 @@ test('Verify that all required fields must be filled before clicking the "Create
     await Click.Btn("createTransaction");
     await page.waitForLoadState('networkidle');
     await Click.Btn("clickTransaction")
-    await Verify.verifyErrorMessage(page, "Group is a required field"); 
+    await Verify.verifyErrorMessage(page, "Group is a required field");
 });
 
 test('Verify that the "Branch" dropdown is disabled until a "Group" is selected', async ({ page, Actions, Click, Verify }) => {
@@ -265,7 +265,7 @@ test.skip("Verify the system's response when entering extremely long text (e.g.,
     await Click.Btn("createTransaction");
     await page.waitForLoadState('networkidle');
     await Click.dropdown("Select a group", "`Group 2");
-    await Click.dropdown("Select a branch", "Branch 2");  
+    await Click.dropdown("Select a branch", "Branch 2");
     await Click.radioButton("Company");
     const longText = 'A'.repeat(10000);
     await Actions.enterText("enterCompanyName", longText);
@@ -285,7 +285,7 @@ test('Verify that navbar options are displayed as expected at the top of the scr
     await Actions.enterText("transactionSearchMenu", "281744");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
-    await Verify.IsTextDisplayed(page, ["Show Required","Hide Overview","Client Details","Vehicle Details","Account Details"]);
+    await Verify.IsTextDisplayed(page, ["Show Required", "Hide Overview", "Client Details", "Vehicle Details", "Account Details"]);
 });
 
 test('Verify that the Show Required tab displays only mandatory fields on the form.', async ({ page, Actions, Click, Verify }) => {
@@ -294,8 +294,8 @@ test('Verify that the Show Required tab displays only mandatory fields on the fo
     await Actions.enterText("transactionSearchMenu", "281744");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
-    await Click.transactionTabs("Show Required"); 
-    await Verify.IsTextDisplayed(page, ["Transaction Status","Finance Status","Transaction Status Notes"]);
+    await Click.transactionTabs("Show Required");
+    await Verify.IsTextDisplayed(page, ["Transaction Status", "Finance Status", "Transaction Status Notes"]);
     await Click.transactionTabs("Vehicle Details");
     await Verify.IsTextDisplayed(page, "Vehicle Condition");
 });
@@ -305,38 +305,38 @@ test('Verify that the "Show All" tab displays all fields on the form.', async ({
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281744");
     await Click.Btn("view");
-    await page.waitForLoadState('networkidle');  
-    await Verify.IsTextDisplayed(page, ["Preferred Contact Time", "Finance Status", "Fleet Number"]); 
+    await page.waitForLoadState('networkidle');
+    await Verify.IsTextDisplayed(page, ["Preferred Contact Time", "Finance Status", "Fleet Number"]);
 });
 
-test('Verify that the "Hide Overview" tab hides the overview section of transaction.', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the Hide Overview tab hides the overview section of transaction.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281744");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
-    await Click.transactionTabs("Hide Overview"); 
+    await Click.transactionTabs("Hide Overview");
     await expect(page.locator('//span[normalize-space()="TESTING COMPANY"]')).toBeHidden();
 });
 
-test('Verify that the "Show Overview" tab displays the overview section of transaction.', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the Show Overview tab displays the overview section of transaction.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281744");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
-    await Click.transactionTabs("Hide Overview"); 
+    await Click.transactionTabs("Hide Overview");
     await Click.transactionTabs("Show Overview");
     await expect(page.locator('//span[normalize-space()="TESTING COMPANY"]')).toBeVisible();
 });
 
-test('Verify that all form sections are displayed sequentially on the screen', async ({ page, Actions, Click, Verify }) => {  
+test('Verify that all form sections are displayed sequentially on the screen', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281744");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
-    await Click.transactionTabs("Show Required",true); 
+    await Click.transactionTabs("Show Required", true);
 });
 
 test('Verify that the user can expand and collapse the details by clicking on the collapse button.', async ({ page, Actions, Click, Verify }) => {
@@ -345,19 +345,19 @@ test('Verify that the user can expand and collapse the details by clicking on th
     await Actions.enterText("transactionSearchMenu", "281744");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
-    await Click.icon("expandAll"); 
+    await Click.icon("expandAll");
     await Click.icon("collapseAll");
     await expect(page.locator('//span[normalize-space()="Change Vehicle"]')).toBeHidden();
 });
 
-test('Verify that "Client details" section is displayed as expected.', async ({ page, Actions, Click, Verify }) => {
+test('Verify that Client details section is displayed as expected.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281744");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
     await Click.transactionTabs("Client Details");
-    await Verify.IsTextDisplayed(page, ["Customer Type","Company Name","Type of Business","Nature Of Business"]);
+    await Verify.IsTextDisplayed(page, ["Customer Type", "Company Name", "Type of Business", "Nature Of Business"]);
 });
 
 //reports >> DealTrackerReport-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -565,7 +565,7 @@ test('Verify that clicking on the back arrow, user is navigated to the template 
 
 //Admin >> Group-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify that the user can filter group details using the filter options', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can filter group using the filter options', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -589,7 +589,7 @@ test('Verify that group detail text is displayed when clicking on group tab', as
     await Verify.IsTextDisplayed(page, "Group Details");
 });
 
-test('Verify that the user can reset group details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can reset group by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -605,7 +605,7 @@ test('Verify that the user can reset group details by clicking on the reset butt
     //await Verify.verifyDatacount(10);
 });
 
-test('Verify that the user cannot add new group details with invalid data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user cannot add new group with invalid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -618,25 +618,44 @@ test('Verify that the user cannot add new group details with invalid data', asyn
 
 });
 
-test('Verify that the user can edit the group details with valid data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can edit the group with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
     await Click.chevronLeftArrow(1);
     await Click.tabs("group");
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(2000);
     await Click.icon("filterArrow");
     await Actions.enterText("groupName", "delete group");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
-    await Actions.enterText("defaultPrime","2")
+    await Actions.enterText("defaultPrime", "2")
     await page.waitForLoadState('networkidle');
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Group Details saved!");
 });
 
-test('Verify that the user can copy the group details', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user cannot edit the group with invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "delete group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Actions.enterText("defaultPrime", " ")
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Default Prime Adjustment is a required field");
+});
+
+
+test('Verify that the user can copy the group', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -654,29 +673,6 @@ test('Verify that the user can copy the group details', async ({ page, Actions, 
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
-test('Verify that the user cannot add a group in the groupline with invalid data', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Admin");
-    await Click.chevronLeftArrow(1);
-    await Click.tabs("group");
-    await page.waitForTimeout(2000);
-    await Click.icon("filterArrow");
-    await Actions.enterText("groupName", "`Group 2");
-    await Click.Btn("apply");
-    await page.waitForTimeout(2000);
-    await Click.icon("edit");
-    await Click.Btn("groupLine");
-    await Click.Btn("add");
-    await Click.dropdown("Account Manager", "admin@seritisolutions.com");
-    await page.waitForTimeout(2000);
-    await Click.dropdown("Marketer", "a1");
-    await page.waitForTimeout(1000);
-    await Click.calendar(1, "2026", "Jul", 25);
-    await Click.Btn("save");
-    await Verify.verifyErrorMessage(page, "Financial Manager is a required field");
-});
-
 test('Verify that the user can delete a group', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
@@ -692,6 +688,82 @@ test('Verify that the user can delete a group', async ({ page, Actions, Click, V
     await Click.Btn("yes");
     await page.waitForTimeout(4000);
     //await Verify.verifyDatacount(1);
+});
+
+//Group line-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user cannot add a group in the groupline with invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "delete group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.Btn("groupLine");
+    await Click.Btn("add");
+    await Click.dropdown("Account Manager", "admin@seritisolutions.com");
+    await page.waitForTimeout(2000);
+    await Click.dropdown("Marketer", "a1");
+    await page.waitForTimeout(1000);
+    await Click.calendar(1, "2026", "Jul", 25);
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Financial Manager is a required field");
+});
+
+test('Verify that the user can add a group in the groupline with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "delete group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.Btn("groupLine");
+    await Click.Btn("add");
+    await Click.dropdown("Account Manager", "admin@seritisolutions.com");
+    await page.waitForTimeout(2000);
+    await Click.dropdown("Marketer", "a1");
+    await page.waitForTimeout(1000);
+    await Click.dropdown("Approval User Products", "45012741@mylife.unisa.ac.za");
+    await page.waitForTimeout(1000);
+    await Click.dropdown("Approval User Other", "adamm@financenow.co.nz");
+    await page.waitForTimeout(1000);
+    await Click.dropdown("Financial Manager", "amal@theelitecars.com");
+    await page.waitForTimeout(1000);
+    await Click.calendar(1, "2026", "Jul", 25);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Group Details (delete group)");
+});
+
+test('Verify that the user is able to edit the group line details by clicking on the "Edit" icon', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "delete group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.Btn("groupLine");
+    await Click.icon("groupLineFutureArrow");
+    await Click.icon("edit");
+    await page.waitForTimeout(2000);
+    await Click.dropdown("Account Manager", "a1");
+    await page.waitForTimeout(1000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Group Details (delete group)");
 });
 
 test('Verify that the user can navigate through pagination numbers in group page', async ({ page, Actions, Click, Verify }) => {
@@ -785,7 +857,7 @@ test('Verify that the user can edit the branch details with valid data', async (
     await Click.tabs("branches");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
-    await Actions.enterText("branchName","Updated Branch Name");
+    await Actions.enterText("branchName", "Updated Branch Name");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
@@ -1026,12 +1098,12 @@ test('Verify that the user can edit the product details with valid data', async 
     await Click.tabs("productAdmin");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
-    await Actions.enterText("productName","updated practise product");
+    await Actions.enterText("productName", "updated practise product");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
     await page.waitForTimeout(5000);
-    await Actions.enterText("productName","practise product");
+    await Actions.enterText("productName", "practise product");
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Products saved!");
 });
@@ -1066,9 +1138,9 @@ test('Verify that the user can copy the product details with valid data', async 
     await Click.icon("copy");
     await Click.icon("selectAll");
     await Click.Btn("copying");
-    await page.waitForTimeout(2000); 
-    await Click.calendar(1, "2026", "May", 8); 
-    await page.waitForTimeout(2000); 
+    await page.waitForTimeout(2000);
+    await Click.calendar(1, "2026", "May", 8);
+    await page.waitForTimeout(2000);
     await Click.calendar(2, "2026", "Aug", 20);
     await page.waitForTimeout(1000);
     await Click.Btn("save");
@@ -1095,7 +1167,7 @@ test('Verify that the user cannot copy the product details with invalid data', a
 
 //Accessories-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify that user can expand "Accessories" section and the sub option should display as expected', async ({ page, Actions, Click, Verify }) => {       
+test('Verify that user can expand "Accessories" section and the sub option should display as expected', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Accessories");
@@ -1124,7 +1196,7 @@ test('Verify that the user can filter accessory details using the filter options
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Verify.verifyDatacount(2);
-}); 
+});
 
 test('Verify that the user can reset accessory details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
@@ -1342,7 +1414,7 @@ test('Verify that the user cannot copy the vehicle details that already exsists'
     await Click.icon("copy");
     await Click.icon("selectAll");
     await Click.Btn("copying");
-    await Actions.enterText("vehicleDoors","2");
+    await Actions.enterText("vehicleDoors", "2");
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Saving Failed!");
 });
@@ -1381,9 +1453,9 @@ test('Verify that the user can import a vehicle file when clicking on the import
     await Click.tabs("vehicleAdmin");
     await page.waitForLoadState('networkidle');
     await Click.tabs("importVehicleFile");
-    await Click.dropdown("Select a group","`Group 2")
-    await Click.dropdown("Select a branch","Branch 2") 
-    const fileInput = await page.$("//input[@type='file']"); 
+    await Click.dropdown("Select a group", "`Group 2")
+    await Click.dropdown("Select a branch", "Branch 2")
+    const fileInput = await page.$("//input[@type='file']");
     await fileInput.setInputFiles(path.resolve('PlayWright_Skeleton/documents/Sample report.pdf'));
     await Click.Btn("importVehicleBtn");
     await Verify.IsTextDisplayed(page, "Success");
@@ -1397,8 +1469,8 @@ test('Verify that the user cannot import a vehicle file without uploading a file
     await Click.tabs("vehicleAdmin");
     await page.waitForLoadState('networkidle');
     await Click.tabs("importVehicleFile");
-    await Click.dropdown("Select a group","`Group 2")
-    await Click.dropdown("Select a branch","Branch 2") 
+    await Click.dropdown("Select a group", "`Group 2")
+    await Click.dropdown("Select a branch", "Branch 2")
     await Click.Btn("importVehicleBtn");
     await Verify.IsTextDisplayed(page, "Request Failed!");
 });
@@ -1439,9 +1511,9 @@ test('Verify that the user can reset user details by clicking on the reset butto
     await Click.Btn("reset");
     await page.waitForTimeout(1000);
     await Verify.verifyDatacount(10);
-});  
+});
 
-test ('Verify that the user cannot add new user with invalid details', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user cannot add new user with invalid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Users");
@@ -1449,7 +1521,7 @@ test ('Verify that the user cannot add new user with invalid details', async ({ 
     await page.waitForLoadState('networkidle');
     await Click.Btn("addUser");
     await Actions.enterText("userName", "test-automation@testingframeworks.co.uk");
-    await Click.Btn("save");    
+    await Click.Btn("save");
     await Verify.verifyErrorMessage(page, "First Name is a required field");
 });
 
@@ -1465,7 +1537,7 @@ test('Verify that the user can edit the user details with valid data', async ({ 
     await page.waitForTimeout(1000);
     await Click.icon("edit");
     await page.waitForTimeout(2000);
-    await Click.calendar(1, "2001", "Oct", 1); 
+    await Click.calendar(1, "2001", "Oct", 1);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "User Details saved!");
 });
@@ -1485,7 +1557,7 @@ test('Verify that the user cannot edit the user details with Invalid data', asyn
     await Actions.enterText("firstName", " ");
     await Click.Btn("save");
     await Verify.verifyErrorMessage(page, "First Name is a required field");
-});  
+});
 
 test('Verify that the user can sort the user details in the data grid', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
@@ -1508,6 +1580,9 @@ test('Verify that pagination works correctly for users page', async ({ page, Act
     await page.waitForTimeout(1000);
     await Verify.verifyDatacount(10);
 });
+
+
+
 
 
 
