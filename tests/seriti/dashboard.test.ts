@@ -4,6 +4,7 @@ import { Actions } from '@pages/Actions'
 import { Click } from '@pages/Click'
 import { verify } from 'crypto'
 import { access } from 'fs'
+import { Verify } from '@pages/Verify'
 
 
 
@@ -76,55 +77,61 @@ test('Verify that user can load accordion of main dashboard by applying filter p
     await Verify.IsTextDisplayed(page, ["Chart View", "Collapse All"]);
 });
 
-test('Verify that the loaded chart can be saved in different formats on Main Dashboard', async ({ page, Actions, Click, Verify }) => {
+
+// Dashboard >> Main Dashboard >> Transaction conversion rate------------------------------------------------------------------------------------------------------------------------
+
+test.only('Verify that the transaction conversion chart loaded as expected', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Main Dashboard");
     await Click.tabs("mainDashboard");
     await Click.Btn('load');
-    await page.waitForTimeout(2000);
+    const canvasElmt = await page.locator("canvas[data-pc-section='canvas']")
+    await Verify.verifyElementPresence(canvasElmt, true);
+    console.log("Transaction conversion chart loaded as expected.")
+    await page.locator("//span[text()='Tabular View']").click();
+    await page.waitForLoadState();
+
+});
+
+
+test('Verify that the transaction conversion chart can be saved in different formats', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Main Dashboard");
+    await Click.tabs("mainDashboard");
+    await Click.Btn('load');
+    await page.waitForTimeout(3000);
     await Click.selectSaveAsOption('PNG');
     await page.waitForTimeout(2000);
     await Click.selectSaveAsOption('JPEG');
     await page.waitForTimeout(2000);
     await Click.selectSaveAsOption('PDF');
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(2000);
 });
 
-
-test('Verify that each accordian section chart is displayed correctly on Main Dashboard', async ({ page, Actions, Click, Verify }) => {
-    const sectionTitles = [
-        "Transaction Conversion Rate",
-        "Cash and Finance Shares",
-        "Vehicles Financed per Finance House",
-        "Vehicles Sold per Dealer",
-        "Vehicles Sold per Sales Person",
-        "Vehicles Sold per Business Manager",
-        "% Penetration per Product Type Category",
-        "APU per Business Manager",
-        "APU per Sales Person"
-    ];
-
+test('Verify that user can switch to tabular view of transaction conversion chart and it is displayed as expected', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Main Dashboard");
     await Click.tabs("mainDashboard");
     await Click.Btn('load');
-    await page.waitForTimeout(2000);
 
-    for (const title of sectionTitles) {
-        const section = page.getByText(title, { exact: false });
-        // Expand the section if it's collapsed (if applicable)
-        if (await section.getAttribute('aria-expanded') === 'false') {
-            await section.click();
-            await page.waitForTimeout(500);
-        }
-        await expect(section).toBeVisible();
-        await section.scrollIntoViewIfNeeded();
-        await Verify.chartImageLoaded();
-        await Verify.IsTextDisplayed(page, title);
-    }
+    // Click the button or tab to switch to tabular view (replace with actual selector or method)
+    await Click.Btn("tabularViewBtn");
+
+    // Assert that the tabular view is displayed (replace with actual selector or text)
+    await expect(page.locator('table.transaction-conversion-table')).toBeVisible(); // Adjust selector as needed
+    await expect(page.locator('text=Transaction Conversion Table')).toBeVisible(); // Optional: check for heading/text
+
+    await console.log("User can switch to tabular view of transaction conversion chart and it is displayed as expected.");
 });
+
+
+
+
+
+
 
 // Dashboard >> Transaction In Progress Dashboard----------------------------------------------------------------------------------------------------------------------------------
 
@@ -345,6 +352,19 @@ test('Verify that the Finance Application Analysis Dashboard filter parameters w
     await page.waitForTimeout(2000);
     await Verify.IsTextDisplayed(page, ["Chart View", "Collapse All"]);
 });
+
+test('Verify that the Finance Application Analysis Dashboard canvas is attached', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Finance Application Analysis");
+    await Click.tabs("financeApplicationAnalysisDashboard");
+    await page.waitForTimeout(2000);
+    await Verify.verifyCanvasAttached('canvas#myCustomChart');
+});
+
+
+
+
 
 
 

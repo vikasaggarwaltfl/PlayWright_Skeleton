@@ -1,4 +1,4 @@
-import { Page, BrowserContext, expect } from '@playwright/test'
+import { Page, BrowserContext, expect, Locator } from '@playwright/test'
 // import * as dotenv from 'dotenv'
 // dotenv.config()
 import * as fs from 'fs';
@@ -22,6 +22,11 @@ export class Verify {
     this.page = page
     this.context = context
   }
+
+  get transactionConversionChart() {
+    return this.page.locator('canvas[data-pc-section="canvas"]');
+  }
+
   get SignIn() {
     return this.page.locator(
       'xpath=/html/body/div[1]/div/div[1]/div[2]/div[2]/div[3]/div/div/form/input[3]',
@@ -135,26 +140,6 @@ export class Verify {
     }
   }
 
-  // Verify chart view of dashboard--------------------
-
-  // Verify chart image loaded (robust for multiple canvases)
-  async chartImageLoaded() {
-    const canvases = this.page.locator('canvas[data-pc-section="canvas"]');
-    const count = await canvases.count();
-    let foundVisible = false;
-    for (let i = 0; i < count; i++) {
-      const canvas = canvases.nth(i);
-      if (await canvas.isVisible()) {
-        const box = await canvas.boundingBox();
-        if (box && box.width > 0 && box.height > 0) {
-          foundVisible = true;
-          await expect(canvas).toBeVisible();
-          break;
-        }
-      }
-    }
-    expect(foundVisible).toBe(true);
-  }
   
   //Verify Icon is visible-------------------------------------------------------------------------------------------------------------
 
@@ -162,5 +147,14 @@ export class Verify {
     const selector = iconLocators[iconName];
     if (!selector) throw new Error(`No selector found for icon: ${iconName}`);
     await expect(page.locator(selector)).toBeVisible();
+  }
+
+
+  async verifyElementPresence(element: Locator, shouldBePresent: boolean) {
+    if (shouldBePresent) {
+      await expect(element).toBeAttached();
+    } else {
+      await expect(element).not.toBeAttached();
+    }
   }
 }

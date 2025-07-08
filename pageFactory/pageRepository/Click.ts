@@ -133,6 +133,7 @@ export class Click {
     private readonly saveAsPDF: Locator;
     private readonly addUser: Locator;
     private readonly clickTransaction: Locator;
+    private readonly tabularViewBtn: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -263,6 +264,7 @@ export class Click {
         this.saveAsPDF = page.getByRole('menuitem', { name: 'PDF' });
         this.addUser = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.clickTransaction = page.locator("//button[@class='p-button p-component flex flex-row justify-center']");
+        this.tabularViewBtn = page.locator("//span[normalize-space()='Tabular View']");
        
     }
 
@@ -620,6 +622,9 @@ export class Click {
         }
         else if (str === "clickTransaction") {
             await this.clickTransaction.click();
+        }
+        else if (str === "tabularViewBtn") {
+            await this.tabularViewBtn.click();
         }
         
     };
