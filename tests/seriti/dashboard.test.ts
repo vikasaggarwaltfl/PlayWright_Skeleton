@@ -61,7 +61,7 @@ test('Verify that the "Expand All" and "Collapse All" buttons function as expect
     await expect(page.getByText("Expand All")).toBeVisible();
 });
 
-test('Verify that the dashboard chart loads after clicking the "Load" button on the Main Dashboard', async ({ page, Actions, Click, Verify }) => {
+test('Verify that user can load accordion of main dashboard by applying filter parameters', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Main Dashboard");
