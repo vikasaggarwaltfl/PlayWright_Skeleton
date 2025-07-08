@@ -654,7 +654,6 @@ test('Verify that the user cannot edit the group with invalid data', async ({ pa
     await Verify.verifyErrorMessage(page, "Default Prime Adjustment is a required field");
 });
 
-
 test('Verify that the user can copy the group', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
@@ -684,10 +683,50 @@ test('Verify that the user can delete a group', async ({ page, Actions, Click, V
     await Actions.enterText("groupName", "delete group");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
-    await Click.icon("delete");
+    await Click.icon("deleted");
     await Click.Btn("yes");
     await page.waitForTimeout(4000);
     //await Verify.verifyDatacount(1);
+});
+
+test('Verify that the user can navigate through pagination numbers in group page', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForLoadState('networkidle');
+    await Click.pagination(9);
+    await page.waitForTimeout(1000);
+    //await Verify.verifyDatacount(1);
+});
+
+test('Verify that the user can refresh the group page data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "`Group 2");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Verify.verifyDatacount(3);
+    await Click.Btn("refresh");
+    await page.waitForLoadState('networkidle');
+    //await Verify.verifyDatacount(3);
+});
+
+test('Verify that the user can sort the group details in the data grid', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
 });
 
 //Group line-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -760,40 +799,54 @@ test('Verify that the user is able to edit the group line details by clicking on
     await Click.icon("groupLineFutureArrow");
     await Click.icon("edit");
     await page.waitForTimeout(2000);
-    await Click.dropdown("Account Manager", "a1");
+    await Actions.enterText("registeredName", "Group Line 1");
     await page.waitForTimeout(1000);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Group Details (delete group)");
 });
 
-test('Verify that the user can navigate through pagination numbers in group page', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user is able to copy the group line details by clicking on the "Copy" icon', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
     await Click.chevronLeftArrow(1);
     await Click.tabs("group");
-    await page.waitForLoadState('networkidle');
-    await Click.pagination(9);
-    await page.waitForTimeout(1000);
-    //await Verify.verifyDatacount(1);
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "delete group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.Btn("groupLine");
+    await Click.icon("groupLineFutureArrow");
+    await Click.icon("detailsCopy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Group Details (delete group)");
 });
 
-test('Verify that the user can refresh the group page data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user is able to delete the group line details by clicking on the "delete" icon', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
     await Click.chevronLeftArrow(1);
     await Click.tabs("group");
-    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(2000);
     await Click.icon("filterArrow");
-    await Actions.enterText("groupName", "`Group 2");
+    await Actions.enterText("groupName", "delete group");
     await Click.Btn("apply");
-    await page.waitForTimeout(1000);
-    await Verify.verifyDatacount(3);
-    await Click.Btn("refresh");
-    await page.waitForLoadState('networkidle');
-    //await Verify.verifyDatacount(3);
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.Btn("groupLine");
+    await Click.icon("groupLineFutureArrow");
+    await page.pause();
+    await Click.icon("deleted");
+    await Click.Btn("yes");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Group Details (delete group)");
 });
+
 
 //branches-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

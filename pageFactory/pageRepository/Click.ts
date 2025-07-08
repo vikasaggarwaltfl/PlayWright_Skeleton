@@ -76,6 +76,8 @@ export class Click {
     private readonly collapseAll: Locator;
     private readonly expandAll: Locator;
     private readonly groupLineFutureArrow: Locator;
+    private readonly detailsCopy: Locator;
+    private readonly deleted: Locator;
   
 
     //buttons--------------------------------------------------------------------------------------------------------
@@ -208,6 +210,8 @@ export class Click {
         this.collapseAll = page.locator("//div[text()='Collapse All']");
         this.expandAll = page.locator("//div[text()='Expand All']");
         this.groupLineFutureArrow = page.locator("//button[@class='p-row-toggler p-link']//*[name()='svg']");
+        this.detailsCopy = page.locator("(//button[@class='flex flex-col justify-center'])[2]");
+        this.deleted = page.locator("(//button[@class='flex flex-col justify-center'])[3]");
 
         //buttons---------------------------------------------------------------------------------------------------------------------------------------------------        
         
@@ -469,8 +473,14 @@ export class Click {
         else if (str === "expandAll") {
             await this.expandAll.click();
         }
-         else if (str === "groupLineFutureArrow") {
+        else if (str === "groupLineFutureArrow") {
             await this.groupLineFutureArrow.click();
+        }
+        else if (str === "detailsCopy") {
+            await this.detailsCopy.click();
+        }
+        else if (str === "deleted") {
+            await this.deleted.click();
         }
 };
 
