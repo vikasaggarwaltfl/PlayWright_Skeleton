@@ -91,7 +91,6 @@ test.only('Verify that the transaction conversion chart loaded as expected', asy
     console.log("Transaction conversion chart loaded as expected.")
     await page.locator("//span[text()='Tabular View']").click();
     await page.waitForLoadState();
-
 });
 
 
