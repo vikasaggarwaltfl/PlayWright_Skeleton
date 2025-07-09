@@ -80,7 +80,7 @@ test('Verify that user can load accordion of main dashboard by applying filter p
 
 // Dashboard >> Main Dashboard >> Transaction conversion rate------------------------------------------------------------------------------------------------------------------------
 
-test.only('Verify that the transaction conversion chart loaded as expected', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the transaction conversion chart loaded as expected', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Main Dashboard");
@@ -89,10 +89,8 @@ test.only('Verify that the transaction conversion chart loaded as expected', asy
     const canvasElmt = await page.locator("canvas[data-pc-section='canvas']")
     await Verify.verifyElementPresence(canvasElmt, true);
     console.log("Transaction conversion chart loaded as expected.")
-    await page.locator("//span[text()='Tabular View']").click();
     await page.waitForLoadState();
 });
-
 
 test('Verify that the transaction conversion chart can be saved in different formats', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
@@ -109,28 +107,126 @@ test('Verify that the transaction conversion chart can be saved in different for
     await page.waitForTimeout(2000);
 });
 
-test('Verify that user can switch to tabular view of transaction conversion chart and it is displayed as expected', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can switch to the tabular view of the transaction conversion chart and it displays correctly.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Main Dashboard");
     await Click.tabs("mainDashboard");
     await Click.Btn('load');
-
-    // Click the button or tab to switch to tabular view (replace with actual selector or method)
-    await Click.Btn("tabularViewBtn");
-
-    // Assert that the tabular view is displayed (replace with actual selector or text)
-    await expect(page.locator('table.transaction-conversion-table')).toBeVisible(); // Adjust selector as needed
-    await expect(page.locator('text=Transaction Conversion Table')).toBeVisible(); // Optional: check for heading/text
-
-    await console.log("User can switch to tabular view of transaction conversion chart and it is displayed as expected.");
+    await page.locator("//span[text()='Tabular View']").click();
+    await page.waitForSelector('table', { state: 'visible' }); 
+    await expect(page.locator('table')).toBeVisible();
+    console.log("User can switch to tabular view of transaction conversion chart and it is displayed as expected.");
 });
 
+test('Export Transaction Conversion Chart to Excel', async ({ page, Actions, Click, Verify, context }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Main Dashboard");
+    await Click.tabs("mainDashboard");
+    await Click.Btn('load');
+    await page.locator("//span[text()='Tabular View']").click();
+    await page.waitForSelector('table', { state: 'visible' });
+    const [ download ] = await Promise.all([
+        page.waitForEvent('download'),
+        page.click('button:has-text("Export to Excel")') 
+    ]);
+    const suggestedFilename = download.suggestedFilename();
+    expect(suggestedFilename).toMatch(/\.xlsx?$/i);
+    await console.log("Transaction Conversion Chart exported to Excel successfully.");
+});
 
+// Dashboard >> Main Dashboard >> Cash and Finance Shares Chart -----------------------------------------------------------------------------------------------------------
+test('Verify that the Cash and Finance Shares canvas chart loads as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Main Dashboard");
+    await Click.tabs("mainDashboard");
+    await page.waitForTimeout(2000);
+    await Click.calendar(1, "2025", "Feb", 10);
+    await page.waitForTimeout(2000);
+    await Click.Btn('load');
+    const canvasElmt = page.locator('#c1ed079c-dc5e-45cd-9a38-06d44dc75c7d');
+    await Verify.verifyElementPresence(canvasElmt, true);
+    await page.waitForLoadState();
+    console.log("Cash and Finance Shares canvas chart loaded as expected.");
+});
 
+test('Verify that the Cash and Finance Share chart can be saved in different formats', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Main Dashboard");
+    await Click.tabs("mainDashboard");
+    await Click.Btn('load');
+    await page.waitForTimeout(3000);
+    await Click.selectSaveAsOption('PNG');
+    await page.waitForTimeout(2000);
+    await Click.selectSaveAsOption('JPEG');
+    await page.waitForTimeout(2000);
+    await Click.selectSaveAsOption('PDF');
+    await page.waitForTimeout(2000);
+});
 
+// Dashboard >> Main Dashboard >> Vehicle financed per Finance House----------------------------------------------------------------------------------------------------------
+test('Verify that the Vehicle financed per Finance House canvas chart loads as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Main Dashboard");
+    await Click.tabs("mainDashboard");
+    await page.waitForTimeout(2000);
+    await Click.calendar(1, "2025", "Feb", 10);
+    await page.waitForTimeout(2000);
+    await Click.Btn('load');
+    const canvasElmt = page.locator('#88224891-e16d-42b6-9013-2de2ffa935b6');
+    await Verify.verifyElementPresence(canvasElmt, true);
+    await page.waitForLoadState();
+    console.log("Cash and Finance Shares canvas chart loaded as expected.");
+});
 
+test('Verify that the Vehicle financed per Finance House chart can be saved in different formats', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Main Dashboard");
+    await Click.tabs("mainDashboard");
+    await Click.Btn('load');
+    await page.waitForTimeout(3000);
+    await Click.selectSaveAsOption('PNG');
+    await page.waitForTimeout(2000);
+    await Click.selectSaveAsOption('JPEG');
+    await page.waitForTimeout(2000);
+    await Click.selectSaveAsOption('PDF');
+    await page.waitForTimeout(2000);
+});
+// Dashboard >> Main dashboard >> Vehicles solds per sales person-----------------------------------------------------------------------------------------------
+test('Verify that the Vehicles solds per sales person canvas chart loads as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Main Dashboard");
+    await Click.tabs("mainDashboard");
+    await page.waitForTimeout(2000);
+    await Click.calendar(1, "2025", "Feb", 10);
+    await page.waitForTimeout(2000);
+    await Click.Btn('load');
+    const canvasElmt = page.locator('#d5dc892a-e024-4dc4-96d8-250fee1da8a4');
+    await Verify.verifyElementPresence(canvasElmt, true);
+    await page.waitForLoadState();
+    console.log("Cash and Finance Shares canvas chart loaded as expected.");
+});
 
+test('Verify that the Vehicles solds per sales person chart can be saved in different formats', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Main Dashboard");
+    await Click.tabs("mainDashboard");
+    await Click.Btn('load');
+    await page.waitForTimeout(3000);
+    await Click.selectSaveAsOption('PNG');
+    await page.waitForTimeout(2000);
+    await Click.selectSaveAsOption('JPEG');
+    await page.waitForTimeout(2000);
+    await Click.selectSaveAsOption('PDF');
+    await page.waitForTimeout(2000);
+});
 
 // Dashboard >> Transaction In Progress Dashboard----------------------------------------------------------------------------------------------------------------------------------
 
@@ -176,6 +272,9 @@ test('Verify that the Transaction In Progress Dashboard can be saved in differen
     await Click.selectSaveAsOption('PNG');
     await Verify.verifyDownload('downloadlink');
 });
+
+
+
 
 // Dashboard >> Transaction Status Ageing Analysis Dashboard------------------------------------------------------------------------------------------------------------------------------------------------------
 
