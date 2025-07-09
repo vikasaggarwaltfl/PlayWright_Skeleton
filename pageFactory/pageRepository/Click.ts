@@ -49,6 +49,7 @@ export class Click {
     private readonly dealerMarketShareDashboard: Locator;
     private readonly transactionWeeklyAnalysisDashboard: Locator;
     private readonly financeApplicationAnalysisDashboard: Locator;
+    private readonly groupCompanies: Locator;
     
 
     //icon--------------------------------------------------------------------------------------------------------
@@ -184,6 +185,7 @@ export class Click {
         this.dealerMarketShareDashboard = page.locator("//div[text()='Dealer Market Share']");
         this.transactionWeeklyAnalysisDashboard = page.locator("//div[text()='Transaction Weekly Analysis']");
         this.financeApplicationAnalysisDashboard = page.locator("//div[text()='Finance Application Analysis']");
+        this.groupCompanies = page.locator("//button[normalize-space()='Companies']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -398,6 +400,9 @@ export class Click {
         }
         else if (str === "financeApplicationAnalysisDashboard") {
             await this.financeApplicationAnalysisDashboard.click();
+        }
+        else if (str === "groupCompanies") {
+            await this.groupCompanies.click();
         }
     };
 

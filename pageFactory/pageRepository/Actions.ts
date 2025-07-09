@@ -41,6 +41,8 @@ export class Actions {
     private readonly firstName: Locator; 
     private readonly enterCompanyName: Locator;
     private readonly registeredName: Locator;
+    private readonly sortKey: Locator;
+    private readonly searchBox: Locator;
    
 
 
@@ -69,6 +71,8 @@ export class Actions {
         this.firstName = page.locator("//input[@id='FirstName']"); 
         this.enterCompanyName = page.locator("//input[@datakey='createTransactioncompanyName']");
         this.registeredName = page.locator("//input[@id='RegisteredName']");
+        this.sortKey = page.locator("//input[@id='SortKey']");
+        this.searchBox = page.locator("//input[@role='searchbox']");
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -162,6 +166,14 @@ export class Actions {
         else if (textBoxName === "registeredName") {
 
             await this.registeredName.fill(text);
+        }
+        else if (textBoxName === "sortKey") {
+
+            await this.sortKey.fill(text);
+        }
+        else if (textBoxName === "searchBox") {
+
+            await this.searchBox.fill(text);
         }
         
     }
