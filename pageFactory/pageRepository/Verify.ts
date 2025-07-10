@@ -124,6 +124,7 @@ export class Verify {
   }
 
   // Verify Sort Icon State------------------------------------------------------------------------------------------------------------------------------------------------------------
+  
   async verifySortOrder() {
     const icon = await this.page.locator("//th[2]//div[1]//span[2]//*[name()='svg']");
     const state = await icon.getAttribute('sortOrder');

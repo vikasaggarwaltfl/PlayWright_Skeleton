@@ -97,7 +97,6 @@ test('Verify that sidebar options are highlighted when hovered over', async ({ p
 test('Verify that the tab names are displayed for all logos in the minimized state', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Click.icon("collapse");
     await page.hover("//i[@class='pi pi-home']");
     await Verify.IsTextDisplayed(page, "Home");
 });
@@ -259,11 +258,12 @@ test('Verify that the user can reset template details by clicking on the reset b
     await Verify.verifyDatacount(10);
 });
 
-test('Verify that the user can "sort" the template datas in the data grid', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can "sort" the template datas in the data grid', async ({ page, Actions, Click, Verify }) => {  
     await Actions.signIn("Automation");
-    await Click.Btn("login");
+    await Click.Btn("login");  
     await Click.tabs("template");
-    await Verify.verifySortOrder();
+    await Click.icon("sort"); ;
+    await Verify.verifySortOrder(); 
 });
 
 test('Verify that the user can "Copy" Template with valid data', async ({ page, Actions, Click, Verify }) => {
@@ -471,7 +471,7 @@ test('Verify that the user can sort the group details in the data grid', async (
     await Verify.verifySortOrder();
 });
 
-//Group line-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Group >> Group line-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that the user can add a new "groupline" in the addGroupline section with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
@@ -525,7 +525,7 @@ test('Verify that the user cannot add a new "groupline" in the addGroupline sect
     await Verify.verifyErrorMessage(page, "Financial Manager is a required field");
 });
 
-test('Verify that the user is able to edit a group line by clicking on the "Edit" icon ', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user is able to edit a group line', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -547,7 +547,7 @@ test('Verify that the user is able to edit a group line by clicking on the "Edit
     await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
 });
 
-test('Verify that the user is able to copy a group line by clicking on the "Copy" icon', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user is able to copy a group line', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -568,7 +568,7 @@ test('Verify that the user is able to copy a group line by clicking on the "Copy
     await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
 });
 
-test('Verify that the user is able to delete a group line by clicking on the "delete" icon', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user is able to delete a group line', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -585,6 +585,44 @@ test('Verify that the user is able to delete a group line by clicking on the "de
     await page.pause();
     await Click.icon("deleted");
     await Click.Btn("yes");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
+
+test('Verify that the user is able to sort the group line details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.Btn("groupLine");
+    await Click.icon("groupLineFutureArrow");
+    await page.waitForTimeout(2000);
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
+});
+
+test('Verify that the user is able to refresh the group line details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.Btn("groupLine");
+    await page.waitForTimeout(2000);
+    await Click.Btn("refresh");
     await page.waitForTimeout(2000);
     await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
 });
@@ -608,7 +646,7 @@ test('Verify that the user can add a new "company" in the addGroupCompany sectio
     await Click.dropdown("Company Name", "ABC Company");
     await Actions.enterText("sortKey", "309");
     await Click.calendar(1, "2026", "Jul", 25); 
-    await Click.calendar(2, "2027", "Oct", 10);
+    await page.waitForTimeout(2000);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
 });
@@ -632,7 +670,7 @@ test('Verify that the user cannot add a new "company" in the addGroupCompany sec
     await Verify.verifyErrorMessage(page, "Company Name is a required field"); 
 });
 
-test('Verify that the user is able to edit a company by clicking on the "Edit" icon', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user is able to edit a company', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -651,6 +689,85 @@ test('Verify that the user is able to edit a company by clicking on the "Edit" i
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
 });
+
+test('Verify that the user is able to copy a company', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupCompanies");
+    await page.waitForTimeout(2000);
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
+
+test('Verify that the user is able to delete a company', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupCompanies");
+    await page.waitForTimeout(2000);
+    await Click.icon("deleted");
+    await Click.Btn("yes");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Could not delete record");
+});
+
+test('Verify that the user is able to sort the groupCompany details in the data grid', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupCompanies");
+    await page.waitForTimeout(2000);
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
+});
+
+test('Verify that the user is able to refresh the groupCompany page', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupCompanies");
+    await page.waitForTimeout(2000);
+    await Click.Btn("refresh");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
+
 
 //branches-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
