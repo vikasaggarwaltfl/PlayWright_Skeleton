@@ -50,6 +50,8 @@ export class Click {
     private readonly transactionWeeklyAnalysisDashboard: Locator;
     private readonly financeApplicationAnalysisDashboard: Locator;
     private readonly groupCompanies: Locator;
+    private readonly groupLine: Locator;
+    private readonly groupProducts: Locator;
     
 
     //icon--------------------------------------------------------------------------------------------------------
@@ -115,7 +117,7 @@ export class Click {
     private readonly templateLine: Locator;
     private readonly add : Locator;
     private readonly addGroup: Locator;
-    private readonly groupLine: Locator;
+   
     private readonly refresh: Locator;
     private readonly addBranch: Locator;
     private readonly addCompany: Locator;
@@ -186,6 +188,8 @@ export class Click {
         this.transactionWeeklyAnalysisDashboard = page.locator("//div[text()='Transaction Weekly Analysis']");
         this.financeApplicationAnalysisDashboard = page.locator("//div[text()='Finance Application Analysis']");
         this.groupCompanies = page.locator("//button[normalize-space()='Companies']");
+        this.groupLine = page.locator("//button[normalize-space()='Group Line']");
+        this.groupProducts = page.locator("//button[normalize-space()='Products']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -250,7 +254,6 @@ export class Click {
         this.templateLine = page.locator("//button[normalize-space()='Template Line']");
         this.add = page.locator("//span[normalize-space()='Add']");
         this.addGroup = page.locator("//button[contains(@class,'p-button p-component p-splitbutton-defaultbutton')]");
-        this.groupLine = page.locator("//button[normalize-space()='Group Line']");
         this.refresh = page.locator("//span[text()='Refresh']");
         this.addBranch = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.addCompany = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
@@ -403,6 +406,12 @@ export class Click {
         }
         else if (str === "groupCompanies") {
             await this.groupCompanies.click();
+        }
+        else if (str === "groupLine") {
+            await this.groupLine.click();
+        }
+        else if (str === "groupProducts") {
+            await this.groupProducts.click();
         }
     };
 
@@ -595,9 +604,6 @@ export class Click {
         }
         else if (str === "addGroup") {
             await this.addGroup.click();
-        }
-        else if (str === "groupLine") {
-            await this.groupLine.click();
         }
         else if (str === "refresh") {
             await this.refresh.click();

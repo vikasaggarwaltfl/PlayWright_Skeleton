@@ -485,7 +485,7 @@ test('Verify that the user can add a new "groupline" in the addGroupline section
     await Click.Btn("apply");
     await page.waitForTimeout(2000);
     await Click.icon("edit");
-    await Click.Btn("groupLine");
+    await Click.tabs("groupLine");
     await Click.Btn("add");
     await Click.dropdown("Account Manager", "admin@seritisolutions.com");
     await page.waitForTimeout(2000);
@@ -514,7 +514,7 @@ test('Verify that the user cannot add a new "groupline" in the addGroupline sect
     await Click.Btn("apply");
     await page.waitForTimeout(2000);
     await Click.icon("edit");
-    await Click.Btn("groupLine");
+    await Click.tabs("groupLine");
     await Click.Btn("add");
     await Click.dropdown("Account Manager", "admin@seritisolutions.com");
     await page.waitForTimeout(2000);
@@ -537,7 +537,7 @@ test('Verify that the user is able to edit a group line', async ({ page, Actions
     await Click.Btn("apply");
     await page.waitForTimeout(2000);
     await Click.icon("edit");
-    await Click.Btn("groupLine");
+    await Click.tabs("groupLine");
     await Click.icon("groupLineFutureArrow");
     await Click.icon("edit");
     await page.waitForTimeout(2000);
@@ -559,7 +559,7 @@ test('Verify that the user is able to copy a group line', async ({ page, Actions
     await Click.Btn("apply");
     await page.waitForTimeout(2000);
     await Click.icon("edit");
-    await Click.Btn("groupLine");
+    await Click.tabs("groupLine");
     await Click.icon("groupLineFutureArrow");
     await Click.icon("detailsCopy");
     await Click.icon("selectAll");
@@ -580,7 +580,7 @@ test('Verify that the user is able to delete a group line', async ({ page, Actio
     await Click.Btn("apply");
     await page.waitForTimeout(2000);
     await Click.icon("edit");
-    await Click.Btn("groupLine");
+    await Click.tabs("groupLine");
     await Click.icon("groupLineFutureArrow");
     await page.pause();
     await Click.icon("deleted");
@@ -601,7 +601,7 @@ test('Verify that the user is able to sort the group line details', async ({ pag
     await Click.Btn("apply");
     await page.waitForTimeout(2000);
     await Click.icon("edit");
-    await Click.Btn("groupLine");
+    await Click.tabs("groupLine");
     await Click.icon("groupLineFutureArrow");
     await page.waitForTimeout(2000);
     await Click.icon("sort");
@@ -620,7 +620,7 @@ test('Verify that the user is able to refresh the group line details', async ({ 
     await Click.Btn("apply");
     await page.waitForTimeout(2000);
     await Click.icon("edit");
-    await Click.Btn("groupLine");
+    await Click.tabs("groupLine");
     await page.waitForTimeout(2000);
     await Click.Btn("refresh");
     await page.waitForTimeout(2000);
@@ -643,9 +643,10 @@ test('Verify that the user can add a new "company" in the addGroupCompany sectio
     await Click.icon("edit");
     await Click.tabs("groupCompanies");
     await Click.Btn("add");
-    await Click.dropdown("Company Name", "ABC Company");
+    await Click.calendar(2, "2026", "Jul", 26); 
+    await Click.dropdown("Company Name", "ABC Company");  
     await Actions.enterText("sortKey", "309");
-    await Click.calendar(1, "2026", "Jul", 25); 
+    await Click.calendar(1, "2025", "Jul", 25); 
     await page.waitForTimeout(2000);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
@@ -768,6 +769,118 @@ test('Verify that the user is able to refresh the groupCompany page', async ({ p
     await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
 });
 
+//Group >> Products-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add a new "product" in the addGroupProduct section with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupProducts");
+    await Click.Btn("add");
+    await Click.dropdown("Product Type", "Comprehensive Insurance");
+    await page.waitForTimeout(1000);
+    await Click.calendar(2, "2027", "Jul", 25); 
+    await Click.dropdown("Product Sub Type", "Third Party Insurance");
+    await Click.dropdown("Product Name", "Practise product");
+    await Actions.enterText("sortKey", "309");
+    await Click.calendar(1, "2026", "Jul", 25); 
+    await Click.dropdown("Require At Inception", "Always");
+    await page.waitForTimeout(2000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
+
+test('Verify that the user cannot add a new "product" in the addGroupProduct section with invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupProducts");
+    await Click.Btn("add");
+    await Click.dropdown("Product Type", "Comprehensive Insurance");
+    await page.waitForTimeout(1000);
+    await Click.dropdown("Product Sub Type", "Third Party Insurance");
+    await Click.dropdown("Product Name", "Practise product");
+    await Click.calendar(1, "2026", "Jul", 25); 
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Require At Inception is a required field"); 
+});
+
+test('Verify that the user is able to edit a product', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupProducts");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit"); 
+    await Actions.enterText("sortKey", "310");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "310");
+});
+
+test('Verify that the user is able to copy a product', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupProducts");
+    await page.waitForTimeout(2000);
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Practise product2");
+});
+
+test('Verify that the user is able to delete a product', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupProducts");
+    await page.waitForTimeout(2000);
+    await Click.icon("deleted");
+    await Click.Btn("yes");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
 
 //branches-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
