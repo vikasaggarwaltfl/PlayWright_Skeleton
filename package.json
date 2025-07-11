@@ -8,6 +8,7 @@
     "ritesh":"npx playwright test tests/seriti/riteshTest.test.ts",
     "dashboard":"npx playwright test tests/seriti/dashboard.test.ts",
     "my_reports":"npx playwright test tests/seriti/my_reports.test.ts",
+     "sonali":"npx playwright test tests/seriti/sonaliTest.test.ts",
     "akshaya":"npx playwright test tests/seriti/akshayaTest.test.ts"
   },
   "keywords": [],

@@ -6,13 +6,6 @@ import { Verify } from 'crypto'
 import { access } from 'fs'
 
 
-//login -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-test('Verify that the user can log in successfully with valid credentials.', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Verify.verifyURL(page, "https://seritiweb-mea-uat.seriti-int.com/transaction");
-});
 
 // Home-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -137,6 +137,7 @@ test('Export Transaction Conversion Chart to Excel', async ({ page, Actions, Cli
 });
 
 // Dashboard >> Main Dashboard >> Cash and Finance Shares Chart -----------------------------------------------------------------------------------------------------------
+
 test('Verify that the Cash and Finance Shares canvas chart loads as expected', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
@@ -168,6 +169,7 @@ test('Verify that the Cash and Finance Share chart can be saved in different for
 });
 
 // Dashboard >> Main Dashboard >> Vehicle financed per Finance House----------------------------------------------------------------------------------------------------------
+
 test('Verify that the Vehicle financed per Finance House canvas chart loads as expected', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
@@ -197,7 +199,9 @@ test('Verify that the Vehicle financed per Finance House chart can be saved in d
     await Click.selectSaveAsOption('PDF');
     await page.waitForTimeout(2000);
 });
+
 // Dashboard >> Main dashboard >> Vehicles solds per sales person-----------------------------------------------------------------------------------------------
+
 test('Verify that the Vehicles solds per sales person canvas chart loads as expected', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
