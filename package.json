@@ -5,18 +5,18 @@
   "main": "index.js",
   "scripts": {
     "seriti": "npx playwright test --config=config/seriti.config.ts",
-    "ritesh":"npx playwright test tests/seriti/riteshTest.test.ts",
-    "dashboard":"npx playwright test tests/seriti/dashboard.test.ts",
-    "my_reports":"npx playwright test tests/seriti/my_reports.test.ts",
-     "sonali":"npx playwright test tests/seriti/sonaliTest.test.ts",
-    "akshaya":"npx playwright test tests/seriti/akshayaTest.test.ts"
+    "ritesh": "npx playwright test tests/seriti/riteshTest.test.ts",
+    "dashboard": "npx playwright test tests/seriti/dashboard.test.ts",
+    "my_reports": "npx playwright test tests/seriti/my_reports.test.ts",
+    "sonali": "npx playwright test tests/seriti/sonaliTest.test.ts",
+    "akshaya": "npx playwright test tests/seriti/akshayaTest.test.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@axe-core/playwright": "^4.9.0",
-    "@playwright/test": "^1.48.1",
+    "@playwright/test": "^1.54.1",
     "@types/adm-zip": "^0.5.5",
     "@types/crypto-js": "^4.2.2",
     "@types/node": "^22.7.7",

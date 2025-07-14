@@ -1,0 +1,4 @@
+"Transact" is visible on the page
+"Create Transaction" is visible on the page
+"Search" is visible on the page
+"Recent Transactions" is visible on the page

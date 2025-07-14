@@ -9,4 +9,8 @@ test('Verify that the user can log in successfully with valid credentials.', asy
   console.log('User logging in successfully');
 });
 
-
+test('Verify that error message should displayed for Invalid inputs', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn(" ");
+    await Click.Btn("login");
+    await Verify.IsTextDisplayed(page, "Username is a required field");
+});

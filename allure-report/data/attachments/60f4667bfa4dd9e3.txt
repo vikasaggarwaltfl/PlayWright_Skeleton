@@ -1,0 +1,1 @@
+"Group is a required field" is visible on the page

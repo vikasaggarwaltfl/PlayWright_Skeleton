@@ -30,7 +30,6 @@ test('Verify that the user can search for transactions using the transaction num
     await Verify.IsTextDisplayed(page, "Transaction 281716");
 });
 
-
 test('Verify that the user can reset applied search on transactions', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
