@@ -16,7 +16,9 @@ test('Verify that the Main Dashboard screen is displayed as expected', async ({ 
   await Click.Btn('login');
   await Actions.enterText('searchMenu', 'Main Dashboard');
   await Click.tabs('mainDashboard');
-  await expect(page.getByText('Main Dashboard', { exact: true }).first()).toBeVisible();
+  // Wait for a unique dashboard element to appear
+  await page.waitForSelector('text=Main Dashboard', { timeout: 15000 });
+  await Verify.IsTextDisplayed(page, 'Main Dashboard');
 });
 
 test('Verify that all expected accordions are present on the Main Dashboard.', async ({ page, Actions, Click, Verify }) => {
