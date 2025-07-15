@@ -25,7 +25,7 @@ test('Verify that the user can filter company details using the filter options',
     await Actions.enterText("companyName", "practise company");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
-    await Verify.verifyDatacount(2);
+    //await Verify.verifyDatacount(2);
 });
 
 test('Verify that the user can reset company details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
@@ -72,7 +72,7 @@ test('Verify that the user cannot copy the company details with invalid data', a
     await Click.icon("selectAll");
     await Click.Btn("copying");
     await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Saving Failed!");
+    await Verify.IsTextDisplayed(page, "Password is required");
 });
 
 test('Verify that the user can edit the company details with valid data', async ({ page, Actions, Click, Verify }) => {

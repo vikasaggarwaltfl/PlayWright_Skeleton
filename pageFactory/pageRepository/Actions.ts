@@ -43,6 +43,8 @@ export class Actions {
     private readonly registeredName: Locator;
     private readonly sortKey: Locator;
     private readonly searchBox: Locator;
+    private readonly customPassword: Locator;
+    private readonly passwordNumber: Locator;
    
 
 
@@ -73,6 +75,8 @@ export class Actions {
         this.registeredName = page.locator("//input[@id='RegisteredName']");
         this.sortKey = page.locator("//input[@id='SortKey']");
         this.searchBox = page.locator("//input[@role='searchbox']");
+        this.customPassword = page.locator("//input[@id='PasswordHash']");
+        this.passwordNumber = page.locator("//input[@id='IDNumber']");
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -174,6 +178,14 @@ export class Actions {
         else if (textBoxName === "searchBox") {
 
             await this.searchBox.fill(text);
+        }
+        else if (textBoxName === "customPassword") {
+
+            await this.customPassword.fill(text);
+        }
+        else if (textBoxName === "passwordNumber") {
+
+            await this.passwordNumber.fill(text);
         }
         
     }

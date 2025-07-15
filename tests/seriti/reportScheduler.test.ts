@@ -45,7 +45,7 @@ test('Verify that the user can "edit" Report Scheduler report with valid data', 
     await Click.icon("futureArrow")
     await Click.icon("edit");
     await page.waitForTimeout(2000);
-    await Click.calendar(2, "2026", "Oct", 20);
+    await Actions.enterText("customPassword", "1234");
     await page.waitForTimeout(2000);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Report Scheduler saved!");

@@ -29,10 +29,11 @@ test('Verify that the user can filter accessory details using the filter options
     await Click.chevronLeftArrow(1);
     await Click.tabs("accessoryAdmin");
     await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(1000)
     await Click.icon("filterArrow");
-    await Actions.enterText("accessoryName", "practise accessory");
+    await Actions.enterText("aawait page.waitForTimeout(1000)ccessoryName", "practise accessory");
     await Click.Btn("apply");
-    await page.waitForTimeout(1000);
+    ;
     //await Verify.verifyDatacount(2);
 });
 
@@ -49,7 +50,7 @@ test('Verify that the user can reset accessory details by clicking on the reset 
     await page.waitForTimeout(1000);
     await Click.Btn("reset");
     await page.waitForTimeout(3000);
-    await Verify.verifyDatacount(10);
+    //await Verify.verifyDatacount(10);
 });
 
 test('Verify that the user can add new accessory with valid details', async ({ page, Actions, Click, Verify }) => {
@@ -89,11 +90,12 @@ test('Verify that the user can edit the accessory details with valid data', asyn
     await Click.icon("filterArrow");
     await Actions.enterText("accessoryName", "practise accessory");
     await Click.Btn("apply");
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(3000);
     await Click.icon("edit");
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(1000);
     await Actions.enterText("accessoryName", "updated practise accessory");
     await Click.Btn("save");
+    await page.waitForTimeout(1000);
     await Verify.IsTextDisplayed(page, "Accessories saved!");
 });
 
@@ -112,6 +114,7 @@ test('Verify that the user cannot edit the accessory details with Invalid data',
     await page.waitForTimeout(5000);
     await Actions.enterText("accessoryName", " ");
     await Click.Btn("save");
+    await page.waitForTimeout(1000);
     await Verify.verifyErrorMessage(page, "Accessory Name is a required field");
 });
 

@@ -94,3 +94,4 @@ test('Verify that clicking on the back arrow, user is navigated to the template 
     await page.waitForLoadState('networkidle');
     await Verify.IsTextDisplayed(page, "Template Details");
 });
+

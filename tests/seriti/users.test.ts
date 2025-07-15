@@ -65,7 +65,7 @@ test('Verify that the user can edit the user details with valid data', async ({ 
     await page.waitForTimeout(1000);
     await Click.icon("edit");
     await page.waitForTimeout(2000);
-    await Click.calendar(1, "2001", "Oct", 1);
+    await Actions.enterText("passwordNumber", "1234");
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "User Details saved!");
 });

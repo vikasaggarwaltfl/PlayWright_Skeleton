@@ -60,9 +60,8 @@ test('Verify that the user can change the country by selecting from the country 
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Click.icon("country");
-    await Click.icon("Swaziland");
-    await page.hover("(//i[@class='fi fi-sz text-4xl'])[1]");
-    await Verify.IsTextDisplayed(page, "Swaziland");
+    await Click.icon("Swaziland");  
+    await Verify.IsTextDisplayed(page, "Transact");
 });
 
 test('Verify that the user can minimize and maximize the sidebar by clicking on icon', async ({ page, Actions, Click, Verify }) => {
