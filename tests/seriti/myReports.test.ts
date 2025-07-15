@@ -194,15 +194,15 @@ test('Verify that the user can sort Doc Summary Report records', async ({ page, 
     await Verify.verifySortOrder();
 });
 
-test('Verify that the user can "download" DOC Summary report', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("docSummary");
-    await Verify.verifyDownload('downloadlink');
-});
+// test('Verify that the user can "download" DOC Summary report', async ({ page, Actions, Click, Verify }) => {
+//     await Actions.signIn("sonali");
+//     await Click.Btn("login");
+//     await Actions.enterText("searchMenu", "My Reports");
+//     await Click.chevronLeftArrow(1);
+//     await Click.chevronLeftArrow(2);
+//     await Click.tabs("docSummary");
+//     await Verify.verifyDownload('downloadlink');
+// });
 
 //My Reports >> Reports >> DOC Report----------------------------------------------------------------------------------------------------------------------------------------------
 

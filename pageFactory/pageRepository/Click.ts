@@ -139,6 +139,7 @@ export class Click {
     private readonly addUser: Locator;
     private readonly clickTransaction: Locator;
     private readonly tabularViewBtn: Locator;
+    private readonly beforeArrowBtn: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -181,7 +182,7 @@ export class Click {
         this.importVehicleFile = page.locator("//div[contains(text(),'Import Vehicle File')]");
         this.mainDashboard = page.locator("//div[text()='Main Dashboard']");
         this.users = page.locator("//div[contains(text(),'Users')]");
-        this.transactionInProgressDashboard = page.locator("//a[.//div[contains(text(),'Transaction In Progress')]]");
+        this.transactionInProgressDashboard = page.locator("//a[.//div[@class='text-start' and contains(text(),'Transactions In Progress')]]");
         this.transactionStatusAgeingAnalysisDashboard = page.locator("//div[text()='Transaction Status Ageing Analysis']");
         this.financeHouseMarketShareDashboard = page.locator("//div[text()='Finance House Market Share']");
         this.dealerMarketShareDashboard = page.locator("//div[text()='Dealer Market Share']");
@@ -274,6 +275,7 @@ export class Click {
         this.addUser = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.clickTransaction = page.locator("//button[@class='p-button p-component flex flex-row justify-center']");
         this.tabularViewBtn = page.locator("//span[normalize-space()='Tabular View']");
+        this.beforeArrowBtn = page.locator("//div[@class='flex flex-col gap-2 m-5']//div[2]//div[1]//div[2]//button[1]//i[1]");
        
     }
 
@@ -647,6 +649,9 @@ export class Click {
         else if (str === "tabularViewBtn") {
             await this.tabularViewBtn.click();
         }
+        else if (str === "beforeArrowBtn") {
+            await this.beforeArrowBtn.click();
+        }
         
     };
 
@@ -687,16 +692,28 @@ export class Click {
 
     //calendar-------------------------------------------------------------------------------------------------------
     async calendar(index: number, year: string, month: string, date?: number): Promise<void> {
-        // First click the calendar button
+        console.log(`Opening calendar at index ${index}`);
         await this.page.locator(`(//button[@aria-label='Choose Date'])[${index}]`).click();
-        // Click the year picker and select year
+        console.log('Clicked calendar button, opening year picker');
         await this.page.locator("//button[@aria-label='Choose Year']").click();
-        await this.page.locator(`//span[normalize-space()='${year}']`).click();
+        const yearLocator = this.page.locator(`//span[normalize-space()='${year}']`);
+        console.log(`Waiting for year element: ${year}`);
+        await yearLocator.waitFor({ state: 'visible', timeout: 5000 });
+        console.log(`Clicking year: ${year}`);
+        await yearLocator.click();
         // Select the month
-        await this.page.locator(`(//span[@data-pc-section='month'][text()='${month} '])`).click();
-       // If date is provided, select it
+        const monthLocator = this.page.locator(`(//span[@data-pc-section='month'][text()='${month} '])`);
+        console.log(`Waiting for month element: ${month}`);
+        await monthLocator.waitFor({ state: 'visible', timeout: 5000 });
+        console.log(`Clicking month: ${month}`);
+        await monthLocator.click();
+        // If date is provided, select it
         if (date !== undefined) {
-            await this.page.locator(`(//span[@data-p-disabled='false'])[text()='${date}']`).click();
+            const dateLocator = this.page.locator(`(//span[@data-p-disabled='false'])[text()='${date}']`);
+            console.log(`Waiting for date element: ${date}`);
+            await dateLocator.waitFor({ state: 'visible', timeout: 5000 });
+            console.log(`Clicking date: ${date}`);
+            await dateLocator.click();
         }
     };
 
