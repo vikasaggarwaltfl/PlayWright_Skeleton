@@ -25,7 +25,7 @@ test('Verify that the user can filter branch details using the filter options', 
     await Actions.enterText("branchName", "Practise branch");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
-    //await Verify.verifyDatacount(1);
+    await Verify.verifyDatacount(1);
 });
 
 test('Verify that the user can reset branch details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {

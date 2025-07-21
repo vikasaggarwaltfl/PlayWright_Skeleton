@@ -64,7 +64,7 @@ test('Verify that the user can filter Report Scheduler records and data grid get
     await Click.icon("filterArrow");
     await Actions.enterText("reportName", "Practise test");
     await Click.Btn("apply");
-    //await Verify.verifyDatacount(3);
+    await Verify.verifyDatacount(3);
 });
 
 test('Verify that the user can reset Report Scheduler records and data grid gets updated', async ({ page, Actions, Click, Verify }) => {
@@ -81,5 +81,5 @@ test('Verify that the user can reset Report Scheduler records and data grid gets
     await Actions.enterText("reportName", "Practise test");
     await Click.Btn("apply");
     await Click.Btn("reset");
-    //await Verify.verifyDatacount(3);
+    await Verify.verifyDatacount(3);
 });

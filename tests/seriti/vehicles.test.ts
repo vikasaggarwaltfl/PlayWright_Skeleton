@@ -5,7 +5,7 @@ import { Click } from '@pages/Click'
 import { Verify } from '@pages/Verify'
 import * as path from 'path'
 
-test('Verify that user can expand "Vehicles" section and the sub option should display as expected', async ({ page, Actions, Click, Verify }) => {
+test.only('Verify that user can expand "Vehicles" section and the sub option should display as expected', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Vehicles");
@@ -48,8 +48,8 @@ test('Verify that the user can reset vehicle details by clicking on the reset bu
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.Btn("reset");
-    // await page.waitForTimeout(5000);
-    // await Verify.verifyDatacount(10);
+    await page.waitForTimeout(5000);
+    await Verify.verifyDatacount(10);
 });
 
 test('Verify that the user cannot add an vehicle with that already exsists', async ({ page, Actions, Click, Verify }) => {

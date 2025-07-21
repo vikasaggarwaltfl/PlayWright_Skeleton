@@ -17,7 +17,7 @@ test('Verify that the user can filter group using the filter options', async ({ 
     await Actions.enterText("groupName", "`Group 2");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
-    //await Verify.verifyDatacount(3);
+    await Verify.verifyDatacount(3);
 });
 
 test('Verify that group detail text is displayed when clicking on group tab', async ({ page, Actions, Click, Verify }) => {

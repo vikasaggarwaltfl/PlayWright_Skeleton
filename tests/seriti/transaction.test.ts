@@ -48,7 +48,7 @@ test('Verify that the user can apply multiple filters to search for transactions
     await Click.calendar(1, "2025", "May", 8);
     await Click.Btn("search");
     await page.waitForTimeout(2000);
-    //await Verify.verifyDatacount(9);
+    await Verify.verifyDatacount(9);
 });
 
 test('Verify that the user can minimize the search module', async ({ page, Actions, Click, Verify }) => {
@@ -65,7 +65,7 @@ test('Verify that the user can view recent transactions by clicking on the "Rece
     await Click.Btn("login");
     await Click.link("recentTransactions");
     await page.waitForLoadState('networkidle');
-    //await Verify.verifyDatacount(9);
+    await Verify.verifyDatacount(9);
 });
 
 test('Verify that user can enter to any transaction by clicking on enter transaction icon', async ({ page, Actions, Click, Verify }) => {

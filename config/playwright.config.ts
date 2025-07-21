@@ -1,7 +1,7 @@
 import { defineConfig, devices, PlaywrightTestConfig } from '@playwright/test';
 import { testConfig } from '../testConfig';
 import * as dotenv from 'dotenv';
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const ENV = 'qa';
 const browserNm = process.env.BROWSER_NAME as 'chromium' | 'chrome' | 'firefox' | 'webkit' | 'edge';
