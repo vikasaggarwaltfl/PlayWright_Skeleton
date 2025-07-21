@@ -33,8 +33,9 @@ test('Verify that the user can filter accessory details using the filter options
     await Click.icon("filterArrow");
     await Actions.enterText("aawait page.waitForTimeout(1000)ccessoryName", "practise accessory");
     await Click.Btn("apply");
+    await Verify.verifyDatacount(2);
     ;
-    //await Verify.verifyDatacount(2);
+    
 });
 
 test('Verify that the user can reset accessory details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
@@ -50,7 +51,7 @@ test('Verify that the user can reset accessory details by clicking on the reset 
     await page.waitForTimeout(1000);
     await Click.Btn("reset");
     await page.waitForTimeout(3000);
-    //await Verify.verifyDatacount(10);
+    await Verify.verifyDatacount(10);
 });
 
 test('Verify that the user can add new accessory with valid details', async ({ page, Actions, Click, Verify }) => {
