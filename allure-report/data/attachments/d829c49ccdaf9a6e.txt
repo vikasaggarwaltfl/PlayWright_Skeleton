@@ -1,4 +1,0 @@
-"Transaction Status" is visible on the page
-"Finance Status" is visible on the page
-"Transaction Status Notes" is visible on the page
-"Vehicle Condition" is visible on the page

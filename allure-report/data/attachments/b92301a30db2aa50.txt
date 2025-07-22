@@ -1,3 +1,0 @@
-"Preferred Contact Time" is visible on the page
-"Finance Status" is visible on the page
-"Fleet Number" is visible on the page

@@ -1,2 +1,0 @@
-"Select a group" is visible on the page
-"Select a branch" is visible on the page
