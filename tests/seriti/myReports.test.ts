@@ -43,6 +43,18 @@ test('Verify that the user can "Add" new Deal Tracker Report with valid data', a
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
+test('Verify that the user cannot "Add" new Deal Tracker Report with Invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("dealTracker");
+    await Click.Btn("addDealTrackerReport");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Validation Failed");
+});
+
 test('Verify that the user can "Edit" a Deal Tracker Report with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
@@ -55,6 +67,21 @@ test('Verify that the user can "Edit" a Deal Tracker Report with valid data', as
     await Actions.enterText("notes", "Edited by automation");
     await Click.Btn("save");
     await expect(page.getByText("Edited by automation")).toBeVisible();
+});
+
+test('Verify that the user cannot "Edit" a Deal Tracker Report with Invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("dealTracker");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Actions.enterText("notes", "   ");
+    await Click.Btn("save");
+    await expect(page.getByText("Notes is a required field")).toBeVisible();
+    await page.pause()
 });
 
 test('Verify that the user can "Delete" a Deal Tracker Report', async ({ page, Actions, Click, Verify }) => {
@@ -139,6 +166,18 @@ test('Verify that the user can "Add" new DOC Summary report with valid data', as
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
+test('Verify that the user cannot "Add" new DOC Summary report with Invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docSummary");
+    await Click.Btn("addDocSummaryReport");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "failed");
+});
+
 test('Verify that the user can "Edit" a Doc Summary Report with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
@@ -152,6 +191,21 @@ test('Verify that the user can "Edit" a Doc Summary Report with valid data', asy
     await Click.Btn("save");
     await page.waitForTimeout(2000); // or better: wait for a specific element/state
     await expect(page.getByText("Edited by automation")).toBeVisible();
+});
+
+test('Verify that the user cannot "Edit" a Doc Summary Report with Invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docSummary");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Actions.enterText("notes", "        ");
+    await Click.Btn("save");
+    await page.waitForTimeout(2000); // or better: wait for a specific element/state
+    await expect(page.getByText("Notes is a required field")).toBeVisible();
 });
 
 test('Verify that the user can "Delete" a Doc Summary Report', async ({ page, Actions, Click, Verify }) => {
@@ -194,15 +248,15 @@ test('Verify that the user can sort Doc Summary Report records', async ({ page, 
     await Verify.verifySortOrder();
 });
 
-// test('Verify that the user can "download" DOC Summary report', async ({ page, Actions, Click, Verify }) => {
-//     await Actions.signIn("sonali");
-//     await Click.Btn("login");
-//     await Actions.enterText("searchMenu", "My Reports");
-//     await Click.chevronLeftArrow(1);
-//     await Click.chevronLeftArrow(2);
-//     await Click.tabs("docSummary");
-//     await Verify.verifyDownload('downloadlink');
-// });
+test('Verify that the user can "download" DOC Summary report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docSummary");
+    await Verify.verifyDownload('downloadlink');
+});
 
 //My Reports >> Reports >> DOC Report----------------------------------------------------------------------------------------------------------------------------------------------
 

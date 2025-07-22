@@ -14,4 +14,6 @@ test('Verify that Home sidebar option is displayed correctly with icon', async (
   console.log('The Home sidebar option is displayed as expected with the icon.');
 });
 
+
+
 // Note: Home page is still not fully developed.
