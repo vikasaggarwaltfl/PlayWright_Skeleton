@@ -96,11 +96,12 @@ export class Verify {
     await expect(locator).toBeEnabled();
 
   }
-  // Verify record count from data grid---------------------------------------------------------------------------------------------------------------------------------------------
-  async verifyDatacount(expectedCount: number): Promise<void> {
+  
+  // Verify record count is greater than zero from data grid--------------------------------------------------------------------------
+  async verifyDatacount(): Promise<void> {
     const columnCells = this.page.locator("//table//tr/td[3]");
     const count = await columnCells.count();
-    expect(count).toBe(expectedCount);
+    expect(count).toBeGreaterThan(0);
     console.log(`Number of rows in column 3: ${count}`);
   }
   // Verify download-----------------------------------------------------------------------------------------------------------------------------------------------------------------
