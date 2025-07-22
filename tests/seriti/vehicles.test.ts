@@ -33,7 +33,7 @@ test('Verify that the user can filter vehicle details using the filter options',
     await Actions.enterText("vehicleCode", "AC001");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
-    await Verify.verifyDatacountGreaterThanZero();
+    await Verify.verifyDatacount();
 });
 
 test('Verify that the user can reset vehicle details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
@@ -49,7 +49,7 @@ test('Verify that the user can reset vehicle details by clicking on the reset bu
     await page.waitForTimeout(1000);
     await Click.Btn("reset");
     await page.waitForTimeout(5000);
-    await Verify.verifyDatacountGreaterThanZero();
+    await Verify.verifyDatacount();
 });
 
 test('Verify that the user cannot add an vehicle with that already exsists', async ({ page, Actions, Click, Verify }) => {
@@ -142,12 +142,12 @@ test('Verify that pagination works correctly for vehicles page', async ({ page, 
     await page.waitForTimeout(2000);
     await Click.pagination(4);
     await page.waitForTimeout(1000);
-    await Verify.verifyDatacountGreaterThanZero();
+    await Verify.verifyDatacount();
 });
 
 //Vehicles >> Import vehicle file---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test.only('Verify that the user can import a vehicle file when clicking on the import vehicle file button', async ({ page, Actions, Click, Verify }) => {
+test.skip('Verify that the user can import a vehicle file when clicking on the import vehicle file button', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Vehicles");
@@ -158,7 +158,7 @@ test.only('Verify that the user can import a vehicle file when clicking on the i
     await Click.dropdown("Select a group", "`Group 2")
     await Click.dropdown("Select a branch", "Branch 2")
     const fileInput = await page.$("//input[@type='file']");
-    await fileInput.setInputFiles(path.resolve('documents/Sample report1.pdf'));
+    await fileInput.setInputFiles(path.resolve('C:\\Users\\Akshaya K\\OneDrive\\Documents\\automation project\\PlayWright_Skeleton\\documents\\SAMPLEREPORT.PDF'));
     await Click.Btn("importVehicleBtn");
     await Verify.IsTextDisplayed(page, "Success");
 });

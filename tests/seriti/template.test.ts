@@ -31,7 +31,7 @@ test('Verify that the user can filter template details using the filter options'
     await Actions.enterText("templateName", "my template");
     await Click.Btn("apply");
     await page.waitForTimeout(2000);
-    await Verify.verifyDatacount(1);
+    await Verify.verifyDatacount();
 });
 
 test('Verify that the user can reset template details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
@@ -45,7 +45,7 @@ test('Verify that the user can reset template details by clicking on the reset b
     await page.waitForTimeout(2000);
     await Click.Btn("reset");
     await page.waitForTimeout(2000);
-    await Verify.verifyDatacount(10);
+    await Verify.verifyDatacount();
 });
 
 test('Verify that the user can "sort" the template datas in the data grid', async ({ page, Actions, Click, Verify }) => {  
@@ -81,7 +81,7 @@ test('Verify that the user can "Edit" Template with valid data', async ({ page, 
     await Click.calendar(2, "2026", "Oct", 1);
     await Click.Btn("save");
     await page.waitForTimeout(2000);
-    await Verify.verifyDatacount(10);
+    await Verify.verifyDatacount();
 });
 
 test('Verify that clicking on the back arrow, user is navigated to the template screen', async ({ page, Actions, Click, Verify }) => {

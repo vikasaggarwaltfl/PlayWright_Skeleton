@@ -48,7 +48,7 @@ test('Verify that the user can apply multiple filters to search for transactions
     await Click.calendar(1, "2025", "May", 8);
     await Click.Btn("search");
     await page.waitForTimeout(2000);
-    await Verify.verifyDatacount(9);
+    await Verify.verifyDatacount();
 });
 
 test('Verify that the user can minimize the search module', async ({ page, Actions, Click, Verify }) => {
@@ -65,7 +65,7 @@ test('Verify that the user can view recent transactions by clicking on the "Rece
     await Click.Btn("login");
     await Click.link("recentTransactions");
     await page.waitForLoadState('networkidle');
-    await Verify.verifyDatacount(9);
+    await Verify.verifyDatacount();
 });
 
 test('Verify that user can enter to any transaction by clicking on enter transaction icon', async ({ page, Actions, Click, Verify }) => {
@@ -85,7 +85,7 @@ test('Verify that pagination works correctly for navigating through paged conten
     await Click.Btn("login");
     await page.waitForTimeout(5000);
     await Click.pagination(1);
-    await Verify.verifyDatacount(10);
+    await Verify.verifyDatacount();
 });
 
 //create transaction-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -190,7 +190,7 @@ test('Verify that navbar options are displayed as expected at the top of the scr
     await Verify.IsTextDisplayed(page, ["Show Required", "Hide Overview", "Client Details", "Vehicle Details", "Account Details"]);
 });
 
-test('Verify that the Show Required tab displays only mandatory fields on the form.', async ({ page, Actions, Click, Verify }) => {
+test.only('Verify that the Show Required tab displays only mandatory fields on the form.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281744");

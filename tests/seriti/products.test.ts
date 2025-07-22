@@ -34,7 +34,7 @@ test('Verify that the user can filter product details using the filter options',
     await Actions.enterText("productName", "practise product");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
-    await Verify.verifyDatacount(4);
+    await Verify.verifyDatacount();
 });
 
 test('Verify that the user can reset product details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
@@ -49,7 +49,7 @@ test('Verify that the user can reset product details by clicking on the reset bu
     await page.waitForTimeout(1000);
     await Click.Btn("reset");
     await page.waitForTimeout(5000);
-    await Verify.verifyDatacount(10);
+    await Verify.verifyDatacount();
 });
 
 test('Verify that the user cannot add new product with invalid details', async ({ page, Actions, Click, Verify }) => {

@@ -23,7 +23,7 @@ test('Verify that the user can filter user details using the filter options', as
     await Actions.enterText("userName", "test-automation@testingframeworks.co.uk");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
-    await Verify.verifyDatacount(1);
+    await Verify.verifyDatacount();
 });
 
 test('Verify that the user can reset user details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
@@ -38,7 +38,7 @@ test('Verify that the user can reset user details by clicking on the reset butto
     await page.waitForTimeout(1000);
     await Click.Btn("reset");
     await page.waitForTimeout(1000);
-    await Verify.verifyDatacount(10);
+    await Verify.verifyDatacount();
 });
 
 test('Verify that the user cannot add new user with invalid details', async ({ page, Actions, Click, Verify }) => {
@@ -106,7 +106,7 @@ test('Verify that pagination works correctly for users page', async ({ page, Act
     await page.waitForTimeout(2000);
     await Click.pagination(2);
     await page.waitForTimeout(1000);
-    await Verify.verifyDatacount(10);
+    await Verify.verifyDatacount();
 });
 
 

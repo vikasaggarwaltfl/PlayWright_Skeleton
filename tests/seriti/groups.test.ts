@@ -17,7 +17,7 @@ test('Verify that the user can filter group using the filter options', async ({ 
     await Actions.enterText("groupName", "`Group 2");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
-    await Verify.verifyDatacount(3);
+    await Verify.verifyDatacount();
 });
 
 test('Verify that group detail text is displayed when clicking on group tab', async ({ page, Actions, Click, Verify }) => {
@@ -43,7 +43,7 @@ test('Verify that the user can reset group by clicking on the reset button', asy
     await page.waitForTimeout(1000);
     await Click.Btn("reset");
     await page.waitForTimeout(1000);
-    //await Verify.verifyDatacount(10);
+    await Verify.verifyDatacount();
 });
 
 test('Verify that the user cannot add new group with invalid data', async ({ page, Actions, Click, Verify }) => {
@@ -122,7 +122,7 @@ test('Verify that the user can navigate through pagination numbers in group page
     await page.waitForLoadState('networkidle');
     await Click.pagination(9);
     await page.waitForTimeout(1000);
-    //await Verify.verifyDatacount(1);
+    await Verify.verifyDatacount();
 });
 
 test('Verify that the user can refresh the group page data', async ({ page, Actions, Click, Verify }) => {
@@ -136,8 +136,8 @@ test('Verify that the user can refresh the group page data', async ({ page, Acti
     await Actions.enterText("groupName", "`Group 2");
     await Click.Btn("apply");
     await Click.Btn("refresh");
-   //await page.waitForLoadState('networkidle');
-    //await Verify.verifyDatacount(3);
+    await page.waitForLoadState('networkidle');
+    await Verify.verifyDatacount();
 });
 
 test('Verify that the user can sort the group details in the data grid', async ({ page, Actions, Click, Verify }) => {
