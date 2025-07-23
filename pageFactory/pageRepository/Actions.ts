@@ -45,6 +45,7 @@ export class Actions {
     private readonly searchBox: Locator;
     private readonly customPassword: Locator;
     private readonly passwordNumber: Locator;
+    private readonly transactionFee: Locator;
    
 
 
@@ -77,6 +78,7 @@ export class Actions {
         this.searchBox = page.locator("//input[@role='searchbox']");
         this.customPassword = page.locator("//input[@id='PasswordHash']");
         this.passwordNumber = page.locator("//input[@id='IDNumber']");
+        this.transactionFee = page.locator("//input[@id='TransactionFee']");
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -187,6 +189,10 @@ export class Actions {
 
             await this.passwordNumber.fill(text);
         }
+        else if (textBoxName === "transactionFee") {
+
+            await this.transactionFee.fill(text);
+        }
         
     }
 
@@ -198,7 +204,7 @@ export class Actions {
         }
         else if (userProfile === "Automation") {
             await this.enterText("email", "test-automation@testingframeworks.co.uk");
-            await this.enterText("password", "Sunshine@123");
+            await this.enterText("password", "Summer@123");
         }
     }
 

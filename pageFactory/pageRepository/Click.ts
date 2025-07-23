@@ -52,6 +52,7 @@ export class Click {
     private readonly groupCompanies: Locator;
     private readonly groupLine: Locator;
     private readonly groupProducts: Locator;
+    private readonly groupSSF: Locator;
     
 
     //icon--------------------------------------------------------------------------------------------------------
@@ -191,6 +192,7 @@ export class Click {
         this.groupCompanies = page.locator("//button[normalize-space()='Companies']");
         this.groupLine = page.locator("//button[normalize-space()='Group Line']");
         this.groupProducts = page.locator("//button[normalize-space()='Products']");
+        this.groupSSF = page.locator("//button[normalize-space()='SSF']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -414,6 +416,9 @@ export class Click {
         }
         else if (str === "groupProducts") {
             await this.groupProducts.click();
+        }
+        else if (str === "groupSSF") {
+            await this.groupSSF.click();
         }
     };
 

@@ -147,7 +147,7 @@ test('Verify that pagination works correctly for vehicles page', async ({ page, 
 
 //Vehicles >> Import vehicle file---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test.skip('Verify that the user can import a vehicle file when clicking on the import vehicle file button', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can import a vehicle file when clicking on the import vehicle file button', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Vehicles");
@@ -158,7 +158,7 @@ test.skip('Verify that the user can import a vehicle file when clicking on the i
     await Click.dropdown("Select a group", "`Group 2")
     await Click.dropdown("Select a branch", "Branch 2")
     const fileInput = await page.$("//input[@type='file']");
-    await fileInput.setInputFiles(path.resolve('C:\\Users\\Akshaya K\\OneDrive\\Documents\\automation project\\PlayWright_Skeleton\\documents\\SAMPLEREPORT.PDF'));
+    await fileInput.setInputFiles(path.resolve('./documents/Sample report.pdf'));
     await Click.Btn("importVehicleBtn");
     await Verify.IsTextDisplayed(page, "Success");
 });

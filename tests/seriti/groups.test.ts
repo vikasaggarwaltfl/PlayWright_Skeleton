@@ -5,6 +5,15 @@ import { Click } from '@pages/Click'
 import { Verify } from '@pages/Verify'
 import * as path from 'path'
 
+test('Verify that "group details" screen is displayed correctly', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Group Details");
+});
 
 test('Verify that the user can filter group using the filter options', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
@@ -18,16 +27,6 @@ test('Verify that the user can filter group using the filter options', async ({ 
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Verify.verifyDatacount();
-});
-
-test('Verify that group detail text is displayed when clicking on group tab', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Admin");
-    await Click.chevronLeftArrow(1);
-    await Click.tabs("group");
-    await page.waitForTimeout(2000);
-    await Verify.IsTextDisplayed(page, "Group Details");
 });
 
 test('Verify that the user can reset group by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
@@ -330,7 +329,7 @@ test('Verify that the user cannot add a new "company" in the addGroupCompany sec
     await Verify.verifyErrorMessage(page, "Company Name is a required field"); 
 });
 
-test('Verify that the user is able to edit a company', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user is able to edit a groupCompany', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -350,7 +349,7 @@ test('Verify that the user is able to edit a company', async ({ page, Actions, C
     await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
 });
 
-test('Verify that the user is able to copy a company', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user is able to copy a groupCompany', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -460,7 +459,7 @@ test('Verify that the user cannot add a new "product" in the addGroupProduct sec
     await Verify.verifyErrorMessage(page, "Require At Inception is a required field"); 
 });
 
-test('Verify that the user is able to edit a product', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user is able to edit a groupProduct', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -480,7 +479,7 @@ test('Verify that the user is able to edit a product', async ({ page, Actions, C
     await Verify.IsTextDisplayed(page, "310");
 });
 
-test('Verify that the user is able to copy a product', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user is able to copy a groupProduct', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -501,3 +500,80 @@ test('Verify that the user is able to copy a product', async ({ page, Actions, C
     await Verify.IsTextDisplayed(page, "Practise product2");
 });
 
+test('Verify that the user is able to sort the groupProduct details in the data grid', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupProducts");
+    await page.waitForTimeout(2000);
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
+});
+
+test('Verify that the user is able to refresh the groupProduct page', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupProducts");
+    await page.waitForTimeout(2000);
+    await Click.Btn("refresh");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
+
+//Group >> SSF-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add a new "ssf" in the addGroupSSF section with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupSSF");
+    await Click.Btn("add");
+    await Actions.enterText("transactionFee", "1000");
+    await Click.calendar(1, "2026", "Jul", 25); 
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
+
+test('Verify that the user cannot add a new "ssf" in the addGroupSSF section with invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupSSF");
+    await Click.Btn("add");
+    await Click.calendar(1, "2026", "Jul", 25); 
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Transaction Fee is a required field"); 
+});

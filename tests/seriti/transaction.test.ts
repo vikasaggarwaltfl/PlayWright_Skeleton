@@ -190,7 +190,7 @@ test('Verify that navbar options are displayed as expected at the top of the scr
     await Verify.IsTextDisplayed(page, ["Show Required", "Hide Overview", "Client Details", "Vehicle Details", "Account Details"]);
 });
 
-test.only('Verify that the Show Required tab displays only mandatory fields on the form.', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the Show Required tab displays only mandatory fields on the form.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281744");
@@ -261,3 +261,5 @@ test('Verify that Client details section is displayed as expected.', async ({ pa
     await Click.transactionTabs("Client Details");
     await Verify.IsTextDisplayed(page, ["Customer Type", "Company Name", "Type of Business", "Nature Of Business"]);
 });
+
+
