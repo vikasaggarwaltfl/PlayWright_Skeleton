@@ -577,3 +577,44 @@ test('Verify that the user cannot add a new "ssf" in the addGroupSSF section wit
     await Click.Btn("save");
     await Verify.verifyErrorMessage(page, "Transaction Fee is a required field"); 
 });
+
+test('Verify that the user is able to edit a groupSSF', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupSSF");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit"); 
+    await Actions.enterText("transactionFee", "2000");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
+
+test('Verify that the user is able to copy a groupSSF', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupSSF");
+    await page.waitForTimeout(2000);
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
