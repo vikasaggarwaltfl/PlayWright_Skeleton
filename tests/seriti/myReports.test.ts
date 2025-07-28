@@ -288,6 +288,18 @@ test('Verify that the user can "Add" new DOC report with valid data', async ({ p
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
+test('Verify that the user cannot "Add" new DOC report with Invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docReport");
+    await Click.Btn("addDocReport");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Failed");
+});
+
 test('Verify that the user can "Edit" a Doc Report with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
@@ -301,6 +313,21 @@ test('Verify that the user can "Edit" a Doc Report with valid data', async ({ pa
     await Click.Btn("save");
     await expect(page.getByText("Edited by automation")).toBeVisible();
 });
+
+test('Verify that the user cannot "Edit" a Doc Report with Invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("docReport");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Actions.enterText("notes", "    ");
+    await Click.Btn("save");
+    await expect(page.getByText("Notes is a required field")).toBeVisible();
+});
+
 
 test('Verify that the user can "Delete" a Doc Report', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
