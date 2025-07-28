@@ -618,3 +618,106 @@ test('Verify that the user is able to copy a groupSSF', async ({ page, Actions, 
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
 });
+
+test('Verify that the user is able to sort the groupSSF details in the data grid', async ({ page, Actions, Click, Verify }) => {        
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupSSF");
+    await page.waitForTimeout(2000);
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
+});
+
+test('Verify that the user is able to refresh the groupSSF page', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupSSF");
+    await page.waitForTimeout(2000);
+    await Click.Btn("refresh");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
+
+//Group >> Documents-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add a new "document" in the addGroupDocument section with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupDocuments");
+    await Click.Btn("add");
+    await Click.dropdown("Document Category", "BANKING DETAILS");  
+    const fileInput = await page.$("//input[@type='file']");
+    await fileInput.setInputFiles(path.resolve('./documents/Sample report.pdf'));
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
+
+test.skip('Verify that the user cannot add a new "document" in the addGroupDocument section with invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupDocuments");
+    await Click.Btn("add");
+    const fileInput = await page.$("//input[@type='file']");
+    await fileInput.setInputFiles(path.resolve('./documents/Sample report.pdf'));
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Document Category is a required field"); 
+});
+
+test('Verify that the user is able to edit a groupDocument', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupDocuments");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit"); 
+    const fileInput = await page.$("//input[@type='file']");
+    await fileInput.setInputFiles(path.resolve('./documents/Demo document.pdf'));
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
