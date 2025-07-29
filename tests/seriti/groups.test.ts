@@ -761,3 +761,22 @@ test('Verify that the user is able to download groupDocument', async ({ page, Ac
      await Click.icon("sort");
     await Verify.verifySortOrder(); 
 });
+
+test.only('Verify that the user is able to refresh the groupDocument page', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupDocuments");
+    await page.waitForTimeout(2000);
+    await Click.Btn("refresh");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
