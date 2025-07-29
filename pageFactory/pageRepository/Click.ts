@@ -11,6 +11,7 @@ export class Click {
     private readonly download: Locator;
     private readonly recentTransactions: Locator;
     private readonly clickhere: Locator;
+    private readonly groupDownload: Locator;
 
     //tabs--------------------------------------------------------------------------------------------------------
     
@@ -152,6 +153,7 @@ export class Click {
         this.download = page.locator("//tbody/tr[1]/td[4]/a[1]");
         this.recentTransactions = page.locator("//span[normalize-space()='Recent Transactions']");
         this.clickhere = page.locator("//a[normalize-space()='Click here...']");
+        this.groupDownload = page.locator("//tbody/tr[1]/td[2]/a[1]");
 
         //tabs--------------------------------------------------------------------------------------------------------
         
@@ -292,8 +294,11 @@ export class Click {
         else if (linkName === 'recentTransactions') {
             await this.recentTransactions.click();
         }
-         else if (linkName === 'clickhere') {
+        else if (linkName === 'clickhere') {
             await this.clickhere.click();
+        }
+        else if (linkName === 'groupDownload') {
+            await this.groupDownload.click();
         }
     };
 
