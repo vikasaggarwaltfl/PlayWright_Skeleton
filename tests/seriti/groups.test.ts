@@ -762,7 +762,7 @@ test('Verify that the user is able to download groupDocument', async ({ page, Ac
     await Verify.verifySortOrder(); 
 });
 
-test.only('Verify that the user is able to refresh the groupDocument page', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user is able to refresh the groupDocument page', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -778,5 +778,67 @@ test.only('Verify that the user is able to refresh the groupDocument page', asyn
     await page.waitForTimeout(2000);
     await Click.Btn("refresh");
     await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
+
+//Group >> Templates-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add a new "template" in the addGroupTemplate section with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupTemplates");
+    await Click.Btn("add");
+    await Click.dropdown("Template Category", "Email Notifications");
+    await Click.calendar(1, "2026", "Jul", 25);
+    await Click.dropdown("Template Name", "auto Email");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
+
+test('Verify that the user cannot add a new "template" in the addGroupTemplate section with invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupTemplates");
+    await Click.Btn("add");
+    await Click.calendar(1, "2026", "Jul", 25);
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Template Category is a required field"); 
+});
+
+test('Verify that the user is able to edit a groupTemplate', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupTemplates");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit"); 
+    await Actions.enterText("sortKey", "310");
+    await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
 });
