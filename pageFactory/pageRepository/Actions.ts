@@ -46,6 +46,8 @@ export class Actions {
     private readonly customPassword: Locator;
     private readonly passwordNumber: Locator;
     private readonly transactionFee: Locator;
+    private readonly emailinput: Locator;
+    private readonly passwordinput: Locator;
    
 
 
@@ -79,6 +81,21 @@ export class Actions {
         this.customPassword = page.locator("//input[@id='PasswordHash']");
         this.passwordNumber = page.locator("//input[@id='IDNumber']");
         this.transactionFee = page.locator("//input[@id='TransactionFee']");
+        this.emailinput = page.locator("//input[@placeholder='Username (Email)']");
+        this.passwordinput = page.locator("");
+
+    }
+
+    async signIn(userProfile: string) {
+        await this.page.goto('https://seritiweb-mea-uat.seriti-int.com');
+        if (userProfile === "sonali") {
+            await this.enterText("email", "sonali@testingframeworks.co.uk");
+            await this.enterText("password", "Password@123");
+        }
+        else if (userProfile === "Automation") {
+            await this.enterText("email", "test-automation@testingframeworks.co.uk");
+            await this.enterText("password", "Summer@123");
+        }
     }
 
     async enterText(textBoxName: string, text: string): Promise<void> {
@@ -193,20 +210,18 @@ export class Actions {
 
             await this.transactionFee.fill(text);
         }
+        else if (textBoxName === "emailinput") {
+
+            await this.emailinput.fill(text);
+        }
+        else if (textBoxName === "passwordinput") {
+
+            await this.passwordinput.fill(text);
+        }
         
     }
 
-    async signIn(userProfile: string) {
-        await this.page.goto('https://seritiweb-mea-uat.seriti-int.com');
-        if (userProfile === "sonali") {
-            await this.enterText("email", "sonali@testingframeworks.co.uk");
-            await this.enterText("password", "Password@123");
-        }
-        else if (userProfile === "Automation") {
-            await this.enterText("email", "test-automation@testingframeworks.co.uk");
-            await this.enterText("password", "Summer@123");
-        }
-    }
+    
 
 async SelectDropdownOptions(index: number, selectors: string[] | string): Promise<void> {
         // Click the dropdown first
