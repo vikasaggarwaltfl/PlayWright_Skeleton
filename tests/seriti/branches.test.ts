@@ -83,7 +83,7 @@ test('Verify that the user cannot edit the branch details with Invalid data', as
     await Click.tabs("branches");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
-    await Actions.enterText("branchName", "copy branch");
+    await Actions.enterText("branchName", "Demo test branch");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
@@ -101,7 +101,7 @@ test('Verify that the user can copy the branch details', async ({ page, Actions,
     await Click.tabs("branches");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
-    await Actions.enterText("branchName", "copy branch");
+    await Actions.enterText("branchName", "Demo test branch");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("copy");
@@ -110,4 +110,45 @@ test('Verify that the user can copy the branch details', async ({ page, Actions,
     await Click.Btn("save");
     await page.waitForTimeout(1000);
     await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
+test('Verify that the user can sort the branch details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
+});
+
+test('Verify that the user is able to refresh the branch details page', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await Click.Btn("refresh");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Branch Details");
+});
+
+//Branches >> Products-----------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add a new "product" in the addBranchProduct section with valid data ', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchProducts");
+    await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
 });

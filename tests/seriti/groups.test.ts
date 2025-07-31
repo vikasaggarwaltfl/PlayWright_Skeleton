@@ -842,3 +842,66 @@ test('Verify that the user is able to edit a groupTemplate', async ({ page, Acti
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
 });
+
+test('Verify that the user is able to copy a groupTemplate', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupTemplates");
+    await page.waitForTimeout(2000);
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await page.waitForTimeout(1000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
+
+test('Verify that the user is able to sort the groupTemplate details in the data grid', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupTemplates");
+    await page.waitForTimeout(2000);
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
+});
+
+test('Verify that the user is able to refresh the groupTemplate page', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupTemplates");
+    await page.waitForTimeout(2000);
+    await Click.Btn("refresh");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
+
+
