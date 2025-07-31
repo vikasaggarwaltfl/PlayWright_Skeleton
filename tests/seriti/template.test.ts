@@ -10,7 +10,7 @@ test('Verify that the user can "Add" new Template with valid data', async ({ pag
     await Click.Btn("login");
     await Click.tabs("template");
     await Click.Btn("addTemplate");
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(2000);c
     await Click.dropdown("Template Category", "Record of advice");
     await Actions.enterText("templateName", "Template3");
     await Actions.enterText("reportHeading", "Template3 Heading");
