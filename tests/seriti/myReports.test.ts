@@ -64,9 +64,9 @@ test('Verify that the user can "Edit" a Deal Tracker Report with valid data', as
     await Click.tabs("dealTracker");
     await page.waitForTimeout(2000);
     await Click.icon("edit");
-    await Actions.enterText("notes", "Edited by automation");
+    await Actions.enterText("notes", "Edited Deal Tracker Report ");
     await Click.Btn("save");
-    await expect(page.getByText("Edited by automation")).toBeVisible();
+    await expect(page.getByText("Edited Deal Tracker Report")).toBeVisible();
 });
 
 test('Verify that the user cannot "Edit" a Deal Tracker Report with Invalid data', async ({ page, Actions, Click, Verify }) => {
@@ -187,10 +187,10 @@ test('Verify that the user can "Edit" a Doc Summary Report with valid data', asy
     await Click.tabs("docSummary");
     await page.waitForTimeout(2000);
     await Click.icon("edit");
-    await Actions.enterText("notes", "Edited by automation user");
+    await Actions.enterText("notes", "Edited Doc Summary Report");
     await Click.Btn("save");
-    await page.waitForTimeout(2000); // or better: wait for a specific element/state
-    await expect(page.getByText("Edited by automation user")).toBeVisible();
+    await page.waitForTimeout(2000); 
+    await expect(page.getByText("Edited Doc Summary Report")).toBeVisible();
 });
 
 test('Verify that the user cannot "Edit" a Doc Summary Report with Invalid data', async ({ page, Actions, Click, Verify }) => {
@@ -285,6 +285,7 @@ test('Verify that the user can "Add" new DOC report with valid data', async ({ p
     await Click.Btn("inceptDateYes")
     await page.waitForTimeout(6000);
     await Click.Btn("save");
+    await page.waitForTimeout(22000);
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
@@ -422,9 +423,9 @@ test('Verify that the user can "Edit" a Insurance Lead Report with valid data', 
     await Click.tabs("insuranceLeadReport");
     await page.waitForTimeout(2000);
     await Click.icon("edit");
-    await Actions.enterText("notes", "Edited by automation");
+    await Actions.enterText("notes", "Edited Insurance Lead Report");
     await Click.Btn("save");
-    await expect(page.getByText("Edited by automation")).toBeVisible();
+    await expect(page.getByText("Edited Insurance Lead Report")).toBeVisible();
 });
 
 
@@ -443,6 +444,7 @@ test('Verify that the user can "Copy" a Insurance Lead Report with valid data', 
     await Click.Btn("copying");
     await page.waitForTimeout(6000);
     await Click.Btn("save");
+    await page.waitForTimeout(2000);
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
@@ -508,6 +510,7 @@ test('Verify that the user can "Add" new Payover report with valid data', async 
     await Click.Btn("inceptDateYes")
     await page.waitForTimeout(6000);
     await Click.Btn("save");
+    await page.waitForTimeout(2000);
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
@@ -520,9 +523,9 @@ test('Verify that the user can "Edit" a Payover Report with valid data', async (
     await Click.tabs("payoverReport");
     await page.waitForTimeout(2000);
     await Click.icon("edit");
-    await Actions.enterText("notes", "Edited by automation");
+    await Actions.enterText("notes", "Edited Payover Report");
     await Click.Btn("save");
-    await expect(page.getByText("Edited by automation")).toBeVisible();
+    await expect(page.getByText("Edited Payover Report")).toBeVisible();
 });
 
 test('Verify that the user can "Delete" a Payover Report', async ({ page, Actions, Click, Verify }) => {
@@ -796,7 +799,7 @@ test('Verify that the user can generate Banker User Login Report', async ({ page
     await Click.Btn("includeActiveUsersYes");
     await page.waitForTimeout(3000);
     await Click.generateReport.click(); 
-     await Verify.verifyDownload('generateReport');
+    await Verify.verifyDownload('generateReport');
     
 });
 
@@ -813,6 +816,7 @@ test('Verify that the Supply Data Report screen is displayed as expected', async
     await Verify.IsTextDisplayed(page, [
         "Group", "Branch", "Product Type", "Product Sub Type", "Product", "Administrator", "Underwriter", "Owner", "Claims", "Start Date", "End Date", "Generate Report"
     ]);
+    console.log( 'Supply Data Report screen is displayed as expected');
 });
 
 test('Verify that the user can generate Supply Data Report', async ({ page, Actions, Click, Verify }) => {
@@ -832,12 +836,12 @@ test('Verify that the user can generate Supply Data Report', async ({ page, Acti
     await Click.checkboxWithoutAll("Underwriter", "All");
     await Click.checkboxWithoutAll("Claims", "All");
     await Click.checkboxWithoutAll("Owner", "All");
-    await Click.calendar(1, "2025", "May", 20);
-    await page.waitForTimeout(2000);
-    await Click.calendar(2, "2025", "Jul", 26);
-    await page.waitForTimeout(2000);
+    await Click.calendar(1, "2025", "Jul", 1);
+    await page.waitForTimeout(1000);
+    await Click.calendar(2, "2025", "Jul", 31);
+    await page.waitForTimeout(1000);
     await Click.generateReport.click();
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(1000);
     await Verify.verifyDownload('generateReport');
    
 });
