@@ -48,6 +48,7 @@ export class Actions {
     private readonly transactionFee: Locator;
     private readonly emailinput: Locator;
     private readonly passwordinput: Locator;
+    private readonly branchCode: Locator;
    
 
 
@@ -83,6 +84,7 @@ export class Actions {
         this.transactionFee = page.locator("//input[@id='TransactionFee']");
         this.emailinput = page.locator("//input[@placeholder='Username (Email)']");
         this.passwordinput = page.locator("");
+        this.branchCode = page.locator("//input[@id='BranchCode']");
 
     }
 
@@ -217,6 +219,10 @@ export class Actions {
         else if (textBoxName === "passwordinput") {
 
             await this.passwordinput.fill(text);
+        }
+         else if (textBoxName === "branchCode") {
+
+            await this.branchCode.fill(text);
         }
         
     }
