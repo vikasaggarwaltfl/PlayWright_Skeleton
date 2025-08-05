@@ -146,6 +146,7 @@ export class Click {
     private readonly tabularViewBtn: Locator;
     private readonly beforeArrowBtn: Locator;
     private readonly submitBtn: Locator;
+    private readonly bankerLinkEnabledYes: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -288,6 +289,7 @@ export class Click {
         this.tabularViewBtn = page.locator("//span[normalize-space()='Tabular View']");
         this.beforeArrowBtn = page.locator("//div[@class='flex flex-col gap-2 m-5']//div[2]//div[1]//div[2]//button[1]//i[1]");
         this.submitBtn = page.locator("//button[@aria-label='Submit']");
+        this.bankerLinkEnabledYes = page.locator("//span[normalize-space()='Yes']");
        
     }
 
@@ -681,6 +683,9 @@ export class Click {
         }
         else if (str === "submitBtn") {
             await this.submitBtn.click();
+        }
+        else if (str === "bankerLinkEnabledYes") {
+            await this.bankerLinkEnabledYes.click();
         }
 
         

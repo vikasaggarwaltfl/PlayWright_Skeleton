@@ -44,6 +44,21 @@ test('Verify that the user can reset company details by clicking on the reset bu
     await Verify.verifyDatacount();
 });
 
+test.skip('Verify that the user can add a new company with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("addCompany");
+    await Click.checkboxWithoutAll("Company Type", ["Finance", "Insurance"]);
+    await Actions.enterText("companyName", "Demo Test Company");
+    await Actions.enterText("companyCode", "Demo");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved successfully");
+});
+
 test('Verify that the user cannot add new company with invalid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
@@ -83,12 +98,31 @@ test('Verify that the user can edit the company details with valid data', async 
     await Click.tabs("companies");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
-    await Actions.enterText("companyName", "Test Company 6");
+    await Actions.enterText("companyName", "Company testing");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
+    await Actions.enterText("bankerLinkExpiryDays", "2");
+    await Click.Btn("bankerLinkEnabledYes");
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Company saved!");
+});
+
+test('Verify that the user cannot edit the company details with invalid data' , async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "Company testing");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Actions.enterText("bankerLinkExpiryDays", " ");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Banker Link Expiry Days is a required field");
 });
 
 test('Verify that password generator working as expected', async ({ page, Actions, Click, Verify }) => {

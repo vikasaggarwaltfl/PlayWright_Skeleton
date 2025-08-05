@@ -49,7 +49,9 @@ export class Actions {
     private readonly emailinput: Locator;
     private readonly passwordinput: Locator;
     private readonly branchCode: Locator;
-   
+    private readonly companyCode: Locator;
+    private readonly bankerLinkExpiryDays: Locator;
+    
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -85,6 +87,9 @@ export class Actions {
         this.emailinput = page.locator("//input[@placeholder='Username (Email)']");
         this.passwordinput = page.locator("");
         this.branchCode = page.locator("//input[@id='BranchCode']");
+        this.companyCode = page.locator("//input[@id='CompanyCode']");
+        this.bankerLinkExpiryDays = page.locator("//input[@id='BankerLinkExpiryDays']");
+      
 
     }
 
@@ -220,10 +225,19 @@ export class Actions {
 
             await this.passwordinput.fill(text);
         }
-         else if (textBoxName === "branchCode") {
+        else if (textBoxName === "branchCode") {
 
             await this.branchCode.fill(text);
         }
+        else if (textBoxName === "companyCode") {
+
+            await this.companyCode.fill(text);
+        }
+        else if (textBoxName === "bankerLinkExpiryDays") {
+
+            await this.bankerLinkExpiryDays.fill(text);
+        }
+       
         
     }
 
