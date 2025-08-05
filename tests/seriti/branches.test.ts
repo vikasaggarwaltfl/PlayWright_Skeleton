@@ -5,7 +5,7 @@ import { Click } from '@pages/Click'
 import { Verify } from '@pages/Verify'
 import * as path from 'path'
 
-test.only('Verify that "branch details" screen is displayed correctly', async ({ page, Actions, Click, Verify }) => {
+test('Verify that "branch details" screen is displayed correctly', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -154,7 +154,7 @@ test('Verify that the user is able to refresh the branch details page', async ({
 
 //Branches >> Products-----------------------------------------------------------------------------------------------------------------------------------------
 
-test.skip('Verify that the user can add a new "product" in the addBranchProduct section with valid data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can add a new "product" in the addBranchProduct section with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -215,7 +215,7 @@ test('Verify that the user can edit the "product" in the addBranchProduct sectio
     await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
 });
 
-test.only('Verify that the user can copy a branchProduct', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can copy a branchProduct', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -271,3 +271,118 @@ test("Verify that the user can refresh the branch products page", async ({ page,
     await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
 });
 
+//Branches >> SSF-----------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add a new branchSSF with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchSSF");
+    await Click.Btn("add");
+    await Actions.enterText("transactionFee", "499");
+    await Click.calendar(1, "2025", "Sep", 15);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
+});
+
+test('Verify that the user cannot add a branchSSF with invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchSSF");
+    await Click.Btn("add");
+    await Click.calendar(1, "2025", "Sep", 15);
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Transaction Fee is a required field");
+});
+
+test('Verify that the user can edit the branchSSF with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchSSF");
+    await Click.icon("edit");
+    await Actions.enterText("transactionFee", "599");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
+});
+
+test('Verify that the user can copy a branchSSF', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchSSF");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await Click.Btn("save");
+    await page.waitForTimeout(1000);
+    await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
+});
+
+test('Verify that the user can sort the branchSSF', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchSSF");
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
+});
+
+test.only('Verify that the user can refresh the branchSSF page', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchSSF");
+    await Click.Btn("refresh");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
+});

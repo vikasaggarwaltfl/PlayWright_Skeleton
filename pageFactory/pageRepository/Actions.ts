@@ -51,7 +51,7 @@ export class Actions {
     private readonly branchCode: Locator;
     private readonly companyCode: Locator;
     private readonly bankerLinkExpiryDays: Locator;
-    
+   
 
 
     constructor(page: Page, context: BrowserContext) {
