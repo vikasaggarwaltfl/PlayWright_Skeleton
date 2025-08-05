@@ -96,6 +96,9 @@ export class Click {
     private readonly createTransaction: Locator;
     private readonly resetCriteria: Locator;
     private readonly search: Locator;
+    private readonly hideOverview: Locator;
+    private readonly showOverview: Locator;
+
     private readonly addDealTrackerReport: Locator;
     private readonly addInsuranceLeadReport: Locator;
     private readonly addPayoverReport: Locator;
@@ -240,7 +243,9 @@ export class Click {
         this.view = page.locator("//span[text()='VIEW']")
         this.createTransaction = page.locator("//span[@class='p-button-icon p-button-icon-left pi pi-plus']")
         this.resetCriteria = page.locator("//button[text()=' Reset Criteria ']")
-        this.search = page.locator("//button[@aria-label='Search']")
+        this.search = page.locator("//button[@aria-label='Hide Overview']")
+        this.hideOverview = page.locator("//div[normalize-space()='Hide Overview']");
+        this.showOverview = page.locator("//span[text()='Login']");
         this.addProductDetailsReport = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.addDealTrackerReport = page.locator("//div[text()=' Add Deal Tracker Report']");
         this.addDocSummaryReport = page.locator("//div[@class='flex flex-row gap-2 items-center']");
@@ -556,6 +561,13 @@ export class Click {
         else if (str === "search") {
             await this.search.click();
         }
+        else if (str === "hideOverview") {
+            await this.hideOverview.click();
+        }
+        else if (str === "showOverview") {
+            await this.showOverview.click();
+        }
+
         else if (str === "addDealTrackerReport") {
             await this.addDealTrackerReport.click();
         }

@@ -21,7 +21,7 @@ export class Actions {
 
     private readonly USERNAME_EDITBOX: Locator;
     private readonly PASSWORD_EDITBOX: Locator;
-    private readonly lastnameTextbox: Locator;
+    private readonly lastName: Locator;
     private readonly searchMenu: Locator;
     private readonly transactionSearchMenu: Locator;
     private readonly notes: Locator;
@@ -59,7 +59,7 @@ export class Actions {
         this.context = context;
         this.USERNAME_EDITBOX = page.locator("//input[@placeholder='Username']");
         this.PASSWORD_EDITBOX = page.locator("//input[@placeholder='Password']");
-        this.lastnameTextbox = page.locator("(//input[@name='lastName'])[2]");
+        this.lastName = page.locator("(//input[@name='lastName'])[2]");
         this.searchMenu = page.locator("//input[@placeholder='Search']");
         this.transactionSearchMenu = page.locator("//input[@placeholder='Transaction Number']");
         this.notes = page.locator("//input[@id='Notes']");
@@ -115,9 +115,9 @@ export class Actions {
 
             await this.PASSWORD_EDITBOX.fill(text);
         }
-        else if (textBoxName === "lastnameTextbox") {
+        else if (textBoxName === "lastName") {
 
-            await this.lastnameTextbox.fill(text);
+            await this.lastName.fill(text);
         }
 
         else if (textBoxName === "searchMenu") {
