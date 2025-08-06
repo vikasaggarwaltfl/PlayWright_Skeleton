@@ -52,7 +52,7 @@ test.skip('Verify that the user can add a new branch with valid details', async 
     await Click.tabs("branches");
     await page.waitForLoadState('networkidle');
     await Click.Btn("addBranch");
-    await Click.calendar(1, "2026", "Sep", 15); 
+    await Click.calendar(1, "2026", "Sep", 15);
     await Actions.enterText("branchCode", "TB001");
     await Click.dropdown("Group Name", "AA Group");
     await Click.calendar(2, "2027", "Jul", 26);
@@ -173,7 +173,7 @@ test('Verify that the user can add a new "product" in the addBranchProduct secti
     await Click.dropdown("Require At Inception", "Always");
     await Click.dropdown("Product Name", "Practise product");
     await Actions.enterText("sortKey", "100");
-    await Click.calendar(1, "2026", "Sep", 15); 
+    await Click.calendar(1, "2026", "Sep", 15);
     await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
 });
 
@@ -369,7 +369,7 @@ test('Verify that the user can sort the branchSSF', async ({ page, Actions, Clic
     await Verify.verifySortOrder();
 });
 
-test.only('Verify that the user can refresh the branchSSF page', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can refresh the branchSSF page', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -382,6 +382,129 @@ test.only('Verify that the user can refresh the branchSSF page', async ({ page, 
     await page.waitForTimeout(1000);
     await Click.icon("edit");
     await Click.tabs("branchSSF");
+    await Click.Btn("refresh");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
+});
+
+//Branches >> Documents-----------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add a new branchDocument with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchDocuments");
+    await Click.Btn("add");
+    await Click.dropdown("Category", "BANKING DETAILS");
+    const fileInput = await page.$("//input[@type='file']");
+    await fileInput.setInputFiles(path.resolve('./documents/Sample report.pdf'));
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
+});
+
+test('Verify that the user cannot add a branchDocument with invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchDocuments");
+    await Click.Btn("add");
+    const fileInput = await page.$("//input[@type='file']");
+    await fileInput.setInputFiles(path.resolve('./documents/Sample report.pdf'));
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Category is a required field");
+});
+
+test('Verify that the user can edit the branchDocument with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchDocuments");
+    await Click.icon("edit");
+    const fileInput = await page.$("//input[@type='file']");
+    await fileInput.setInputFiles(path.resolve('./documents/Demo document.pdf'));
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
+});
+
+test('Verify that the user can copy a branchDocument', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchDocuments");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await Click.Btn("save");
+    await page.waitForTimeout(1000);
+    await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
+});
+
+test('Verify that the user can sort the branchDocuments', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchDocuments");
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
+});
+
+test('Verify that the user can refresh the branchDocuments page', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchDocuments");
     await Click.Btn("refresh");
     await page.waitForTimeout(2000);
     await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
