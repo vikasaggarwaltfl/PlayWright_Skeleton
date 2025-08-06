@@ -64,18 +64,17 @@ test('Verify that the "Show All" tab displays all fields on the form.', async ({
     console.log(" Show All tab displays all fields as expected");
 });
 
-test.only('Verify that the Hide Overview tab hides the overview section of transaction.', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the Hide Overview tab hides the overview section of transaction.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281957");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
     await Click.transactionTabs("Hide Overview");
-    await Verify.IsTextDisplayed(page, "Show Overview");
-    
+    await Verify.IsTextDisplayed(page, "Show Overview"); 
 });
 
-test.only('Verify that the Show Overview tab displays the overview section of transaction.', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the Show Overview tab displays the overview section of transaction.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281957");
@@ -83,7 +82,6 @@ test.only('Verify that the Show Overview tab displays the overview section of tr
     await page.waitForLoadState('networkidle');
     await Click.transactionTabs("showOverview");
     await Verify.IsTextDisplayed(page, "Hide Overview");
-    
 });
 
 test('Verify that all form sections are displayed sequentially on the screen', async ({ page, Actions, Click, Verify }) => {
@@ -92,7 +90,8 @@ test('Verify that all form sections are displayed sequentially on the screen', a
     await Actions.enterText("transactionSearchMenu", "281957");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
-    await Click.transactionTabs("showRequired", true);
+    await Verify.IsTextDisplayed(page, ["Transaction Details Status Finance Application Info", "Client Details", "Vehicle Details", "Account Details","Documents","Finance Application","Additional Person, Spouse or Guarantor","Products","Accessories","Trade In", "Insurance Application","Record of Advice (ROA)","Record of Transaction (ROT)","Notes","Incept Transaction","Doc Data","Communication"]);
+   console.log("All form sections are displayed sequentially on the screen as expected");
 });
 
 test('Verify that the user can expand and collapse the details by clicking on the collapse button.', async ({ page, Actions, Click, Verify }) => {
@@ -102,7 +101,9 @@ test('Verify that the user can expand and collapse the details by clicking on th
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
     await Click.icon("expandAll");
+    await Verify.IsTextDisplayed(page, "Collapse All"); 
     await Click.icon("collapseAll");
+    await Verify.IsTextDisplayed(page, "Expand All"); 
     await expect(page.locator('//span[normalize-space()="Change Vehicle"]')).toBeHidden();
 });
 
