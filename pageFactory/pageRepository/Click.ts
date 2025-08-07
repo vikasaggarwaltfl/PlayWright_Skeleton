@@ -59,6 +59,7 @@ export class Click {
     private readonly branchProducts: Locator;
     private readonly branchSSF: Locator;
     private readonly branchDocuments: Locator;  
+    private readonly branchHFACalculator: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -114,6 +115,7 @@ export class Click {
     private readonly createDateNo: Locator;
     private readonly inceptDateNo: Locator;
     private readonly yes: Locator;
+    private readonly no: Locator;
     private readonly copying: Locator;
     private readonly addDocSummaryReport: Locator;
     private readonly addDocReport: Locator;
@@ -209,6 +211,7 @@ export class Click {
         this.branchProducts = page.locator("//button[normalize-space()='Products']");
         this.branchSSF = page.locator("//button[normalize-space()='SSF']");
         this.branchDocuments = page.locator("//button[normalize-space()='Documents']");
+        this.branchHFACalculator = page.locator("//button[normalize-space()='HFA Calculator']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -263,6 +266,7 @@ export class Click {
         this.createDateNo = page.locator("//div[@placeholder='Create Date']//span[@class='p-button-label'][normalize-space()='No']");
         this.inceptDateNo = page.locator("//div[@placeholder='Incept Date']//span[@class='p-button-label'][normalize-space()='No']");
         this.yes = page.locator("//span[text()='Yes']");
+        this.no = page.locator("//span[normalize-space()='No']");
         this.copying = page.locator("//button[text()='Copy']");
         this.selectAll = page.locator("//span[text()='Select All']");
         this.deSelectAll = page.locator("//span[text()='De-select All']");
@@ -458,6 +462,9 @@ export class Click {
         else if (str === "branchDocuments") {
             await this.branchDocuments.click();
         }
+        else if (str === "branchHFACalculator") {
+            await this.branchHFACalculator.click();
+        }
     };
 
     //icon--------------------------------------------------------------------------------------------------------
@@ -617,6 +624,9 @@ export class Click {
         }
         else if (str === "yes") {
             await this.yes.click();
+        }
+        else if (str === "no") {
+            await this.no.click();
         }
         else if (str === "copying") {
             await this.copying.click();
