@@ -157,6 +157,19 @@ export class Click {
     private readonly bankerLinkEnabledYes: Locator;
     private readonly saveAll: Locator;
 
+    private readonly accountDetails: Locator;
+    private readonly documents: Locator;
+    private readonly addDocument: Locator;
+    private readonly saveDocument: Locator;
+    private readonly financeApplication: Locator;
+    private readonly financeLogo: Locator;
+    private readonly auditLog: Locator;
+    private readonly saveTransaction:Locator;
+    
+    
+
+
+
 
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
@@ -308,6 +321,21 @@ export class Click {
         this.submitBtn = page.locator("//button[@aria-label='Submit']");
         this.bankerLinkEnabledYes = page.locator("//span[normalize-space()='Yes']");
         this.saveAll = page.locator("//button[@aria-label='Save All']");
+
+        this.accountDetails = page.locator("//button[normalize-space()='Account Details']");
+        this.documents = page.locator("//button[normalize-space()='Documents']");
+        this.addDocument = page.locator("//button[@aria-label='Add']");
+        this.saveDocument = page.locator("//span[normalize-space()='Save']");
+        this.financeApplication = page.locator("//button[normalize-space()='Finance Application']");
+        this.financeLogo = page.locator("//button[@class='h-10 w-full flex flex-row justify-center items-center']");
+        this.auditLog = page.locator("//span[normalize-space()='Audit Log']");
+        this.saveTransaction = page.locator("//span[normalize-space()='Save All']");
+        
+
+
+
+        
+
        
     }
 
@@ -733,6 +761,31 @@ export class Click {
         else if (str === "saveAll") {
             await this.saveAll.click();
         }
+        else if (str === "accountDetails") {
+            await this.accountDetails.click();
+        }
+        else if (str === "documents") {
+            await this.documents.click();
+        }
+        else if (str === "addDocument") {
+            await this.addDocument.click();
+        }
+        else if (str === "saveDocument") {
+            await this.saveDocument.click();
+        }
+        else if (str === "financeApplication") {
+            await this.financeApplication.click();
+        }
+         else if (str === "financeLogo") {
+            await this.financeLogo.click();
+        }
+        else if (str === "auditLog") {
+            await this.auditLog.click();
+        }
+        else if (str === "saveTransaction") {
+            await this.saveTransaction.click();
+        }
+
 
         
     };

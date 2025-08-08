@@ -1,5 +1,7 @@
 import test from '@lib/BaseTest';
 import { expect } from '@playwright/test';
+import { Actions } from '@pages/Actions';
+import { Click } from '@pages/Click';
 
 // Login ------------------------------------------------------------------------------------------------------------------------
 
@@ -168,8 +170,7 @@ test('Verify that the user can fill in all the required fields on the transactio
     await Click.Btn("view");
     await Actions.enterText("transactionStatusNotes", "Testing");
     await Click.Btn("saveAll");
-    await Verify.IsTextDisplayed(page, "Transaction saved successfully");
-    
+    await Verify.IsTextDisplayed(page, "Transaction saved successfully"); 
 }); 
 
 test('Verify that an error message is displayed when the user clicks Save All without filling in the mandatory fields.', async ({ page, Actions, Click, Verify }) => {
@@ -293,5 +294,108 @@ test('Verify that the user can edit the vehicle details section and save success
     await Click.Btn("saveAll");
     await Verify.IsTextDisplayed(page, "Transaction saved successfully");
 });
+
+// Account Details
+
+test('Verify that Account details Section displayed as expected on transaction screen', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("accountDetails");
+    await Verify.IsTextDisplayed(page, ["Bank Accounts","Credit Card Accounts"]);
+    console.log("Account details displayed as expected");
+});
+
+
+// Document
+
+test('Verify that document section displayed as expected on transaction screen', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("documents");
+    await Verify.IsTextDisplayed(page, ["Uploaded date", "Document category", "Description","File size", "created by","Certification type","File name"]);
+    console.log(" Document section displayed as expected");
+});
+
+test('Verify that user cannot add Transaction Document with Invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("documents");
+    await Click.Btn("addDocument");
+    await Click.Btn("saveDocument");
+    await Verify.IsTextDisplayed(page,'please fix errors before submitting');
+    console.log(" Error message displayed for required field as expected ");
+});
+
+// Finance Application
+
+test('Verify that Finance application section displayed as expected on transaction screen', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("financeApplication");
+    await Verify.IsTextDisplayed(page, ["Logo","finance status", "Service message","Bank details", "Latest Application","Document update" ]);
+    console.log("Finance application section displayed as expected");
+});
+
+test('Verify that user can enter to the finnace application from transaction screen', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("financeApplication");
+    await Click.Btn("financeLogo")
+    await Verify.IsTextDisplayed(page, "Finance Application: Test_Comp");
+    console.log("User successfully enter in to Finance application");
+});
+
+// Audit Log
+
+test('Verify user can check Audit Log on transaction screen', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("auditLog");
+    await Verify.IsTextDisplayed(page, "Change made by user");
+    console.log("Audit log displayed as expected");
+});
+
+// Save Transaction
+
+test('Veriy that user can save transaction with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("saveTransaction");
+    await Verify.IsTextDisplayed(page, "Transaction saved Successfully");
+    console.log("Transaction saved successfully");
+});
+
+test('Veriy that user cannot save transaction with Invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("saveTransaction");
+    await Verify.IsTextDisplayed(page, "validation warnings");
+    console.log("Error message displayed as expected for required fields");
+});
+
 
 
