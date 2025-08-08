@@ -509,3 +509,82 @@ test('Verify that the user can refresh the branchDocuments page', async ({ page,
     await page.waitForTimeout(2000);
     await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
 });
+
+//Branches >> HFA Calculator-----------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add a new branch HFA Calculator with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchHFACalculator");
+    await Click.Btn("add");
+    await Click.Btn("yes");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
+});
+
+test('Verify that the user cannot add a new branch HFA Calculator with invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchHFACalculator");
+    await Click.Btn("add");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Enable HFA Calculator? is a required field");
+});
+
+test('Verify that the user can copy a branch HFA Calculator', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchHFACalculator");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await Click.Btn("save");
+    await page.waitForTimeout(1000);
+    await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
+});
+
+test('Verify that the user can refresh the branch HFA Calculator page', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchHFACalculator");
+    await Click.Btn("refresh");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
+});
+
