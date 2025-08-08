@@ -45,7 +45,8 @@ test('Verify navigation to "Forgot Password" screen from Login screen', async ({
   console.log('User redirected to forgot password screen');
 });
 
-// Transaction Screen
+// Transaction Screen ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 test('Verify that a user can initiate the individual create transaction process with valid input', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
@@ -147,4 +148,150 @@ test('Verify that the user can expand and collapse the details by clicking on th
     await Verify.IsTextDisplayed(page, "Expand All"); 
     await expect(page.locator('//span[normalize-space()="Change Vehicle"]')).toBeHidden();
 });
+
+//Transaction Details Status Finance Application Info ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can view the transaction details status and finance application info on the transaction screen.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281803");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Verify.IsTextDisplayed(page, ["Status", "Transaction Type", "Finance Application Info"]);
+    console.log("User can view the transaction details status and finance application info on the transaction screen as expected");
+});
+
+test('Verify that the user can fill in all the required fields on the transaction details status finance application info and save successfully', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281803");
+    await Click.Btn("view");
+    await Actions.enterText("transactionStatusNotes", "Testing");
+    await Click.Btn("saveAll");
+    await Verify.IsTextDisplayed(page, "Transaction saved successfully");
+    
+}); 
+
+test('Verify that an error message is displayed when the user clicks Save All without filling in the mandatory fields.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281803");
+    await Click.Btn("view");
+    await Click.icon("cancel");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("saveAll");
+    await page.waitForLoadState('networkidle');
+    await Verify.verifyErrorMessage(page, "Transaction Status is a required field");
+});
+
+test('Verify that the user can edit the transaction details status finance application info', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281803");
+    await Click.Btn("view");
+    await Actions.enterText("transactionStatusNotes", "Test Notes");
+    await Click.Btn("saveAll");
+    await Verify.IsTextDisplayed(page, "Transaction saved successfully");
+});   
+
+//Client Details ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can view the client details section on the transaction screen.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281803");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.tabs("clientDetails");
+    await Verify.IsTextDisplayed(page, ["Client Details", "Address in Home Country", "Physical Address","Drivers License Details"]);
+    console.log("User can view the client details section on the transaction screen as expected");
+});
+
+test('Verify that the user can fill in all the required fields in the client details section and save successfully.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281803");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.tabs("clientDetails");
+    await Actions.enterText("firstName", "Demo");
+    await Click.Btn("saveAll");
+    await Verify.IsTextDisplayed(page, "Transaction saved successfully");
+});
+
+test('Verify that an error message is displayed when the user clicks Save All without filling in the mandatory fields in the client details section.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281803");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.tabs("clientDetails");
+    await Actions.enterText("firstName", " ");
+    await Click.Btn("saveAll");
+    await Verify.verifyErrorMessage(page, "First Name is a required field");
+});
+
+test('Verify that the user can edit the client details section and save successfully.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281803");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.tabs("clientDetails");
+    await Actions.enterText("firstName", "Updated demo");
+    await Click.Btn("saveAll");
+    await Verify.IsTextDisplayed(page, "Transaction saved successfully");
+});
+
+//Vehicle Details ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can view the vehicle details section on the transaction screen.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281803");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.tabs("vehicleDetails");
+    await Verify.IsTextDisplayed(page, ["Vehicle Details", "Vehicle Description", "Vehicle Condition"]);
+    console.log("User can view the vehicle details section on the transaction screen as expected");
+});
+
+test('Verify that the user can fill in all the required fields in the vehicle details section and save successfully.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281803");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.tabs("vehicleDetails");
+    await page.pause();
+    await Actions.enterText("vehicleKM", "235");
+    await Click.Btn("saveAll");
+    await Verify.IsTextDisplayed(page, "Transaction saved successfully");
+});
+
+test('Verify that an error message is displayed when the user clicks Save All without filling in the mandatory fields in the vehicle details section.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281803");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.tabs("vehicleDetails");
+    await Actions.enterText("vehicleKM", " ");
+    await page.waitForTimeout(2000);
+    await Click.Btn("saveAll");
+    await Verify.verifyErrorMessage(page, "Kilometers is required");
+});
+
+test('Verify that the user can edit the vehicle details section and save successfully.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281803");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.tabs("vehicleDetails");
+    await Actions.enterText("vehicleKM", "1000");
+    await Click.Btn("saveAll");
+    await Verify.IsTextDisplayed(page, "Transaction saved successfully");
+});
+
 

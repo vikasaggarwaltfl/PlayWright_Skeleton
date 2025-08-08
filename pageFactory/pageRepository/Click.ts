@@ -60,6 +60,8 @@ export class Click {
     private readonly branchSSF: Locator;
     private readonly branchDocuments: Locator;  
     private readonly branchHFACalculator: Locator;
+    private readonly clientDetails: Locator;
+    private readonly vehicleDetails: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -153,6 +155,7 @@ export class Click {
     private readonly beforeArrowBtn: Locator;
     private readonly submitBtn: Locator;
     private readonly bankerLinkEnabledYes: Locator;
+    private readonly saveAll: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -212,12 +215,14 @@ export class Click {
         this.branchSSF = page.locator("//button[normalize-space()='SSF']");
         this.branchDocuments = page.locator("//button[normalize-space()='Documents']");
         this.branchHFACalculator = page.locator("//button[normalize-space()='HFA Calculator']");
+        this.clientDetails = page.locator("(//button[normalize-space()='Client Details'])[1]");
+        this.vehicleDetails = page.locator("//button[normalize-space()='Vehicle Details']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
         this.seritiLogo = page.locator("//img[@src='https://seritiweb-mea-uat.seriti-int.com/_nuxt/seriti-int-full.Bv5pslmx.svg']")
         this.testingFrameworks = page.locator("//p[text()='Testing Frameworks']")
-        this.cancel = page.locator("//*[name()='path' and contains(@d,'M8.01186 7')]");
+        this.cancel = page.locator("(//*[name()='svg'][@class='p-icon p-dropdown-clear-icon'])[1]");
         this.delete = page.locator("//i[contains(@class, 'pi-trash')]");
         this.copy = page.locator("//tbody/tr[1]/td[1]/div[1]/div[1]/button[1]/i[1]");
         this.edit = page.locator("(//i[@class='pi pi-pencil text-lg'])[1]");
@@ -302,6 +307,7 @@ export class Click {
         this.beforeArrowBtn = page.locator("//div[@class='flex flex-col gap-2 m-5']//div[2]//div[1]//div[2]//button[1]//i[1]");
         this.submitBtn = page.locator("//button[@aria-label='Submit']");
         this.bankerLinkEnabledYes = page.locator("//span[normalize-space()='Yes']");
+        this.saveAll = page.locator("//button[@aria-label='Save All']");
        
     }
 
@@ -464,6 +470,12 @@ export class Click {
         }
         else if (str === "branchHFACalculator") {
             await this.branchHFACalculator.click();
+        }
+        else if (str === "clientDetails") {
+            await this.clientDetails.click();
+        }
+         else if (str === "vehicleDetails") {
+            await this.vehicleDetails.click();
         }
     };
 
@@ -717,6 +729,9 @@ export class Click {
         }
         else if (str === "bankerLinkEnabledYes") {
             await this.bankerLinkEnabledYes.click();
+        }
+        else if (str === "saveAll") {
+            await this.saveAll.click();
         }
 
         

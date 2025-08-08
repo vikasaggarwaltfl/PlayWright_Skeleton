@@ -51,7 +51,8 @@ export class Actions {
     private readonly branchCode: Locator;
     private readonly companyCode: Locator;
     private readonly bankerLinkExpiryDays: Locator;
-   
+    private readonly transactionStatusNotes: Locator;
+    private readonly vehicleKM: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -89,7 +90,8 @@ export class Actions {
         this.branchCode = page.locator("//input[@id='BranchCode']");
         this.companyCode = page.locator("//input[@id='CompanyCode']");
         this.bankerLinkExpiryDays = page.locator("//input[@id='BankerLinkExpiryDays']");
-      
+        this.transactionStatusNotes = page.locator("//textarea[@id='TransactionStatusNotes']");
+        this.vehicleKM = page.locator("//input[@id='Kilometers']");
 
     }
 
@@ -236,6 +238,14 @@ export class Actions {
         else if (textBoxName === "bankerLinkExpiryDays") {
 
             await this.bankerLinkExpiryDays.fill(text);
+        }
+        else if (textBoxName === "transactionStatusNotes") {
+
+            await this.transactionStatusNotes.fill(text);
+        }
+        else if (textBoxName === "vehicleKM") {
+
+            await this.vehicleKM.fill(text);
         }
        
         
