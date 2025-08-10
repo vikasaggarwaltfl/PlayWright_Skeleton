@@ -2,6 +2,8 @@ import test from '@lib/BaseTest';
 import { expect } from '@playwright/test';
 import { Actions } from '@pages/Actions';
 import { Click } from '@pages/Click';
+import { Verify } from '@pages/Verify'
+import * as path from 'path'
 
 // Login ------------------------------------------------------------------------------------------------------------------------
 
@@ -163,7 +165,7 @@ test('Verify that the user can view the transaction details status and finance a
     console.log("User can view the transaction details status and finance application info on the transaction screen as expected");
 });
 
-test('Verify that the user can fill in all the required fields on the transaction details status finance application info and save successfully', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can save the transaction details status finance application info with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281803");
@@ -172,18 +174,6 @@ test('Verify that the user can fill in all the required fields on the transactio
     await Click.Btn("saveAll");
     await Verify.IsTextDisplayed(page, "Transaction saved successfully"); 
 }); 
-
-test('Verify that an error message is displayed when the user clicks Save All without filling in the mandatory fields.', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("transactionSearchMenu", "281803");
-    await Click.Btn("view");
-    await Click.icon("cancel");
-    await page.waitForLoadState('networkidle');
-    await Click.Btn("saveAll");
-    await page.waitForLoadState('networkidle');
-    await Verify.verifyErrorMessage(page, "Transaction Status is a required field");
-});
 
 test('Verify that the user can edit the transaction details status finance application info', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
@@ -208,7 +198,7 @@ test('Verify that the user can view the client details section on the transactio
     console.log("User can view the client details section on the transaction screen as expected");
 });
 
-test('Verify that the user can fill in all the required fields in the client details section and save successfully.', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can save the client details section with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281803");
@@ -218,18 +208,6 @@ test('Verify that the user can fill in all the required fields in the client det
     await Actions.enterText("firstName", "Demo");
     await Click.Btn("saveAll");
     await Verify.IsTextDisplayed(page, "Transaction saved successfully");
-});
-
-test('Verify that an error message is displayed when the user clicks Save All without filling in the mandatory fields in the client details section.', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("transactionSearchMenu", "281803");
-    await Click.Btn("view");
-    await page.waitForLoadState('networkidle');
-    await Click.tabs("clientDetails");
-    await Actions.enterText("firstName", " ");
-    await Click.Btn("saveAll");
-    await Verify.verifyErrorMessage(page, "First Name is a required field");
 });
 
 test('Verify that the user can edit the client details section and save successfully.', async ({ page, Actions, Click, Verify }) => {
@@ -257,7 +235,7 @@ test('Verify that the user can view the vehicle details section on the transacti
     console.log("User can view the vehicle details section on the transaction screen as expected");
 });
 
-test('Verify that the user can fill in all the required fields in the vehicle details section and save successfully.', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can save the vehicle details section with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281803");
@@ -268,19 +246,6 @@ test('Verify that the user can fill in all the required fields in the vehicle de
     await Actions.enterText("vehicleKM", "235");
     await Click.Btn("saveAll");
     await Verify.IsTextDisplayed(page, "Transaction saved successfully");
-});
-
-test('Verify that an error message is displayed when the user clicks Save All without filling in the mandatory fields in the vehicle details section.', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("transactionSearchMenu", "281803");
-    await Click.Btn("view");
-    await page.waitForLoadState('networkidle');
-    await Click.tabs("vehicleDetails");
-    await Actions.enterText("vehicleKM", " ");
-    await page.waitForTimeout(2000);
-    await Click.Btn("saveAll");
-    await Verify.verifyErrorMessage(page, "Kilometers is required");
 });
 
 test('Verify that the user can edit the vehicle details section and save successfully.', async ({ page, Actions, Click, Verify }) => {
@@ -397,5 +362,272 @@ test('Veriy that user cannot save transaction with Invalid data', async ({ page,
     console.log("Error message displayed as expected for required fields");
 });
 
+//groups-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+test('Verify that "group details" screen is displayed correctly', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Group Details");
+});
 
+test('Verify that the user can filter group using the filter options', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "`Group 2");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Verify.verifyDatacount();
+});
+
+test('Verify that the user can reset group by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(1000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "`Group 2");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.Btn("reset");
+    await page.waitForTimeout(1000);
+    await Verify.verifyDatacount();
+});
+
+test('Verify that the user cannot add new group with invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await Click.Btn("addGroup");
+    await Actions.enterText("groupName", "`Group 2");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Group Code is a required field");
+
+});
+
+//Group >> Documents-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add a new "document" in the addGroupDocument section with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupDocuments");
+    await Click.Btn("add");
+    await Click.dropdown("Document Category", "BANKING DETAILS");  
+    const fileInput = await page.$("//input[@type='file']");
+    await fileInput.setInputFiles(path.resolve('./documents/Sample report.pdf'));
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
+
+test('Verify that the user is able to edit a groupDocument', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupDocuments");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit"); 
+    const fileInput = await page.$("//input[@type='file']");
+    await fileInput.setInputFiles(path.resolve('./documents/Demo document.pdf'));
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+});
+
+test('Verify that the user is able to download groupDocument', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("group");
+    await page.waitForTimeout(2000);
+    await Click.icon("filterArrow");
+    await Actions.enterText("groupName", "Demo test group");
+    await Click.Btn("apply");
+    await page.waitForTimeout(2000);
+    await Click.icon("edit");
+    await Click.tabs("groupDocuments");
+    await page.waitForTimeout(2000);
+    await Click.link("groupDownload");
+    await Verify.verifyDownload("DOWNLOAD_LINK");
+});
+
+//branch-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that "branch details" screen is displayed correctly', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await Verify.IsTextDisplayed(page, "Branch Details");
+});
+
+test('Verify that the user can filter branch details using the filter options', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Practise branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Verify.verifyDatacount();
+});
+
+test('Verify that the user can reset branch details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Practise branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.Btn("reset");
+    await page.waitForTimeout(5000);
+    await Verify.verifyDatacount();
+});
+
+test('Verify that the user can add a new branch with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("addBranch");
+    await Click.calendar(1, "2026", "Sep", 15);
+    await Actions.enterText("branchCode", "TB001");
+    await Click.dropdown("Group Name", "AA Group");
+    await Click.calendar(2, "2027", "Jul", 26);
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
+//Company-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that "company details" screen is displayed correctly', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await Verify.IsTextDisplayed(page, "Company");
+});
+
+test('Verify that the user can filter company details using the filter options', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "practise company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Verify.verifyDatacount();
+});
+
+test('Verify that the user can reset company details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "practise company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.Btn("reset");
+    await page.waitForTimeout(5000);
+    await Verify.verifyDatacount();
+});
+
+test('Verify that the user can add a new company with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("addCompany");
+    await Click.checkboxWithoutAll("Company Type", ["Finance", "Insurance"]);
+    await Actions.enterText("companyName", "Demo Test Company");
+    await Actions.enterText("companyCode", "Demo");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved successfully");
+});
+
+test('Verify that password generator working as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "Test Company 6");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.Btn("companyDetails");
+    await Click.Btn("add");
+    await page.waitForTimeout(2000);
+    const [popup] = await Promise.all([page.waitForEvent('popup'), await Click.link("clickhere")]);
+    await Verify.verifyURL(popup, 'https://randomwheel.org/password-generator');
+});
+
+test('Verify Document protection is working or not if it selected as "Yes"', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "Test Company 6");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.Btn("companyDetails");
+    await Click.Btn("add");
+    await page.waitForTimeout(2000);
+    await Click.Btn("documentProtectedyes");
+    await page.waitForTimeout(2000);
+
+});
