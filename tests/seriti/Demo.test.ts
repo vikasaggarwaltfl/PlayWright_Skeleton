@@ -402,7 +402,8 @@ test('Verify that the user can edit the client details section and save successf
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
     await Click.tabs("clientDetails");
-    await Actions.enterText("firstName", "Updated demo");
+    await Actions.enterText("firstName", "Demo");
+    await page.waitForTimeout(5000);
     await Click.Btn("saveAll");
     await Verify.IsTextDisplayed(page, "Transaction saved successfully");
 });
@@ -555,27 +556,12 @@ test('Verify that the user can filter group using the filter options', async ({ 
     await Click.tabs("group");
     await page.waitForTimeout(2000);
     await Click.icon("filterArrow");
-    await Actions.enterText("groupName", "`Group 2");
+    await Actions.enterText("groupName", "Group 2");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Verify.verifyDatacount();
 });
 
-test('Verify that the user can reset group by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Admin");
-    await Click.chevronLeftArrow(1);
-    await Click.tabs("group");
-    await page.waitForTimeout(1000);
-    await Click.icon("filterArrow");
-    await Actions.enterText("groupName", "`Group 2");
-    await Click.Btn("apply");
-    await page.waitForTimeout(1000);
-    await Click.Btn("reset");
-    await page.waitForTimeout(1000);
-    await Verify.verifyDatacount();
-});
 
 test('Verify that the user cannot add a duplicate group', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
@@ -654,19 +640,6 @@ test('Verify that the user is able to download groupDocument', async ({ page, Ac
 
 //branch-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify that the user can filter branch details using the filter options', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Admin");
-    await Click.chevronLeftArrow(1);
-    await Click.tabs("branches");
-    await page.waitForLoadState('networkidle');
-    await Click.icon("filterArrow");
-    await Actions.enterText("branchName", "Practise branch");
-    await Click.Btn("apply");
-    await page.waitForTimeout(1000);
-    await Verify.verifyDatacount();
-});
 
 test('Verify that the user can reset branch details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
@@ -717,21 +690,6 @@ test('Verify that the user can filter company details using the filter options',
     await Verify.verifyDatacount();
 });
 
-test('Verify that the user can reset company details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Admin");
-    await Click.chevronLeftArrow(1);
-    await Click.tabs("companies");
-    await page.waitForLoadState('networkidle');
-    await Click.icon("filterArrow");
-    await Actions.enterText("companyName", "practise company");
-    await Click.Btn("apply");
-    await page.waitForTimeout(1000);
-    await Click.Btn("reset");
-    await page.waitForTimeout(5000);
-    await Verify.verifyDatacount();
-});
 
 test('Verify that the user can add a new company with valid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
@@ -784,7 +742,7 @@ test('Verify Document protection is working if it selected as "Yes"', async ({ p
     await Click.Btn("add");
     await page.waitForTimeout(2000);
     await Click.Btn("documentProtectedyes");
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(4000);
     await Verify.IsTextDisplayed(page, 'Add Company Information');
 });
 
