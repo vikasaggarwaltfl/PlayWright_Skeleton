@@ -39,6 +39,7 @@ export class Actions {
     private readonly defaultPrime: Locator;
     private readonly userName: Locator;
     private readonly firstName: Locator; 
+    private readonly userLastName: Locator;
     private readonly enterCompanyName: Locator;
     private readonly registeredName: Locator;
     private readonly sortKey: Locator;
@@ -78,6 +79,7 @@ export class Actions {
         this.defaultPrime = page.locator("//input[@id='DefaultPrimeAdjustment']");
         this.userName = page.locator("//input[@id='UserName']");
         this.firstName = page.locator("//input[@id='FirstName']"); 
+        this.userLastName = page.locator("//input[@id='LastName']");
         this.enterCompanyName = page.locator("//input[@datakey='createTransactioncompanyName']");
         this.registeredName = page.locator("//input[@id='RegisteredName']");
         this.sortKey = page.locator("//input[@id='SortKey']");
@@ -190,6 +192,10 @@ export class Actions {
         else if (textBoxName === "firstName") {
 
             await this.firstName.fill(text);
+        }
+        else if (textBoxName === "userLastName") {
+
+            await this.userLastName.fill(text);
         }
         else if (textBoxName === "enterCompanyName") {
 

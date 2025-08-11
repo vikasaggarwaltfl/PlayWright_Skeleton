@@ -41,6 +41,24 @@ test('Verify that the user can reset user details by clicking on the reset butto
     await Verify.verifyDatacount();
 });
 
+test('Verify that the user can add a new user with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Users");
+    await Click.tabs("users");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("addUser");
+    await Actions.enterText("userName", "Akshaya@123456.com");
+    await Actions.enterText("firstName", "Test_");
+    await Actions.enterText("userLastName", "user");
+    await Actions.enterText("passwordNumber", "1234");
+    await Click.checkboxWithoutAll("User Countries","All");
+    await Click.dropdown("Default Country", "Australia");
+    await Click.dropdown("Role", "Admin");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved successfully");
+});
+
 test('Verify that the user cannot add new user with invalid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");

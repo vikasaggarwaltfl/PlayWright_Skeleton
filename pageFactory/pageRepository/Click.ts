@@ -62,6 +62,7 @@ export class Click {
     private readonly branchHFACalculator: Locator;
     private readonly clientDetails: Locator;
     private readonly vehicleDetails: Locator;
+    private readonly companyDetails: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -133,8 +134,7 @@ export class Click {
    
     private readonly refresh: Locator;
     private readonly addBranch: Locator;
-    private readonly addCompany: Locator;
-    private readonly companyDetails: Locator;
+    private readonly addCompany: Locator; 
     private readonly documentProtectedyes: Locator;
     private readonly addProduct: Locator;
     private readonly supplyDataReportReset: Locator;
@@ -230,6 +230,7 @@ export class Click {
         this.branchHFACalculator = page.locator("//button[normalize-space()='HFA Calculator']");
         this.clientDetails = page.locator("(//button[normalize-space()='Client Details'])[1]");
         this.vehicleDetails = page.locator("//button[normalize-space()='Vehicle Details']");
+        this.companyDetails = page.locator("//button[normalize-space()='Company Details']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -299,8 +300,7 @@ export class Click {
         this.addGroup = page.locator("//button[contains(@class,'p-button p-component p-splitbutton-defaultbutton')]");
         this.refresh = page.locator("//span[text()='Refresh']");
         this.addBranch = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
-        this.addCompany = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
-        this.companyDetails = page.locator("//button[normalize-space()='Company Details']");
+        this.addCompany = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");  
         this.documentProtectedyes = page.locator("//div[@placeholder='Is Document Protected']//span[@class='p-button-label'][normalize-space()='Yes']");
         this.addProduct = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.supplyDataReportReset = page.locator("//button[normalize-space()='Reset']");
@@ -505,6 +505,9 @@ export class Click {
          else if (str === "vehicleDetails") {
             await this.vehicleDetails.click();
         }
+        else if (str === "companyDetails") {
+            await this.companyDetails.click();
+        }
     };
 
     //icon--------------------------------------------------------------------------------------------------------
@@ -588,6 +591,7 @@ export class Click {
         else if (str === "deleted") {
             await this.deleted.click();
         }
+        
 };
 
     //buttons--------------------------------------------------------------------------------------------------------
@@ -716,9 +720,7 @@ export class Click {
         else if (str === "addCompany") {
             await this.addCompany.click();
         }
-        else if (str === "companyDetails") {
-            await this.companyDetails.click();
-        }
+
         else if (str === "documentProtectedyes") {
             await this.documentProtectedyes.click();
         }

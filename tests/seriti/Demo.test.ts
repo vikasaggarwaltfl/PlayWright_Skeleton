@@ -186,7 +186,7 @@ test('Verify that the user cannot "Add" new Deal Tracker Report with Invalid dat
     await Verify.IsTextDisplayed(page, "Validation Failed");
 });
 
-test.only('Verify that the user can "Copy" a Deal Tracker Report with valid data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can "Copy" a Deal Tracker Report with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
@@ -343,7 +343,7 @@ test('Verify that the user can expand and collapse the details by clicking on th
 test('Verify that the user can view the transaction details status and finance application info on the transaction screen.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Actions.enterText("transactionSearchMenu", "281803");
+    await Actions.enterText("transactionSearchMenu", "281800");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
     await Verify.IsTextDisplayed(page, ["Status", "Transaction Type", "Finance Application Info"]);
@@ -353,7 +353,7 @@ test('Verify that the user can view the transaction details status and finance a
 test('Verify that the user can save the Transaction details status finance application info with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Actions.enterText("transactionSearchMenu", "281803");
+    await Actions.enterText("transactionSearchMenu", "281800");
     await Click.Btn("view");
     await Actions.enterText("transactionStatusNotes", "Testing");
     await Click.Btn("saveAll");
@@ -363,7 +363,7 @@ test('Verify that the user can save the Transaction details status finance appli
 test('Verify that the user can edit the transaction details status finance application info', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Actions.enterText("transactionSearchMenu", "281803");
+    await Actions.enterText("transactionSearchMenu", "281800");
     await Click.Btn("view");
     await Actions.enterText("transactionStatusNotes", "Test Notes");
     await Click.Btn("saveAll");
@@ -375,7 +375,7 @@ test('Verify that the user can edit the transaction details status finance appli
 test('Verify that the user can view the client details section on the transaction screen.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Actions.enterText("transactionSearchMenu", "281803");
+    await Actions.enterText("transactionSearchMenu", "281800");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
     await Click.tabs("clientDetails");
@@ -386,7 +386,7 @@ test('Verify that the user can view the client details section on the transactio
 test('Verify that the user can save the client details section with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Actions.enterText("transactionSearchMenu", "281803");
+    await Actions.enterText("transactionSearchMenu", "281800");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
     await Click.tabs("clientDetails");
@@ -398,7 +398,7 @@ test('Verify that the user can save the client details section with valid data',
 test('Verify that the user can edit the client details section and save successfully.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Actions.enterText("transactionSearchMenu", "281803");
+    await Actions.enterText("transactionSearchMenu", "281800");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
     await Click.tabs("clientDetails");
@@ -412,7 +412,7 @@ test('Verify that the user can edit the client details section and save successf
 test('Verify that the user can view the vehicle details section on the transaction screen.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Actions.enterText("transactionSearchMenu", "281803");
+    await Actions.enterText("transactionSearchMenu", "281800");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
     await Click.tabs("vehicleDetails");
@@ -423,11 +423,10 @@ test('Verify that the user can view the vehicle details section on the transacti
 test('Verify that the user can save the vehicle details section with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Actions.enterText("transactionSearchMenu", "281803");
+    await Actions.enterText("transactionSearchMenu", "281800");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
     await Click.tabs("vehicleDetails");
-    await page.pause();
     await Actions.enterText("vehicleKM", "235");
     await Click.Btn("saveAll");
     await Verify.IsTextDisplayed(page, "Transaction saved successfully");
@@ -436,7 +435,7 @@ test('Verify that the user can save the vehicle details section with valid data'
 test('Verify that the user can edit the vehicle details section and save successfully.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
-    await Actions.enterText("transactionSearchMenu", "281803");
+    await Actions.enterText("transactionSearchMenu", "281800");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
     await Click.tabs("vehicleDetails");
@@ -548,16 +547,6 @@ test('Veriy that user cannot save transaction with Invalid data', async ({ page,
 
 //Groups-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify that "group details" screen is displayed correctly', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Admin");
-    await Click.chevronLeftArrow(1);
-    await Click.tabs("group");
-    await page.waitForTimeout(2000);
-    await Verify.IsTextDisplayed(page, "Group Details");
-});
-
 test('Verify that the user can filter group using the filter options', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
@@ -588,7 +577,7 @@ test('Verify that the user can reset group by clicking on the reset button', asy
     await Verify.verifyDatacount();
 });
 
-test('Verify that the user cannot add new group with invalid data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user cannot add a duplicate group', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -665,15 +654,6 @@ test('Verify that the user is able to download groupDocument', async ({ page, Ac
 
 //branch-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify that "branch details" screen is displayed correctly', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Admin");
-    await Click.chevronLeftArrow(1);
-    await Click.tabs("branches");
-    await Verify.IsTextDisplayed(page, "Branch Details");
-});
-
 test('Verify that the user can filter branch details using the filter options', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
@@ -722,15 +702,6 @@ test('Verify that the user can add a new branch with valid details', async ({ pa
 });
 
 //Company-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-test('Verify that "company details" screen is displayed correctly', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Admin");
-    await Click.chevronLeftArrow(1);
-    await Click.tabs("companies");
-    await Verify.IsTextDisplayed(page, "Company");
-});
 
 test('Verify that the user can filter company details using the filter options', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
@@ -789,14 +760,15 @@ test('Verify that password generator working as expected', async ({ page, Action
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
-    await Click.Btn("companyDetails");
+    await Click.tabs("companyDetails");
     await Click.Btn("add");
     await page.waitForTimeout(2000);
     const [popup] = await Promise.all([page.waitForEvent('popup'), await Click.link("clickhere")]);
     await Verify.verifyURL(popup, 'https://randomwheel.org/password-generator');
+
 });
 
-test('Verify Document protection is working or not if it selected as "Yes"', async ({ page, Actions, Click, Verify }) => {
+test('Verify Document protection is working if it selected as "Yes"', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -808,10 +780,45 @@ test('Verify Document protection is working or not if it selected as "Yes"', asy
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
-    await Click.Btn("companyDetails");
+    await Click.tabs("companyDetails");
     await Click.Btn("add");
     await page.waitForTimeout(2000);
     await Click.Btn("documentProtectedyes");
     await page.waitForTimeout(2000);
-
+    await Verify.IsTextDisplayed(page, 'Add Company Information');
 });
+
+//vehicles-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user cannot add an duplicate vehicle', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("addVehicle");
+    await Click.dropdown("Manufacturer", "Acura");
+    await Actions.enterText("vehicleModel", "new")
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saving Failed!");
+});
+
+//Vehicles >> Import vehicle file---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can import a vehicle file when clicking on the import vehicle file button', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.tabs("importVehicleFile");
+    await Click.dropdown("Select a group", "Group 2")
+    await Click.dropdown("Select a branch", "Branch 2")
+    const fileInput = await page.$("//input[@type='file']");
+    await fileInput.setInputFiles(path.resolve('./documents/Sample report.pdf'));
+    await Click.Btn("importVehicleBtn");
+    await Verify.IsTextDisplayed(page, "Success");
+});
+

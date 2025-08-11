@@ -52,7 +52,7 @@ test('Verify that the user can reset vehicle details by clicking on the reset bu
     await Verify.verifyDatacount();
 });
 
-test('Verify that the user cannot add an vehicle with that already exsists', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user cannot add an duplicate vehicle', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Vehicles");

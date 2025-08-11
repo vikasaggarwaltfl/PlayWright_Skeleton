@@ -45,7 +45,7 @@ test('Verify that the user can reset group by clicking on the reset button', asy
     await Verify.verifyDatacount();
 });
 
-test('Verify that the user cannot add new group with invalid data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user cannot add a duplicate group', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");

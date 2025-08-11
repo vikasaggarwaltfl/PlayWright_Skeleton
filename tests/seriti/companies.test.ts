@@ -137,7 +137,7 @@ test('Verify that password generator working as expected', async ({ page, Action
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
-    await Click.Btn("companyDetails");
+    await Click.tabs("companyDetails");
     await Click.Btn("add");
     await page.waitForTimeout(2000);
     const [popup] = await Promise.all([page.waitForEvent('popup'), await Click.link("clickhere")]);
@@ -145,7 +145,7 @@ test('Verify that password generator working as expected', async ({ page, Action
 
 });
 
-test('Verify Document protection is working or not if it selected as "Yes"', async ({ page, Actions, Click, Verify }) => {
+test('Verify Document protection is working if it selected as "Yes"', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -157,10 +157,11 @@ test('Verify Document protection is working or not if it selected as "Yes"', asy
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
-    await Click.Btn("companyDetails");
+    await Click.tabs("companyDetails");
     await Click.Btn("add");
     await page.waitForTimeout(2000);
     await Click.Btn("documentProtectedyes");
     await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, 'Add Company Information');
 
 });
