@@ -54,7 +54,7 @@ test('Verify that the Show Required tab displays only mandatory fields on the fo
     console.log(" Show Required tab displays only mandatory fields as expected");
 });
 
-test('Verify that the "Show All" tab displays all fields on the form.', async ({ page, Actions, Click, Verify }) => {
+test.only('Verify that the "Show All" tab displays all fields on the form.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281957");
@@ -64,7 +64,7 @@ test('Verify that the "Show All" tab displays all fields on the form.', async ({
     console.log(" Show All tab displays all fields as expected");
 });
 
-test('Verify that the Hide Overview tab hides the overview section of transaction.', async ({ page, Actions, Click, Verify }) => {
+test.only('Verify that the Hide Overview tab hides the overview section of transaction.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281957");

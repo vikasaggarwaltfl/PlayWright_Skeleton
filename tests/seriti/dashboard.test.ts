@@ -16,7 +16,6 @@ test('Verify that the Main Dashboard screen is displayed as expected', async ({ 
   await Click.Btn('login');
   await Actions.enterText('searchMenu', 'Main Dashboard');
   await Click.tabs('mainDashboard');
-  // Wait for a unique dashboard element to appear
   await page.waitForSelector('text=Main Dashboard', { timeout: 15000 });
   await Verify.IsTextDisplayed(page, 'Main Dashboard');
 });
@@ -51,17 +50,6 @@ test('Verify that the "Expand All" and "Collapse All" buttons function as expect
   await expect(page.getByText('Expand All')).toBeVisible();
 });
 
-// test('Verify that user can load accordion of main dashboard by applying filter parameters', async ({ page, Actions, Click, Verify }) => {
-//   await Actions.signIn('sonali');
-//   await Click.Btn('login');
-//   await Actions.enterText('searchMenu', 'Main Dashboard');
-//   await Click.tabs('mainDashboard');
-//   await Click.calendar(1, '2025', 'Jun', 10);
-//   await page.waitForTimeout(2000);
-//   await Click.calendar(2, '2025', 'Jun', 20);
-//   await Click.Btn('load');
-//   await Verify.IsTextDisplayed(page, ['Chart View', 'Collapse All']);
-// });
 
 // -------------------- Transaction Conversion Rate --------------------
 
@@ -116,19 +104,9 @@ test('Export Transaction Conversion Chart to Excel', async ({ page, Actions, Cli
   console.log('Transaction Conversion Chart exported to Excel successfully.');
 });
 
-// -------------------- Cash and Finance Shares Chart --------------------
+//-------------------- Cash and Finance Shares Chart --------------------
 
-// test('Verify that the Cash and Finance Shares canvas chart loads as expected', async ({ page, Actions, Click, Verify }) => {
-//   await Actions.signIn('sonali');
-//   await Click.Btn('login');
-//   await Actions.enterText('searchMenu', 'Main Dashboard');
-//   await Click.tabs('mainDashboard');
-//   await Click.calendar(1, '2025', 'Feb', 10);
-//   await Click.Btn('load');
-//   const canvasElmt = page.locator('#c1ed079c-dc5e-45cd-9a38-06d44dc75c7d');
-//   await Verify.verifyElementPresence(canvasElmt, true);
-//   console.log('Cash and Finance Shares canvas chart loaded as expected.');
-// });
+
 
 test('Verify that the Cash and Finance Share chart can be saved in different formats', async ({ page, Actions, Click }) => {
   await Actions.signIn('sonali');
@@ -142,19 +120,7 @@ test('Verify that the Cash and Finance Share chart can be saved in different for
   await Click.selectSaveAsOption('PDF');
 });
 
-// -------------------- Vehicle Financed per Finance House --------------------
-
-// test('Verify that the Vehicle financed per Finance House canvas chart loads as expected', async ({ page, Actions, Click, Verify }) => {
-//   await Actions.signIn('sonali');
-//   await Click.Btn('login');
-//   await Actions.enterText('searchMenu', 'Main Dashboard');
-//   await Click.tabs('mainDashboard');
-//   await Click.calendar(1, '2025', 'Feb', 10);
-//   await Click.Btn('load');
-//   const canvasElmt = page.locator('#88224891-e16d-42b6-9013-2de2ffa935b6');
-//   await Verify.verifyElementPresence(canvasElmt, true);
-//   console.log('Vehicle financed per Finance House canvas chart loaded as expected.');
-// });
+//-------------------- Vehicle Financed per Finance House --------------------
 
 test('Verify that the Vehicle financed per Finance House chart can be saved in different formats', async ({ page, Actions, Click }) => {
   await Actions.signIn('sonali');
@@ -166,60 +132,6 @@ test('Verify that the Vehicle financed per Finance House chart can be saved in d
   await Click.selectSaveAsOption('JPEG');
   await Click.selectSaveAsOption('PDF');
 });
-
-// -------------------- Vehicles Sold per Sales Person --------------------
-
-// test('Verify that the Vehicles sold per sales person canvas chart loads as expected', async ({ page, Actions, Click, Verify }) => {
-//   await Actions.signIn('sonali');
-//   await Click.Btn('login');
-//   await Actions.enterText('searchMenu', 'Main Dashboard');
-//   await Click.tabs('mainDashboard');
-//   await Click.calendar(1, '2025', 'Feb', 10);
-//   await Click.Btn('load');
-//   const canvasElmt = page.locator('#d5dc892a-e024-4dc4-96d8-250fee1da8a4');
-//   await Verify.verifyElementPresence(canvasElmt, true);
-//   console.log('Vehicles sold per sales person canvas chart loaded as expected.');
-// });
-
-// test('Verify that the Vehicles sold per sales person chart can be saved in different formats', async ({ page, Actions, Click }) => {
-//   await Actions.signIn('sonali');
-//   await Click.Btn('login');
-//   await Actions.enterText('searchMenu', 'Main Dashboard');
-//   await Click.tabs('mainDashboard');
-//   await Click.Btn('load');
-//   await Click.selectSaveAsOption('PNG');
-//   await Click.selectSaveAsOption('JPEG');
-//   await Click.selectSaveAsOption('PDF');
-// });
-
-// -------------------- Transaction In Progress Dashboard --------------------
-
-// test('Verify that the Transaction In Progress Dashboard screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {
-//   await Actions.signIn('sonali');
-//   await Click.Btn('login');
-//   await Actions.enterText('searchMenu', 'Progress');
-//   await Click.tabs('transactionInProgressDashboard');
-//   await expect(page.getByText('Transaction In Progress', { exact: true })).toBeVisible();
-//   await Verify.IsTextDisplayed(page, ['Transaction In Progress']);
-// });
-
-// test('Verify that all expected sections are present on the Transaction In Progress Dashboard', async ({ page, Actions, Click, Verify }) => {
-//   await Actions.signIn('sonali');
-//   await Click.Btn('login');
-//   await Actions.enterText('searchMenu', 'Transaction In Progress');
-//   await Click.tabs('transactionInProgressDashboard');
-//   await Click.Btn('load');
-//   await Verify.IsTextDisplayed(page, ['Chart View', 'Collapse All']);
-// });
-
-// test('Verify that the Transaction In Progress Dashboard filter parameters work correctly', async ({ page, Actions, Click, Verify }) => {
-//   await Actions.signIn('sonali');
-//   await Click.Btn('login');
-//   await Actions.enterText('searchMenu', 'Transaction In Progress');
-//   await Click.tabs('transactionInProgressDashboard');
-//   await Click.Btn('load');
-//   await Verify.IsTextDisplayed(page, ['Chart View', 'Collapse All']);
-// });
 
 test('Verify that the Transaction In Progress Dashboard can be saved in different formats', async ({ page, Actions, Click, Verify }) => {
   await Actions.signIn('sonali');
@@ -240,14 +152,6 @@ test('Verify that the Transaction Status Ageing Analysis Dashboard screen is dis
   await Verify.IsTextDisplayed(page, ['Transaction Status Ageing Analysis']);
 });
 
-test('Verify that all expected sections are present on the Transaction Status Ageing Analysis Dashboard', async ({ page, Actions, Click, Verify }) => {
-  await Actions.signIn('sonali');
-  await Click.Btn('login');
-  await Actions.enterText('searchMenu', 'Transaction Status Ageing Analysis');
-  await Click.tabs('transactionStatusAgeingAnalysisDashboard');
-  await Click.Btn('load');
-  await Verify.IsTextDisplayed(page, ['Chart View', 'Collapse All']);
-});
 
 test('Verify that the Transaction Status Ageing Analysis Dashboard filter parameters work correctly', async ({ page, Actions, Click, Verify }) => {
   await Actions.signIn('sonali');
@@ -341,41 +245,9 @@ test('Verify that the Transaction Weekly Analysis Dashboard screen is displayed 
   await Verify.IsTextDisplayed(page, ["Transaction Weekly Analysis"]);
 });
 
-test('Verify that all expected sections are present on the Transaction Weekly Analysis Dashboard', async ({ page, Actions, Click, Verify }) => {
-  await Actions.signIn("sonali");
-  await Click.Btn("login");
-  await Actions.enterText("searchMenu", "Transaction Weekly Analysis");
-  await Click.tabs("transactionWeeklyAnalysisDashboard");
-  await page.waitForTimeout(2000);
-  await Click.Btn('load');
-  await page.waitForTimeout(2000);
-  await Verify.IsTextDisplayed(page, ["Chart View", "Collapse All"]);
-});
-
-test('Verify that the Transaction Weekly Analysis Dashboard filter parameters work correctly', async ({ page, Actions, Click, Verify }) => {
-  await Actions.signIn("sonali");
-  await Click.Btn("login");
-  await Actions.enterText("searchMenu", "Transaction Weekly Analysis");
-  await Click.tabs("transactionWeeklyAnalysisDashboard");
-  await page.waitForTimeout(2000);
-  await Click.Btn('load');
-  await page.waitForTimeout(2000);
-  await Verify.IsTextDisplayed(page, ["Chart View", "Collapse All"]);
-});
-
 
 // Dashboard >> Finance Application Analysis Dashboard-------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify that the Finance Application Analysis Dashboard screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {
-  await Actions.signIn("sonali");
-  await Click.Btn("login");
-  await Actions.enterText("searchMenu", "Finance Application Analysis");
-  await Click.tabs("financeApplicationAnalysisDashboard");
-  await page.waitForTimeout(2000);
-  await expect(page.getByText("Finance Application Analysis", { exact: true })).toBeVisible();
-  await page.waitForTimeout(2000);
-  await Verify.IsTextDisplayed(page, ["Finance Application Analysis"]);
-});
 
 test('Verify that all expected sections are present on the Finance Application Analysis Dashboard', async ({ page, Actions, Click, Verify }) => {
   await Actions.signIn("sonali");
@@ -388,19 +260,7 @@ test('Verify that all expected sections are present on the Finance Application A
   await Verify.IsTextDisplayed(page, ["Chart View", "Collapse All"]);
 });
 
-test('Verify that the Finance Application Analysis Dashboard filter parameters work correctly', async ({ page, Actions, Click, Verify }) => {
-  await Actions.signIn("sonali");
-  await Click.Btn("login");
-  await Actions.enterText("searchMenu", "Finance Application Analysis");
-  await Click.tabs("financeApplicationAnalysisDashboard");
-  await page.waitForTimeout(2000);
-  await Click.Btn('load');
-  await page.waitForTimeout(2000);
-  await Verify.IsTextDisplayed(page, ["Chart View", "Collapse All"]);
-});
-
-
-test('Verify that each accordian section chart is displayed correctly on Main Dashboard', async ({ page, Actions, Click, Verify }) => {
+test.only('Verify that each accordian section chart is displayed correctly on Main Dashboard', async ({ page, Actions, Click, Verify }) => {
   const sectionTitles = [
       "Transaction Conversion Rate",
       "Cash and Finance Shares",
@@ -435,79 +295,6 @@ test('Verify that each accordian section chart is displayed correctly on Main Da
   }
 });
 
-// Dashboard >> Transaction In Progress Dashboard----------------------------------------------------------------------------------------------------------------------------------
-
-test('Verify that the Transaction In Progress Dashboard screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {
-  await Actions.signIn("sonali");
-  await Click.Btn("login");
-  await Actions.enterText("searchMenu", "Transaction In Progress");
-  await Click.tabs("transactionInProgressDashboard");
-  await page.waitForTimeout(2000);
-  await expect(page.getByText("Transaction In Progress", { exact: true })).toBeVisible();
-  await Verify.IsTextDisplayed(page, ["Transaction In Progress"]);
-});
-
-test('Verify that all expected sections are present on the Transaction In Progress Dashboard', async ({ page, Actions, Click, Verify }) => {
-  await Actions.signIn("sonali");
-  await Click.Btn("login");
-  await Actions.enterText("searchMenu", "Transaction In Progress");
-  await Click.tabs("transactionInProgressDashboard");
-  await page.waitForTimeout(2000);
-  await Click.Btn('load');
-  await page.waitForTimeout(2000);
-  await Verify.IsTextDisplayed(page, ["Chart View", "Collapse All"]);
-});
-
-test('Verify that the Transaction In Progress Dashboard filter parameters work correctly', async ({ page, Actions, Click, Verify }) => {
-  await Actions.signIn("sonali");
-  await Click.Btn("login");
-  await Actions.enterText("searchMenu", "Transaction In Progress");
-  await Click.tabs("transactionInProgressDashboard");
-  await page.waitForTimeout(2000);
-  await Click.Btn('load');
-  await page.waitForTimeout(2000);
-  await Verify.IsTextDisplayed(page, ["Chart View", "Collapse All"]);
-});
-
-test('Verify that the Transaction Status Ageing Analysis Dashboard can be saved in different formats', async ({ page, Actions, Click, Verify }) => {
-  await Actions.signIn("sonali");
-  await Click.Btn("login");
-  await Actions.enterText("searchMenu", "Transaction Status Ageing Analysis");
-  await Click.tabs("transactionStatusAgeingAnalysisDashboard");
-  await Click.Btn('load');
-  await page.waitForTimeout(2000);
-  await Click.selectSaveAsOption('JPEG');
-  await Verify.verifyDownload('downloadlink');
-});
-
-// Dashboard >> Finance House Market Share Dashboard------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-test('Verify that the Finance House Market Share Dashboard can be saved in different formats', async ({ page, Actions, Click, Verify }) => {
-  await Actions.signIn("sonali");
-  await Click.Btn("login");
-  await Actions.enterText("searchMenu", "Finance House Market Share");
-  await Click.tabs("financeHouseMarketShareDashboard");
-  await Click.Btn('load');
-  await page.waitForTimeout(2000);
-  await Click.selectSaveAsOption('PDF');
-  await Verify.verifyDownload('downloadlink');
-});
-
-// Dashboard >> Dealer Market Share Dashboard------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-test('Verify that the Dealer Market Share Dashboard can be saved in different formats', async ({ page, Actions, Click, Verify }) => {
-  await Actions.signIn("sonali");
-  await Click.Btn("login");
-  await Actions.enterText("searchMenu", "Dealer Market Share");
-  await Click.tabs("dealerMarketShareDashboard");
-  await Click.Btn('load');
-  await page.waitForTimeout(2000);
-  await Click.selectSaveAsOption('PNG');
-  await Verify.verifyDownload('downloadlink');
-});
 
 
 

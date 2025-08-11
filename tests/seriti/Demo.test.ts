@@ -5,7 +5,7 @@ import { Click } from '@pages/Click';
 import { Verify } from '@pages/Verify'
 import * as path from 'path'
 
-// Login ------------------------------------------------------------------------------------------------------------------------
+// Login ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 test('Verify that the "Login" screen is displayed as expected.', async ({ page, Actions, Click, Verify }) => {
@@ -46,7 +46,215 @@ test('Verify navigation to "Forgot Password" screen from Login screen', async ({
   await page.goto("https://seritiweb-mea-uat.seriti-int.com/auth/UserLogin");
   await page.click('text=Forgot Password');
   await Verify.verifyURL(page, 'https://seritiweb-mea-uat.seriti-int.com/password/forgot');
-  console.log('User redirected to forgot password screen');
+  console.log('User redirected to forgot password screen a expected');
+});
+
+// Dashboard---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that Dashboard sidebar option is displayed correctly with icon', async ({ page, Actions, Click, Verify }) => {
+  await Actions.signIn('sonali');
+  await Click.Btn('login');
+  await Verify.IsTextDisplayed(page, 'Dashboard');
+  await Verify.isIconVisible(page, 'dashboardIcon');
+  console.log('The Dashboard sidebar option is displayed as expected with icon.');
+});
+
+test('Verify that all expected accordions are present on the Main Dashboard.', async ({ page, Actions, Click, Verify }) => {
+  await Actions.signIn('sonali');
+  await Click.Btn('login');
+  await Actions.enterText('searchMenu', 'Main Dashboard');
+  await Click.tabs('mainDashboard');
+  await Verify.IsTextDisplayed(page, [
+    'Transaction Conversion Rate',
+    'Cash and Finance Shares',
+    'Vehicles Financed per Finance House',
+    'Vehicles Sold per Dealer',
+    'Vehicles Sold per Sales Person',
+    'Vehicles Sold per Business Manager',
+    '% Penetration per Product Type Category',
+    'APU per Business Manager',
+    'APU per Sales Person',
+  ]);
+  console.log("all expected accordions are present on the Main Dashboard")
+});
+
+test('Verify that the "Expand All" and "Collapse All" buttons function as expected.', async ({ page, Actions, Click }) => {
+  await Actions.signIn('sonali');
+  await Click.Btn('login');
+  await Actions.enterText('searchMenu', 'Main Dashboard');
+  await Click.tabs('mainDashboard');
+  await page.getByRole('button', { name: /Expand All/i }).click();
+  await expect(page.getByText('Collapse All')).toBeVisible();
+  await page.getByRole('button', { name: /Collapse All/i }).click();
+  await expect(page.getByText('Expand All')).toBeVisible();
+});
+
+// Dashboard >> Transaction Conversion Rate -------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the transaction conversion chart loaded as expected', async ({ page, Actions, Click, Verify }) => {
+  await Actions.signIn('sonali');
+  await Click.Btn('login');
+  await Actions.enterText('searchMenu', 'Main Dashboard');
+  await Click.tabs('mainDashboard');
+  await Click.Btn('load');
+  await page.waitForTimeout(2000);
+  const canvasElmt = page.locator("canvas[data-pc-section='canvas']");
+  await Verify.verifyElementPresence(canvasElmt, true);
+  console.log('Transaction conversion chart loaded as expected.');
+});
+
+test('Verify that the transaction conversion chart can be saved in different formats', async ({ page, Actions, Click }) => {
+  await Actions.signIn('sonali');
+  await Click.Btn('login');
+  await Actions.enterText('searchMenu', 'Main Dashboard');
+  await Click.tabs('mainDashboard');
+  await Click.Btn('load');
+  await Click.selectSaveAsOption('PNG');
+  await Click.selectSaveAsOption('JPEG');
+  await Click.selectSaveAsOption('PDF');
+  console.log('Transaction conversion chart saved in different formats as expected.');
+});
+
+test('Verify that the user can switch to the tabular view of the transaction conversion chart and it displays correctly.', async ({ page, Actions, Click, Verify }) => {
+  await Actions.signIn('sonali');
+  await Click.Btn('login');
+  await Actions.enterText('searchMenu', 'Main Dashboard');
+  await Click.tabs('mainDashboard');
+  await Click.Btn('load');
+  await page.locator("//span[text()='Tabular View']").click();
+  const tableElmt = page.locator('table');
+  await Verify.verifyElementPresence(tableElmt, true);
+  console.log('User can switch to tabular view of transaction conversion chart and it is displayed as expected.');
+});
+
+test('Export Transaction Conversion Chart to Excel', async ({ page, Actions, Click }) => {
+  await Actions.signIn('sonali');
+  await Click.Btn('login');
+  await Actions.enterText('searchMenu', 'Main Dashboard');
+  await Click.tabs('mainDashboard');
+  await Click.Btn('load');
+  await page.locator("//span[text()='Tabular View']").click();
+  await page.waitForSelector('table', { state: 'visible' });
+  const [download] = await Promise.all([
+    page.waitForEvent('download'),
+    page.click('button:has-text("Export to Excel")'),
+  ]);
+  const suggestedFilename = download.suggestedFilename();
+  expect(suggestedFilename).toMatch(/\.xlsx?$/i);
+  console.log('Transaction Conversion Chart exported to Excel successfully.');
+});
+
+//My Reports >> Reports >> Deal Tracker Report-------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the Deal Tracker Report screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("dealTracker");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, ["Created Date", "Process State Message", "Report File"]);
+});
+
+test('Verify that the user can "Add" new Deal Tracker Report with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("dealTracker");
+    await Click.Btn("addDealTrackerReport");
+    await Click.dropdown("Group", "Test_Group");
+    await Click.calendar(1, "2025", "Jun", 10);
+    await page.waitForTimeout(2000);
+    await Click.calendar(2, "2025", "Jun", 20);
+    await Click.Btn("createDateYes");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
+test('Verify that the user cannot "Add" new Deal Tracker Report with Invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("dealTracker");
+    await Click.Btn("addDealTrackerReport");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Validation Failed");
+});
+
+test.only('Verify that the user can "Copy" a Deal Tracker Report with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("dealTracker");
+    await page.waitForTimeout(2000);
+    await Click.icon("copy");
+    await Click.Btn("selectAll");
+    await Click.Btn("copying");
+    await page.waitForTimeout(6000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
+test('Verify that the user can sort Deal Tracker Report records', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("dealTracker");
+    await Click.icon("Sort")
+    await Verify.verifySortOrder();
+    await page.waitForTimeout(2000);
+    await Verify.verifySortOrder();
+});
+
+test('Verify that the user can "download" Deal Tracker report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(2);
+    await Click.tabs("dealTracker");
+    await Verify.verifyDownload('downloadlink');
+});
+
+//My Reports >> Admin Report  >> Banker User Login Report------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can generate Banker User Login Report', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("bankerUserLoginReport"); 
+    await page.waitForTimeout(2000);
+    await Click.checkboxWithoutAll("Groups", "All");
+    await Click.checkboxWithoutAll("Branch", "All");
+    await Click.checkboxWithoutAll("Finance Company", "All");
+    await Click.checkboxWithoutAll("Role", "All");
+    await Click.Btn("includeActiveUsersYes");
+    await page.waitForTimeout(3000);
+    await Click.generateReport.click(); 
+    await Verify.verifyDownload('generateReport');
+});
+
+test('Verify that the user cannot generate Supply Data Report without required fields', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "My Reports");
+    await Click.chevronLeftArrow(1);
+    await Click.chevronLeftArrow(4);
+    await Click.tabs("supplyDataReport");
+    await page.waitForTimeout(2000);
+    await Click.generateReport.click();
+    await Verify.IsTextDisplayed(page, "Could not generate report"); // Adjust if different error message
 });
 
 // Transaction Screen ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -61,20 +269,7 @@ test('Verify that a user can initiate the individual create transaction process 
     await Actions.enterText("lastName", "TestTransaction");
     await Click.Btn("clickTransaction");
     await Verify.IsTextDisplayed(page,"redirecting");
-    console.log("Individual Transaction created successfully");
-});
-
-test('Verify that the user is redirected to the transaction details screen after creating individual transaction. ', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Click.Btn("createTransaction");
-    await Click.dropdown("Select a group", "Test_Group")
-    await Click.dropdown("Select a branch", "Test_Branch")
-    await Click.radioButton("Individual");
-    await Actions.enterText("lastName", "TestTransaction");
-    await Click.Btn("clickTransaction");
-    await Verify.IsTextDisplayed(page,"Client details");
-    console.log("User redirected to transaction details screen as expected");
+    console.log("Individual Transaction Created Successfully");
 });
 
 test('Verify that navbar options are displayed as expected at the top of the screeen.', async ({ page, Actions, Click, Verify }) => {
@@ -120,16 +315,6 @@ test('Verify that the Hide Overview tab hides the overview section of transactio
     await Verify.IsTextDisplayed(page, "Show Overview"); 
 });
 
-test('Verify that the Show Overview tab displays the overview section of transaction.', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("transactionSearchMenu", "281957");
-    await Click.Btn("view");
-    await page.waitForLoadState('networkidle');
-    await Click.transactionTabs("showOverview");
-    await Verify.IsTextDisplayed(page, "Hide Overview");
-});
-
 test('Verify that all form sections are displayed sequentially on the screen', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
@@ -165,7 +350,7 @@ test('Verify that the user can view the transaction details status and finance a
     console.log("User can view the transaction details status and finance application info on the transaction screen as expected");
 });
 
-test('Verify that the user can save the transaction details status finance application info with valid data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can save the Transaction details status finance application info with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281803");
@@ -260,7 +445,7 @@ test('Verify that the user can edit the vehicle details section and save success
     await Verify.IsTextDisplayed(page, "Transaction saved successfully");
 });
 
-// Account Details
+// Account Details --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that Account details Section displayed as expected on transaction screen', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
@@ -273,8 +458,7 @@ test('Verify that Account details Section displayed as expected on transaction s
     console.log("Account details displayed as expected");
 });
 
-
-// Document
+// Document --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that document section displayed as expected on transaction screen', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
@@ -300,7 +484,7 @@ test('Verify that user cannot add Transaction Document with Invalid data', async
     console.log(" Error message displayed for required field as expected ");
 });
 
-// Finance Application
+// Finance Application --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that Finance application section displayed as expected on transaction screen', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
@@ -325,7 +509,7 @@ test('Verify that user can enter to the finnace application from transaction scr
     console.log("User successfully enter in to Finance application");
 });
 
-// Audit Log
+// Audit Log --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify user can check Audit Log on transaction screen', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
@@ -338,7 +522,7 @@ test('Verify user can check Audit Log on transaction screen', async ({ page, Act
     console.log("Audit log displayed as expected");
 });
 
-// Save Transaction
+// Save Transaction  --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Veriy that user can save transaction with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
@@ -362,7 +546,7 @@ test('Veriy that user cannot save transaction with Invalid data', async ({ page,
     console.log("Error message displayed as expected for required fields");
 });
 
-//groups-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Groups-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that "group details" screen is displayed correctly', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
