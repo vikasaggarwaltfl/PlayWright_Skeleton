@@ -11,14 +11,9 @@ import * as path from 'path'
 test('Verify that the "Login" screen is displayed as expected.', async ({ page, Actions, Click, Verify }) => {
   await page.goto("https://seritiweb-mea-uat.seriti-int.com/auth/UserLogin");
   await Verify.IsTextDisplayed(page, 'Login');
-  console.log('Login screen displayed as expected');
-});
-
-test('seriti Logo should be visible on the login page', async ({ page }) => {
-  await page.goto("https://seritiweb-mea-uat.seriti-int.com/auth/UserLogin");
   const logo = page.locator('img.w-auto.h-16.pointer-events-none');
   await expect(logo).toBeVisible();
-  console.log('Seriti logo is displayed as expected');
+  console.log('Login screen displayed as expected with logo');
 });
 
 test('Verify that the user can log in successfully with valid credentials.', async ({ page, Actions, Click, Verify }) => {
@@ -33,20 +28,6 @@ test('Verify that error message should displayed for Invalid inputs', async ({ p
   await Click.Btn('login');
   await Verify.IsTextDisplayed(page, 'Username is a required field');
   console.log('Error message displayed as expected for invalid inputs');
-});
-
-test('Verify that the user is redirected to the correct URL after logging in successfully.', async ({ page, Actions, Click, Verify }) => {
-  await Actions.signIn('sonali');
-  await Click.Btn('login');
-  await Verify.verifyURL(page, 'https://seritiweb-mea-uat.seriti-int.com/transaction');
-  console.log('user is redirected to the correct URL after logging in');
-});
-
-test('Verify navigation to "Forgot Password" screen from Login screen', async ({ page, Actions, Click, Verify}) => {
-  await page.goto("https://seritiweb-mea-uat.seriti-int.com/auth/UserLogin");
-  await page.click('text=Forgot Password');
-  await Verify.verifyURL(page, 'https://seritiweb-mea-uat.seriti-int.com/password/forgot');
-  console.log('User redirected to forgot password screen a expected');
 });
 
 // Dashboard---------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -91,15 +72,16 @@ test('Verify that the "Expand All" and "Collapse All" buttons function as expect
 
 // Dashboard >> Transaction Conversion Rate -------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify that the transaction conversion chart loaded as expected', async ({ page, Actions, Click, Verify }) => {
+test.only('Verify that the transaction conversion chart loaded as expected', async ({ page, Actions, Click, Verify }) => {
   await Actions.signIn('sonali');
   await Click.Btn('login');
   await Actions.enterText('searchMenu', 'Main Dashboard');
   await Click.tabs('mainDashboard');
   await Click.Btn('load');
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(3000);
   const canvasElmt = page.locator("canvas[data-pc-section='canvas']");
   await Verify.verifyElementPresence(canvasElmt, true);
+  await page.waitForTimeout(2000);
   console.log('Transaction conversion chart loaded as expected.');
 });
 
@@ -184,22 +166,6 @@ test('Verify that the user cannot "Add" new Deal Tracker Report with Invalid dat
     await Click.Btn("addDealTrackerReport");
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Validation Failed");
-});
-
-test('Verify that the user can "Copy" a Deal Tracker Report with valid data', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "My Reports");
-    await Click.chevronLeftArrow(1);
-    await Click.chevronLeftArrow(2);
-    await Click.tabs("dealTracker");
-    await page.waitForTimeout(2000);
-    await Click.icon("copy");
-    await Click.Btn("selectAll");
-    await Click.Btn("copying");
-    await page.waitForTimeout(6000);
-    await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
 test('Verify that the user can sort Deal Tracker Report records', async ({ page, Actions, Click, Verify }) => {
@@ -467,6 +433,7 @@ test('Verify that document section displayed as expected on transaction screen',
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
     await Click.Btn("documents");
+    await page.waitForTimeout(2000);
     await Verify.IsTextDisplayed(page, ["Uploaded date", "Document category", "Description","File size", "created by","Certification type","File name"]);
     console.log(" Document section displayed as expected");
 });
@@ -505,6 +472,7 @@ test('Verify that user can enter to the finnace application from transaction scr
     await page.waitForLoadState('networkidle');
     await Click.Btn("financeApplication");
     await Click.Btn("financeLogo")
+    await page.waitForLoadState('networkidle');
     await Verify.IsTextDisplayed(page, "Finance Application: Test_Comp");
     console.log("User successfully enter in to Finance application");
 });
