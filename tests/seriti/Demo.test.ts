@@ -72,7 +72,7 @@ test('Verify that the "Expand All" and "Collapse All" buttons function as expect
 
 // Dashboard >> Transaction Conversion Rate -------------------------------------------------------------------------------------------------------------------------------
 
-test.only('Verify that the transaction conversion chart loaded as expected', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the transaction conversion chart loaded as expected', async ({ page, Actions, Click, Verify }) => {
   await Actions.signIn('sonali');
   await Click.Btn('login');
   await Actions.enterText('searchMenu', 'Main Dashboard');
@@ -361,7 +361,7 @@ test('Verify that the user can save the client details section with valid data',
     await Verify.IsTextDisplayed(page, "Transaction saved successfully");
 });
 
-test('Verify that the user can edit the client details section and save successfully.', async ({ page, Actions, Click, Verify }) => {
+test.only('Verify that the user can edit the client details section and save successfully.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281800");

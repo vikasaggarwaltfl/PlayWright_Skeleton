@@ -63,6 +63,7 @@ export class Click {
     private readonly clientDetails: Locator;
     private readonly vehicleDetails: Locator;
     private readonly companyDetails: Locator;
+    private readonly branchHFACustomerNotifications: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -165,6 +166,7 @@ export class Click {
     private readonly financeLogo: Locator;
     private readonly auditLog: Locator;
     private readonly saveTransaction:Locator;
+    private readonly branchEnableLinkButtonYes: Locator;
     
     
 
@@ -231,6 +233,7 @@ export class Click {
         this.clientDetails = page.locator("(//button[normalize-space()='Client Details'])[1]");
         this.vehicleDetails = page.locator("//button[normalize-space()='Vehicle Details']");
         this.companyDetails = page.locator("//button[normalize-space()='Company Details']");
+        this.branchHFACustomerNotifications = page.locator("//button[normalize-space()='HFA Customer Notifications']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -330,14 +333,9 @@ export class Click {
         this.financeLogo = page.locator("//button[@class='h-10 w-full flex flex-row justify-center items-center']");
         this.auditLog = page.locator("//span[normalize-space()='Audit Log']");
         this.saveTransaction = page.locator("//span[normalize-space()='Save All']");
+        this.branchEnableLinkButtonYes = page.locator("//div[@placeholder='Enable Link Button?']//span[@class='p-button-label'][normalize-space()='Yes']");
         
-
-
-
-        
-
-       
-    }
+}
 
     //link--------------------------------------------------------------------------------------------------------
     
@@ -508,6 +506,9 @@ export class Click {
         else if (str === "companyDetails") {
             await this.companyDetails.click();
         }
+        else if (str === "branchHFACustomerNotifications") {
+            await this.branchHFACustomerNotifications.click();
+        }
     };
 
     //icon--------------------------------------------------------------------------------------------------------
@@ -591,6 +592,7 @@ export class Click {
         else if (str === "deleted") {
             await this.deleted.click();
         }
+        
         
 };
 
@@ -786,6 +788,9 @@ export class Click {
         }
         else if (str === "saveTransaction") {
             await this.saveTransaction.click();
+        }
+        else if (str === "branchEnableLinkButtonYes") {
+            await this.branchEnableLinkButtonYes.click();
         }
 
 
