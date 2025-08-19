@@ -107,6 +107,49 @@ test('Verify that the user can expand and collapse the details by clicking on th
     await expect(page.locator('//span[normalize-space()="Change Vehicle"]')).toBeHidden();
 });
 
+//Transaction Details Status Finance Application Info ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the Transaction details status and finance application info displayed correctly on the transaction screen.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Verify.IsTextDisplayed(page, ["Status", "Transaction Type", "Finance Application Info"]);
+    console.log("User can view the transaction details status and finance application info on the transaction screen as expected");
+});
+
+test('Verify that the user can save the Transaction details status finance application info with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await Actions.enterText("transactionStatusNotes", "Testing");
+    await Click.Btn("saveAll");
+    await Verify.IsTextDisplayed(page, "Transaction saved successfully"); 
+}); 
+
+test('Verify that the user cannot save the Transaction details status finance application info with Invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await Actions.enterText("transactionStatusNotes", "   ");
+    await Click.Btn("saveAll");
+    await Verify.IsTextDisplayed(page, "Validations warnings"); 
+});
+
+test('Verify that the user can edit the transaction details status finance application info', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await Actions.enterText("transactionStatusNotes", "Test Notes");
+    await Click.Btn("saveAll");
+    await Verify.IsTextDisplayed(page, "Transaction saved successfully");
+});   
+
+
 
 
 

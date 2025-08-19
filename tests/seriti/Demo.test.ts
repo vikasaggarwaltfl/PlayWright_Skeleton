@@ -78,10 +78,10 @@ test('Verify that the transaction conversion chart loaded as expected', async ({
   await Actions.enterText('searchMenu', 'Main Dashboard');
   await Click.tabs('mainDashboard');
   await Click.Btn('load');
-  await page.waitForTimeout(3000);
+  await page.waitForTimeout(2000);
   const canvasElmt = page.locator("canvas[data-pc-section='canvas']");
   await Verify.verifyElementPresence(canvasElmt, true);
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(3000);
   console.log('Transaction conversion chart loaded as expected.');
 });
 
@@ -361,7 +361,7 @@ test('Verify that the user can save the client details section with valid data',
     await Verify.IsTextDisplayed(page, "Transaction saved successfully");
 });
 
-test.only('Verify that the user can edit the client details section and save successfully.', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can edit the client details section and save successfully.', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281800");
