@@ -317,7 +317,7 @@ test('Verify that the user can sort Doc Report records', async ({ page, Actions,
 
 //My Reports >> Reports >> Insurance Deal Report--------------------------------------------------------------------------------------------------------------------------------------------
 
-test.only('Verify that the Insurance Lead Report screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the Insurance Lead Report screen is displayed as expected', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");

@@ -260,7 +260,7 @@ test('Verify that all expected sections are present on the Finance Application A
   await Verify.IsTextDisplayed(page, ["Chart View", "Collapse All"]);
 });
 
-test.only('Verify that each accordian section chart is displayed correctly on Main Dashboard', async ({ page, Actions, Click, Verify }) => {
+test('Verify that each accordian section chart is displayed correctly on Main Dashboard', async ({ page, Actions, Click, Verify }) => {
   const sectionTitles = [
       "Transaction Conversion Rate",
       "Cash and Finance Shares",
