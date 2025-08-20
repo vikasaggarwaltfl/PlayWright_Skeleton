@@ -134,9 +134,9 @@ test('Verify that the user cannot save the Transaction details status finance ap
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281957");
     await Click.Btn("view");
-    await Actions.enterText("transactionStatusNotes", "   ");
+    await Actions.enterText("transactionStatusNotes", "------");
     await Click.Btn("saveAll");
-    await Verify.IsTextDisplayed(page, "Validations warnings"); 
+    await Verify.IsTextDisplayed(page, "Validation warnings"); 
 });
 
 test('Verify that the user can edit the transaction details status finance application info', async ({ page, Actions, Click, Verify }) => {
@@ -149,7 +149,43 @@ test('Verify that the user can edit the transaction details status finance appli
     await Verify.IsTextDisplayed(page, "Transaction saved successfully");
 });   
 
+//Client Details ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+test('Verify that the user can view the client details section on the transaction screen.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.tabs("clientDetails");
+    await Verify.IsTextDisplayed(page, ["Client Details", "Address in Home Country", "Physical Address","Drivers License Details"]);
+    console.log("User can view the client details section on the transaction screen as expected");
+});
+
+test('Verify that the user can save the client details section with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.tabs("clientDetails");
+    await Actions.enterText("firstName", "Demo");
+    await Click.Btn("saveAll");
+    await Verify.IsTextDisplayed(page, "Transaction saved successfully");
+});
+
+test('Verify that the user can edit the client details section and save successfully.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.tabs("clientDetails");
+    await Actions.enterText("firstName", "Demo");
+    await page.waitForTimeout(5000);
+    await Click.Btn("saveAll");
+    await Verify.IsTextDisplayed(page, "Transaction saved successfully");
+});
 
 
 
