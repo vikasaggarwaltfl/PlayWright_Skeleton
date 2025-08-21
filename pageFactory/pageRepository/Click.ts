@@ -64,6 +64,7 @@ export class Click {
     private readonly vehicleDetails: Locator;
     private readonly companyDetails: Locator;
     private readonly branchHFACustomerNotifications: Locator;
+    private readonly branchSalesPerson: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -92,6 +93,7 @@ export class Click {
     private readonly groupLineFutureArrow: Locator;
     private readonly detailsCopy: Locator;
     private readonly deleted: Locator;
+    private readonly editBranchHFA: Locator;
   
 
     //buttons--------------------------------------------------------------------------------------------------------
@@ -234,6 +236,7 @@ export class Click {
         this.vehicleDetails = page.locator("//button[normalize-space()='Vehicle Details']");
         this.companyDetails = page.locator("//button[normalize-space()='Company Details']");
         this.branchHFACustomerNotifications = page.locator("//button[normalize-space()='HFA Customer Notifications']");
+        this.branchSalesPerson = page.locator("//button[normalize-space()='Sales Person']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -262,6 +265,7 @@ export class Click {
         this.groupLineFutureArrow = page.locator("//button[@class='p-row-toggler p-link']//*[name()='svg']");
         this.detailsCopy = page.locator("(//button[@class='flex flex-col justify-center'])[2]");
         this.deleted = page.locator("(//button[@class='flex flex-col justify-center'])[3]");
+        this.editBranchHFA = page.locator("//tbody/tr[1]/td[1]/div[1]/button[1]/i[1]");
 
         //buttons---------------------------------------------------------------------------------------------------------------------------------------------------        
         
@@ -509,6 +513,9 @@ export class Click {
         else if (str === "branchHFACustomerNotifications") {
             await this.branchHFACustomerNotifications.click();
         }
+        else if (str === "branchSalesPerson") {    
+            await this.branchSalesPerson.click();
+        }
     };
 
     //icon--------------------------------------------------------------------------------------------------------
@@ -591,6 +598,9 @@ export class Click {
         }
         else if (str === "deleted") {
             await this.deleted.click();
+        }
+         else if (str === "editBranchHFA") {
+            await this.editBranchHFA.click();
         }
         
         

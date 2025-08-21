@@ -46,6 +46,7 @@ export class Actions {
     private readonly searchBox: Locator;
     private readonly customPassword: Locator;
     private readonly passwordNumber: Locator;
+    private readonly passportNumber: Locator;
     private readonly transactionFee: Locator;
     private readonly emailinput: Locator;
     private readonly passwordinput: Locator;
@@ -54,6 +55,7 @@ export class Actions {
     private readonly bankerLinkExpiryDays: Locator;
     private readonly transactionStatusNotes: Locator;
     private readonly vehicleKM: Locator;
+    private readonly salesPersonName: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -86,6 +88,7 @@ export class Actions {
         this.searchBox = page.locator("//input[@role='searchbox']");
         this.customPassword = page.locator("//input[@id='PasswordHash']");
         this.passwordNumber = page.locator("//input[@id='IDNumber']");
+        this.passportNumber = page.locator("//input[@id='IdNumber']");
         this.transactionFee = page.locator("//input[@id='TransactionFee']");
         this.emailinput = page.locator("//input[@placeholder='Username (Email)']");
         this.passwordinput = page.locator("");
@@ -94,6 +97,7 @@ export class Actions {
         this.bankerLinkExpiryDays = page.locator("//input[@id='BankerLinkExpiryDays']");
         this.transactionStatusNotes = page.locator("//textarea[@id='TransactionStatusNotes']");
         this.vehicleKM = page.locator("//input[@id='Kilometers']");
+        this.salesPersonName = page.locator("//input[@id='SalesPersonName']");
 
     }
 
@@ -221,6 +225,10 @@ export class Actions {
 
             await this.passwordNumber.fill(text);
         }
+        else if (textBoxName === "passportNumber") {
+
+            await this.passportNumber.fill(text);
+        }
         else if (textBoxName === "transactionFee") {
 
             await this.transactionFee.fill(text);
@@ -252,6 +260,10 @@ export class Actions {
         else if (textBoxName === "vehicleKM") {
 
             await this.vehicleKM.fill(text);
+        }
+        else if (textBoxName === "salesPersonName") {
+
+            await this.salesPersonName.fill(text);
         }
        
         

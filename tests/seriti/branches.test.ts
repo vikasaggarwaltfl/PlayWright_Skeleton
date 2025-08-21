@@ -647,3 +647,105 @@ test('Verify that the user can copy a branch HFA Customer Notifications', async 
     await page.waitForTimeout(1000);
     await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
 });
+
+test('Verify that the user can edit a branch HFA Customer Notifications', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchHFACustomerNotifications");
+    await Click.icon("editBranchHFA");
+    await Click.Btn("branchEnableLinkButtonYes");
+    await page.waitForTimeout(2000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
+});
+
+//Branches >> Sales persons-----------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add a new branch Sales Person with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchSalesPerson");
+    await Click.Btn("add");
+    await Actions.enterText("salesPersonName", "John Doe");
+    await Actions.enterText("passportNumber", "SP001");
+    await Click.dropdown("Id Type", "Passport");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
+});
+
+test('Verify that the user cannot add a new branch Sales Person with invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchSalesPerson");
+    await Click.Btn("add");
+    await Actions.enterText("salesPersonName", "John Doe");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Id Type is a required field");
+}); 
+
+test('Verify that the user can edit a branch Sales Person with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchSalesPerson");
+    await Click.icon("edit");
+    await Actions.enterText("salesPersonName", "Jane Doe");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
+});
+
+test('Verify that the user can copy a branch Sales Person', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("branches");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("branchName", "Demo test branch");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("branchSalesPerson");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await Click.Btn("save");
+    await page.waitForTimeout(1000);
+    await Verify.IsTextDisplayed(page, "Branch Details (Demo test branch)");
+}); 
