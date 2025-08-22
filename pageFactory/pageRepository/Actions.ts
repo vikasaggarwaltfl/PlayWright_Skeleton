@@ -56,6 +56,10 @@ export class Actions {
     private readonly transactionStatusNotes: Locator;
     private readonly vehicleKM: Locator;
     private readonly salesPersonName: Locator;
+    private readonly leadEmail: Locator;
+    private readonly companyEmail: Locator;
+    private readonly legalName: Locator;
+
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -98,6 +102,9 @@ export class Actions {
         this.transactionStatusNotes = page.locator("//textarea[@id='TransactionStatusNotes']");
         this.vehicleKM = page.locator("//input[@id='Kilometers']");
         this.salesPersonName = page.locator("//input[@id='SalesPersonName']");
+        this.leadEmail = page.locator("//textarea[@id='LeadEmail']");
+        this.companyEmail = page.locator("//input[@id='CompanyEmail']");
+        this.legalName = page.locator("//input[@id='LegalName']");
 
     }
 
@@ -109,7 +116,7 @@ export class Actions {
         }
         else if (userProfile === "Automation") {
             await this.enterText("email", "test-automation@testingframeworks.co.uk");
-            await this.enterText("password", "Summer@123");
+            await this.enterText("password", "Ocean@123");
         }
     }
 
@@ -265,7 +272,18 @@ export class Actions {
 
             await this.salesPersonName.fill(text);
         }
-       
+        else if (textBoxName === "leadEmail") {
+
+            await this.leadEmail.fill(text);
+        }
+        else if (textBoxName === "companyEmail") {
+
+            await this.companyEmail.fill(text);
+        }
+        else if (textBoxName === "legalName") {
+
+            await this.legalName.fill(text);
+        }
         
     }
 

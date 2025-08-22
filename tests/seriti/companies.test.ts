@@ -5,7 +5,7 @@ import { Click } from '@pages/Click'
 import { Verify } from '@pages/Verify'
 import * as path from 'path'
 
-test('Verify that "company details" screen is displayed correctly', async ({ page, Actions, Click, Verify }) => {
+test('Verify that "company" screen is displayed correctly', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -14,7 +14,7 @@ test('Verify that "company details" screen is displayed correctly', async ({ pag
     await Verify.IsTextDisplayed(page, "Company");
 });
 
-test('Verify that the user can filter company details using the filter options', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can filter company using the filter options', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -28,7 +28,7 @@ test('Verify that the user can filter company details using the filter options',
     await Verify.verifyDatacount();
 });
 
-test('Verify that the user can reset company details by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can reset company by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -72,7 +72,7 @@ test('Verify that the user cannot add new company with invalid details', async (
     await Verify.verifyErrorMessage(page, "Company Code is a required field");
 });
 
-test('Verify that the user cannot copy the company details with invalid data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user cannot copy a company with invalid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -90,7 +90,7 @@ test('Verify that the user cannot copy the company details with invalid data', a
     await Verify.IsTextDisplayed(page, "Password is required");
 });
 
-test('Verify that the user can edit the company details with valid data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can edit a company with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -108,7 +108,9 @@ test('Verify that the user can edit the company details with valid data', async 
     await Verify.IsTextDisplayed(page, "Company saved!");
 });
 
-test('Verify that the user cannot edit the company details with invalid data' , async ({ page, Actions, Click, Verify }) => {
+//Company >> Company Details ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add company information with valid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -116,13 +118,58 @@ test('Verify that the user cannot edit the company details with invalid data' , 
     await Click.tabs("companies");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
-    await Actions.enterText("companyName", "Company testing");
+    await Actions.enterText("companyName", "Demo Test Company");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
-    await Actions.enterText("bankerLinkExpiryDays", " ");
+    await Click.tabs("companyDetails");
+    await Click.Btn("add");
+    await Actions.enterText("companyEmail", "akshaya@testingframeworks.co.uk");
+    await Click.calendar(3, "2026", "Aug", 15);
+    await Actions.enterText("leadEmail", "akshaya@testingframeworks.co.uk");
+    await Actions.enterText("legalName", "Demo Test Company");
     await Click.Btn("save");
-    await Verify.verifyErrorMessage(page, "Banker Link Expiry Days is a required field");
+    await Click.calendar(2, "2025", "Sep", 15);
+    await page.waitForTimeout(2000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Company (Demo Test Company)")
+});  
+
+test('Verify that the user cannot add company information with invalid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "Demo Test Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyDetails");
+    await Click.Btn("add");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Legal Name is a required field");
+});
+
+test('verify that the user can edit the company information with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "Demo Test Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyDetails");
+    await Click.icon("edit");
+    await Actions.enterText("companyEmail", "testing123@gmail.com")
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Company (Demo Test Company)")
 });
 
 test('Verify that password generator working as expected', async ({ page, Actions, Click, Verify }) => {
