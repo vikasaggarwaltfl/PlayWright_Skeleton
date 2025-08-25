@@ -110,7 +110,7 @@ test('Verify that the user can edit a company with valid data', async ({ page, A
 
 //Company >> Company Details ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify that the user can add company information with valid details', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can add company details with valid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -135,7 +135,7 @@ test('Verify that the user can add company information with valid details', asyn
     await Verify.IsTextDisplayed(page, "Company (Demo Test Company)")
 });  
 
-test('Verify that the user cannot add company information with invalid details', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user cannot add company details with invalid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -153,7 +153,7 @@ test('Verify that the user cannot add company information with invalid details',
     await Verify.verifyErrorMessage(page, "Legal Name is a required field");
 });
 
-test('verify that the user can edit the company information with valid details', async ({ page, Actions, Click, Verify }) => {
+test('verify that the user can edit the company details with valid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -168,6 +168,27 @@ test('verify that the user can edit the company information with valid details',
     await Click.tabs("companyDetails");
     await Click.icon("edit");
     await Actions.enterText("companyEmail", "testing123@gmail.com")
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Company (Demo Test Company)")
+});
+
+test('verify that the user can copy company details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "Demo Test Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyDetails");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await page.waitForTimeout(2000);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Company (Demo Test Company)")
 });
@@ -210,5 +231,45 @@ test('Verify Document protection is working if it selected as "Yes"', async ({ p
     await Click.Btn("documentProtectedyes");
     await page.waitForTimeout(2000);
     await Verify.IsTextDisplayed(page, 'Add Company Information');
+});
 
+//Company >> groups ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add company groups with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyGroups");
+    await Click.Btn("add");
+    await Click.dropdown("Group", "AATest");
+    await Actions.enterText("sortKey", "309");
+    await Click.calendar(1, "2026", "Aug", 15);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Company (AA Company)");
+});
+
+test('Verify that the user cannot add company groups with invalid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyGroups");
+    await Click.Btn("add");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Group is a required field");
 });
