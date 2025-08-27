@@ -376,4 +376,22 @@ test.skip('Verify that the user can add company branches with valid details', as
     await Verify.IsTextDisplayed(page, "Company (AA Company)");
 });
 
+test('Verify that the user cannot add company branches with invalid details', async ({ page, Actions, Click, Verify }) => {    
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyBranches");
+    await Click.Btn("add");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Group is a required field");
+});
+
 
