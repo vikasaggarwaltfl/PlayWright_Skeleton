@@ -66,6 +66,7 @@ export class Click {
     private readonly branchHFACustomerNotifications: Locator;
     private readonly branchSalesPerson: Locator;
     private readonly companyGroups: Locator;
+    private readonly companyBranches: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -239,6 +240,7 @@ export class Click {
         this.branchHFACustomerNotifications = page.locator("//button[normalize-space()='HFA Customer Notifications']");
         this.branchSalesPerson = page.locator("//button[normalize-space()='Sales Person']");
         this.companyGroups = page.locator("//button[normalize-space()='Groups']");
+        this.companyBranches = page.locator("//button[normalize-space()='Branches']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -520,6 +522,9 @@ export class Click {
         }
         else if (str === "companyGroups") {    
             await this.companyGroups.click();
+        }
+        else if (str === "companyBranches") {    
+            await this.companyBranches.click();
         }
     };
 

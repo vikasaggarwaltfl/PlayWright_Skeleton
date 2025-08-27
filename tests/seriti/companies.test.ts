@@ -349,3 +349,31 @@ test('Verify that the group dropdown is disabled when editing a company group', 
     await Click.icon("edit");
     await Verify.verifyDisabledButton("Demo Group");
 });
+
+//Company >> branches ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test.skip('Verify that the user can add company branches with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyBranches");
+    await Click.Btn("add");
+    await Click.dropdown("Group", "Group 2");
+    await Click.dropdown("Branch", "Branch 2");
+    await Actions.enterText("sortKey", "309");
+    await Click.calendar(2, "2026", "Oct", 15);
+    await Click.Btn("save");
+    await Click.calendar(1, "2025", "Aug", 10);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Company (AA Company)");
+});
+
+
