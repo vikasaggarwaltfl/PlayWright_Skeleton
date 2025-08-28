@@ -85,7 +85,7 @@ export class Verify {
   }
 
   // verify disabled button------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  async verifyDisabledButton(buttonName: string): Promise<void> {
+  async verifyDisabledButton(buttonName: string | string[]): Promise<void> {
     const locator = this.page.locator(`//span[text()='${buttonName}']`);
     await expect(locator).toBeDisabled();
   }

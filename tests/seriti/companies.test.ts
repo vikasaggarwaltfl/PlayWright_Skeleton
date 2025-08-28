@@ -333,7 +333,7 @@ test('Verify that the user cannot delete company groups', async ({ page, Actions
     await Verify.IsTextDisplayed(page, "Could not delete record.");
 });
 
-test('Verify that the group dropdown is disabled when editing a company group', async ({ page, Actions, Click, Verify }) => {
+test.only('Verify that the group dropdown is disabled when editing a company group', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -352,7 +352,7 @@ test('Verify that the group dropdown is disabled when editing a company group', 
 
 //Company >> branches ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test.skip('Verify that the user can add company branches with valid details', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can add company branches with valid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -367,7 +367,7 @@ test.skip('Verify that the user can add company branches with valid details', as
     await Click.tabs("companyBranches");
     await Click.Btn("add");
     await Click.dropdown("Group", "Group 2");
-    await Click.dropdown("Branch", "Branch 2");
+    await Click.checkboxWithoutAll("Branch", "Branch 2");
     await Actions.enterText("sortKey", "309");
     await Click.calendar(2, "2026", "Oct", 15);
     await Click.Btn("save");
@@ -394,4 +394,81 @@ test('Verify that the user cannot add company branches with invalid details', as
     await Verify.verifyErrorMessage(page, "Group is a required field");
 });
 
+test('Verify that the user can edit company branches with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyBranches");
+    await Click.icon("edit");
+    await Actions.enterText("sortKey", "310");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Company (AA Company)");
+});
 
+
+test('Verify that the user can copy company branches', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyBranches");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await Click.checkboxWithoutAll("Branch", "Branch 2");
+    await page.waitForTimeout(2000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Company (AA Company)");
+});
+
+test.skip("Verify that the group dropdown is disabled when editing a company branch", async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyBranches");
+    await Click.icon("edit");
+    await page.pause();
+    await Verify.verifyDisabledButton(["Demo Group", "Demo Branch"]);
+});
+
+test.only('Verify that the user cannot delete company branches', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyBranches");
+    await Click.icon("delete");
+    await page.waitForTimeout(1000);
+    await Click.Btn("yes");
+    await Verify.IsTextDisplayed(page, "Could not delete record.");
+});
