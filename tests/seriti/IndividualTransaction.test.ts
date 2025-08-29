@@ -14,7 +14,7 @@ test('Verify that a user can initiate the individual create transaction process 
     await Click.radioButton("Individual");
     await Actions.enterText("lastName", "TestTransaction");
     await Click.Btn("clickTransaction");
-    await Verify.IsTextDisplayed(page,"redirecting");
+    await Verify.IsTextDisplayed(page," redirecting...");
     console.log("Individual Transaction created successfully");
 });
 
@@ -181,11 +181,89 @@ test('Verify that the user can edit the client details section and save successf
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
     await Click.tabs("clientDetails");
-    await Actions.enterText("firstName", "Demo");
+    await Actions.enterText("firstName", "Demo1");
     await page.waitForTimeout(5000);
     await Click.Btn("saveAll");
     await Verify.IsTextDisplayed(page, "Transaction saved successfully");
 });
+
+//Vehicle Details ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can view the vehicle details section on the transaction screen.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.tabs("vehicleDetails");
+    await Verify.IsTextDisplayed(page, ["Vehicle Details", "Vehicle Description", "Vehicle Condition"]);
+    console.log("User can view the vehicle details section on the transaction screen as expected");
+});
+
+test('Verify that the user can add vehicle details with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.tabs("vehicleDetails");
+    await Actions.enterText("vehicleTest", "123");
+    await Click.Btn("saveAll");
+    await Verify.IsTextDisplayed(page, "Transaction saved successfully");
+});
+
+test('Verify that the user can edit the vehicle details section and save successfully.', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.tabs("vehicleDetails");
+    await Actions.enterText("vehicletest", "700");
+    await Click.Btn("saveAll");
+    await Verify.IsTextDisplayed(page, "Transaction saved successfully");
+});
+
+// Account Details --------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that Account details Section displayed as expected on transaction screen', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("accountDetails");
+    await Verify.IsTextDisplayed(page, ["Bank Accounts","Credit Card Accounts"]);
+    console.log("Account details displayed as expected");
+});
+
+// Document --------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that document section displayed as expected on transaction screen', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("documents");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, ["Uploaded date", "Document category", "Description","File size", "created by","Certification type","File name"]);
+    console.log(" Document section displayed as expected");
+});
+
+test('Verify that user cannot add Transaction Document with Invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("documents");
+    await Click.Btn("addDocument");
+    await Click.Btn("saveDocument");
+    await Verify.IsTextDisplayed(page,'please fix errors before submitting');
+    console.log(" Error message displayed for required field as expected ");
+});
+
 
 
 
