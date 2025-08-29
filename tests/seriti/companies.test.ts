@@ -333,7 +333,7 @@ test('Verify that the user cannot delete company groups', async ({ page, Actions
     await Verify.IsTextDisplayed(page, "Could not delete record.");
 });
 
-test.only('Verify that the group dropdown is disabled when editing a company group', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the group dropdown is disabled when editing a company group', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -436,25 +436,7 @@ test('Verify that the user can copy company branches', async ({ page, Actions, C
     await Verify.IsTextDisplayed(page, "Company (AA Company)");
 });
 
-test.skip("Verify that the group dropdown is disabled when editing a company branch", async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Admin");
-    await Click.chevronLeftArrow(1);
-    await Click.tabs("companies");
-    await page.waitForLoadState('networkidle');
-    await Click.icon("filterArrow");
-    await Actions.enterText("companyName", "AA Company");
-    await Click.Btn("apply");
-    await page.waitForTimeout(1000);
-    await Click.icon("edit");
-    await Click.tabs("companyBranches");
-    await Click.icon("edit");
-    await page.pause();
-    await Verify.verifyDisabledButton(["Demo Group", "Demo Branch"]);
-});
-
-test.only('Verify that the user cannot delete company branches', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user cannot delete company branches', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -471,4 +453,84 @@ test.only('Verify that the user cannot delete company branches', async ({ page, 
     await page.waitForTimeout(1000);
     await Click.Btn("yes");
     await Verify.IsTextDisplayed(page, "Could not delete record.");
+});
+
+//Company >> WebServices ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add company web services with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyWebservices");
+    await Click.Btn("add");
+    await Click.checkboxWithoutAll("Web Service", "Get Transaction Number");
+    await Click.calendar(1, "2025", "May", 15);
+    await Click.Btn("save");
+    await Click.calendar(2, "2026", "Aug", 10);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Company (AA Company)");
+});
+
+test('Verify that the user cannot add company web services with invalid details', async ({ page, Actions, Click, Verify }) => {    
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyWebservices");
+    await Click.Btn("add");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Web Service is a required field");
+});
+
+test.only('Verify that the user can edit a company web service', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyWebservices");
+    await Click.icon("edit");
+    await Verify.verifyDisabledButton("2025");
+});
+
+test('Verify that the user cannot duplicate company web services', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyWebservices");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await page.waitForTimeout(2000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Company (AA Company)");
 });
