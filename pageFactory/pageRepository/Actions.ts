@@ -59,6 +59,8 @@ export class Actions {
     private readonly leadEmail: Locator;
     private readonly companyEmail: Locator;
     private readonly legalName: Locator;
+    private readonly companyProductTypeName: Locator;
+    private readonly companyProductTypeCode: Locator;
 
 
 
@@ -105,6 +107,8 @@ export class Actions {
         this.leadEmail = page.locator("//textarea[@id='LeadEmail']");
         this.companyEmail = page.locator("//input[@id='CompanyEmail']");
         this.legalName = page.locator("//input[@id='LegalName']");
+        this.companyProductTypeName = page.locator("//input[@id='CompanyProductTypeName']");
+        this.companyProductTypeCode = page.locator("//input[@id='CompanyProductTypeCode']");
 
     }
 
@@ -283,6 +287,14 @@ export class Actions {
         else if (textBoxName === "legalName") {
 
             await this.legalName.fill(text);
+        }
+        else if (textBoxName === "companyProductTypeName") {
+
+            await this.companyProductTypeName.fill(text);
+        }
+        else if (textBoxName === "companyProductTypeCode") {
+
+            await this.companyProductTypeCode.fill(text);
         }
         
     }

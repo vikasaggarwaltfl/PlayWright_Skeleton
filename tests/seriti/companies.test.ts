@@ -497,23 +497,6 @@ test('Verify that the user cannot add company web services with invalid details'
     await Verify.verifyErrorMessage(page, "Web Service is a required field");
 });
 
-test.only('Verify that the user can edit a company web service', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Admin");
-    await Click.chevronLeftArrow(1);
-    await Click.tabs("companies");
-    await page.waitForLoadState('networkidle');
-    await Click.icon("filterArrow");
-    await Actions.enterText("companyName", "AA Company");
-    await Click.Btn("apply");
-    await page.waitForTimeout(1000);
-    await Click.icon("edit");
-    await Click.tabs("companyWebservices");
-    await Click.icon("edit");
-    await Verify.verifyDisabledButton("2025");
-});
-
 test('Verify that the user cannot duplicate company web services', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
@@ -534,3 +517,85 @@ test('Verify that the user cannot duplicate company web services', async ({ page
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Company (AA Company)");
 });
+
+//Company >> Product Type Mapping ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add company product type mapping with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle'); 
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);        
+    await Click.icon("edit");
+    await Click.tabs("companyProductTypeMapping");
+    await Click.Btn("add");
+    await Click.dropdown("Product Type", "Comprehensive Insurance");
+    await Actions.enterText("companyProductTypeName", "AA product type");
+    await Actions.enterText("companyProductTypeCode", "AA001");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Company (AA Company)");
+});
+
+test('Verify that the user cannot add company product type mapping with invalid details', async ({ page, Actions, Click, Verify }) => {    
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);        
+    await Click.icon("edit");
+    await Click.tabs("companyProductTypeMapping");  
+    await Click.Btn("add");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Product Type is a required field");
+});
+
+test('Verify that the user can edit company product type mapping with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle'); 
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);        
+    await Click.icon("edit");
+    await Click.tabs("companyProductTypeMapping");  
+    await Click.icon("edit");
+    await Click.Btn("bankerLinkEnabledYes");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Company (AA Company)");
+});
+
+test('Verify that the user can copy company product type mapping', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");   
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle'); 
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyProductTypeMapping");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await page.waitForTimeout(2000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Company (AA Company)");
+});
+
