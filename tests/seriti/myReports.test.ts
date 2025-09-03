@@ -26,7 +26,7 @@ test('Verify that the Deal Tracker Report screen is displayed as expected', asyn
     await Verify.IsTextDisplayed(page, ["Created Date", "Process State Message", "Report File"]);
 });
 
-test('Verify that the user can "Add" new Deal Tracker Report with valid data', async ({ page, Actions, Click, Verify }) => {
+test.only('Verify that the user can "Add" new Deal Tracker Report with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
@@ -43,7 +43,7 @@ test('Verify that the user can "Add" new Deal Tracker Report with valid data', a
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
-test('Verify that the user cannot "Add" new Deal Tracker Report with Invalid data', async ({ page, Actions, Click, Verify }) => {
+test.only('Verify that the user cannot "Add" new Deal Tracker Report with Invalid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "My Reports");
