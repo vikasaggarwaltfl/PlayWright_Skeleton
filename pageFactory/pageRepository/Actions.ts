@@ -61,7 +61,9 @@ export class Actions {
     private readonly legalName: Locator;
     private readonly companyProductTypeName: Locator;
     private readonly companyProductTypeCode: Locator;
-
+    private readonly companyProductSubTypeName: Locator;
+    private readonly companyProductSubTypeCode: Locator;
+    private readonly companyProductNameCode: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -109,6 +111,9 @@ export class Actions {
         this.legalName = page.locator("//input[@id='LegalName']");
         this.companyProductTypeName = page.locator("//input[@id='CompanyProductTypeName']");
         this.companyProductTypeCode = page.locator("//input[@id='CompanyProductTypeCode']");
+        this.companyProductSubTypeName = page.locator("//input[@id='CompanyProductSubTypeName']");
+        this.companyProductSubTypeCode = page.locator("//input[@id='CompanyProductSubTypeCode']");
+        this.companyProductNameCode = page.locator("//input[@id='CompanyProductNameCode']");
 
     }
 
@@ -295,6 +300,19 @@ export class Actions {
         else if (textBoxName === "companyProductTypeCode") {
 
             await this.companyProductTypeCode.fill(text);
+        }
+        else if (textBoxName === "companyProductSubTypeName") {
+
+            await this.companyProductSubTypeName.fill(text);
+        }
+        else if (textBoxName === "companyProductSubTypeCode") {
+
+            await this.companyProductSubTypeCode.fill(text);
+        }
+
+        else if (textBoxName === "companyProductNameCode") {
+
+            await this.companyProductNameCode.fill(text);
         }
         
     }

@@ -69,6 +69,7 @@ export class Click {
     private readonly companyBranches: Locator;
     private readonly companyWebservices: Locator;
     private readonly companyProductTypeMapping  : Locator;
+    private readonly companyProductSubTypeMapping  : Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -245,6 +246,7 @@ export class Click {
         this.companyBranches = page.locator("//button[normalize-space()='Branches']");
         this.companyWebservices = page.locator("//button[normalize-space()='Web Service']");
         this.companyProductTypeMapping  = page.locator("//button[normalize-space()='Product Type Mapping']");
+        this.companyProductSubTypeMapping  = page.locator("//button[normalize-space()='Product Sub Type Mapping']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -534,8 +536,11 @@ export class Click {
         else if (str === "companyWebservices") {    
             await this.companyWebservices.click();
         }
-         else if (str === "companyProductTypeMapping") {    
+        else if (str === "companyProductTypeMapping") {    
             await this.companyProductTypeMapping.click();
+        }
+        else if (str === "companyProductSubTypeMapping") {    
+            await this.companyProductSubTypeMapping.click();
         }
     };
 
