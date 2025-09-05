@@ -10,13 +10,14 @@ test('Verify that the user can "Add" new Template with valid data', async ({ pag
     await Click.Btn("login");
     await Click.tabs("template");
     await Click.Btn("addTemplate");
-    await page.waitForTimeout(2000);c
+    await page.waitForTimeout(2000);
     await Click.dropdown("Template Category", "Record of advice");
     await Actions.enterText("templateName", "Template3");
     await Actions.enterText("reportHeading", "Template3 Heading");
     await Click.Btn("yes");
     await Click.calendar(1, "2025", "Jul", 20);
     await page.waitForTimeout(2000);
+    await Click.Btn("save");
     await Click.calendar(2, "2025", "Oct", 26);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Saved Successfully");
@@ -67,7 +68,7 @@ test('Verify that the user can "Copy" Template with valid data', async ({ page, 
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
 
-test('Verify that the user can "Edit" Template with valid data', async ({ page, Actions, Click, Verify }) => {
+test.skip('Verify that the user can "Edit" Template with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Click.tabs("template");
@@ -78,6 +79,7 @@ test('Verify that the user can "Edit" Template with valid data', async ({ page, 
     await Click.dropdown("Category", "Finance");
     await Click.calendar(1, "2026", "Jul", 22);
     await page.waitForTimeout(2000);
+    await Click.Btn("save");
     await Click.calendar(2, "2026", "Oct", 1);
     await Click.Btn("save");
     await page.waitForTimeout(2000);

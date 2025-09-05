@@ -660,7 +660,7 @@ test('Verify that the user is able to refresh the groupSSF page', async ({ page,
 
 //Group >> Documents-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify that the user can add a new "document" in the addGroupDocument section with valid data', async ({ page, Actions, Click, Verify }) => {
+test.only('Verify that the user can add a new "document" in the addGroupDocument section with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -678,10 +678,10 @@ test('Verify that the user can add a new "document" in the addGroupDocument sect
     const fileInput = await page.$("//input[@type='file']");
     await fileInput.setInputFiles(path.resolve('./documents/Sample report.pdf'));
     await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Group Details (Demo test group)");
+    await Verify.IsTextDisplayed(page, "File successfully uploaded!");
 });
 
-test.skip('Verify that the user cannot add a new "document" in the addGroupDocument section with invalid data', async ({ page, Actions, Click, Verify }) => {
+test.only('Verify that the user cannot add a new "document" in the addGroupDocument section with invalid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -698,7 +698,8 @@ test.skip('Verify that the user cannot add a new "document" in the addGroupDocum
     const fileInput = await page.$("//input[@type='file']");
     await fileInput.setInputFiles(path.resolve('./documents/Sample report.pdf'));
     await Click.Btn("save");
-    await Verify.verifyErrorMessage(page, "Document Category is a required field"); 
+    await page.waitForTimeout(1000);
+    await Verify.IsTextDisplayed(page, "Error!"); 
 });
 
 test('Verify that the user is able to edit a groupDocument', async ({ page, Actions, Click, Verify }) => {

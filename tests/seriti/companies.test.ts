@@ -44,7 +44,7 @@ test('Verify that the user can reset company by clicking on the reset button', a
     await Verify.verifyDatacount();
 });
 
-test.skip('Verify that the user can add a new company with valid details', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can add a new company with valid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
