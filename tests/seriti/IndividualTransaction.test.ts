@@ -264,7 +264,20 @@ test('Verify that user cannot add Transaction Document with Invalid data', async
     console.log(" Error message displayed for required field as expected ");
 });
 
+//Submit Finance Application
 
+test('Verify that user can submit finance application with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+});
+test('Verify that user cannot submit finance application with Invalid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+});
 
 
 
