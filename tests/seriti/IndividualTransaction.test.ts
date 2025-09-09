@@ -264,6 +264,48 @@ test('Verify that user cannot add Transaction Document with Invalid data', async
     console.log(" Error message displayed for required field as expected ");
 });
 
+
+//Finance Application------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that Finance Application section displayed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("financeApplication");
+    await Verify.IsTextDisplayed(page, ["Logo", "Finance Status", "Service Message","Bank Details", "Latest application","Document Update"]);
+    console.log(" Finance Application section displayed as expected");
+});
+
+test('Verify that user redirected to Finance Application as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("financeApplication");
+    await Click.Btn("Test_Comp");
+    await Verify.IsTextDisplayed(page, "Finance Application: Test_Comp");
+    console.log(" User redirected to Finance application as expected");
+});
+
+test.only('Verify that user can save Finance Application with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("financeApplication");
+    await Click.Btn("Test_Comp");
+    await page.waitForTimeout(3000);
+    await Click.Btn("saveAll")
+    console.log("finance details saved successfully");
+});
+
+
+
+
 //Submit Finance Application
 
 test('Verify that user can submit finance application with valid data', async ({ page, Actions, Click, Verify }) => {

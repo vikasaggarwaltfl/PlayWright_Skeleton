@@ -174,6 +174,7 @@ export class Click {
     private readonly auditLog: Locator;
     private readonly saveTransaction:Locator;
     private readonly branchEnableLinkButtonYes: Locator;
+    private readonly Test_Comp: Locator;
     
     
 
@@ -349,6 +350,7 @@ export class Click {
         this.auditLog = page.locator("//span[normalize-space()='Audit Log']");
         this.saveTransaction = page.locator("//span[normalize-space()='Save All']");
         this.branchEnableLinkButtonYes = page.locator("//div[@placeholder='Enable Link Button?']//span[@class='p-button-label'][normalize-space()='Yes']");
+        this.Test_Comp = page.locator("//button[normalize-space()='Test_Comp']");
         
 }
 
@@ -829,6 +831,9 @@ export class Click {
         }
         else if (str === "branchEnableLinkButtonYes") {
             await this.branchEnableLinkButtonYes.click();
+        }
+        else if (str === "Test_Comp") {
+            await this.Test_Comp.click();
         }
 
 
