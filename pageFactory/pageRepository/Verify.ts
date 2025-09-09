@@ -101,8 +101,12 @@ export class Verify {
   async verifyDatacount(): Promise<void> {
     const columnCells = this.page.locator("//table//tr/td[3]");
     const count = await columnCells.count();
+    if(true){
     expect(count).toBeGreaterThan(0);
-    console.log(`Number of rows in column 3: ${count}`);
+    console.log(`Number of rows in column 3: ${count}`)
+  }else{
+    console.log("No data available in the grid");
+  }
   }
   // Verify download-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
