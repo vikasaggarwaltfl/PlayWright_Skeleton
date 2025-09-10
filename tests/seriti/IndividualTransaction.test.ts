@@ -290,7 +290,7 @@ test('Verify that user redirected to Finance Application as expected', async ({ 
     console.log(" User redirected to Finance application as expected");
 });
 
-test.only('Verify that user can save Finance Application with valid details', async ({ page, Actions, Click, Verify }) => {
+test('Verify that user can save Finance Application with valid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281957");
@@ -299,12 +299,11 @@ test.only('Verify that user can save Finance Application with valid details', as
     await Click.Btn("financeApplication");
     await Click.Btn("Test_Comp");
     await page.waitForTimeout(3000);
-    await Click.Btn("saveAll")
-    console.log("finance details saved successfully");
+    await Click.Btn("financeSaveAll")
+    await page.waitForTimeout(3000);
+    await Verify.IsTextDisplayed(page,"saved successfully!");
+    console.log("finance details saved successfully"); 
 });
-
-
-
 
 //Submit Finance Application
 
@@ -313,13 +312,28 @@ test('Verify that user can submit finance application with valid data', async ({
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281957");
     await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("financeApplication");
+    await Click.Btn("Test_Comp");
+    await page.waitForTimeout(3000);
+    await Click.Btn("financeApply")
+    await page.waitForTimeout(3000);
+    await Verify.IsTextDisplayed(page,"Disclaimer");
 });
-test('Verify that user cannot submit finance application with Invalid data', async ({ page, Actions, Click, Verify }) => {
+
+ test('Verify that user cannot submit finance application with Invalid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281957");
     await Click.Btn("view");
-});
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("financeApplication");
+    await Click.Btn("Test_Comp");
+    await page.waitForTimeout(3000);
+    await Click.Btn("financeApply")
+    await page.waitForTimeout(3000);
+    await Verify.IsTextDisplayed(page,"Request failed");
+ });
 
 
 

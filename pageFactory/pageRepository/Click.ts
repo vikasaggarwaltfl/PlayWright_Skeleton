@@ -176,11 +176,10 @@ export class Click {
     private readonly saveTransaction:Locator;
     private readonly branchEnableLinkButtonYes: Locator;
     private readonly Test_Comp: Locator;
+    private readonly financeSaveAll: Locator;
+    private readonly financeApply: Locator;
     
     
-
-
-
 
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
@@ -353,7 +352,8 @@ export class Click {
         this.saveTransaction = page.locator("//span[normalize-space()='Save All']");
         this.branchEnableLinkButtonYes = page.locator("//div[@placeholder='Enable Link Button?']//span[@class='p-button-label'][normalize-space()='Yes']");
         this.Test_Comp = page.locator("//button[normalize-space()='Test_Comp']");
-        
+        this.financeSaveAll = page.locator("//button[@title='No Changes to Save']");
+        this.financeApply = page.locator("//span[normalize-space()='Apply']");
 }
 
     //link--------------------------------------------------------------------------------------------------------
@@ -839,6 +839,12 @@ export class Click {
         }
         else if (str === "Test_Comp") {
             await this.Test_Comp.click();
+        }
+        else if (str === "financeSaveAll") {
+            await this.financeSaveAll.click();
+        }
+        else if (str === "financeApply") {
+            await this.financeApply.click();
         }
 
 
