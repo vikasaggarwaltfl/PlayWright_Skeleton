@@ -685,7 +685,9 @@ test('Verify that the user can copy company product sub type mapping', async ({ 
     await Verify.IsTextDisplayed(page, "Company (AA Company)");
 });
 
-test('Verify that the user can delete company product sub type mapping', async ({ page, Actions, Click, Verify }) => {
+//Company >> Validations ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add company validations with valid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -697,9 +699,69 @@ test('Verify that the user can delete company product sub type mapping', async (
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
-    await Click.tabs("companyProductSubTypeMapping");
-    await Click.icon("delete");
+    await Click.tabs("companyValidations");
+    await Click.Btn("add");
+    await Click.dropdown("Field Name", "CustomerType");
+    await Click.Btn("save");
+    await Verify.verifyDatacount();
+});
+
+test('Verify that the user cannot add company validations with invalid details', async ({ page, Actions, Click, Verify }) => {    
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyValidations");
+    await Click.Btn("add");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Field Name is a required field");
+});
+
+test('Verify that the user can edit company validations with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyValidations");
+    await Click.icon("edit");
+    await Click.Btn("yes");
     await page.waitForTimeout(1000);
     await Click.Btn("yes");
-    await Verify.verifyDatacount();
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Company (AA Company)");
+});
+
+test('Verify that the user can copy company validations', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyValidations");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await page.waitForTimeout(2000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Company (AA Company)");
 });
