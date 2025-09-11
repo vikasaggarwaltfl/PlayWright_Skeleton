@@ -71,6 +71,7 @@ export class Click {
     private readonly companyProductTypeMapping  : Locator;
     private readonly companyProductSubTypeMapping  : Locator;
     private readonly companyValidations  : Locator;
+    private readonly companyLookupDataMapping  : Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -249,6 +250,7 @@ export class Click {
         this.companyProductTypeMapping  = page.locator("//button[normalize-space()='Product Type Mapping']");
         this.companyProductSubTypeMapping  = page.locator("//button[normalize-space()='Product Sub Type Mapping']");
         this.companyValidations  = page.locator("//button[normalize-space()='Validations']");
+        this.companyLookupDataMapping  = page.locator("//button[normalize-space()='Lookup Data Mapping']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -548,6 +550,9 @@ export class Click {
         }
         else if (str === "companyValidations") {    
             await this.companyValidations.click();
+        }
+         else if (str === "companyLookupDataMapping") {    
+            await this.companyLookupDataMapping.click();
         }
     };
 

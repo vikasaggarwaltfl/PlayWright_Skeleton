@@ -64,6 +64,7 @@ export class Actions {
     private readonly companyProductSubTypeName: Locator;
     private readonly companyProductSubTypeCode: Locator;
     private readonly companyProductNameCode: Locator;
+    private readonly staticValueCode: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -114,6 +115,7 @@ export class Actions {
         this.companyProductSubTypeName = page.locator("//input[@id='CompanyProductSubTypeName']");
         this.companyProductSubTypeCode = page.locator("//input[@id='CompanyProductSubTypeCode']");
         this.companyProductNameCode = page.locator("//input[@id='CompanyProductNameCode']");
+        this.staticValueCode = page.locator("//input[@id='StaticValueCode']");
 
     }
 
@@ -313,6 +315,10 @@ export class Actions {
         else if (textBoxName === "companyProductNameCode") {
 
             await this.companyProductNameCode.fill(text);
+        }
+         else if (textBoxName === "staticValueCode") {
+
+            await this.staticValueCode.fill(text);
         }
         
     }
