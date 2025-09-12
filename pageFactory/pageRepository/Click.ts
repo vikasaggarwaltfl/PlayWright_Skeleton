@@ -179,6 +179,10 @@ export class Click {
     private readonly Test_Comp: Locator;
     private readonly financeSaveAll: Locator;
     private readonly financeApply: Locator;
+    private readonly guarantor: Locator;
+    private readonly accessories: Locator;
+    private readonly Products : Locator;
+
     
     
 
@@ -356,6 +360,10 @@ export class Click {
         this.Test_Comp = page.locator("//button[normalize-space()='Test_Comp']");
         this.financeSaveAll = page.locator("//button[@title='No Changes to Save']");
         this.financeApply = page.locator("//span[normalize-space()='Apply']");
+        this.guarantor = page.locator("//span[normalize-space()='Apply']");
+        this.accessories = page.locator("//span[normalize-space()='Apply']");
+        this.Products = page.locator("//span[normalize-space()='Apply']");
+
 }
 
     //link--------------------------------------------------------------------------------------------------------
@@ -851,6 +859,16 @@ export class Click {
         else if (str === "financeApply") {
             await this.financeApply.click();
         }
+        else if (str === "") {
+            await this.financeApply.click();
+        }
+        else if (str === "financeApply") {
+            await this.financeApply.click();
+        }
+        else if (str === "financeApply") {
+            await this.financeApply.click();
+        }
+
 
 
         

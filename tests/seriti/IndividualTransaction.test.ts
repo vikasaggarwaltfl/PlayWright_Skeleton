@@ -335,6 +335,39 @@ test('Verify that user can submit finance application with valid data', async ({
     await Verify.IsTextDisplayed(page,"Request failed");
  });
 
+ // Additional person/ spouse o Guarantor
+ test('Verify that Additional person ,spouse or Guarantor  displayed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("Guarantor");
+});
+
+ // Products
+  test('Verify that product section displayed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("Products");
+});
+
+ // Accessories
+ test('Verify that Accessories section displayed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("Accessories");
+});
+
+ 
+
+
 
 
 
