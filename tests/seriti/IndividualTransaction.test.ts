@@ -356,14 +356,65 @@ test('Verify that user can submit finance application with valid data', async ({
 });
 
  // Accessories
- test('Verify that Accessories section displayed as expected', async ({ page, Actions, Click, Verify }) => {
+ test.only('Verify that user can redirect to Accessories section as expected', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281957");
     await Click.Btn("view");
     await page.waitForLoadState('networkidle');
-    await Click.Btn("Accessories");
+    await Click.Btn("accessories");
+    await Verify.IsTextDisplayed(page,"Add");
 });
+
+ test('Verify that user can add transaction accessories with valid data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("accessories");
+    await Click.Btn("addTransactionAccessories")
+    await Click.dropdown("Select a category", "other")
+    await Click.Btn("save")
+
+});
+
+test('Verify that error message displayed for invalid transaction accessories data', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("accessories");
+    await Click.Btn("addTransactionAccessories")
+    await Click.Btn("save")
+});
+
+test('Verify that user can filter transaction accessories records ', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("accessories");
+    await Click.icon("filterArrow");
+    await Click.dropdown("Select a category", "other")
+    await Click.Btn("Apply")
+
+});
+
+test('Verify that user can sort transaction accessories records ', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("accessories");
+    await Click.icon("sort");
+    await Verify.verifySortOrder();
+});
+
+
 
  
 

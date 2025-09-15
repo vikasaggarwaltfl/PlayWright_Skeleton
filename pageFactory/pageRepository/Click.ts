@@ -364,9 +364,9 @@ export class Click {
         this.Test_Comp = page.locator("//button[normalize-space()='Test_Comp']");
         this.financeSaveAll = page.locator("//button[@title='No Changes to Save']");
         this.financeApply = page.locator("//span[normalize-space()='Apply']");
-        this.guarantor = page.locator("//span[normalize-space()='Apply']");
-        this.accessories = page.locator("//span[normalize-space()='Apply']");
-        this.Products = page.locator("//span[normalize-space()='Apply']");
+        this.guarantor = page.locator("//button[normalize-space()='guarantor']");
+        this.accessories = page.locator("//button[normalize-space()='Accessories']");
+        this.Products = page.locator("//button[normalize-space()='Products']");
 
 }
 
@@ -869,14 +869,14 @@ export class Click {
         else if (str === "financeApply") {
             await this.financeApply.click();
         }
-        else if (str === "") {
-            await this.financeApply.click();
+        else if (str === "Guarantor") {
+            await this.guarantor.click();
         }
-        else if (str === "financeApply") {
-            await this.financeApply.click();
+        else if (str === "Products") {
+            await this.Products.click();
         }
-        else if (str === "financeApply") {
-            await this.financeApply.click();
+        else if (str === "accessories") {
+            await this.accessories.click();
         }
 
 
