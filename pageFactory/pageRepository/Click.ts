@@ -73,6 +73,7 @@ export class Click {
     private readonly companyValidations  : Locator;
     private readonly companyLookupDataMapping  : Locator;
     private readonly companyVehicleCodeMapping  : Locator;
+    private readonly companyDocumentCategoryMapping  : Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -257,6 +258,7 @@ export class Click {
         this.companyValidations  = page.locator("//button[normalize-space()='Validations']");
         this.companyLookupDataMapping  = page.locator("//button[normalize-space()='Lookup Data Mapping']");
         this.companyVehicleCodeMapping  = page.locator("//button[normalize-space()='Vehicle Code Mapping']");
+        this.companyDocumentCategoryMapping  = page.locator("//button[normalize-space()='Document Category Mapping']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -566,6 +568,9 @@ export class Click {
         }
         else if (str === "companyVehicleCodeMapping") {    
             await this.companyVehicleCodeMapping.click();
+        }
+        else if (str === "companyDocumentCategoryMapping") {    
+            await this.companyDocumentCategoryMapping.click();
         }
     };
 
