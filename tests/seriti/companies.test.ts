@@ -1057,3 +1057,101 @@ test('Verify that the "document category" dropdown is disabled when editing a co
     await Click.icon("edit");
     await Verify.verifyDisabledButton("Finance");
 });
+
+//Company >> Nationality Mapping ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add company nationality mapping with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyNationalityMapping");
+    await Click.Btn("add");
+    await Click.dropdown("Nationality", "Afghanistan");
+    await Actions.enterText("accessoryCode", "AA001");
+    await Click.Btn("save");
+    await Verify.verifyDatacount();
+});
+
+test('Verify that the user cannot add company nationality mapping with invalid details', async ({ page, Actions, Click, Verify }) => {    
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyNationalityMapping");
+    await Click.Btn("add");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Nationality is a required field");
+});
+
+test('Verify that the user can edit company nationality mapping with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyNationalityMapping");
+    await Click.icon("edit");
+    await Actions.enterText("accessoryCode", "AA002");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Company (AA Company)");
+});
+
+test('Verify that the user can copy company nationality mapping', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyNationalityMapping");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await page.waitForTimeout(2000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Company (AA Company)");
+});
+
+test('Verify that the "nationality" dropdown is disabled when editing a company nationality mapping', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyNationalityMapping");
+    await Click.icon("edit");
+    await Verify.verifyDisabledButton("Afghanistan");
+});
+
