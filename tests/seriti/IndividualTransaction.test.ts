@@ -376,7 +376,6 @@ test('Verify that user can submit finance application with valid data', async ({
     await Click.Btn("addTransactionAccessories")
     await Click.dropdown("Select a category", "other")
     await Click.Btn("save")
-
 });
 
 test('Verify that error message displayed for invalid transaction accessories data', async ({ page, Actions, Click, Verify }) => {
@@ -400,7 +399,6 @@ test('Verify that user can filter transaction accessories records ', async ({ pa
     await Click.icon("filterArrow");
     await Click.dropdown("Select a category", "other")
     await Click.Btn("Apply")
-
 });
 
 test('Verify that user can sort transaction accessories records ', async ({ page, Actions, Click, Verify }) => {
@@ -413,6 +411,48 @@ test('Verify that user can sort transaction accessories records ', async ({ page
     await Click.icon("sort");
     await Verify.verifySortOrder();
 });
+
+//Trade in
+test('Verify that user can redirect to the Trade in section', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("tradeIn");
+});
+
+test('Verify that trade in section displyed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("tradeIn");
+});
+
+test('Verify that trade in section displyed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("tradeIn");
+});
+
+test('Verify that user can select Is Trade in toggel', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("tradeIn");
+});
+
+
+
+
+
 
 
 
