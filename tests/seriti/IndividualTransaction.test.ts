@@ -449,6 +449,32 @@ test('Verify that user can select Is Trade in toggel', async ({ page, Actions, C
     await Click.Btn("tradeIn");
 });
 
+test('Verify that user can redirect to the Insurance application section', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("insuranceApp");
+});
+
+test('Verify that the Insurance application section displayed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("insuranceApp");
+});
+
+test('Verify that user can enter in to Insurance application', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("insuranceApp");
+});
 
 
 
