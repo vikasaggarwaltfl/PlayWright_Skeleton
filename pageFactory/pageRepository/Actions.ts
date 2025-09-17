@@ -66,6 +66,8 @@ export class Actions {
     private readonly companyProductNameCode: Locator;
     private readonly staticValueCode: Locator;
     private readonly documentCategoryCode: Locator;
+    private readonly responseCode: Locator;
+    private readonly description: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -118,6 +120,8 @@ export class Actions {
         this.companyProductNameCode = page.locator("//input[@id='CompanyProductNameCode']");
         this.staticValueCode = page.locator("//input[@id='StaticValueCode']");
         this.documentCategoryCode = page.locator("//input[@id='DocumentCategoryCode']");
+        this.responseCode = page.locator("//input[@id='Status']");
+        this.description = page.locator("//textarea[@id='StatusNotes']");
 
     }
 
@@ -325,6 +329,14 @@ export class Actions {
         else if (textBoxName === "documentCategoryCode") {
 
             await this.documentCategoryCode.fill(text);
+        }
+        else if (textBoxName === "responseCode") {
+
+            await this.responseCode.fill(text);
+        }
+        else if (textBoxName === "description") {
+
+            await this.description.fill(text);
         }
         
     }

@@ -1155,3 +1155,85 @@ test('Verify that the "nationality" dropdown is disabled when editing a company 
     await Verify.verifyDisabledButton("Afghanistan");
 });
 
+//Company >> Finance Status Mapping ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add company finance status mapping with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyFinanceStatusMapping");
+    await Click.Btn("add");
+    await Actions.enterText("responseCode", "200K");
+    await Click.dropdown("Finance Status", "Contract Stage");
+    await Click.Btn("save");
+    await Verify.verifyDatacount();
+});
+
+test('Verify that the user cannot add company finance status mapping with invalid details', async ({ page, Actions, Click, Verify }) => {    
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyFinanceStatusMapping");
+    await Click.Btn("add");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Finance Status is a required field");
+});
+
+test('Verify that the user can edit company finance status mapping with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyFinanceStatusMapping");
+    await Click.icon("edit");
+    await Actions.enterText("description", "Testing");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Testing");
+});
+
+test('Verify that the user can copy company finance status mapping', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Admin");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("companies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "AA Company");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("companyFinanceStatusMapping");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await page.waitForTimeout(2000);
+    await Click.Btn("save");
+    await Verify.verifyDatacount();
+});
+
+
+
