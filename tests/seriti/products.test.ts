@@ -103,7 +103,7 @@ test('Verify that the user can edit the product details with valid data', async 
     await Verify.IsTextDisplayed(page, "Products saved!");
 });
 
-test('Verify that the user can copy the product details with valid data', async ({ page, Actions, Click, Verify }) => {
+test.only('Verify that the user can copy the product details with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Product Admin");
@@ -118,7 +118,9 @@ test('Verify that the user can copy the product details with valid data', async 
     await Click.Btn("copying");
     await page.waitForTimeout(1000);
     await Click.Btn("save");
-    await Click.calendar(1, "2026", "Aug", 20);
+    await Click.calendar(1, "2026", "Aug", 22);
+    await Click.Btn("save");
+    await Click.calendar(1, "2026", "Aug", 22);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
