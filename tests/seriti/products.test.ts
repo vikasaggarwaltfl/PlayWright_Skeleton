@@ -103,7 +103,7 @@ test('Verify that the user can edit the product details with valid data', async 
     await Verify.IsTextDisplayed(page, "Products saved!");
 });
 
-test.only('Verify that the user can copy the product details with valid data', async ({ page, Actions, Click, Verify }) => {
+test.skip('Verify that the user can copy the product details with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Product Admin");
@@ -118,11 +118,95 @@ test.only('Verify that the user can copy the product details with valid data', a
     await Click.Btn("copying");
     await page.waitForTimeout(1000);
     await Click.Btn("save");
-    await Click.calendar(1, "2026", "Aug", 22);
-    await Click.Btn("save");
-    await Click.calendar(1, "2026", "Aug", 22);
+    await Click.calendar(1, "2026", "Oct", 22);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Saved Successfully");
 });
+
+//Products >> Product lines----------------------------------------------------------------------------------------------------------------------------
+
+test.only('Verify that the user can add a product line with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("productName", "Demo test product");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("productLines");
+    await Click.Btn("add");
+    await Click.dropdown("Administrator", "Nolo");
+    await page.pause();
+  
+    await Click.dropdown("Owner", "Marsh Administrators");
+    await page.pause();
+    await Click.dropdown("Underwriter", "Rivonia Product Owners");
+    await page.pause();
+    await Click.calendar(1, "2026", "Aug", 22);
+    await Click.dropdown("Display Type", "Radio Button");
+    await page.pause();
+    await Click.dropdown("Claims ", "Monthly Admin Co");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Products saved!");
+});
+
+test('Verify that the user cannot add a product line with invalid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("productName", "practise product");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("productLines");
+    await Click.Btn("add");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Administrator is a required field");
+});
+
+
+/*test('Verify that the user can edit a product line and save', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("productName", "practise product");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.transactionTabs("Product lines");
+    await Click.icon("edit");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Products saved!");
+});
+
+test('Verify that the user can copy a product line', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("productName", "practise product");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.transactionTabs("Product lines");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await page.waitForTimeout(1000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Products saved!");
+});*/
+
 
 

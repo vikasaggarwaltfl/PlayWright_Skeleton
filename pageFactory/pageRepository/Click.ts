@@ -76,6 +76,7 @@ export class Click {
     private readonly companyDocumentCategoryMapping  : Locator;
     private readonly companyNationalityMapping  : Locator;
     private readonly companyFinanceStatusMapping  : Locator;
+    private readonly productLines: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -263,6 +264,7 @@ export class Click {
         this.companyDocumentCategoryMapping  = page.locator("//button[normalize-space()='Document Category Mapping']");
         this.companyNationalityMapping  = page.locator("//button[normalize-space()='Nationality Mapping']");
         this.companyFinanceStatusMapping  = page.locator("//button[normalize-space()='Finance Status Mapping']");
+        this.productLines = page.locator("//button[normalize-space()='Product Lines']");
         
         
         //icon--------------------------------------------------------------------------------------------------------        
@@ -582,6 +584,9 @@ export class Click {
         }
         else if (str === "companyFinanceStatusMapping") {    
             await this.companyFinanceStatusMapping.click();
+        }
+        else if (str === "productLines") {    
+            await this.productLines.click();
         }
     
     };
