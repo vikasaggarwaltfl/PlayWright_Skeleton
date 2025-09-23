@@ -106,6 +106,7 @@ export class Click {
     private readonly detailsCopy: Locator;
     private readonly deleted: Locator;
     private readonly editBranchHFA: Locator;
+    private readonly productLineCopy: Locator;
     
 
     //buttons--------------------------------------------------------------------------------------------------------
@@ -295,7 +296,7 @@ export class Click {
         this.detailsCopy = page.locator("(//button[@class='flex flex-col justify-center'])[2]");
         this.deleted = page.locator("(//button[@class='flex flex-col justify-center'])[3]");
         this.editBranchHFA = page.locator("//tbody/tr[1]/td[1]/div[1]/button[1]/i[1]");
-       
+        this.productLineCopy = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/i[1]");
 
         //buttons---------------------------------------------------------------------------------------------------------------------------------------------------        
         
@@ -675,7 +676,9 @@ export class Click {
         else if (str === "editBranchHFA") {
             await this.editBranchHFA.click();
         }
-        
+        else if (str === "productLineCopy") {
+            await this.productLineCopy.click();
+        }
         
         
         

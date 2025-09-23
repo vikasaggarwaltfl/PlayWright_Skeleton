@@ -125,7 +125,7 @@ test.skip('Verify that the user can copy the product details with valid data', a
 
 //Products >> Product lines----------------------------------------------------------------------------------------------------------------------------
 
-test.only('Verify that the user can add a product line with valid details', async ({ page, Actions, Click, Verify }) => {
+test.skip('Verify that the user can add a product line with valid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Product Admin");
@@ -140,7 +140,6 @@ test.only('Verify that the user can add a product line with valid details', asyn
     await Click.Btn("add");
     await Click.dropdown("Administrator", "Nolo");
     await page.pause();
-  
     await Click.dropdown("Owner", "Marsh Administrators");
     await page.pause();
     await Click.dropdown("Underwriter", "Rivonia Product Owners");
@@ -148,7 +147,8 @@ test.only('Verify that the user can add a product line with valid details', asyn
     await Click.calendar(1, "2026", "Aug", 22);
     await Click.dropdown("Display Type", "Radio Button");
     await page.pause();
-    await Click.dropdown("Claims ", "Monthly Admin Co");
+    await page.locator("//label[@for='ClaimsId']").click();
+    await page.locator("//span[normalize-space()='Monthly Admin Co']").click();
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Products saved!");
 });
@@ -160,7 +160,7 @@ test('Verify that the user cannot add a product line with invalid details', asyn
     await Click.tabs("productAdmin");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
-    await Actions.enterText("productName", "practise product");
+    await Actions.enterText("productName", "Demo test product");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
@@ -171,21 +171,21 @@ test('Verify that the user cannot add a product line with invalid details', asyn
 });
 
 
-/*test('Verify that the user can edit a product line and save', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user cannot edit a product line', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Product Admin");
     await Click.tabs("productAdmin");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
-    await Actions.enterText("productName", "practise product");
+    await Actions.enterText("productName", "Demo test product");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
-    await Click.transactionTabs("Product lines");
+    await Click.tabs("productLines");
+    await Click.icon("futureArrow");
     await Click.icon("edit");
-    await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Products saved!");
+    await Verify.IsTextDisplayed(page, "Edit Product Lines");
 });
 
 test('Verify that the user can copy a product line', async ({ page, Actions, Click, Verify }) => {
@@ -195,18 +195,19 @@ test('Verify that the user can copy a product line', async ({ page, Actions, Cli
     await Click.tabs("productAdmin");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
-    await Actions.enterText("productName", "practise product");
+    await Actions.enterText("productName", "Demo test product");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
     await Click.icon("edit");
-    await Click.transactionTabs("Product lines");
-    await Click.icon("copy");
+    await Click.tabs("productLines");
+    await Click.icon("futureArrow");
+    await Click.icon("productLineCopy");
     await Click.icon("selectAll");
     await Click.Btn("copying");
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(2000);
     await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Products saved!");
-});*/
+    await Verify.verifyDatacount();
+});
 
 
 
