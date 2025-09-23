@@ -660,7 +660,7 @@ test('Verify that the user is able to refresh the groupSSF page', async ({ page,
 
 //Group >> Documents-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test.only('Verify that the user can add a new "document" in the addGroupDocument section with valid data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can add a new "document" in the addGroupDocument section with valid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
@@ -681,7 +681,7 @@ test.only('Verify that the user can add a new "document" in the addGroupDocument
     await Verify.IsTextDisplayed(page, "File successfully uploaded!");
 });
 
-test.only('Verify that the user cannot add a new "document" in the addGroupDocument section with invalid data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user cannot add a new "document" in the addGroupDocument section with invalid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Admin");
