@@ -125,6 +125,48 @@ test.skip('Verify that the user can copy the product details with valid data', a
 
 //Products >> Product lines----------------------------------------------------------------------------------------------------------------------------
 
+test('Verify that the user can filter product lines using the filter options', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("productName", "Demo test product");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("productLines");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Click.calendar(1, "2026", "Jan", 22);
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Verify.IsTextDisplayed(page, "No records found..." );
+    });
+
+    test('Verify that the user can reset product lines by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
+        await Actions.signIn("Automation");
+        await Click.Btn("login");
+        await Actions.enterText("searchMenu", "Product Admin");
+        await Click.tabs("productAdmin");
+        await page.waitForLoadState('networkidle');
+        await Click.icon("filterArrow");
+        await Actions.enterText("productName", "Demo test product");
+        await Click.Btn("apply");
+        await page.waitForTimeout(1000);
+        await Click.icon("edit");
+        await Click.tabs("productLines");
+        await page.waitForLoadState('networkidle');
+        await Click.icon("filterArrow");
+        await Click.calendar(1, "2026", "Jan", 22);
+        await Click.Btn("apply");
+        await page.waitForTimeout(1000);
+        await Click.Btn("reset");
+        await page.waitForTimeout(5000);
+        await Verify.IsTextDisplayed(page, "Active");   
+    });
+
 test.skip('Verify that the user can add a product line with valid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
@@ -139,18 +181,15 @@ test.skip('Verify that the user can add a product line with valid details', asyn
     await Click.tabs("productLines");
     await Click.Btn("add");
     await Click.dropdown("Administrator", "Nolo");
-    await page.pause();
-    await Click.dropdown("Owner", "Marsh Administrators");
-    await page.pause();
+    await Click.dropdown("Owner", "Marsh Administrators"); 
+    await page.waitForTimeout(1000);
     await Click.dropdown("Underwriter", "Rivonia Product Owners");
-    await page.pause();
     await Click.calendar(1, "2026", "Aug", 22);
+    await Click.icon("productLineClaims");
+    await Click.Btn("productLineClaimsDropdownOption");
     await Click.dropdown("Display Type", "Radio Button");
-    await page.pause();
-    await page.locator("//label[@for='ClaimsId']").click();
-    await page.locator("//span[normalize-space()='Monthly Admin Co']").click();
     await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Products saved!");
+    await Verify.IsTextDisplayed(page, "Products (Demo test product)");
 });
 
 test('Verify that the user cannot add a product line with invalid details', async ({ page, Actions, Click, Verify }) => {
@@ -208,6 +247,4 @@ test('Verify that the user can copy a product line', async ({ page, Actions, Cli
     await Click.Btn("save");
     await Verify.verifyDatacount();
 });
-
-
 

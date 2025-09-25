@@ -107,6 +107,7 @@ export class Click {
     private readonly deleted: Locator;
     private readonly editBranchHFA: Locator;
     private readonly productLineCopy: Locator;
+    private readonly productLineClaims: Locator;
     
 
     //buttons--------------------------------------------------------------------------------------------------------
@@ -188,6 +189,7 @@ export class Click {
     private readonly guarantor: Locator;
     private readonly accessories: Locator;
     private readonly Products : Locator;
+    private readonly productLineClaimsDropdownOption : Locator;
 
     
     
@@ -297,6 +299,7 @@ export class Click {
         this.deleted = page.locator("(//button[@class='flex flex-col justify-center'])[3]");
         this.editBranchHFA = page.locator("//tbody/tr[1]/td[1]/div[1]/button[1]/i[1]");
         this.productLineCopy = page.locator("//tbody/tr[3]/td[1]/div[1]/div[1]/button[1]/i[1]");
+        this.productLineClaims = page.locator("(//*[name()='svg'][@class='p-icon p-dropdown-trigger-icon'])[3]");
 
         //buttons---------------------------------------------------------------------------------------------------------------------------------------------------        
         
@@ -375,6 +378,7 @@ export class Click {
         this.guarantor = page.locator("//button[normalize-space()='guarantor']");
         this.accessories = page.locator("//button[normalize-space()='Accessories']");
         this.Products = page.locator("//button[normalize-space()='Products']");
+        this.productLineClaimsDropdownOption = page.locator("//span[normalize-space()='Monthly Admin Co']");
 
 }
 
@@ -679,6 +683,9 @@ export class Click {
         else if (str === "productLineCopy") {
             await this.productLineCopy.click();
         }
+        else if (str === "productLineClaims") {
+            await this.productLineClaims.click();
+        }
         
         
         
@@ -897,6 +904,9 @@ export class Click {
         }
         else if (str === "accessories") {
             await this.accessories.click();
+        }
+        else if (str === "productLineClaimsDropdownOption") {
+            await this.productLineClaimsDropdownOption.click();
         }
 
 
