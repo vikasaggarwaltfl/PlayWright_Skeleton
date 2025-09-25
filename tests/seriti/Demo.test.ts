@@ -349,7 +349,7 @@ test('Verify that the user can view the client details section on the transactio
     console.log("User can view the client details section on the transaction screen as expected");
 });
 
-test.only('Verify that the user can save the client details section with valid data_1', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can save the client details section with valid data_1', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281800");
@@ -361,7 +361,7 @@ test.only('Verify that the user can save the client details section with valid d
     await Verify.IsTextDisplayed(page, "Transaction saved successfully");
 });
 
-test.only('Verify that the user can save the client details section with valid data_2', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can save the client details section with valid data_2', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281800");

@@ -356,7 +356,7 @@ test('Verify that user can submit finance application with valid data', async ({
 });
 
  // Accessories
- test.only('Verify that user can redirect to Accessories section as expected', async ({ page, Actions, Click, Verify }) => {
+ test('Verify that user can redirect to Accessories section as expected', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
     await Actions.enterText("transactionSearchMenu", "281957");
@@ -431,14 +431,6 @@ test('Verify that trade in section displyed as expected', async ({ page, Actions
     await Click.Btn("tradeIn");
 });
 
-test('Verify that trade in section displyed as expected', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("sonali");
-    await Click.Btn("login");
-    await Actions.enterText("transactionSearchMenu", "281957");
-    await Click.Btn("view");
-    await page.waitForLoadState('networkidle');
-    await Click.Btn("tradeIn");
-});
 
 test('Verify that user can select Is Trade in toggel', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
@@ -476,7 +468,26 @@ test('Verify that user can enter in to Insurance application', async ({ page, Ac
     await Click.Btn("insuranceApp");
 });
 
+//ROA
+test('Verify that Record of Advice section displayed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("ROA");
+});
 
+
+//ROT
+test('Verify that Record of Transaction section displayed as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await page.waitForLoadState('networkidle');
+    await Click.Btn("ROT");
+});
 
 
 
