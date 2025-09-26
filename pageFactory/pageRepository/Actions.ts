@@ -68,6 +68,7 @@ export class Actions {
     private readonly documentCategoryCode: Locator;
     private readonly responseCode: Locator;
     private readonly description: Locator;
+    private readonly optionName: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -122,6 +123,7 @@ export class Actions {
         this.documentCategoryCode = page.locator("//input[@id='DocumentCategoryCode']");
         this.responseCode = page.locator("//input[@id='Status']");
         this.description = page.locator("//textarea[@id='StatusNotes']");
+        this.optionName = page.locator("//input[@id='OptionName']");
 
     }
 
@@ -337,6 +339,10 @@ export class Actions {
         else if (textBoxName === "description") {
 
             await this.description.fill(text);
+        }
+        else if (textBoxName === "optionName") {
+
+            await this.optionName.fill(text);
         }
         
     }
