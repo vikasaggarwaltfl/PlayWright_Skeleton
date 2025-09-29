@@ -295,6 +295,46 @@ test('Verify that the user can filter product options using the filter options',
         await Verify.verifyDatacount();
     });
 
+    test('Verify that the user can add a product option with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("productName", "Demo test product");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("productOptions");
+    await Click.Btn("add");
+    await Actions.enterText("sortKey", "100");
+    await Actions.enterText("optionCode", "Test Code");
+    await Actions.enterText("optionName", "Demo Option");
+    await Click.dropdown("Option Type", "Standard");
+    await Click.checkboxWithoutAll("Transaction Type", "Fleet");
+    await Click.calendar(1, "2026", "Dec", 15);
+    await Click.Btn("save");
+    await Verify.verifyDatacount();
+});
+    
+test('Verify that the user cannot add a product option with invalid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("productName", "Demo test product");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("productOptions");
+    await Click.Btn("add");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Sort Key is a required field");
+});
+
 test('Verify that the user can copy a product option with valid details', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
@@ -332,3 +372,123 @@ test('Verify that the user can edit a product option', async ({ page, Actions, C
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "101");
 });
+
+//Products >> Product companies----------------------------------------------------------------------------------------------------------------------------
+
+
+test('Verify that the user can filter product companies using the filter options', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("productName", "Demo test product");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("productCompanies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("Company Type", "Product");
+    await page.waitForTimeout(2000);
+    await Click.Btn("apply");
+    await Verify.verifyDatacount();
+});
+
+test('Verify that the user can reset product companies by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {    
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("productName", "Demo test product");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("productCompanies");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await page.waitForTimeout(2000);
+    await Actions.enterText("Company Type", "Product");
+    await page.waitForTimeout(2000);
+    await Click.Btn("apply");
+    await Verify.verifyDatacount();
+    await page.waitForTimeout(2000);
+    await Click.Btn("reset");
+    await Verify.verifyDatacount();
+});
+
+/*test('Verify that the user can add a product company with valid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("productName", "Demo test product");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("productCompanies");
+    await Click.Btn("add");
+
+    await Click.Btn("save");
+    await Verify.verifyDatacount();
+});
+
+test('Verify that the user cannot add a product company with invalid details', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("productName", "Demo test product");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("productCompanies");
+    await Click.Btn("add");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Company Name is a required field");
+});
+
+test('Verify that the user can copy a product company', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("productName", "Demo test product");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("productCompanies");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await page.waitForTimeout(2000);
+    await Click.Btn("save");
+    await Verify.verifyDatacount();
+});
+
+test('Verify that the user can edit a product company', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("productName", "Demo test product");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("productCompanies");
+    await Click.icon("edit");
+    
+    await Click.Btn("save");
+    await Verify.verifyDatacount();
+});*/

@@ -69,6 +69,7 @@ export class Actions {
     private readonly responseCode: Locator;
     private readonly description: Locator;
     private readonly optionName: Locator;
+    private readonly optionCode: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -124,6 +125,7 @@ export class Actions {
         this.responseCode = page.locator("//input[@id='Status']");
         this.description = page.locator("//textarea[@id='StatusNotes']");
         this.optionName = page.locator("//input[@id='OptionName']");
+        this.optionCode = page.locator("//input[@id='OptionCode']");
 
     }
 
@@ -343,6 +345,10 @@ export class Actions {
         else if (textBoxName === "optionName") {
 
             await this.optionName.fill(text);
+        }
+        else if (textBoxName === "optionCode") {
+
+            await this.optionCode.fill(text);
         }
         
     }
