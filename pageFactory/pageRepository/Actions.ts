@@ -70,6 +70,8 @@ export class Actions {
     private readonly description: Locator;
     private readonly optionName: Locator;
     private readonly optionCode: Locator;
+    private readonly companyProductName: Locator;
+    private readonly companyProductCode: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -126,6 +128,8 @@ export class Actions {
         this.description = page.locator("//textarea[@id='StatusNotes']");
         this.optionName = page.locator("//input[@id='OptionName']");
         this.optionCode = page.locator("//input[@id='OptionCode']");
+        this.companyProductName = page.locator("//input[@id='CompanyProductName']");
+        this.companyProductCode = page.locator("//input[@id='CompanyProductCode']");
 
     }
 
@@ -349,6 +353,14 @@ export class Actions {
         else if (textBoxName === "optionCode") {
 
             await this.optionCode.fill(text);
+        }
+        else if (textBoxName === "companyProductName") {
+
+            await this.companyProductName.fill(text);
+        }
+        else if (textBoxName === "companyProductCode") {
+
+            await this.companyProductCode.fill(text);
         }
         
     }
