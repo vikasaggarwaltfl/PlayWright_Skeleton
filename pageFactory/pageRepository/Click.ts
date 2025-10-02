@@ -79,6 +79,7 @@ export class Click {
     private readonly productLines: Locator;
     private readonly productOptions: Locator;
     private readonly productCompanies: Locator;
+    private readonly productTypeMapping: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -272,6 +273,7 @@ export class Click {
         this.productLines = page.locator("//button[normalize-space()='Product Lines']");
         this.productOptions = page.locator("//button[normalize-space()='Product Options']");
         this.productCompanies = page.locator("//button[normalize-space()='Product Companies']");
+        this.productTypeMapping = page.locator("//button[normalize-space()='Product Type Mapping']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -601,6 +603,9 @@ export class Click {
         }
         else if (str === "productCompanies") {    
             await this.productCompanies.click();
+        }
+        else if (str === "productTypeMapping") {    
+            await this.productTypeMapping.click();
         }
     
     };

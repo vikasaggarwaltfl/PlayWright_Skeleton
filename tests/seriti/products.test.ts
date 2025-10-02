@@ -458,7 +458,7 @@ test('Verify that the user cannot add a product company with invalid details', a
     await Verify.verifyErrorMessage(page, "Company Type is a required field");
 });
 
-test.skip('Verify that the user can copy a product company', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can copy a product company', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Product Admin");
@@ -497,3 +497,48 @@ test('Verify that the user can edit a product company', async ({ page, Actions, 
     await Click.Btn("save");
     await Verify.verifyDatacount();
 });
+
+//Products >> Product Type Mapping----------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can filter product type mapping using the filter options', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Product Admin");
+    await Click.tabs("productAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("productName", "Demo test product");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await Click.tabs("productTypeMapping");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("companyName", "Demo test company");
+    await page.waitForTimeout(2000);
+    await Click.Btn("apply");
+    await Verify.verifyDatacount();
+    });
+
+    test('Verify that the user can reset product type mapping by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {    
+        await Actions.signIn("Automation");
+        await Click.Btn("login");
+        await Actions.enterText("searchMenu", "Product Admin");
+        await Click.tabs("productAdmin");
+        await page.waitForLoadState('networkidle');
+        await Click.icon("filterArrow");
+        await Actions.enterText("productName", "Demo test product");
+        await Click.Btn("apply");
+        await page.waitForTimeout(1000);
+        await Click.icon("edit");
+        await Click.tabs("productTypeMapping");
+        await page.waitForLoadState('networkidle');
+        await Click.icon("filterArrow");
+        await Actions.enterText("companyName", "Demo test company");
+        await page.waitForTimeout(2000);
+        await Click.Btn("apply");
+        await Verify.verifyDatacount();
+        await page.waitForTimeout(2000);
+        await Click.Btn("reset");
+        await Verify.verifyDatacount();
+    });
