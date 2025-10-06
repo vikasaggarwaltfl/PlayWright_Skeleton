@@ -431,7 +431,6 @@ test('Verify that trade in section displyed as expected', async ({ page, Actions
     await Click.Btn("tradeIn");
 });
 
-
 test('Verify that user can select Is Trade in toggel', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
     await Click.Btn("login");
@@ -478,7 +477,6 @@ test('Verify that Record of Advice section displayed as expected', async ({ page
     await Click.Btn("ROA");
 });
 
-
 //ROT
 test('Verify that Record of Transaction section displayed as expected', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("sonali");
@@ -488,6 +486,41 @@ test('Verify that Record of Transaction section displayed as expected', async ({
     await page.waitForLoadState('networkidle');
     await Click.Btn("ROT");
 });
+
+//Doc data
+test('Verify that user redirected to Doc data section as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await Click.Btn("docData");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed (page,["Vehicle details, Print costing schedule"]);
+});
+
+//Communcication
+test('Verify that user redirected to communication section as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await Click.Btn("communication");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed (page,["Email, Subject, message"]);
+});
+
+//Audit log
+test('Verify that user redirected to Audit log section as expected', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("sonali");
+    await Click.Btn("login");
+    await Actions.enterText("transactionSearchMenu", "281957");
+    await Click.Btn("view");
+    await Click.Btn("auditLogs");
+    await Click.Btn("checkauditLogs");
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed (page,["Field Name, Beforechange, Afterchange"]);
+});
+
 
 
 

@@ -189,6 +189,8 @@ export class Click {
     private readonly guarantor: Locator;
     private readonly accessories: Locator;
     private readonly Products : Locator;
+    private readonly auditLogs : Locator;
+    private readonly checkauditLogs : Locator;
     private readonly productLineClaimsDropdownOption : Locator;
 
     
@@ -379,8 +381,9 @@ export class Click {
         this.accessories = page.locator("//button[normalize-space()='Accessories']");
         this.Products = page.locator("//button[normalize-space()='Products']");
         this.productLineClaimsDropdownOption = page.locator("//span[normalize-space()='Monthly Admin Co']");
+        this.auditLogs = page.locator("//button[normalize-space()='Audit Logs']");
+        this.checkauditLogs = page.locator("//span[normalize-space()='Audit Log']");
 }
-
     //link--------------------------------------------------------------------------------------------------------
     
     async link(linkName: String) {
@@ -909,7 +912,12 @@ export class Click {
         else if (str === "productLineClaimsDropdownOption") {
             await this.productLineClaimsDropdownOption.click();
         }
-        
+        else if (str === "auditLogs") {
+            await this.auditLogs.click();
+        }
+        else if (str === "checkauditLogs") {
+            await this.checkauditLogs.click();
+        }
     };
 
     //dropdown--------------------------------------------------------------------------------------------------------
