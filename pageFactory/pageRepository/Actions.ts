@@ -72,6 +72,7 @@ export class Actions {
     private readonly optionCode: Locator;
     private readonly companyProductName: Locator;
     private readonly companyProductCode: Locator;
+    private readonly accessory : Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -130,6 +131,7 @@ export class Actions {
         this.optionCode = page.locator("//input[@id='OptionCode']");
         this.companyProductName = page.locator("//input[@id='CompanyProductName']");
         this.companyProductCode = page.locator("//input[@id='CompanyProductCode']");
+        this.accessory = page.locator("//input[@id='IsAccessoryText']");
 
     }
 
@@ -361,6 +363,10 @@ export class Actions {
         else if (textBoxName === "companyProductCode") {
 
             await this.companyProductCode.fill(text);
+        }
+        else if (textBoxName === "accessory") {
+
+            await this.accessory.fill(text);
         }
         
     }
