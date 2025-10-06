@@ -123,7 +123,6 @@ export class Click {
     private readonly search: Locator;
     private readonly hideOverview: Locator;
     private readonly showOverview: Locator;
-
     private readonly addDealTrackerReport: Locator;
     private readonly addInsuranceLeadReport: Locator;
     private readonly addPayoverReport: Locator;
@@ -131,7 +130,6 @@ export class Click {
     private readonly addTransactionDetailsReport: Locator;
     private readonly addUserNotificationReport: Locator;
     private readonly addAPIReqResDetailsReport: Locator;
-
     private readonly save: Locator;
     private readonly createDateYes: Locator;
     private readonly inceptDateYes: Locator;
@@ -151,7 +149,6 @@ export class Click {
     private readonly templateLine: Locator;
     private readonly add : Locator;
     private readonly addGroup: Locator;
-   
     private readonly refresh: Locator;
     private readonly addBranch: Locator;
     private readonly addCompany: Locator; 
@@ -176,7 +173,6 @@ export class Click {
     private readonly submitBtn: Locator;
     private readonly bankerLinkEnabledYes: Locator;
     private readonly saveAll: Locator;
-
     private readonly accountDetails: Locator;
     private readonly documents: Locator;
     private readonly addDocument: Locator;
@@ -195,8 +191,6 @@ export class Click {
     private readonly productLineClaimsDropdownOption : Locator;
 
     
-    
-
     constructor(page: Page, context: BrowserContext) {
         //link--------------------------------------------------------------------------------------------------------
         
@@ -367,7 +361,6 @@ export class Click {
         this.submitBtn = page.locator("//button[@aria-label='Submit']");
         this.bankerLinkEnabledYes = page.locator("//span[normalize-space()='Yes']");
         this.saveAll = page.locator("//button[@aria-label='Save All']");
-
         this.accountDetails = page.locator("//button[normalize-space()='Account Details']");
         this.documents = page.locator("//button[normalize-space()='Documents']");
         this.addDocument = page.locator("//button[@aria-label='Add']");
@@ -384,7 +377,6 @@ export class Click {
         this.accessories = page.locator("//button[normalize-space()='Accessories']");
         this.Products = page.locator("//button[normalize-space()='Products']");
         this.productLineClaimsDropdownOption = page.locator("//span[normalize-space()='Monthly Admin Co']");
-
 }
 
     //link--------------------------------------------------------------------------------------------------------
@@ -498,8 +490,6 @@ export class Click {
             await this.users.click();
         }
         else if (str === "transactionInProgressDashboard") {
-            await this.transactionInProgressDashboard.waitFor({ state: 'visible', timeout: 5000 });
-            await this.transactionInProgressDashboard.scrollIntoViewIfNeeded();
             await this.transactionInProgressDashboard.click();
         }
         else if (str === "transactionStatusAgeingAnalysisDashboard") {
@@ -607,7 +597,6 @@ export class Click {
         else if (str === "productTypeMapping") {    
             await this.productTypeMapping.click();
         }
-    
     };
 
     //icon--------------------------------------------------------------------------------------------------------
@@ -629,8 +618,6 @@ export class Click {
             await this.copy.click();
         }
         else if (str === "edit") {
-            await this.page.waitForLoadState('networkidle');
-            await this.edit.waitFor({ state: 'visible', timeout: 5000 });
             await this.edit.click();
         }
         else if (str === "cancel2") {
@@ -699,10 +686,7 @@ export class Click {
         }
         else if (str === "productLineClaims") {
             await this.productLineClaims.click();
-        }
-        
-        
-        
+        }        
 };
 
     //buttons--------------------------------------------------------------------------------------------------------
@@ -724,7 +708,6 @@ export class Click {
         else if (str === "resetCriteria") {
             await this.resetCriteria.click();
         }
-
         else if (str === "search") {
             await this.search.click();
         }
@@ -734,7 +717,6 @@ export class Click {
         else if (str === "showOverview") {
             await this.showOverview.click();
         }
-
         else if (str === "addDealTrackerReport") {
             await this.addDealTrackerReport.click();
         }
@@ -922,9 +904,6 @@ export class Click {
         else if (str === "productLineClaimsDropdownOption") {
             await this.productLineClaimsDropdownOption.click();
         }
-
-
-
         
     };
 
@@ -935,8 +914,8 @@ export class Click {
         // Then select the option
         await this.page.locator(`//span[normalize-space()='${selector}']`).click();
     };
-
- //Dropdownwithscroll-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
+//Dropdownwithscroll-----------------------------------------------------------------------------------------------------------------------------------------------------------------
     async dropdownwithscroll(value: string, selector: string): Promise<void> {
     // Click to open the dropdown
     await this.page.locator(`//span[@aria-label='${value}']`).click();
@@ -949,7 +928,7 @@ export class Click {
     // Click the desired option
     await optionLocator.click();
 }
-    //radio button-------------------------------------------------------------------------------------------------------
+//radio button-------------------------------------------------------------------------------------------------------
 
     async radioButton(label: string[] | string): Promise<void> {
         if (Array.isArray(label)) {
@@ -962,8 +941,7 @@ export class Click {
             await this.page.getByLabel(`${label}`).check();
         }
 };
-
-    //calendar-------------------------------------------------------------------------------------------------------
+//calendar-------------------------------------------------------------------------------------------------------
     async calendar(index: number, year: string, month: string, date?: number): Promise<void> {
         console.log(`Opening calendar at index ${index}`);
         await this.page.locator(`(//button[@aria-label='Choose Date'])[${index}]`).click();
@@ -990,12 +968,12 @@ export class Click {
         }
     };
 
-    //chevronLeft-------------------------------------------------------------------------------------------------------
+//chevronLeft-------------------------------------------------------------------------------------------------------
     async chevronLeftArrow(index: number): Promise<void> {
         await this.page.locator(`(//button[@class='flex flex-row items-center justify-center'])[${index}]`).click();
 };
 
-    //checkbox-----------------------------------------------------------------------------------------------------------
+//checkbox-----------------------------------------------------------------------------------------------------------
     async checkboxWithAll(index: number, selectors: string[] | string): Promise<void> {
         // Click the dropdown first
         await this.page.locator(`(//div[@class='p-multiselect-label'])[${index}]`).click();
@@ -1041,7 +1019,7 @@ export class Click {
         await this.page.locator("body").click({ position: { x: 0, y: 0 } });
     };
 
-    //pagination-------------------------------------------------------------------------------------------------------------------------------------------------------------
+//pagination-------------------------------------------------------------------------------------------------------------------------------------------------------------
     async pagination(value: number): Promise<void> {
         
         for (let i = 1; i <= value; i++) {
@@ -1055,9 +1033,7 @@ export class Click {
         }
     };
 
-    /**
-     * Selects an option from the Save As dropdown (e.g., 'PNG', 'JPEG', 'PDF').
-     */
+//Selects an option from the Save As dropdown (e.g., 'PNG', 'JPEG', 'PDF').
     async selectSaveAsOption(option: string): Promise<void> {
         const saveAsArrowButton = this.page.locator('button:has(svg[data-pc-section="menubuttonicon"])');
         await saveAsArrowButton.click();
@@ -1070,15 +1046,12 @@ export class Click {
 
         console.log(`Dashboard Saved in Format > ${option}`);
     } 
-
-
     async mouseHoverTabs(selectors: string[]): Promise<void> {
         for (const selector of selectors) {
             await this.page.locator(`//div[text()='${selector}']`).hover();
             await this.page.waitForTimeout(1000); 
         }
     }
-
     async transactionTabs(selector: string, printAll: boolean = false): Promise<void> {
         if (printAll) {
             const buttons = await this.page.locator(`//button[normalize-space()]`).all();

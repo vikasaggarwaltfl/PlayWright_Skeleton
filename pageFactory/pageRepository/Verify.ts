@@ -108,8 +108,8 @@ export class Verify {
     console.log("No data available in the grid");
   }
   }
-  // Verify download-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+  // Verify download-----------------------------------------------------------------------------------------------------------------------------------------------------------------
   async verifyDownload(value: string): Promise<void> {
     // Set up download listener before clicking the download button
     const downloadPromise = this.page.waitForEvent('download');
@@ -129,7 +129,6 @@ export class Verify {
   }
 
   // Verify Sort Icon State------------------------------------------------------------------------------------------------------------------------------------------------------------
-  
   async verifySortOrder() {
     const icon = await this.page.locator("//th[2]//div[1]//span[2]//*[name()='svg']");
     const state = await icon.getAttribute('sortOrder');
@@ -145,16 +144,13 @@ export class Verify {
       console.log("Unknown Sort Order");
     }
   }
-
   
   //Verify Icon is visible-------------------------------------------------------------------------------------------------------------
-
-  async isIconVisible(page: Page, iconName: keyof typeof iconLocators) {
+ async isIconVisible(page: Page, iconName: keyof typeof iconLocators) {
     const selector = iconLocators[iconName];
     if (!selector) throw new Error(`No selector found for icon: ${iconName}`);
     await expect(page.locator(selector)).toBeVisible();
   }
-
 
   async verifyElementPresence(element: Locator, shouldBePresent: boolean) {
     if (shouldBePresent) {
