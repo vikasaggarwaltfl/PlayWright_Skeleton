@@ -100,7 +100,7 @@ test('Verify that the user can edit the accessory details with valid data', asyn
     await Verify.IsTextDisplayed(page, "Accessories saved!");
 });
 
-test('Verify that the user cannot edit the accessory details with Invalid data', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user cannot edit the accessory details with invalid data', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Accessories");
@@ -110,14 +110,14 @@ test('Verify that the user cannot edit the accessory details with Invalid data',
     await Click.icon("filterArrow");
     await Actions.enterText("accessoryName", "practise accessory");
     await Click.Btn("apply");
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(3000);
     await Click.icon("edit");
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(1000);
     await Actions.enterText("accessoryName", " ");
     await Click.Btn("save");
-    await page.waitForTimeout(1000);
     await Verify.verifyErrorMessage(page, "Accessory Name is a required field");
 });
+
 
 test('Verify that the user can sort the accessory details in the data grid', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
@@ -142,3 +142,25 @@ test('Verify that pagination works correctly for accessories page', async ({ pag
     await page.waitForTimeout(1000);
     await Verify.verifyDatacount();
 });
+
+test("Verify that the user can copy accessory", async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");   
+    await Actions.enterText("searchMenu", "Accessories");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("accessoryAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("accessoryName", "Test Accessory");
+    await Click.Btn("apply");
+    await page.waitForTimeout(3000);
+    await Click.icon("copy");
+    await page.waitForTimeout(2000);
+    await Click.icon("selectAll");
+    await page.waitForTimeout(2000);
+    await Click.Btn("copying");
+    await Click.Btn("save"); 
+    await page.waitForTimeout(2000);
+    await Verify.IsTextDisplayed(page, "Saved Successfully");
+});
+
