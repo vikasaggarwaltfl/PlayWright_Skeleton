@@ -81,6 +81,7 @@ export class Click {
     private readonly productCompanies: Locator;
     private readonly productTypeMapping: Locator;
     private readonly productSubTypeMapping: Locator;
+    private readonly vehicleTransaction: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -272,6 +273,7 @@ export class Click {
         this.productCompanies = page.locator("//button[normalize-space()='Product Companies']");
         this.productTypeMapping = page.locator("//button[normalize-space()='Product Type Mapping']");
         this.productSubTypeMapping = page.locator("//button[normalize-space()='Product Sub Type Mapping']");
+        this.vehicleTransaction = page.locator("[//button[normalize-space()='Transaction']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -604,6 +606,9 @@ export class Click {
         }
         else if (str === "productSubTypeMapping") {    
             await this.productSubTypeMapping.click();
+        }
+        else if (str === "vehicleTransaction") {    
+            await this.vehicleTransaction.click();
         }
     };
 
