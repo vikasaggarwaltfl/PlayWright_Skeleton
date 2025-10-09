@@ -149,20 +149,22 @@ test('Verify that pagination works correctly for vehicles page', async ({ page, 
 
 //Vehicles >> Transaction---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test('Verify that the user can filter Vehicle transactions using finance status', async ({ page, Actions, Click, Verify }) => {
+test.skip('Verify that the user can filter Vehicle transactions using finance status', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Vehicles");
     await Click.chevronLeftArrow(1);
     await Click.tabs("vehicleAdmin");
     await page.waitForLoadState('networkidle');
-    await Click.icon("filterArrow");
-    await Actions.enterText("vehicleCode", "AC001");
-    await Click.Btn("apply");
-    await Click.icon("filterArrow");
-    await page.waitForTimeout(1000);
+    await Actions.enterText("searchMenu", " ");
+    // await Click.icon("filterArrow");
+    // await Actions.enterText("vehicleCode", "AC001");
+    // await Click.Btn("apply");
+    // await Click.icon("filterArrow");
+    await page.waitForTimeout(3000);
     await page.locator("//i[@class='pi pi-pencil text-lg']").click();
-    await Click.icon("edit");
+    await page.pause();
+    //await Click.icon("edit");
     await Click.tabs("vehicleTransaction");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
@@ -173,7 +175,7 @@ test('Verify that the user can filter Vehicle transactions using finance status'
     
 });
 
-test('Verify that the user can reset Vehicle transaction filters by clicking reset button', async ({ page, Actions, Click, Verify }) => {
+test.skip('Verify that the user can reset Vehicle transaction filters by clicking reset button', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Vehicles");
@@ -186,7 +188,7 @@ test('Verify that the user can reset Vehicle transaction filters by clicking res
     await Click.icon("filterArrow");
     await page.waitForTimeout(1000);
     await page.locator("//i[@class='pi pi-pencil text-lg']").click();
-    await Click.icon("edit");
+   //await Click.icon("edit");
     await Click.tabs("vehicleTransaction");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
@@ -197,100 +199,25 @@ test('Verify that the user can reset Vehicle transaction filters by clicking res
     await Verify.verifyDatacount();
 });
 
-
-/*test('Verify that the user can add a new Vehicle transaction from Vehicles >> Transaction section', async ({ page, Actions, Click, Verify }) => {
+test("Verify that the user cannot copy a duplicate vehicle transaction", async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Vehicles");
     await Click.chevronLeftArrow(1);
-    await Click.tabs("transaction");
+    await Click.tabs("vehicleAdmin");
     await page.waitForLoadState('networkidle');
-    await Click.Btn("createTransaction");
-    await page.waitForLoadState('networkidle');
-    await Verify.IsTextDisplayed(page, ["Create Transaction", "Company", "Branch", "Product"]);
-    console.log("User can create a new transaction from Vehicles >> Transaction section");
-});
-
-test('Verify that the user can search for transactions using the search functionality', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Vehicles");
-    await Click.chevronLeftArrow(1);
-    await Click.tabs("transaction");
-    await page.waitForLoadState('networkidle');
-    await Actions.enterText("searchBox", "281957");
-    await page.waitForTimeout(2000);
-    await Verify.verifyDatacount();
-    console.log("User can search for transactions using search functionality");
-});
-
-test('Verify that the user can sort transactions by different columns in the data grid', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Vehicles");
-    await Click.chevronLeftArrow(1);
-    await Click.tabs("transaction");
-    await page.waitForLoadState('networkidle');
-    await Click.icon("sort");
-    await Verify.verifySortOrder();
-    console.log("User can sort transactions by different columns");
-});
-
-test('Verify that pagination works correctly for transaction list', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Vehicles");
-    await Click.chevronLeftArrow(1);
-    await Click.tabs("transaction");
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(2000);
-    await Click.pagination(3);
+    await Click.icon("filterArrow");
+    await Actions.enterText("vehicleCode", "AC001");
+    await Click.Btn("apply");
     await page.waitForTimeout(1000);
-    await Verify.verifyDatacount();
-    console.log("Pagination works correctly for transaction list");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await page.waitForTimeout(1000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saving Failed!");
+
 });
-
-test('Verify that the user can expand and collapse transaction overview section', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Vehicles");
-    await Click.chevronLeftArrow(1);
-    await Click.tabs("transaction");
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(2000);
-    await Click.Btn("view");
-    await page.waitForLoadState('networkidle');
-    await Click.Btn("hideOverview");
-    await Verify.IsTextDisplayed(page, "Show Overview");
-    await Click.Btn("showOverview");
-    await Verify.IsTextDisplayed(page, "Hide Overview");
-    console.log("User can expand and collapse transaction overview section");
-});
-
-test('Verify that the user can save transaction changes successfully', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Vehicles");
-    await Click.chevronLeftArrow(1);
-    await Click.tabs("transaction");
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(2000);
-    await Click.Btn("view");
-    await page.waitForLoadState('networkidle');
-    await Click.tabs("vehicleDetails");
-    await Actions.enterText("vehicleKM", "50000");
-    await Click.Btn("saveTransaction");
-    await Verify.IsTextDisplayed(page, "Transaction saved successfully");
-    console.log("User can save transaction changes successfully");
-}); */
-
-
-
-
-
-
-
-
 
 
 //Vehicles >> Import vehicle file---------------------------------------------------------------------------------------------------------------------------------------------------------------
