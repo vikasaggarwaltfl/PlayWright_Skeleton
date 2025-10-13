@@ -149,22 +149,15 @@ test('Verify that pagination works correctly for vehicles page', async ({ page, 
 
 //Vehicles >> Transaction---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test.skip('Verify that the user can filter Vehicle transactions using finance status', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can filter Vehicle transactions using finance status', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Vehicles");
     await Click.chevronLeftArrow(1);
     await Click.tabs("vehicleAdmin");
     await page.waitForLoadState('networkidle');
-    await Actions.enterText("searchMenu", " ");
-    // await Click.icon("filterArrow");
-    // await Actions.enterText("vehicleCode", "AC001");
-    // await Click.Btn("apply");
-    // await Click.icon("filterArrow");
     await page.waitForTimeout(3000);
-    await page.locator("//i[@class='pi pi-pencil text-lg']").click();
-    await page.pause();
-    //await Click.icon("edit");
+    await Click.icon("editBranchHFA");
     await Click.tabs("vehicleTransaction");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
@@ -175,20 +168,15 @@ test.skip('Verify that the user can filter Vehicle transactions using finance st
     
 });
 
-test.skip('Verify that the user can reset Vehicle transaction filters by clicking reset button', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can reset Vehicle transaction filters by clicking reset button', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Vehicles");
     await Click.chevronLeftArrow(1);
     await Click.tabs("vehicleAdmin");
     await page.waitForLoadState('networkidle');
-    await Click.icon("filterArrow");
-    await Actions.enterText("vehicleCode", "AC001");
-    await Click.Btn("apply");
-    await Click.icon("filterArrow");
-    await page.waitForTimeout(1000);
-    await page.locator("//i[@class='pi pi-pencil text-lg']").click();
-   //await Click.icon("edit");
+    await page.waitForTimeout(3000);
+    await Click.icon("editBranchHFA");
     await Click.tabs("vehicleTransaction");
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
@@ -216,7 +204,6 @@ test("Verify that the user cannot copy a duplicate vehicle transaction", async (
     await page.waitForTimeout(1000);
     await Click.Btn("save");
     await Verify.IsTextDisplayed(page, "Saving Failed!");
-
 });
 
 

@@ -273,7 +273,7 @@ export class Click {
         this.productCompanies = page.locator("//button[normalize-space()='Product Companies']");
         this.productTypeMapping = page.locator("//button[normalize-space()='Product Type Mapping']");
         this.productSubTypeMapping = page.locator("//button[normalize-space()='Product Sub Type Mapping']");
-        this.vehicleTransaction = page.locator("[//button[normalize-space()='Transaction']");
+        this.vehicleTransaction = page.locator("(//button[normalize-space()='Transaction'])[1]");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
