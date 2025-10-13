@@ -52,6 +52,7 @@ test('Verify that the user can reset vehicle details by clicking on the reset bu
     await Verify.verifyDatacount();
 });
 
+
 test('Verify that the user cannot add an duplicate vehicle', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
@@ -102,6 +103,7 @@ test('Verify that the user cannot edit the vehicle details with invalid data', a
     await Verify.verifyErrorMessage(page, "Model is a required field");
 });
 
+
 test('Verify that the user cannot copy the vehicle details that already exsists', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
@@ -145,6 +147,79 @@ test('Verify that pagination works correctly for vehicles page', async ({ page, 
     await Verify.verifyDatacount();
 });
 
+//Vehicles >> Transaction---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+test.skip('Verify that the user can filter Vehicle transactions using finance status', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await Actions.enterText("searchMenu", " ");
+    // await Click.icon("filterArrow");
+    // await Actions.enterText("vehicleCode", "AC001");
+    // await Click.Btn("apply");
+    // await Click.icon("filterArrow");
+    await page.waitForTimeout(3000);
+    await page.locator("//i[@class='pi pi-pencil text-lg']").click();
+    await page.pause();
+    //await Click.icon("edit");
+    await Click.tabs("vehicleTransaction");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Click.dropdown("Finance Status", "Gathering Customer Info");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Verify.verifyDatacount();
+    
+});
+
+test.skip('Verify that the user can reset Vehicle transaction filters by clicking reset button', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("vehicleCode", "AC001");
+    await Click.Btn("apply");
+    await Click.icon("filterArrow");
+    await page.waitForTimeout(1000);
+    await page.locator("//i[@class='pi pi-pencil text-lg']").click();
+   //await Click.icon("edit");
+    await Click.tabs("vehicleTransaction");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Click.dropdown("Finance Status", "Gathering Customer Info");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.Btn("reset");
+    await Verify.verifyDatacount();
+});
+
+test("Verify that the user cannot copy a duplicate vehicle transaction", async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("vehicleCode", "AC001");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await page.waitForTimeout(1000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Saving Failed!");
+
+});
+
+
 //Vehicles >> Import vehicle file---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test('Verify that the user can import a vehicle file when clicking on the import vehicle file button', async ({ page, Actions, Click, Verify }) => {
@@ -176,3 +251,4 @@ test('Verify that the user cannot import a vehicle file without uploading a file
     await Click.Btn("importVehicleBtn");
     await Verify.IsTextDisplayed(page, "Request Failed!");
 });
+
