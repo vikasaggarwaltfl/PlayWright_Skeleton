@@ -206,6 +206,44 @@ test("Verify that the user cannot copy a duplicate vehicle transaction", async (
     await Verify.IsTextDisplayed(page, "Saving Failed!");
 });
 
+test("Verify that the user can add a new vehicle transaction with valid data", async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("vehicleCode", "AC001");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("editBranchHFA");
+    await Click.tabs("vehicleTransaction");
+    await Click.Btn("add");
+    await Click.dropdown("Group", "1");
+    await Click.dropdown("Branch", "Practise branch");
+    await Click.dropdown("Transaction Type", "Fleet");
+    await Click.Btn("save");
+    await Verify.verifyDatacount();
+});
+
+test("Verify that the user cannot add a new vehicle transaction with invalid data", async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("vehicleCode", "AC001");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("editBranchHFA");
+    await Click.tabs("vehicleTransaction");
+    await Click.Btn("add");
+    await Click.Btn("save");
+    await Verify.verifyErrorMessage(page, "Group is a required field");
+});
 
 //Vehicles >> Import vehicle file---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
