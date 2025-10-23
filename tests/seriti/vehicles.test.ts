@@ -247,7 +247,7 @@ test("Verify that the user cannot add a new vehicle transaction with invalid dat
 
 //Vehicles >> Group/Branch Mapping---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test.skip('Verify that the user can add a new Vehice Group/Branch mapping', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can add a new Vehice Group/Branch mapping', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Vehicles");
@@ -261,9 +261,9 @@ test.skip('Verify that the user can add a new Vehice Group/Branch mapping', asyn
     await Click.icon("editBranchHFA");
     await Click.tabs("groupBranchMapping");
     await Click.Btn("add");
-    await Click.dropdown("Group", "1");
+    await Click.dropdown("Group", "AAGroup");
     await page.pause();
-    await Click.dropdown("Branch", "Practise branch");
+    await Click.dropdown("Branch", "AABranch");
     await Click.Btn("save");
     await page.waitForTimeout(1000);
     await Verify.IsTextDisplayed(page, "Vehicle (Testing Model)");
@@ -290,36 +290,23 @@ test('Verify that the user cannot add a duplicate Vehice Group/Branch mapping', 
     await Verify.IsTextDisplayed(page, "Vehicle Group Branch Mapping already exists.");
 });
 
-/*test('Verify that the user can edit an existing group branch mapping', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user cannot delete a Vehice Group/Branch mapping', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Vehicles");
     await Click.chevronLeftArrow(1);
     await Click.tabs("vehicleAdmin");
     await page.waitForLoadState('networkidle');
-    await Click.tabs("groupBranchMapping");
-    await Click.icon("edit");
-    await Click.dropdown("Select Group", "Group 2");
-    await Click.dropdown("Select Branch", "Branch 2");
-    await Click.Btn("save");
-    await Verify.IsTextDisplayed(page, "Group branch mapping updated successfully!");
-});
-
-test('Verify that the user can delete a group branch mapping', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Vehicles");
-    await Click.chevronLeftArrow(1);
-    await Click.tabs("vehicleAdmin");
-    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("vehicleCode", "AC001");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("editBranchHFA");
     await Click.tabs("groupBranchMapping");
     await Click.icon("delete");
     await Click.Btn("yes");
-    await Verify.IsTextDisplayed(page, "Group branch mapping deleted successfully!");
-});*/
-
-
-
+    await Verify.IsTextDisplayed(page, "Could not delete record.");
+});
 
 //Vehicles >> Import vehicle file---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
