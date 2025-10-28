@@ -139,7 +139,7 @@ export class Actions {
         await this.page.goto('https://seritiweb-mea-uat.seriti-int.com');
         if (userProfile === "sonali") {
             await this.enterText("email", "sonali@testingframeworks.co.uk");
-            await this.enterText("password", "T9#vP2xQ");
+            await this.enterText("password", "G4#m2Tq9");
         }
         else if (userProfile === "Automation") {
             await this.enterText("email", "test-automation@testingframeworks.co.uk");
