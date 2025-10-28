@@ -84,6 +84,7 @@ export class Click {
     private readonly vehicleTransaction: Locator;
     private readonly vehicleAccessories: Locator;
     private readonly groupBranchMapping: Locator;
+    private readonly userDocuments: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -279,6 +280,7 @@ export class Click {
         this.vehicleTransaction = page.locator("(//button[normalize-space()='Transaction'])[1]");
         this.vehicleAccessories = page.locator("//button[normalize-space()='Accessories']");
         this.groupBranchMapping = page.locator("//button[normalize-space()='Group/Branch Mapping']");
+        this.userDocuments = page.locator("//button[normalize-space()='User Documents']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -618,6 +620,9 @@ export class Click {
         }
         else if (str === "groupBranchMapping") {    
             await this.groupBranchMapping.click();
+        }
+        else if (str === "userDocuments") {    
+            await this.userDocuments.click();
         }
     };
 
