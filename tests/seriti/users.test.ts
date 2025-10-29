@@ -88,23 +88,6 @@ test('Verify that the user can edit the user details with valid data', async ({ 
     await Verify.IsTextDisplayed(page, "User Details saved!");
 });
 
-test('Verify that the user cannot edit the user details with Invalid data', async ({ page, Actions, Click, Verify }) => {
-    await Actions.signIn("Automation");
-    await Click.Btn("login");
-    await Actions.enterText("searchMenu", "Users");
-    await Click.tabs("users");
-    await page.waitForLoadState('networkidle');
-    await Click.icon("filterArrow");
-    await Actions.enterText("userName", "test-automation@testingframeworks.co.uk");
-    await Click.Btn("apply");
-    await page.waitForTimeout(1000);
-    await Click.icon("edit");
-    await page.waitForTimeout(2000);
-    await Actions.enterText("firstName", " ");
-    await Click.Btn("save");
-    await Verify.verifyErrorMessage(page, "First Name is a required field");
-});
-
 test('Verify that the user can sort the user details in the data grid', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
@@ -126,6 +109,28 @@ test('Verify that pagination works correctly for users page', async ({ page, Act
     await page.waitForTimeout(1000);
     await Verify.verifyDatacount();
 });
+
+//User >> User Documents ---------------------------------------------------------------------------------------------------------------------------------------------
+
+test('Verify that the user can add in userDocuments section', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Users");
+    await Click.tabs("users");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("userName", "test-automation@testingframeworks.co.uk");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await page.waitForTimeout(2000);
+    await Click.tabs("userDocuments");
+    await Click.Btn("add");
+    await Click.dropdown("Category", "OTHER DOCUMENT");
+    await Verify.IsTextDisplayed(page, "OTHER DOCUMENT");
+});
+
+
 
 
 

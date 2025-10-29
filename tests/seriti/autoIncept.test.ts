@@ -5,7 +5,7 @@ import { Click } from '@pages/Click'
 import { Verify } from '@pages/Verify'
 import * as path from 'path'
 
-test.only('Verify that Auto Incept screen display as expected', async ({ page, Actions, Click, Verify }) => {
+test('Verify that Auto Incept screen display as expected', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn('sonali');
     await Click.Btn('login');
     await Actions.enterText("searchMenu", "Auto-Incept");

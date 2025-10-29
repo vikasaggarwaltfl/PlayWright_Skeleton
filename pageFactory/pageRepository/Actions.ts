@@ -143,7 +143,7 @@ export class Actions {
         }
         else if (userProfile === "Automation") {
             await this.enterText("email", "test-automation@testingframeworks.co.uk");
-            await this.enterText("password", "Blueberry@123");
+            await this.enterText("password", "UatTesting@123");
         }
     }
 

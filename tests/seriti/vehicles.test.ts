@@ -245,9 +245,9 @@ test("Verify that the user cannot add a new vehicle transaction with invalid dat
     await Verify.verifyErrorMessage(page, "Group is a required field");
 });
 
-//Vehicles >> Accessories---------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Vehicles >> Group/Branch Mapping---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-test.skip('Verify that the user can filter vehicle accessories using the filter options', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user can add a new Vehice Group/Branch mapping', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Vehicles");
@@ -256,17 +256,20 @@ test.skip('Verify that the user can filter vehicle accessories using the filter 
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
     await Actions.enterText("vehicleCode", "AC001");
-    await Click.icon("editBranchHFA");
-    await Click.tabs("vehicleAccessories");
-    await page.waitForLoadState('networkidle');
-    await Click.icon("filterArrow");
-    await Actions.enterText("accessoryCode", "AC001");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
-    await Verify.verifyDatacount();
+    await Click.icon("editBranchHFA");
+    await Click.tabs("groupBranchMapping");
+    await Click.Btn("add");
+    await Click.dropdown("Group", "AAGroup");
+    await page.pause();
+    await Click.dropdown("Branch", "AABranch");
+    await Click.Btn("save");
+    await page.waitForTimeout(1000);
+    await Verify.IsTextDisplayed(page, "Vehicle (Testing Model)");
 });
 
-test.skip('Verify that the user can reset vehicle accessories by clicking on the reset button', async ({ page, Actions, Click, Verify }) => {
+test('Verify that the user cannot add a duplicate Vehice Group/Branch mapping', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Vehicles");
@@ -275,18 +278,35 @@ test.skip('Verify that the user can reset vehicle accessories by clicking on the
     await page.waitForLoadState('networkidle');
     await Click.icon("filterArrow");
     await Actions.enterText("vehicleCode", "AC001");
-    await Click.icon("editBranchHFA");
-    await Click.tabs("vehicleAccessories");
-    await page.waitForLoadState('networkidle');
-    await Click.icon("filterArrow");
-    await Actions.enterText("accessoryCode", "AC001");
     await Click.Btn("apply");
     await page.waitForTimeout(1000);
-    await Click.Btn("reset");
-    await Verify.verifyDatacount();
+    await Click.icon("editBranchHFA");
+    await Click.tabs("groupBranchMapping");
+    await Click.icon("copy");
+    await Click.icon("selectAll");
+    await Click.Btn("copying");
+    await page.waitForTimeout(1000);
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "Vehicle Group Branch Mapping already exists.");
 });
 
-
+test('Verify that the user cannot delete a Vehice Group/Branch mapping', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Vehicles");
+    await Click.chevronLeftArrow(1);
+    await Click.tabs("vehicleAdmin");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("vehicleCode", "AC001");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("editBranchHFA");
+    await Click.tabs("groupBranchMapping");
+    await Click.icon("delete");
+    await Click.Btn("yes");
+    await Verify.IsTextDisplayed(page, "Could not delete record.");
+});
 
 //Vehicles >> Import vehicle file---------------------------------------------------------------------------------------------------------------------------------------------------------------
 

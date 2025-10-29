@@ -83,6 +83,8 @@ export class Click {
     private readonly productSubTypeMapping: Locator;
     private readonly vehicleTransaction: Locator;
     private readonly vehicleAccessories: Locator;
+    private readonly groupBranchMapping: Locator;
+    private readonly userDocuments: Locator;
 
     //icon--------------------------------------------------------------------------------------------------------
     
@@ -162,6 +164,7 @@ export class Click {
     private readonly includeActiveUsersYes: Locator;
     private readonly addAccessory: Locator;
     private readonly addVehicle: Locator;
+    private readonly addGroupBranch: Locator;
     private readonly importVehicleBtn: Locator;
     private readonly chooseFile: Locator;
     private readonly load: Locator;
@@ -276,6 +279,8 @@ export class Click {
         this.productSubTypeMapping = page.locator("//button[normalize-space()='Product Sub Type Mapping']");
         this.vehicleTransaction = page.locator("(//button[normalize-space()='Transaction'])[1]");
         this.vehicleAccessories = page.locator("//button[normalize-space()='Accessories']");
+        this.groupBranchMapping = page.locator("//button[normalize-space()='Group/Branch Mapping']");
+        this.userDocuments = page.locator("//button[normalize-space()='User Documents']");
         
         //icon--------------------------------------------------------------------------------------------------------        
         
@@ -355,6 +360,7 @@ export class Click {
         this.includeActiveUsersYes = page.locator("//div[@placeholder='Include Active Users']//span[@class='p-button-label'][normalize-space()='Yes']");
         this.addAccessory = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.addVehicle = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
+        this.addGroupBranch = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.importVehicleBtn = page.locator("//button[@title='Please be patient as it could take a few minutes']");
         this.chooseFile = page.locator("//input[@type='file']");
         this.load = page.locator("//button[.//span[contains(text(),'Load')]]");
@@ -612,6 +618,12 @@ export class Click {
         else if (str === "vehicleTransaction") {    
             await this.vehicleTransaction.click();
         }
+        else if (str === "groupBranchMapping") {    
+            await this.groupBranchMapping.click();
+        }
+        else if (str === "userDocuments") {    
+            await this.userDocuments.click();
+        }
     };
 
     //icon--------------------------------------------------------------------------------------------------------
@@ -843,6 +855,9 @@ export class Click {
         }
         else if (str === "addVehicle") {
             await this.addVehicle.click();
+        }
+        else if (str === "addGroupBranch") {
+            await this.addGroupBranch.click();
         }
         else if (str === "importVehicleBtn") {
             await this.importVehicleBtn.click();
