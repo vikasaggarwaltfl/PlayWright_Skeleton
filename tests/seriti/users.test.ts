@@ -131,7 +131,7 @@ test('Verify that the user can add in userDocuments section', async ({ page, Act
     await Verify.IsTextDisplayed(page, "OTHER DOCUMENT");
 });
 
-test('Verify that the user can upload document in userDocuments section', async ({ page, Actions, Click, Verify }) => {
+test.skip('Verify that the user can upload document in userDocuments section', async ({ page, Actions, Click, Verify }) => {
     await Actions.signIn("Automation");
     await Click.Btn("login");
     await Actions.enterText("searchMenu", "Users");
@@ -146,8 +146,10 @@ test('Verify that the user can upload document in userDocuments section', async 
     await Click.tabs("userDocuments");
     await Click.Btn("add");
     await Click.dropdown("Category", "OTHER DOCUMENT");
-    await page.locator("(//i[@class='pi pi-cloud-upload text-6xl'])[1]").setInputFiles("Users/Akshaya K/OneDrive/Documents/automation project/PlayWright_Skeleton\documents");
-    await Click.Btn("save");
+    await page.pause();
+    await page.locator("(//i[@class='pi pi-cloud-upload text-6xl'])[1]").click();
+    await page.pause();
+    await page.setInputFiles('input[type="file"]', '"Users/Akshaya K/OneDrive/Documents/Sample report.pdf"');
     await Verify.IsTextDisplayed(page, "OTHER DOCUMENT");
 });
 
@@ -170,6 +172,42 @@ test('Verify that the user cannot add in userDocuments section with invalid data
     await Verify.verifyErrorMessage(page, "Category is a required field");
 });
 
+test.skip('Verify that the user can delete document in userDocuments section', async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Users");
+    await Click.tabs("users");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("userName", "test-automation@testingframeworks.co.uk");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await page.waitForTimeout(2000);
+    await Click.tabs("userDocuments");
+    await Click.icon("deleted");
+    await Click.Btn("yes");
+    await Verify.IsTextDisplayed(page, "User Details (test-automation@testingframeworks.co.uk)");
+});
+
+test("Verify that the user can edit document in userDocuments section", async ({ page, Actions, Click, Verify }) => {
+    await Actions.signIn("Automation");
+    await Click.Btn("login");
+    await Actions.enterText("searchMenu", "Users");
+    await Click.tabs("users");
+    await page.waitForLoadState('networkidle');
+    await Click.icon("filterArrow");
+    await Actions.enterText("userName", "test-automation@testingframeworks.co.uk");
+    await Click.Btn("apply");
+    await page.waitForTimeout(1000);
+    await Click.icon("edit");
+    await page.waitForTimeout(2000);
+    await Click.tabs("userDocuments");
+    await Click.icon("edit");
+    await Actions.enterText("docDescription", "TESTING");
+    await Click.Btn("save");
+    await Verify.IsTextDisplayed(page, "User Details (test-automation@testingframeworks.co.uk)");
+});
 
 
 

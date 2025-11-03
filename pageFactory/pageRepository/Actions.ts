@@ -73,6 +73,7 @@ export class Actions {
     private readonly companyProductName: Locator;
     private readonly companyProductCode: Locator;
     private readonly accessory : Locator;
+    private readonly docDescription: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -132,6 +133,7 @@ export class Actions {
         this.companyProductName = page.locator("//input[@id='CompanyProductName']");
         this.companyProductCode = page.locator("//input[@id='CompanyProductCode']");
         this.accessory = page.locator("//input[@id='IsAccessoryText']");
+        this.docDescription = page.locator("//textarea[@id='DocDescription']");
 
     }
 
@@ -367,6 +369,10 @@ export class Actions {
         else if (textBoxName === "accessory") {
 
             await this.accessory.fill(text);
+        }
+        else if (textBoxName === "docDescription") {
+
+            await this.docDescription.fill(text);
         }
         
     }
