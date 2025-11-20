@@ -45,10 +45,15 @@ test('Verify navigation to "Forgot Password" screen from Login screen', async ({
   console.log('User redirected to forgot password screen');
 });
 
-
-
-
-
+test.only('Verify that user can change the country from dropdown', async ({ page, Actions, Click, Verify }) => {
+  await Actions.signIn('sonali');
+  await Click.Btn('login');
+  await page.waitForURL('**/transaction', { timeout: 15000 });
+  await page.waitForSelector('.menuBlock', { state: 'visible', timeout: 15000 });
+  await Actions.changeCountry('New Zealand');
+  await Verify.IsTextDisplayed(page, 'New Zealand');
+  console.log('Country updated to New Zealand');
+});
 
 
 

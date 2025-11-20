@@ -322,7 +322,7 @@ export class Click {
         this.resetCriteria = page.locator("//button[text()=' Reset Criteria ']")
         this.search = page.locator("//button[@aria-label='Hide Overview']")
         this.hideOverview = page.locator("//div[normalize-space()='Hide Overview']");
-        this.showOverview = page.locator("//span[text()='Login']");
+        this.showOverview = page.locator("//span[text()='Show Overview']");
         this.addProductDetailsReport = page.locator("//button[@class='p-button p-component p-splitbutton-defaultbutton']");
         this.addDealTrackerReport = page.locator("//div[text()=' Add Deal Tracker Report']");
         this.addDocSummaryReport = page.locator("//div[@class='flex flex-row gap-2 items-center']");

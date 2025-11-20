@@ -74,6 +74,9 @@ export class Actions {
     private readonly companyProductCode: Locator;
     private readonly accessory : Locator;
     private readonly docDescription: Locator;
+    private readonly countrySelector: Locator;
+    private readonly countrySearchInput: Locator;
+    private readonly activeCountryLabel: Locator;
 
 
     constructor(page: Page, context: BrowserContext) {
@@ -134,6 +137,9 @@ export class Actions {
         this.companyProductCode = page.locator("//input[@id='CompanyProductCode']");
         this.accessory = page.locator("//input[@id='IsAccessoryText']");
         this.docDescription = page.locator("//textarea[@id='DocDescription']");
+        this.countrySelector = page.locator(".menuBlock").first();
+        this.countrySearchInput = page.locator(".menuBlock input[type='search'], .menuBlock input");
+        this.activeCountryLabel = page.locator(".menuBlock .countryName, [data-testid='active-country']");
 
     }
 
@@ -141,7 +147,7 @@ export class Actions {
         await this.page.goto('https://seritiweb-mea-uat.seriti-int.com');
         if (userProfile === "sonali") {
             await this.enterText("email", "sonali@testingframeworks.co.uk");
-            await this.enterText("password", "G4#m2Tq9");
+            await this.enterText("password", "Sonali@123");
         }
         else if (userProfile === "Automation") {
             await this.enterText("email", "test-automation@testingframeworks.co.uk");
@@ -402,5 +408,75 @@ async SelectDropdownOptions(index: number, selectors: string[] | string): Promis
         await this.page.locator("body").click({ position: { x: 0, y: 0 } });
     }
 
+  async selectCountry(dropdownSelector, countryName) {
+    try {
+      console.log(`Selecting country: ${countryName}`);
 
+      // Click the dropdown to open it
+      await this.page.click(dropdownSelector);
+
+      // Wait until the dropdown options are visible
+      await this.page.waitForSelector(`text=${countryName}`, { timeout: 5000 });
+
+      // Scroll into view (if needed)
+      const countryOption = this.page.locator(`text=${countryName}`);
+      await countryOption.scrollIntoViewIfNeeded();
+
+      // Click on the desired country
+      await countryOption.click();
+
+      console.log(`Country selected: ${countryName}`);
+    } catch (error) {
+      console.error(`Failed to select country: ${countryName}`, error);
+      throw error;
+    }
+  }
+
+  async changeCountry(countryName: string) {
+    const selector = this.countrySelector.first();
+    await selector.waitFor({ state: 'visible' });
+    await selector.click();
+
+    const panel = this.page
+      .locator(
+        '.menuBlock .p-overlaypanel-content, .menuBlock .dropdown-panel, .menuBlock .p-multiselect-items, .menuBlock .country-list',
+      )
+      .first();
+    if ((await panel.count()) > 0) {
+      await panel.waitFor({ state: 'visible' }).catch(() => undefined);
+      await panel.evaluate((el) => {
+        el.scrollTop = 0;
+      }).catch(() => undefined);
+    }
+
+    const searchInputCount = await this.countrySearchInput.count();
+    if (searchInputCount > 0) {
+      const searchInput = this.countrySearchInput.first();
+      if (await searchInput.isVisible()) {
+        await searchInput.fill('');
+        await searchInput.fill(countryName);
+      }
+    }
+
+    let option = this.page
+      .locator(".menuBlock .p-dropdown-item, .menuBlock .p-multiselect-item, .menuBlock li, .menuBlock span")
+      .filter({ hasText: countryName })
+      .first();
+    if ((await option.count()) === 0) {
+      option = this.page.locator(`//span[normalize-space()='${countryName}']`).first();
+    }
+    await option.waitFor({ state: 'visible' });
+    await option.scrollIntoViewIfNeeded();
+    await option.click();
+
+    if ((await this.activeCountryLabel.count()) > 0) {
+      const activeLabel = this.activeCountryLabel.first();
+      if (await activeLabel.isVisible()) {
+        await expect(activeLabel).toContainText(countryName);
+      }
+    }
+  }
 }
+
+
+
