@@ -45,7 +45,7 @@ test('Verify navigation to "Forgot Password" screen from Login screen', async ({
   console.log('User redirected to forgot password screen');
 });
 
-test.only('Verify that user can change the country from dropdown', async ({ page, Actions, Click, Verify }) => {
+test('Verify that user can change the country from dropdown', async ({ page, Actions, Click, Verify }) => {
   await Actions.signIn('sonali');
   await Click.Btn('login');
   await page.waitForURL('**/transaction', { timeout: 15000 });
